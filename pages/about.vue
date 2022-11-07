@@ -227,6 +227,7 @@
       >
         <div
           id="target"
+          data-id="canvas"
           class="flex flex-grow justify-center absolute inset-0 overflow-visible"
           :style="{
             transform: `translate3D(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px, 0px) rotate(${addaSquare.rotation}deg) scale(${addaSquare.scale})`,
@@ -243,9 +244,10 @@
               <div
                 v-show="selectToi.selectedBox && !canvasFF.isDragging"
                 class="absolute pointer-events-none"
+                style="transform: translate(-50vw, -50vh)"
                 :style="{
-                  left: selectToi.selectedBoxData.X + 'px',
-                  top: selectToi.selectedBoxData.Y + 'px',
+                  left: selectToi.selectedBoxHTMLX + 'px',
+                  top: selectToi.selectedBoxHTMLY + 'px',
                   height: selectToi.selectedBoxHTMLHeight + 'px',
                   width: selectToi.selectedBoxHTMLWidth + 'px',
                 }"

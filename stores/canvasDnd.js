@@ -15,6 +15,9 @@ export const useCanvasDndStore = defineStore({
     dragzone: "",
     spareDragzone: ""
   }),
+  getters: {
+
+  },
   actions: {
     checkDroppable(e, node) {
       if (this.isDragging == true) {
@@ -32,6 +35,8 @@ export const useCanvasDndStore = defineStore({
         this.isDroppable = false;
           }
 
+      } else if(e.target.dataset.id === canvas){
+        this.appendToCanvas()
       } else {
         this.currDrop = "";
         this.isDroppable = false;

@@ -6,8 +6,8 @@
         backgroundColor: node.bgColor,
         height: selectToi.getHeight(node.height, node.unit),
         width: selectToi.getWidth(node.width, node.unit),
-        left: node.X + node.Xunit,
-        top: node.Y + node.Yunit,
+        left: node.position === 'absolute' ? node.X + node.Xunit : document.querySelector(`[data-id=${selectToi.selectedBoxData.parent}]`).getBoundingClientRect.x,
+        top: node.position === 'absolute' ? node.Y + node.Yunit : document.querySelector(`[data-id=${selectToi.selectedBoxData.parent}]`).getBoundingClientRect.y,
         display: 'flex',
         flexDirection: node.flexDirection,
         justifyContent : selectToi.getJustify(node.justify),
@@ -221,11 +221,12 @@ const testDown = (e, currDrag) => {
           let dropzoneLeft = dropzonerect.x
           let dropzoneTop = dropzonerect.y
 
-        selectToi.selectedBoxData.X = e.clientX - dropzoneLeft - prevOffsetLeft;
-        selectToi.selectedBoxData.Y = e.clientY  - dropzoneTop  - prevOffsetTop;
+        selectToi.selectedBoxData.X = Math.round(e.clientX - dropzoneLeft - prevOffsetLeft);
+        selectToi.selectedBoxData.Y = Math.round(e.clientY  - dropzoneTop  - prevOffsetTop);
       } else {
-      selectToi.selectedBoxData.X = e.clientX - prevX;
-      selectToi.selectedBoxData.Y = e.clientY - prevY;
+      selectToi.selectedBoxData.X = Math.round(e.clientX - prevX);
+      selectToi.selectedBoxData.Y = Math.round(e.clientY - prevY);
+      
       }
         
         //sort childrens by dragging
@@ -278,15 +279,19 @@ const testDown = (e, currDrag) => {
           canvasDnd.currDragValue.parent = canvasDnd.currDrop;
 
           canvasDnd.dndAppend(selectToi.data, dragZone);
-        } /* else if (!canvasDnd.isDroppable){
+        } else if (!canvasDnd.isDroppable && canvasDnd.currDrop){
+          canvasDnd.currDragValue.parent = ''
         canvasDnd.appendToCanvas()
-      }*/
+      }
       canvasDnd.checkDroppable();
     }
 
     function mouseup() {
 
       isDragging = false;
+
+      selectToi.selectedBoxHTMLX = document.querySelector(`[data-id=${selectToi.selectedBox}]`).getBoundingClientRect().x;
+      selectToi.selectedBoxHTMLY = document.querySelector(`[data-id=${selectToi.selectedBox}]`).getBoundingClientRect().y;
 
       window.removeEventListener("mousemove", mousemove);
       window.removeEventListener("mouseup", mouseup);

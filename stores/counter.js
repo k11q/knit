@@ -370,8 +370,8 @@ export const useCounterStore = defineStore({
         console.log("parentOffsetLeft = " + parentOffsetLeft);
         console.log("parentOffsetTop = " + parentOffsetTop);
         
-        this.selectedBoxHTMLX = selectedElement.offsetLeft + parentOffsetLeft;
-        this.selectedBoxHTMLY = selectedElement.offsetTop + parentOffsetTop;
+        this.selectedBoxHTMLX = selectedElement.getBoundingClientRect().x
+        this.selectedBoxHTMLY = selectedElement.getBoundingClientRect().y
 
         this.selectedBoxHTMLWidth = this.selectedBoxData.width;
         this.selectedBoxHTMLHeight = this.selectedBoxData.height;
