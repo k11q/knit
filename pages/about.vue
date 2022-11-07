@@ -244,8 +244,8 @@
                 v-show="selectToi.selectedBox && !canvasFF.isDragging"
                 class="absolute pointer-events-none"
                 :style="{
-                  left: selectToi.selectedBoxHTMLX + 'px',
-                  top: selectToi.selectedBoxHTMLY + 'px',
+                  left: selectToi.selectedBoxData.X + 'px',
+                  top: selectToi.selectedBoxData.Y + 'px',
                   height: selectToi.selectedBoxHTMLHeight + 'px',
                   width: selectToi.selectedBoxHTMLWidth + 'px',
                 }"
@@ -855,11 +855,13 @@
               >
                 <div class="flex flex-row gap-2 items-start">
                   <div
-                    @click="selectToi.changeFlexDirection('column')"
-                    class="aspect-square items-center flex flex-none text-neutral-400"
+                    @click="selectToi.selectedBoxData.flexDirection = 'column'"
+                    class="aspect-square items-center flex flex-none"
                     :class="{
                       'text-black':
                         selectToi.selectedBoxData.flexDirection === 'column',
+                        'text-neutral-400':
+                        selectToi.selectedBoxData.flexDirection === 'row',
                     }"
                   >
                     <svg
@@ -879,11 +881,13 @@
                   </div>
 
                   <div
-                    @click="selectToi.changeFlexDirection('row')"
-                    class="aspect-square items-center flex flex-none text-neutral-400"
+                    @click="selectToi.selectedBoxData.flexDirection = 'row'"
+                    class="aspect-square items-center flex flex-none"
                     :class="{
                       'text-black':
                         selectToi.selectedBoxData.flexDirection === 'row',
+                        'text-neutral-400':
+                        selectToi.selectedBoxData.flexDirection === 'column',
                     }"
                   >
                     <svg

@@ -37,6 +37,8 @@ export const useSquareStore = defineStore({
       Xunit: "px",
       Yunit: "px",
       position: "absolute",
+      flexDirection: "row",
+      parent: '',
       children: [],
     },
     dataText: {
@@ -49,6 +51,7 @@ export const useSquareStore = defineStore({
       Xunit: "px",
       Yunit: "px",
       position: "absolute",
+      parent: '',
       children: [],
     },
     dataSquare: {
@@ -61,6 +64,8 @@ export const useSquareStore = defineStore({
       Xunit: "px",
       Yunit: "px",
       position: "absolute",
+      flexDirection: "row",
+      parent: '',
       children: [],
     },
   }),

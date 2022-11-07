@@ -146,15 +146,12 @@
 import { useCounterStore } from "../stores/counter";
 import { useCanvasDndStore } from "../stores/canvasDnd";
 import { useCanvasFF } from "../stores/canvasFreeForm";
-import { useResizeStore } from "../stores/resizeStore";
 import { useSquareStore } from "~~/stores/dataSquare";
 
 const selectToi = useCounterStore();
 const canvasDnd = useCanvasDndStore();
 const canvasFF = useCanvasFF();
-const resizeStore = useResizeStore();
 const squareStore = useSquareStore();
-let isResizing = false;
 
 const typeFrame = (type) => {
   if (type === "frame") {
@@ -175,8 +172,11 @@ const testDown = (e, currDrag) => {
   let prevX = e.layerX;
   let prevY = e.layerY;
 
-  let prevOffsetLeft = e.target.offsetLeft
-  let prevOffsetTop = e.target.offsetTop
+  console.log('prevX = '+prevX)
+  console.log('prevY = '+prevY)
+
+  let prevOffsetLeft = e.clientX - e.target.getBoundingClientRect().x
+  let prevOffsetTop = e.clientY - e.target.getBoundingClientRect().y
 
   canvasFF.isDragging = true;
   canvasDnd.isDragging = true;
@@ -188,6 +188,7 @@ const testDown = (e, currDrag) => {
   console.log("currDrop = " + canvasDnd.currDrop);
   console.log("currDrag = " + canvasDnd.currDrag);
 
+  //delete selected item
   document.addEventListener('keyup', event => {
   if (event.key == 'Backspace' || event.key == 'Delete' && selectToi.selectedBox) {
     canvasDnd.dndRemove(selectToi.data);
@@ -211,23 +212,23 @@ const testDown = (e, currDrag) => {
       
       if (e.target) {
 
-      if (selectToi.selectedBoxData.parent) {
-        selectToi.selectedBoxHTMLX = e.clientX - selectToi.prevX +prevOffsetLeft
-        selectToi.selectedBoxHTMLY = e.clientY - selectToi.prevY +prevOffsetTop
-      } else {
-        selectToi.selectedBoxHTMLX = e.clientX - selectToi.prevX
-        selectToi.selectedBoxHTMLY = e.clientY - selectToi.prevY
-      }
-
       console.log("e clientX = "+e.clientX)
       console.log("e clientY = "+e.clientY)}
 
+      if(selectToi.selectedBoxData.parent){
+        let dropzone = document.querySelector(`[data-id=${selectToi.selectedBoxData.parent}]`)
+          let dropzonerect = dropzone.getBoundingClientRect()
+          let dropzoneLeft = dropzonerect.x
+          let dropzoneTop = dropzonerect.y
+
+        selectToi.selectedBoxData.X = e.clientX - dropzoneLeft - prevOffsetLeft;
+        selectToi.selectedBoxData.Y = e.clientY  - dropzoneTop  - prevOffsetTop;
+      } else {
       selectToi.selectedBoxData.X = e.clientX - prevX;
       selectToi.selectedBoxData.Y = e.clientY - prevY;
-
-      if (!isResizing) {
-        //sort childrens by dragging
+      }
         
+        //sort childrens by dragging
         if (canvasDnd.isDroppable && canvasDnd.currDrop) {
          canvasDnd.currDropHTML=e.target
 
@@ -268,17 +269,18 @@ const testDown = (e, currDrag) => {
 
           console.log("dragZone = "+dragZone);
 
-          console.log("currDrop = " + canvasDnd.currDrop);
+          console.log("currDrop = " + canvasDnd.currDrop);  
 
           canvasDnd.setCurrDragValue(selectToi.data, canvasDnd.currDrag);
           console.log(canvasDnd.currDragValue);
           canvasDnd.dndRemove(selectToi.data);
-          canvasDnd.currDragValue.position = "static";
+
+          canvasDnd.currDragValue.parent = canvasDnd.currDrop;
+
           canvasDnd.dndAppend(selectToi.data, dragZone);
         } /* else if (!canvasDnd.isDroppable){
         canvasDnd.appendToCanvas()
       }*/
-      }
       canvasDnd.checkDroppable();
     }
 
@@ -295,210 +297,6 @@ const testDown = (e, currDrag) => {
     }
   }
 }
-};
-
-const resizeBottomRight = (e) => {
-  let prevWidth = selectToi.selectedBoxData.width;
-  let prevHeight = selectToi.selectedBoxData.height;
-
-  let prevX = e.clientX;
-  let prevY = e.clientY;
-
-  isResizing = true;
-
-  window.addEventListener("mousemove", mousemove);
-  window.addEventListener("mouseup", mouseup);
-
-  function mousemove(e) {
-    selectToi.selectedBoxData.width = prevWidth + (e.clientX - prevX);
-    selectToi.selectedBoxData.height = prevHeight + (e.clientY - prevY);
-    console.log("mousemove!");
-  }
-
-  function mouseup() {
-    isResizing = false;
-    window.removeEventListener("mousemove", mousemove);
-    window.removeEventListener("mouseup", mouseup);
-    console.log("mouseup!");
-  }
-};
-const resizeBottomLeft = (e) => {
-  let prevWidth = selectToi.selectedBoxData.width;
-  let prevHeight = selectToi.selectedBoxData.height;
-  let prevWidth2 = selectToi.selectedBoxData.X;
-
-  let prevX = e.clientX;
-  let prevY = e.clientY;
-
-  isResizing = true;
-
-  window.addEventListener("mousemove", mousemove);
-  window.addEventListener("mouseup", mouseup);
-
-  function mousemove(e) {
-    selectToi.selectedBoxData.width = prevWidth + (prevX - e.clientX);
-    selectToi.selectedBoxData.height = prevHeight + (e.clientY - prevY);
-    selectToi.selectedBoxData.X = prevWidth2 + (e.clientX - prevX);
-    console.log("mousemove!");
-  }
-
-  function mouseup() {
-    isResizing = false;
-    window.removeEventListener("mousemove", mousemove);
-    window.removeEventListener("mouseup", mouseup);
-    console.log("mouseup!");
-  }
-};
-const resizeTopLeft = (e) => {
-  let prevWidth = selectToi.selectedBoxData.X;
-  let prevHeight = selectToi.selectedBoxData.Y;
-  let prevWidth2 = selectToi.selectedBoxData.width;
-  let prevHeight2 = selectToi.selectedBoxData.height;
-
-  let prevX = e.clientX;
-  let prevY = e.clientY;
-
-  isResizing = true;
-
-  window.addEventListener("mousemove", mousemove);
-  window.addEventListener("mouseup", mouseup);
-
-  function mousemove(e) {
-    selectToi.selectedBoxData.X = prevWidth + (e.clientX - prevX);
-    selectToi.selectedBoxData.Y = prevHeight + (e.clientY - prevY);
-    selectToi.selectedBoxData.width = prevWidth2 + (prevX - e.clientX);
-    selectToi.selectedBoxData.height = prevHeight2 + (prevY - e.clientY);
-    console.log("mousemove!");
-  }
-
-  function mouseup() {
-    isResizing = false;
-    window.removeEventListener("mousemove", mousemove);
-    window.removeEventListener("mouseup", mouseup);
-    console.log("mouseup!");
-  }
-};
-const resizeTopRight = (e) => {
-  let prevWidth = selectToi.selectedBoxData.width;
-  let prevHeight = selectToi.selectedBoxData.Y;
-  let prevHeight2 = selectToi.selectedBoxData.height;
-
-  let prevX = e.clientX;
-  let prevY = e.clientY;
-
-  isResizing = true;
-
-  window.addEventListener("mousemove", mousemove);
-  window.addEventListener("mouseup", mouseup);
-
-  function mousemove(e) {
-    selectToi.selectedBoxData.width = prevWidth + (e.clientX - prevX);
-    selectToi.selectedBoxData.Y = prevHeight + (e.clientY - prevY);
-    selectToi.selectedBoxData.height = prevHeight2 + (prevY - e.clientY);
-    console.log("mousemove!");
-  }
-
-  function mouseup() {
-    isResizing = false;
-    window.removeEventListener("mousemove", mousemove);
-    window.removeEventListener("mouseup", mouseup);
-    console.log("mouseup!");
-  }
-};
-const resizeRight = (e) => {
-  let prevWidth = selectToi.selectedBoxData.width;
-
-  let prevX = e.clientX;
-
-  isResizing = true;
-
-  window.addEventListener("mousemove", mousemove);
-  window.addEventListener("mouseup", mouseup);
-
-  function mousemove(e) {
-    selectToi.selectedBoxData.width = prevWidth + (e.clientX - prevX);
-  }
-
-  function mouseup() {
-    isResizing = false;
-    window.removeEventListener("mousemove", mousemove);
-    window.removeEventListener("mouseup", mouseup);
-    console.log("mouseup!");
-  }
-};
-const resizeLeft = (e) => {
-  let prevWidth = selectToi.selectedBoxData.width;
-  let prevWidth2 = selectToi.selectedBoxData.X;
-
-  let prevX = e.clientX;
-
-  isResizing = true;
-
-  window.addEventListener("mousemove", mousemove);
-  window.addEventListener("mouseup", mouseup);
-
-  function mousemove(e) {
-    selectToi.selectedBoxData.width = prevWidth + (prevX - e.clientX);
-    selectToi.selectedBoxData.X = prevWidth2 + (e.clientX - prevX);
-  }
-
-  function mouseup() {
-    isResizing = false;
-    window.removeEventListener("mousemove", mousemove);
-    window.removeEventListener("mouseup", mouseup);
-    console.log("mouseup!");
-  }
-};
-const resizeTop = (e) => {
-  let prevHeight = selectToi.selectedBoxData.height;
-  let prevHeight2 = selectToi.selectedBoxData.Y;
-
-  let prevY = e.clientY;
-
-  isResizing = true;
-
-  window.addEventListener("mousemove", mousemove);
-  window.addEventListener("mouseup", mouseup);
-
-  function mousemove(e) {
-    selectToi.selectedBoxData.height = prevHeight + (prevY - e.clientY);
-    selectToi.selectedBoxData.Y = prevHeight2 + (e.clientY - prevY);
-  }
-
-  function mouseup() {
-    isResizing = false;
-    window.removeEventListener("mousemove", mousemove);
-    window.removeEventListener("mouseup", mouseup);
-    console.log("mouseup!");
-  }
-};
-const resizeBottom = (e) => {
-  let prevHeight = selectToi.selectedBoxData.height;
-
-  let prevY = e.clientY;
-
-  isResizing = true;
-
-  window.addEventListener("mousemove", mousemove);
-  window.addEventListener("mouseup", mouseup);
-
-  function mousemove(e) {
-    selectToi.selectedBoxData.height = prevHeight + (e.clientY - prevY);
-  }
-
-  function mouseup() {
-    isResizing = false;
-    window.removeEventListener("mousemove", mousemove);
-    window.removeEventListener("mouseup", mouseup);
-    console.log("mouseup!");
-  }
-
-  //make text editable
-  const editable = false;
-
-  function makeEditable() {
-    this.editable = true;
-  }
 };
 </script>
 

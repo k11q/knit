@@ -327,9 +327,6 @@ export const useCounterStore = defineStore({
         }
       });
     },
-    changeFlexDirection(value) {
-      this.selectedBoxData.flexDirection = value;
-    },
     changeAlign(value) {
       this.selectedBoxData.align = value;
       console.log("changed align! to " + value);
