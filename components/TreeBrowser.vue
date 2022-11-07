@@ -8,9 +8,12 @@
         'bg-blue-200 border-blue-200 hover:border-blue-200':
           selectToi.selectedBox === node.id,
         'opacity-30': selectToi.dragDisplay === node.id,
-        'hover:border-blue-700': !treeDnd.isDragging,
+        'hover:border-blue-700':
+          !treeDnd.isDragging && selectToi.selectedBox !== node.id,
         'border-blue-700':
-          treeDnd.currDropPosition === 'middle' && treeDnd.currDrop === node.id,
+          treeDnd.currDropPosition === 'middle' &&
+          treeDnd.currDrop === node.id &&
+          selectToi.selectedBox !== node.id,
       }"
       @mouseover.stop.prevent="treeDnd.checkDroppable($event, node)"
       @mousedown="dragAndDrop($event, node.id)"

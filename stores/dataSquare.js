@@ -16,7 +16,7 @@ export const useSquareStore = defineStore({
     draggingPointer: false,
     offsetLeft: 0,
     offsetTop: 0,
-    
+
     //zoom n gesture
     rotation: 0,
     gestureStartRotation: 0,
@@ -30,7 +30,7 @@ export const useSquareStore = defineStore({
     dataFrame: {
       id: "rectangle" + Math.random() * 100,
       type: "frame",
-      bgColor: "red",
+      bgColor: "white",
       height: 100,
       width: 100,
       unit: "px",
@@ -38,7 +38,7 @@ export const useSquareStore = defineStore({
       Yunit: "px",
       position: "absolute",
       flexDirection: "row",
-      parent: '',
+      parent: "",
       children: [],
     },
     dataText: {
@@ -46,18 +46,18 @@ export const useSquareStore = defineStore({
       type: "text",
       textContent: "Text here",
       fontSize: 14,
-      color: "red",
+      color: "white",
       unit: "px",
       Xunit: "px",
       Yunit: "px",
       position: "absolute",
-      parent: '',
+      parent: "",
       children: [],
     },
     dataSquare: {
       id: "rectangle" + Math.random() * 100,
       type: "box",
-      bgColor: "red",
+      bgColor: "white",
       height: 100,
       width: 100,
       unit: "px",
@@ -65,22 +65,25 @@ export const useSquareStore = defineStore({
       Yunit: "px",
       position: "absolute",
       flexDirection: "row",
-      parent: '',
+      parent: "",
       children: [],
     },
   }),
   getters: {
-    getPosition(state){ return `transform: translate(${state.offsetLeft}px, ${state.offsetTop}px)` },
-    render(){ return `translate3D(${posX}px, ${posY}px, 0px) rotate(${rotation}deg) scale(${scale})` }
-
+    getPosition(state) {
+      return `transform: translate(${state.offsetLeft}px, ${state.offsetTop}px)`;
+    },
+    render() {
+      return `translate3D(${posX}px, ${posY}px, 0px) rotate(${rotation}deg) scale(${scale})`;
+    },
   },
   actions: {
     addSquare(event, dataPushed) {
       const counter = useCounterStore();
       const canvasFF = useCanvasFF();
       const squareStore = useSquareStore();
-      const middlePointLeft = this.offsetLeft + vw(50)
-      const middlePointTop = this.offsetTop + vh(50)
+      const middlePointLeft = this.offsetLeft + vw(50);
+      const middlePointTop = this.offsetTop + vh(50);
 
       function vh(percent) {
         var h = Math.max(
@@ -101,7 +104,6 @@ export const useSquareStore = defineStore({
         counter.clearSelected();
       }
       if (this.dragPointer === true || this.draggingPointer === true) {
-
         window.addEventListener("mousemove", mousemove);
         window.addEventListener("mouseup", mouseup);
 
@@ -110,10 +112,14 @@ export const useSquareStore = defineStore({
 
         let initialOffsetLeft = event.clientX - squareStore.offsetLeft;
         let initialOffsetTop = event.clientY - squareStore.offsetTop;
-        
+
         function mousemove(event) {
-            squareStore.offsetLeft = parseInt(Math.round(event.clientX - initialOffsetLeft));
-          squareStore.offsetTop = parseInt(Math.round(event.clientY - initialOffsetTop));
+          squareStore.offsetLeft = parseInt(
+            Math.round(event.clientX - initialOffsetLeft)
+          );
+          squareStore.offsetTop = parseInt(
+            Math.round(event.clientY - initialOffsetTop)
+          );
 
           console.log("offsetLeft = " + this.offsetLeft);
           console.log("offsetTop = " + this.offsetTop);
@@ -123,14 +129,14 @@ export const useSquareStore = defineStore({
 
         function mouseup(event) {
           squareStore.dragPointer = true;
-            squareStore.draggingPointer = false;
-          console.log("draggingpointer ="+this.draggingPointer)
-          console.log("dragpointer ="+this.dragPointer)
+          squareStore.draggingPointer = false;
+          console.log("draggingpointer =" + this.draggingPointer);
+          console.log("dragpointer =" + this.dragPointer);
 
           window.removeEventListener("mousemove", mousemove);
           window.removeEventListener("mouseup", mouseup);
           event.preventDefault();
-        event.stopPropagation();
+          event.stopPropagation();
         }
       }
 
@@ -167,7 +173,6 @@ export const useSquareStore = defineStore({
         counter.changeSelectedNewlyAdded(event, clonedDataFrame);
         this.countBox = this.countBox + 1;
       }
-
     },
     turnOnAddSquareActivated() {
       this.addSquareActivated = true;
@@ -175,7 +180,7 @@ export const useSquareStore = defineStore({
       this.addFrameActivated = false;
       this.normalPointer = false;
       this.dragPointer = false;
-      this.draggingPointer = false
+      this.draggingPointer = false;
     },
     turnOnAddTextActivated() {
       this.addTextActivated = true;
@@ -183,7 +188,7 @@ export const useSquareStore = defineStore({
       this.addFrameActivated = false;
       this.normalPointer = false;
       this.dragPointer = false;
-      this.draggingPointer = false
+      this.draggingPointer = false;
     },
     turnOnAddFrameActivated() {
       this.addFrameActivated = true;
@@ -191,7 +196,7 @@ export const useSquareStore = defineStore({
       this.addTextActivated = false;
       this.normalPointer = false;
       this.dragPointer = false;
-      this.draggingPointer = false
+      this.draggingPointer = false;
     },
     turnOnNormalPointer() {
       this.addFrameActivated = false;
@@ -199,7 +204,7 @@ export const useSquareStore = defineStore({
       this.addTextActivated = false;
       this.normalPointer = true;
       this.dragPointer = false;
-      this.draggingPointer = false
+      this.draggingPointer = false;
     },
     turnOnDragPointer() {
       this.addFrameActivated = false;
@@ -207,7 +212,7 @@ export const useSquareStore = defineStore({
       this.addTextActivated = false;
       this.normalPointer = false;
       this.dragPointer = true;
-      this.draggingPointer = false
+      this.draggingPointer = false;
     },
   },
 });

@@ -1,23 +1,34 @@
 <template>
   <template v-for="node in nodes" :key="node.id">
+    <!--Frame component-->
     <div
       v-if="typeFrame(node.type)"
       :style="{
         backgroundColor: node.bgColor,
-        height: selectToi.getHeight(node.height, node.unit),
-        width: selectToi.getWidth(node.width, node.unit),
-        left: node.position === 'absolute' ? node.X + node.Xunit : document.querySelector(`[data-id=${selectToi.selectedBoxData.parent}]`).getBoundingClientRect.x,
-        top: node.position === 'absolute' ? node.Y + node.Yunit : document.querySelector(`[data-id=${selectToi.selectedBoxData.parent}]`).getBoundingClientRect.y,
+        height: node.height ? node.height + node.unit : 'auto',
+        width: node.width ? node.width + node.unit : 'auto',
+        left:
+          node.position === 'absolute'
+            ? node.X + node.Xunit
+            : document.querySelector(
+                `[data-id=${selectToi.selectedBoxData.parent}]`
+              ).getBoundingClientRect.x,
+        top:
+          node.position === 'absolute'
+            ? node.Y + node.Yunit
+            : document.querySelector(
+                `[data-id=${selectToi.selectedBoxData.parent}]`
+              ).getBoundingClientRect.y,
         display: 'flex',
         flexDirection: node.flexDirection,
-        justifyContent : selectToi.getJustify(node.justify),
-        alignItems : selectToi.getAlign(node.align),
+        justifyContent: selectToi.getJustify(node.justify),
+        alignItems: selectToi.getAlign(node.align),
         position: node.position,
         color: node.color,
         paddingLeft: node.paddingX + 'px',
         paddingTop: node.paddingY + 'px',
-        paddingRight: node.paddingX  + 'px',
-        paddingBottom: node.paddingY  + 'px',
+        paddingRight: node.paddingX + 'px',
+        paddingBottom: node.paddingY + 'px',
         marginLeft: node.marginLeft + 'px',
         marginTop: node.marginTop + 'px',
         marginRight: node.marginRight + 'px',
@@ -27,9 +38,10 @@
         gap: node.gap + 'px',
         flexGrow: node.flexGrow,
         alignSelf: node.alignSelf,
-        boxShadow: `${node.boxShadowOffsetY}px ${node.boxShadowOffsetX}px ${node.boxShadowBlurRadius}px ${node.boxShadowSpreadRadius}px ${node.boxShadowColor}`
+        boxShadow: `${node.boxShadowOffsetY}px ${node.boxShadowOffsetX}px ${node.boxShadowBlurRadius}px ${node.boxShadowSpreadRadius}px ${node.boxShadowColor}`,
       }"
       :data-id="node.id"
+      data-component="Frame"
       @pointerdown.stop="testDown($event, node.id)"
       @mouseover="canvasDnd.checkDroppable($event, node)"
       @mousedown="selectToi.changeSelected($event, node.id)"
@@ -41,7 +53,7 @@
           selectToi.selectedBox === node.id && canvasFF.isDragging == true,
       }"
     >
-    <p
+      <p
         @mousedown="selectToi.changeSelected($event, node.id)"
         class="absolute bottom-full left-0 mb-0.5 hover:text-blue-600"
         :class="{
@@ -50,30 +62,31 @@
       >
         {{ node.id }}
       </p>
-    <UIBrowser
-          v-if="node.children"
-          :key="node.id"
-          :nodes="node.children"
-          :depth="depth + 1"
-        />
+      <UIBrowser
+        v-if="node.children"
+        :key="node.id"
+        :nodes="node.children"
+        :depth="depth + 1"
+      />
     </div>
+    <!--Box component-->
     <div
       v-if="node.type === 'box'"
       :style="{
         backgroundColor: node.bgColor,
-        height: selectToi.getHeight(node.height, node.unit),
-        width: selectToi.getWidth(node.width, node.unit),
+        height: node.height ? node.height + node.unit : 'auto',
+        width: node.width ? node.width + node.unit : 'auto',
         left: node.X + node.Xunit,
         top: node.Y + node.Yunit,
         position: node.position,
         display: 'flex',
         flexDirection: node.flexDirection,
-        justifyContent : selectToi.getJustify(node.justify),
+        justifyContent: selectToi.getJustify(node.justify),
         color: node.color,
         paddingLeft: node.paddingX + 'px',
         paddingTop: node.paddingY + 'px',
-        paddingRight: node.paddingX  + 'px',
-        paddingBottom: node.paddingY  + 'px',
+        paddingRight: node.paddingX + 'px',
+        paddingBottom: node.paddingY + 'px',
         marginLeft: node.marginLeft + 'px',
         marginTop: node.marginTop + 'px',
         marginRight: node.marginRight + 'px',
@@ -86,6 +99,7 @@
         boxShadow: `${node.boxShadowOffsetY}px ${node.boxShadowOffsetX}px ${node.boxShadowBlurRadius}px ${node.boxShadowSpreadRadius}px ${node.boxShadowColor}`,
       }"
       :data-id="node.id"
+      data-component="Box"
       @pointerdown.stop="testDown($event, node.id)"
       @mouseover.stop.prevent="canvasDnd.checkDroppable($event, node)"
       @mousedown="selectToi.changeSelected($event, node.id)"
@@ -98,41 +112,36 @@
       }"
     >
       <UIBrowser
-          v-if="node.children"
-          :key="node.id"
-          :nodes="node.children"
-          :depth="depth + 1"
-        />
+        v-if="node.children"
+        :key="node.id"
+        :nodes="node.children"
+        :depth="depth + 1"
+      />
     </div>
-    <div
+    <!--Text component-->
+    <p
       v-if="typeText(node.type)"
       class="text-center focus:outline-none hover:decoration-blue-600 hover:underline hover:decoration-2"
-      @pointerdown.stop="testDown($event, node.id)"
-      @mousedown="selectToi.changeSelected($event, node.id)"
+      @click.stop.prevent="makeEditable"
+      contenteditable
       style="position: absolute"
       :style="{
-        height: selectToi.getHeight(node.height, node.unit),
-        width: selectToi.getWidth(node.width, node.unit),
+        height: full,
+        width: full,
         left: node.X + node.Xunit,
         top: node.Y + node.Yunit,
         fontSize: node.fontSize + node.fontUnit,
-        position: node.position,
-        display: 'flex',
         color: node.color,
       }"
       :data-id="node.id"
+      data-component="Text"
       :class="{
         'decoration-blue-600 underline decoration-1 ':
           selectToi.selectedBox === node.id,
-        'pointer-events-none':
-          selectToi.selectedBox === node.id && canvasFF.isDragging == true,
       }"
-      @click="makeEditable"
-      :contenteditable="editable"
     >
       {{ node.textContent }}
-      
-    </div>
+    </p>
   </template>
 </template>
 
@@ -146,6 +155,11 @@ const selectToi = useCounterStore();
 const canvasDnd = useCanvasDndStore();
 const canvasFF = useCanvasFF();
 const squareStore = useSquareStore();
+let editable = ref(false);
+
+const makeEditable = () => {
+  editable.value = true;
+};
 
 const typeFrame = (type) => {
   if (type === "frame") {
@@ -160,104 +174,116 @@ const typeText = (type) => {
 };
 
 const testDown = (e, currDrag) => {
-
   if (!squareStore.dragPointer && !squareStore.draggingPointer) {
+    let prevX = e.layerX;
+    let prevY = e.layerY;
 
-  let prevX = e.layerX;
-  let prevY = e.layerY;
+    console.log("prevX = " + prevX);
+    console.log("prevY = " + prevY);
 
-  console.log('prevX = '+prevX)
-  console.log('prevY = '+prevY)
+    let prevOffsetLeft = e.clientX - e.target.getBoundingClientRect().x;
+    let prevOffsetTop = e.clientY - e.target.getBoundingClientRect().y;
 
-  let prevOffsetLeft = e.clientX - e.target.getBoundingClientRect().x
-  let prevOffsetTop = e.clientY - e.target.getBoundingClientRect().y
+    canvasFF.isDragging = true;
+    canvasDnd.isDragging = true;
+    canvasDnd.currDrag = currDrag;
+    let isDragging = false;
 
-  canvasFF.isDragging = true;
-  canvasDnd.isDragging = true;
-  canvasDnd.currDrag = currDrag;
-  let isDragging = false;
+    console.log("mousedown");
 
-  console.log("mousedown");
+    console.log("currDrop = " + canvasDnd.currDrop);
+    console.log("currDrag = " + canvasDnd.currDrag);
 
-  console.log("currDrop = " + canvasDnd.currDrop);
-  console.log("currDrag = " + canvasDnd.currDrag);
-
-  //delete selected item
-  document.addEventListener('keyup', event => {
-  if (event.key == 'Backspace' || event.key == 'Delete' && selectToi.selectedBox) {
-    canvasDnd.dndRemove(selectToi.data);
-    selectToi.clearSelected();
-  }})
-
-  if(!selectToi.selectedBox) {
-    document.removeEventListener('keyup', event => {
-  if (event.key == 'Backspace' || event.key == 'Delete' && selectToi.selectedBox) {
-    canvasDnd.dndRemove(selectToi.data);
-    selectToi.clearSelected();
-  }
-  })}
-
-  if (canvasFF.isDragging == true) {
-    window.addEventListener("mousemove", mousemove);
-    window.addEventListener("mouseup", mouseup);
-
-    function mousemove(e) {
-      isDragging = true;
-
-      selectToi.selectedBoxHTMLX = Math.round(e.clientX - prevX);
-      selectToi.selectedBoxHTMLY = Math.round(e.clientY - prevY);
-
-      if(selectToi.selectedBoxData.parent){
-        let dropzone = document.querySelector(`[data-id=${selectToi.selectedBoxData.parent}]`)
-          let dropzonerect = dropzone.getBoundingClientRect()
-          let dropzoneLeft = dropzonerect.x
-          let dropzoneTop = dropzonerect.y
-
-        selectToi.selectedBoxData.X = Math.round(e.clientX - dropzoneLeft - prevOffsetLeft);
-        selectToi.selectedBoxData.Y = Math.round(e.clientY  - dropzoneTop  - prevOffsetTop);
-      } else {
-      selectToi.selectedBoxData.X = Math.round(e.clientX - prevX);
-      selectToi.selectedBoxData.Y = Math.round(e.clientY - prevY);
-      
+    //delete selected item
+    document.addEventListener("keyup", (event) => {
+      if (
+        event.key == "Backspace" ||
+        (event.key == "Delete" && selectToi.selectedBox)
+      ) {
+        canvasDnd.dndRemove(selectToi.data);
+        selectToi.clearSelected();
       }
-        
+    });
+
+    if (!selectToi.selectedBox) {
+      document.removeEventListener("keyup", (event) => {
+        if (
+          event.key == "Backspace" ||
+          (event.key == "Delete" && selectToi.selectedBox)
+        ) {
+          canvasDnd.dndRemove(selectToi.data);
+          selectToi.clearSelected();
+        }
+      });
+    }
+
+    if (canvasFF.isDragging == true) {
+      window.addEventListener("mousemove", mousemove);
+      window.addEventListener("mouseup", mouseup);
+
+      function mousemove(e) {
+        isDragging = true;
+
+        selectToi.selectedBoxHTMLX = Math.round(e.clientX - prevX);
+        selectToi.selectedBoxHTMLY = Math.round(e.clientY - prevY);
+
+        if (selectToi.selectedBoxData.parent) {
+          let dropzone = document.querySelector(
+            `[data-id=${selectToi.selectedBoxData.parent}]`
+          );
+          let dropzonerect = dropzone.getBoundingClientRect();
+          let dropzoneLeft = dropzonerect.x;
+          let dropzoneTop = dropzonerect.y;
+
+          selectToi.selectedBoxData.X = Math.round(
+            e.clientX - dropzoneLeft - prevOffsetLeft
+          );
+          selectToi.selectedBoxData.Y = Math.round(
+            e.clientY - dropzoneTop - prevOffsetTop
+          );
+        } else {
+          selectToi.selectedBoxData.X = Math.round(e.clientX - prevX);
+          selectToi.selectedBoxData.Y = Math.round(e.clientY - prevY);
+        }
+
         //sort childrens by dragging
         if (canvasDnd.isDroppable && canvasDnd.currDrop) {
-         canvasDnd.currDropHTML=e.target
+          canvasDnd.currDropHTML = e.target;
 
-          let dropzoneChildren = [...canvasDnd.currDropHTML.children]
-          
-          console.log('dropzoneChildren = '+dropzoneChildren)
+          let dropzoneChildren = [...canvasDnd.currDropHTML.children];
+
+          console.log("dropzoneChildren = " + dropzoneChildren);
 
           function getDragAfter(y) {
             return dropzoneChildren.reduce(
               (closest, child) => {
                 const box = child.getBoundingClientRect();
-                console.log("box = "+box);
-                console.log("child id = "+child.dataset.id);
+                console.log("box = " + box);
+                console.log("child id = " + child.dataset.id);
                 canvasDnd.spareDragzone = child.dataset.id;
                 const offset = y - child.offsetTop - child.offsetHeight / 2;
-                console.log("child offsettop = "+child.offsetTop);
+                console.log("child offsettop = " + child.offsetTop);
                 if (child.dataset.id !== currDrag) {
-                if (offset <= 0 && offset > closest.offset) {
-                  console.log('child id = '+child.dataset.id)
-                  return { offset: offset, elementID: child.dataset.id }
-                } else {
-                  console.log('closest = '+closest)
-                  return closest;
+                  if (offset <= 0 && offset > closest.offset) {
+                    console.log("child id = " + child.dataset.id);
+                    return { offset: offset, elementID: child.dataset.id };
+                  } else {
+                    console.log("closest = " + closest);
+                    return closest;
+                  }
                 }
-              }},
+              },
               { offset: Number.NEGATIVE_INFINITY }
             ).elementID;
           }
 
           let y = canvasDnd.clientY;
 
-          let dragZone = getDragAfter(e.clientY)
+          let dragZone = getDragAfter(e.clientY);
 
-            if (dragZone == undefined) {
-              dragZone = canvasDnd.spareDragzone
-            }
+          if (dragZone == undefined) {
+            dragZone = canvasDnd.spareDragzone;
+          }
 
           canvasDnd.setCurrDragValue(selectToi.data, canvasDnd.currDrag);
           canvasDnd.dndRemove(selectToi.data);
@@ -265,29 +291,27 @@ const testDown = (e, currDrag) => {
           canvasDnd.currDragValue.parent = canvasDnd.currDrop;
 
           canvasDnd.dndAppend(selectToi.data, dragZone);
-        } else if (!canvasDnd.isDroppable && canvasDnd.currDrop){
-          canvasDnd.currDragValue.parent = ''
-        canvasDnd.appendToCanvas()
+        } else if (!canvasDnd.isDroppable && canvasDnd.currDrop) {
+          canvasDnd.currDragValue.parent = "";
+          canvasDnd.appendToCanvas();
+        }
+        canvasDnd.checkDroppable();
       }
-      canvasDnd.checkDroppable();
-    }
 
-    function mouseup() {
+      function mouseup() {
+        isDragging = false;
 
-      isDragging = false;
+        window.removeEventListener("mousemove", mousemove);
+        window.removeEventListener("mouseup", mouseup);
 
-      window.removeEventListener("mousemove", mousemove);
-      window.removeEventListener("mouseup", mouseup);
-
-      canvasFF.isDragging = false;
+        canvasFF.isDragging = false;
+      }
     }
   }
-}
 };
 </script>
 
 <script>
-
 export default {
   name: "UIBrowser",
   props: {

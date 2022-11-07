@@ -196,18 +196,42 @@
         class="border-r w-60 flex flex-col flex-none overflow-scroll z-10 bg-white"
       >
         <div class="h-10 border-b flex-none flex flex-row items-center px-2">
-          <div class="px-2 h-full items-center flex flex-row cursor-pointer" :class="{'font-medium text-black':leftPanelStore.activeTab ==='layers', 'text-neutral-400':leftPanelStore.activeTab !=='layers'}"  @click="leftPanelStore.activeTab ='layers'">
+          <div
+            class="px-2 h-full items-center flex flex-row cursor-pointer"
+            :class="{
+              'font-medium text-black': leftPanelStore.activeTab === 'layers',
+              'text-neutral-400': leftPanelStore.activeTab !== 'layers',
+            }"
+            @click="leftPanelStore.activeTab = 'layers'"
+          >
             <span>Layers</span>
           </div>
-          <div class="px-2 h-full items-center flex flex-row cursor-pointer" :class="{'font-medium text-black':leftPanelStore.activeTab ==='data', 'text-neutral-400':leftPanelStore.activeTab !=='data'}"  @click="leftPanelStore.activeTab ='data'">
+          <div
+            class="px-2 h-full items-center flex flex-row cursor-pointer"
+            :class="{
+              'font-medium text-black': leftPanelStore.activeTab === 'data',
+              'text-neutral-400': leftPanelStore.activeTab !== 'data',
+            }"
+            @click="leftPanelStore.activeTab = 'data'"
+          >
             <span>Data</span>
           </div>
-          <div class="px-2 h-full items-center flex flex-row cursor-pointer" :class="{'font-medium text-black':leftPanelStore.activeTab ==='assets', 'text-neutral-400':leftPanelStore.activeTab !=='assets'}"  @click="leftPanelStore.activeTab ='assets'">
+          <div
+            class="px-2 h-full items-center flex flex-row cursor-pointer"
+            :class="{
+              'font-medium text-black': leftPanelStore.activeTab === 'assets',
+              'text-neutral-400': leftPanelStore.activeTab !== 'assets',
+            }"
+            @click="leftPanelStore.activeTab = 'assets'"
+          >
             <span>Assets</span>
           </div>
         </div>
         <!--layers tab content -->
-        <div class="flex flex-col w-full overflow-visible h-fit" v-show="leftPanelStore.activeTab ==='layers'">
+        <div
+          class="flex flex-col w-full overflow-visible h-fit"
+          v-show="leftPanelStore.activeTab === 'layers'"
+        >
           <TreeBrowser :nodes="selectToi.data" />
         </div>
       </div>
@@ -247,19 +271,32 @@
                 :style="{
                   left: selectToi.selectedBoxHTMLX + 'px',
                   top: selectToi.selectedBoxHTMLY + 'px',
-                  height: selectToi.selectedBoxHTMLHeight + 'px',
-                  width: selectToi.selectedBoxHTMLWidth + 'px',
+                  height: selectToi.selectedBoxData.height
+                    ? selectToi.selectedBoxData.height + 'px'
+                    : 'auto',
+                  width: selectToi.selectedBoxData.width
+                    ? selectToi.selectedBoxData.width + 'px'
+                    : 'auto',
                 }"
               >
                 <div class="pointer-events-auto">
                   <p
-                    class="absolute left-0 right-0 top-full mt-2 flex flex-row justify-center"
+                    class="absolute left-0 right-0 top-full mt-2 flex flex-row justify-center flex-nowrap"
                   >
                     <span
-                      class="bg-blue-600 text-white cursor-default px-1 py-0.5 rounded text-[11px]"
+                      class="bg-blue-600 text-white cursor-default px-1 py-0.5 rounded text-[11px] flex-nowrap flex"
                     >
-                      {{ selectToi.selectedBoxHTMLWidth }} x
-                      {{ selectToi.selectedBoxHTMLHeight }}
+                      {{
+                        selectToi.selectedBoxData.width
+                          ? selectToi.selectedBoxData.width
+                          : "Fill"
+                      }}
+                      x
+                      {{
+                        selectToi.selectedBoxData.height
+                          ? selectToi.selectedBoxData.height
+                          : "Fill"
+                      }}
                     </span>
                   </p>
                   <div
@@ -308,18 +345,42 @@
         <div
           class="h-10 flex-none flex flex-row items-center px-2 sticky top-0 bg-white"
         >
-          <div class="px-2 h-full items-center flex flex-row cursor-pointer" :class="{'font-medium text-black':rightPanelStore.activeTab ==='style', 'text-neutral-400':rightPanelStore.activeTab !=='style'}"  @click="rightPanelStore.activeTab ='style'">
+          <div
+            class="px-2 h-full items-center flex flex-row cursor-pointer"
+            :class="{
+              'font-medium text-black': rightPanelStore.activeTab === 'style',
+              'text-neutral-400': rightPanelStore.activeTab !== 'style',
+            }"
+            @click="rightPanelStore.activeTab = 'style'"
+          >
             <span>Style</span>
           </div>
-          <div class="px-2 h-full items-center flex flex-row cursor-pointer" :class="{'font-medium text-black':rightPanelStore.activeTab ==='props', 'text-neutral-400':rightPanelStore.activeTab !=='props'}" @click="rightPanelStore.activeTab ='props'">
+          <div
+            class="px-2 h-full items-center flex flex-row cursor-pointer"
+            :class="{
+              'font-medium text-black': rightPanelStore.activeTab === 'props',
+              'text-neutral-400': rightPanelStore.activeTab !== 'props',
+            }"
+            @click="rightPanelStore.activeTab = 'props'"
+          >
             <span>Props</span>
           </div>
-          <div class="px-2 h-full items-center flex flex-row cursor-pointer" :class="{'font-medium text-black':rightPanelStore.activeTab ==='action', 'text-neutral-400':rightPanelStore.activeTab !=='action'}" @click="rightPanelStore.activeTab ='action'">
+          <div
+            class="px-2 h-full items-center flex flex-row cursor-pointer"
+            :class="{
+              'font-medium text-black': rightPanelStore.activeTab === 'action',
+              'text-neutral-400': rightPanelStore.activeTab !== 'action',
+            }"
+            @click="rightPanelStore.activeTab = 'action'"
+          >
             <span>Action</span>
           </div>
         </div>
         <!--style tab content-->
-        <div v-show="rightPanelStore.activeTab ==='style'" class="flex flex-col">
+        <div
+          v-show="rightPanelStore.activeTab === 'style'"
+          class="flex flex-col"
+        >
           <!--Alignment text props-->
           <div
             v-show="selectToi.selectedBox"
@@ -592,7 +653,9 @@
           >
             <p class="font-medium">Dimensions</p>
             <div class="flex flex-row">
-              <div class="flex flex-row gap-0.5 justify-start items-center w-1/2">
+              <div
+                class="flex flex-row gap-0.5 justify-start items-center w-1/2"
+              >
                 <div class="h-full aspect-square items-center flex flex-none">
                   <p class="text-neutral-400 text-center w-full">X</p>
                 </div>
@@ -603,7 +666,9 @@
                   class="w-2/3 px-2"
                 />
               </div>
-              <div class="flex flex-row gap-0.5 justify-start items-center w-1/2">
+              <div
+                class="flex flex-row gap-0.5 justify-start items-center w-1/2"
+              >
                 <div class="h-full aspect-square items-center flex flex-none">
                   <p class="text-neutral-400 text-center w-full">Y</p>
                 </div>
@@ -709,38 +774,122 @@
               <div class="aspect-square h-full"></div>
             </div>
             <div class="flex flex-row">
-              <div class="flex flex-row gap-0.5 justify-start items-center w-1/2">
+              <div
+                class="flex flex-row gap-0.5 justify-start items-center w-1/2"
+              >
                 <div
-                  class="h-5 w-5 aspect-square items-center flex flex-none justify-center  text-neutral-400"
+                  class="h-5 w-5 aspect-square items-center flex flex-none justify-center"
                   @click="selectToi.selectedBoxData.flexGrow = 0"
-                  :class="{'text-black': selectToi.selectedBoxData.flexGrow === 0}"
+                  :class="{
+                    'text-black': selectToi.selectedBoxData.flexGrow === 0,
+                    'text-neutral-400':
+                      selectToi.selectedBoxData.flexGrow !== 0,
+                  }"
                 >
-                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m20 17-5-5 5-5"></path><path d="m4 17 5-5-5-5"></path></svg>
-                              </div>
-                              <div
-                  class="h-5 w-5 aspect-square items-center flex flex-none justify-center text-neutral-400"
-                  @click="selectToi.selectedBoxData.flexGrow = 1"
-                  :class="{'text-black': selectToi.selectedBoxData.flexGrow === 1}"
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="17"
+                    height="17"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="m20 17-5-5 5-5"></path>
+                    <path d="m4 17 5-5-5-5"></path>
+                  </svg>
+                </div>
+                <div
+                  class="h-5 w-5 aspect-square items-center flex flex-none justify-center"
+                  @click="
+                    () => {
+                      selectToi.selectedBoxData.flexGrow = 1;
+                      delete selectToi.selectedBoxData.width;
+                    }
+                  "
+                  :class="{
+                    'text-black': selectToi.selectedBoxData.flexGrow === 1,
+                    'text-neutral-400':
+                      selectToi.selectedBoxData.flexGrow !== 1,
+                  }"
                 >
-                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 7-5 5 5 5"></path><path d="m15 7 5 5-5 5"></path></svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="17"
+                    height="17"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="m9 7-5 5 5 5"></path>
+                    <path d="m15 7 5 5-5 5"></path>
+                  </svg>
                 </div>
               </div>
-              <div class="flex flex-row gap-0.5 justify-start items-center w-1/2">
+              <div
+                class="flex flex-row gap-0.5 justify-start items-center w-1/2"
+              >
                 <div
-                  class="h-5 w-5 aspect-square items-center flex flex-none justify-center text-neutral-400"
+                  class="h-5 w-5 aspect-square items-center flex flex-none justify-center"
                   @click="selectToi.selectedBoxData.alignSelf = 'auto'"
-                  :class="{'text-black': selectToi.selectedBoxData.alignSelf === 'auto'}"
+                  :class="{
+                    'text-black':
+                      selectToi.selectedBoxData.alignSelf === 'auto',
+                    'text-neutral-400':
+                      selectToi.selectedBoxData.alignSelf !== 'auto',
+                  }"
                 >
-                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m7 20 5-5 5 5"></path><path d="m7 4 5 5 5-5"></path></svg>
-                                            </div>
-                              <div
-                  class="h-5 w-5 aspect-square items-center flex flex-none justify-center text-neutral-400"
-                  @click="selectToi.selectedBoxData.alignSelf = 'stretch'"
-                  :class="{'text-black': selectToi.selectedBoxData.alignSelf === 'stretch'}"
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="17"
+                    height="17"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="m7 20 5-5 5 5"></path>
+                    <path d="m7 4 5 5 5-5"></path>
+                  </svg>
+                </div>
+                <div
+                  class="h-5 w-5 aspect-square items-center flex flex-none justify-cente"
+                  @click="
+                    () => {
+                      selectToi.selectedBoxData.alignSelf = 'stretch';
+                      delete selectToi.selectedBoxData.height;
+                    }
+                  "
+                  :class="{
+                    'text-black':
+                      selectToi.selectedBoxData.alignSelf === 'stretch',
+                    'text-neutral-400':
+                      selectToi.selectedBoxData.alignSelf !== 'stretch',
+                  }"
                 >
-                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m7 15 5 5 5-5"></path><path d="m7 9 5-5 5 5"></path></svg>
-                            </div>
-                          </div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="17"
+                    height="17"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="m7 15 5 5 5-5"></path>
+                    <path d="m7 9 5-5 5 5"></path>
+                  </svg>
+                </div>
+              </div>
 
               <div class="aspect-square h-full"></div>
             </div>
@@ -861,7 +1010,7 @@
                     :class="{
                       'text-black':
                         selectToi.selectedBoxData.flexDirection === 'column',
-                        'text-neutral-400':
+                      'text-neutral-400':
                         selectToi.selectedBoxData.flexDirection === 'row',
                     }"
                   >
@@ -887,7 +1036,7 @@
                     :class="{
                       'text-black':
                         selectToi.selectedBoxData.flexDirection === 'row',
-                        'text-neutral-400':
+                      'text-neutral-400':
                         selectToi.selectedBoxData.flexDirection === 'column',
                     }"
                   >
@@ -911,12 +1060,35 @@
                   <div
                     class="aspect-square items-center flex flex-col justify-center flex-none text-neutral-400 h-[18px]"
                   >
-                  <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M13 13V12C13 11.4477 12.5535 11 12.0012 11C8.82491 11 4.82642 11 2.99668 11C2.44439 11 2 11.4477 2 12V13" stroke="currentColor" stroke-width="0.9375" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M13 2V3C13 3.55228 12.5523 4 12 4H3C2.44771 4 2 3.55228 2 3V2" stroke="currentColor" stroke-width="0.9375" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M11 7.5L4 7.5" stroke="currentColor" stroke-width="0.9375" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-
+                    <svg
+                      width="15"
+                      height="15"
+                      viewBox="0 0 15 15"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M13 13V12C13 11.4477 12.5535 11 12.0012 11C8.82491 11 4.82642 11 2.99668 11C2.44439 11 2 11.4477 2 12V13"
+                        stroke="currentColor"
+                        stroke-width="0.9375"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M13 2V3C13 3.55228 12.5523 4 12 4H3C2.44771 4 2 3.55228 2 3V2"
+                        stroke="currentColor"
+                        stroke-width="0.9375"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M11 7.5L4 7.5"
+                        stroke="currentColor"
+                        stroke-width="0.9375"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
                   </div>
 
                   <div
@@ -1714,9 +1886,9 @@
                 <div class="flex flex-row gap-0.5 justify-between w-full px-0">
                   <select class="w-full -ml-1" selected="inside">
                     <option value="inside">Inside</option>
-      <option value="center">Center</option>
-      <option value="outside">Outside</option>
-    </select>
+                    <option value="center">Center</option>
+                    <option value="outside">Outside</option>
+                  </select>
                   <div class="flex flex-row w-1/2 flex-none px-2">
                     <div
                       class="h-full aspect-square items-center flex flex-none text-neutral-400"
@@ -2159,12 +2331,12 @@
             <div class="flex flex-row justify-between">
               <p class="font-medium">Effects</p>
               <div
-              v-if="
-                !selectToi.selectedBoxData.boxShadowOffsetY &&
-                !selectToi.selectedBoxData.boxShadowOffsetX &&
-                !selectToi.selectedBoxData.boxShadowBlurRadius &&
-                !selectToi.selectedBoxData.boxShadowSpreadRadius
-              "
+                v-if="
+                  !selectToi.selectedBoxData.boxShadowOffsetY &&
+                  !selectToi.selectedBoxData.boxShadowOffsetX &&
+                  !selectToi.selectedBoxData.boxShadowBlurRadius &&
+                  !selectToi.selectedBoxData.boxShadowSpreadRadius
+                "
                 class="aspect-square h-full flex flex-col justify-center items-center"
                 @click="
                   () => {
@@ -2209,17 +2381,39 @@
                   <div
                     class="h-full aspect-square items-center flex justify-center"
                   >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
-                </div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="17"
+                      height="17"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="4"></circle>
+                      <path d="M12 2v2"></path>
+                      <path d="M12 20v2"></path>
+                      <path d="m4.93 4.93 1.41 1.41"></path>
+                      <path d="m17.66 17.66 1.41 1.41"></path>
+                      <path d="M2 12h2"></path>
+                      <path d="M20 12h2"></path>
+                      <path d="m6.34 17.66-1.41 1.41"></path>
+                      <path d="m19.07 4.93-1.41 1.41"></path>
+                    </svg>
+                  </div>
                   <select name="category" selected="drop shadow" class="w-full">
-      <option value="drop shadow">Drop shadow</option>
-      <option value="inner shadow">Inner Shadow</option>
-      <option value="outer glow">Outer glow</option>
-      <option value="inner glow">Inner glow</option>
-    </select>
+                    <option value="drop shadow">Drop shadow</option>
+                    <option value="inner shadow">Inner Shadow</option>
+                    <option value="outer glow">Outer glow</option>
+                    <option value="inner glow">Inner glow</option>
+                  </select>
                 </div>
                 <div class="flex flex-row gap-2 flex-none justify-end w-1/4">
-                  <div class="aspect-square h-full flex items-center justify-center">
+                  <div
+                    class="aspect-square h-full flex items-center justify-center"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="14"
@@ -2243,11 +2437,11 @@
                     @click="
                       () => {
                         selectToi.selectedBoxData.boxShadowOffsetY = 0;
-                    selectToi.selectedBoxData.boxShadowOffsetX = 0;
-                    selectToi.selectedBoxData.boxShadowBlurRadius = 0;
-                    selectToi.selectedBoxData.boxShadowSpreadRadius = 0;
-                    selectToi.selectedBoxData.boxShadowColor = '';
-                    rightPanelStore.toggleShadow = false;
+                        selectToi.selectedBoxData.boxShadowOffsetX = 0;
+                        selectToi.selectedBoxData.boxShadowBlurRadius = 0;
+                        selectToi.selectedBoxData.boxShadowSpreadRadius = 0;
+                        selectToi.selectedBoxData.boxShadowColor = '';
+                        rightPanelStore.toggleShadow = false;
                       }
                     "
                   >
@@ -2271,8 +2465,10 @@
           </div>
         </div>
         <!--props tab content-->
-        <div v-show="rightPanelStore.activeTab ==='props'" class="flex flex-col">
-         
+        <div
+          v-show="rightPanelStore.activeTab === 'props'"
+          class="flex flex-col"
+        >
           <!-- Stroke section! -->
           <div
             v-show="
@@ -2475,216 +2671,216 @@
             </div>
           </div>
           <pre>
-            {{selectToi.selectedBoxData}}
+            {{ selectToi.selectedBoxData }}
           </pre>
-          
         </div>
         <!--action tab content-->
-        <div v-show="rightPanelStore.activeTab ==='action'" class="flex flex-col">
-         
-         <!-- Stroke section! -->
-         <div
-           v-show="
-             selectToi.selectedBoxData.type !== 'text' && selectToi.selectedBox
-           "
-           class="flex flex-col gap-4 border-y py-4 px-4 border-gray-200"
-         >
-           <div class="flex flex-row justify-between">
-             <p class="font-medium">Stroke</p>
-             <div
-               v-if="
-                 !rightPanelStore.toggleStroke ||
-                 !selectToi.selectedBoxData.strokeSize ||
-                 !selectToi.selectedBoxData.strokeColor
-               "
-               class="aspect-square h-full flex flex-col justify-center items-center"
-               @click="
-                 () => {
-                   selectToi.selectedBoxData.strokeColor = 'black';
-                   selectToi.selectedBoxData.strokeSize = 1;
-                   rightPanelStore.toggleStroke = true;
-                 }
-               "
-             >
-               <svg
-                 xmlns="http://www.w3.org/2000/svg"
-                 width="14"
-                 height="14"
-                 viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="1.5"
-                 stroke-linecap="round"
-                 stroke-linejoin="round"
-               >
-                 <line x1="12" y1="5" x2="12" y2="19"></line>
-                 <line x1="5" y1="12" x2="19" y2="12"></line>
-               </svg>
-             </div>
-           </div>
-           <div
-             v-if="
-               rightPanelStore.toggleStroke &&
-               selectToi.selectedBoxData.strokeSize &&
-               selectToi.selectedBoxData.strokeColor
-             "
-             class="flex flex-col gap-4"
-           >
-             <div class="flex flex-row gap-3 flex-none justify-between w-full">
-               <div
-                 class="flex flex-row gap-0.5 justify-start items-center w-2/3"
-               >
-                 <div
-                   class="h-full aspect-square items-center flex flex-none"
-                   :style="{
-                     'background-color': selectToi.selectedBoxData.strokeColor,
-                   }"
-                 ></div>
-                 <input
-                   type="text"
-                   v-model="selectToi.selectedBoxData.strokeColor"
-                   class="w-full px-2"
-                   placeholder="transparent"
-                 />
-                 <input type="text" value="100%" class="w-full px-2" />
-               </div>
-               <div class="flex flex-row gap-2 flex-none justify-end">
-                 <div class="aspect-square h-full">
-                   <svg
-                     xmlns="http://www.w3.org/2000/svg"
-                     width="14"
-                     height="14"
-                     viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     stroke-width="2"
-                     stroke-linecap="round"
-                     stroke-linejoin="round"
-                   >
-                     <path
-                       d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"
-                     ></path>
-                     <circle cx="12" cy="12" r="3"></circle>
-                   </svg>
-                 </div>
+        <div
+          v-show="rightPanelStore.activeTab === 'action'"
+          class="flex flex-col"
+        >
+          <!-- Stroke section! -->
+          <div
+            v-show="
+              selectToi.selectedBoxData.type !== 'text' && selectToi.selectedBox
+            "
+            class="flex flex-col gap-4 border-y py-4 px-4 border-gray-200"
+          >
+            <div class="flex flex-row justify-between">
+              <p class="font-medium">Stroke</p>
+              <div
+                v-if="
+                  !rightPanelStore.toggleStroke ||
+                  !selectToi.selectedBoxData.strokeSize ||
+                  !selectToi.selectedBoxData.strokeColor
+                "
+                class="aspect-square h-full flex flex-col justify-center items-center"
+                @click="
+                  () => {
+                    selectToi.selectedBoxData.strokeColor = 'black';
+                    selectToi.selectedBoxData.strokeSize = 1;
+                    rightPanelStore.toggleStroke = true;
+                  }
+                "
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </div>
+            </div>
+            <div
+              v-if="
+                rightPanelStore.toggleStroke &&
+                selectToi.selectedBoxData.strokeSize &&
+                selectToi.selectedBoxData.strokeColor
+              "
+              class="flex flex-col gap-4"
+            >
+              <div class="flex flex-row gap-3 flex-none justify-between w-full">
+                <div
+                  class="flex flex-row gap-0.5 justify-start items-center w-2/3"
+                >
+                  <div
+                    class="h-full aspect-square items-center flex flex-none"
+                    :style="{
+                      'background-color': selectToi.selectedBoxData.strokeColor,
+                    }"
+                  ></div>
+                  <input
+                    type="text"
+                    v-model="selectToi.selectedBoxData.strokeColor"
+                    class="w-full px-2"
+                    placeholder="transparent"
+                  />
+                  <input type="text" value="100%" class="w-full px-2" />
+                </div>
+                <div class="flex flex-row gap-2 flex-none justify-end">
+                  <div class="aspect-square h-full">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"
+                      ></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                  </div>
 
-                 <div
-                   class="aspect-square h-full flex flex-col items-center justify-center"
-                   @click="
-                     () => {
-                       selectToi.selectedBoxData.strokeColor = '';
-                       selectToi.selectedBoxData.strokeSize = 0;
-                       rightPanelStore.toggleStroke = false;
-                     }
-                   "
-                 >
-                   <svg
-                     xmlns="http://www.w3.org/2000/svg"
-                     width="14"
-                     height="14"
-                     viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     stroke-width="2"
-                     stroke-linecap="round"
-                     stroke-linejoin="round"
-                   >
-                     <line x1="5" y1="12" x2="19" y2="12"></line>
-                   </svg>
-                 </div>
-               </div>
-             </div>
-             <div class="flex flex-row gap-3 flex-none justify-between w-full">
-               <div class="flex flex-row gap-0.5 justify-between w-full">
-                 <input
-                   type="text"
-                   v-model="selectToi.selectedBoxData.strokeType"
-                   class="w-full"
-                 />
-                 <div class="flex flex-row w-1/2 flex-none px-2">
-                   <div
-                     class="h-full aspect-square items-center flex flex-none"
-                   >
-                     <svg
-                       width="14"
-                       height="14"
-                       viewBox="0 0 14 14"
-                       fill="none"
-                       xmlns="http://www.w3.org/2000/svg"
-                     >
-                       <path
-                         d="M12 4H2"
-                         stroke="black"
-                         stroke-width="1.16667"
-                         stroke-linecap="round"
-                         stroke-linejoin="round"
-                       />
-                       <path
-                         d="M10 7H4"
-                         stroke="black"
-                         stroke-width="1.16667"
-                         stroke-linecap="round"
-                         stroke-linejoin="round"
-                       />
-                       <path
-                         d="M9 10H5"
-                         stroke="black"
-                         stroke-width="1.16667"
-                         stroke-linecap="round"
-                         stroke-linejoin="round"
-                       />
-                     </svg>
-                   </div>
-                   <input
-                     type="number"
-                     v-model="selectToi.selectedBoxData.strokeSize"
-                     class="w-full px-2"
-                     placeholder="0"
-                   />
-                 </div>
-               </div>
-               <div class="flex flex-row gap-2 flex-none justify-end">
-                 <div class="aspect-square h-full">
-                   <svg
-                     width="15"
-                     height="15"
-                     viewBox="0 0 15 15"
-                     fill="none"
-                     xmlns="http://www.w3.org/2000/svg"
-                   >
-                     <path
-                       d="M3.97058 1.76465H11.4706M13.2353 3.97053V11.4705M2.20587 3.97053V11.4705M3.97058 13.2352H11.4706"
-                       stroke="black"
-                       stroke-width="1.5"
-                       stroke-linecap="round"
-                       stroke-linejoin="round"
-                     />
-                   </svg>
-                 </div>
+                  <div
+                    class="aspect-square h-full flex flex-col items-center justify-center"
+                    @click="
+                      () => {
+                        selectToi.selectedBoxData.strokeColor = '';
+                        selectToi.selectedBoxData.strokeSize = 0;
+                        rightPanelStore.toggleStroke = false;
+                      }
+                    "
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-row gap-3 flex-none justify-between w-full">
+                <div class="flex flex-row gap-0.5 justify-between w-full">
+                  <input
+                    type="text"
+                    v-model="selectToi.selectedBoxData.strokeType"
+                    class="w-full"
+                  />
+                  <div class="flex flex-row w-1/2 flex-none px-2">
+                    <div
+                      class="h-full aspect-square items-center flex flex-none"
+                    >
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12 4H2"
+                          stroke="black"
+                          stroke-width="1.16667"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M10 7H4"
+                          stroke="black"
+                          stroke-width="1.16667"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M9 10H5"
+                          stroke="black"
+                          stroke-width="1.16667"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </div>
+                    <input
+                      type="number"
+                      v-model="selectToi.selectedBoxData.strokeSize"
+                      class="w-full px-2"
+                      placeholder="0"
+                    />
+                  </div>
+                </div>
+                <div class="flex flex-row gap-2 flex-none justify-end">
+                  <div class="aspect-square h-full">
+                    <svg
+                      width="15"
+                      height="15"
+                      viewBox="0 0 15 15"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M3.97058 1.76465H11.4706M13.2353 3.97053V11.4705M2.20587 3.97053V11.4705M3.97058 13.2352H11.4706"
+                        stroke="black"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </div>
 
-                 <div class="aspect-square h-full">
-                   <svg
-                     xmlns="http://www.w3.org/2000/svg"
-                     width="17"
-                     height="17"
-                     viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     stroke-width="2"
-                     stroke-linecap="round"
-                     stroke-linejoin="round"
-                   >
-                     <circle cx="12" cy="12" r="1"></circle>
-                     <circle cx="19" cy="12" r="1"></circle>
-                     <circle cx="5" cy="12" r="1"></circle>
-                   </svg>
-                 </div>
-               </div>
-             </div>
-           </div>
-         </div>
-         
-       </div>
+                  <div class="aspect-square h-full">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="17"
+                      height="17"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="1"></circle>
+                      <circle cx="19" cy="12" r="1"></circle>
+                      <circle cx="5" cy="12" r="1"></circle>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -2715,7 +2911,6 @@ const canvasFF = useCanvasFF();
 const resizeStore = useResizeStore();
 const rightPanelStore = useRightPanelStore();
 const leftPanelStore = useLeftPanelStore();
-
 
 /* zoom watching
 onMounted(() => {

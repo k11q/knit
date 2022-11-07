@@ -5,7 +5,6 @@ export const useLeftPanelStore = defineStore({
 
   state: () => ({
     toggleStroke: false,
-    activeTab: 'layers'
-
+    activeTab: "layers",
   }),
-})
+});

@@ -340,42 +340,41 @@ export const useCounterStore = defineStore({
     changeSelected(e, id) {
       const squareStore = useSquareStore();
 
-      if(squareStore.dragPointer || squareStore.draggingPointer) {
-        } else {
+      if (squareStore.dragPointer || squareStore.draggingPointer) {
+      } else {
+        e.preventDefault();
+        e.stopPropagation();
 
-          e.preventDefault();
-          e.stopPropagation();
+        this.prevX = e.layerX;
+        this.prevY = e.layerY;
 
-      this.prevX = e.layerX;
-      this.prevY = e.layerY;
+        console.log("prevX = " + this.prevX);
+        console.log("prevY = " + this.prevY);
 
-      console.log("prevX = " + this.prevX);
-      console.log("prevY = " + this.prevY);
+        this.selectedBox = id;
+        console.log("selectedbox" + this.selectedBox);
+        if (e.target) {
+          let selectedTarget = e.target.getBoundingClientRect();
+          let selectedElement = document.querySelector(`[data-id=${id}]`);
+          console.log("selected target = " + selectedTarget);
 
-      this.selectedBox = id;
-      console.log("selectedbox" + this.selectedBox);
-      if (e.target) {
-        let selectedTarget = e.target.getBoundingClientRect();
-        let selectedElement = document.querySelector(`[data-id=${id}]`)
-        console.log("selected target = " + selectedTarget);
+          console.log("selectedX =" + selectedTarget.x);
+          console.log("selectedY =" + selectedTarget.y);
 
-        console.log("selectedX =" + selectedTarget.x);
-        console.log("selectedY =" + selectedTarget.y);
+          this.getChildElement(this.data, id);
+          let parent = selectedElement.offsetParent;
+          let parentOffsetLeft = parent.offsetLeft;
+          let parentOffsetTop = parent.offsetTop;
 
-        this.getChildElement(this.data, id);
-        let parent = selectedElement.offsetParent;
-        let parentOffsetLeft = parent.offsetLeft;
-        let parentOffsetTop = parent.offsetTop;
-        
-        this.selectedBoxHTMLX = Math.round(e.clientX - this.prevX);
-        this.selectedBoxHTMLY = Math.round(e.clientY - this.prevY);
+          this.selectedBoxHTMLX = Math.round(e.clientX - this.prevX);
+          this.selectedBoxHTMLY = Math.round(e.clientY - this.prevY);
 
-        this.selectedBoxHTMLWidth = this.selectedBoxData.width;
-        this.selectedBoxHTMLHeight = this.selectedBoxData.height;
+          this.selectedBoxHTMLWidth = this.selectedBoxData.width;
+          this.selectedBoxHTMLHeight = this.selectedBoxData.height;
 
-        console.log(this.selectedBoxData);
+          console.log(this.selectedBoxData);
+        }
       }
-    }
     },
     changeSelectedNewlyAdded(e, newData) {
       this.prevX = e.layerX;
@@ -394,7 +393,7 @@ export const useCounterStore = defineStore({
     },
 
     clearSelected() {
-      let canvasDnd = useCanvasDndStore()
+      let canvasDnd = useCanvasDndStore();
 
       this.selectedBox = "";
       canvasDnd.currDrag = "";

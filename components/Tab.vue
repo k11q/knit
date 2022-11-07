@@ -1,21 +1,18 @@
 <template lang="">
-    <div class="tab-content" v-show="title == selectedTitle">
-        <slot/>
-    </div>
+  <div class="tab-content" v-show="title == selectedTitle">
+    <slot />
+  </div>
 </template>
 <script>
 export default {
-    props: ['title'],
-    setup() {
-        const selectedTitle = inject('selectedTitle')
+  props: ["title"],
+  setup() {
+    const selectedTitle = inject("selectedTitle");
 
-        return {
-            selectedTitle
-        }
-    }
-    
-}
+    return {
+      selectedTitle,
+    };
+  },
+};
 </script>
-<style lang="">
-    
-</style>
+<style lang=""></style>

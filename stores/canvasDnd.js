@@ -13,31 +13,29 @@ export const useCanvasDndStore = defineStore({
     currDropHTML: "",
     clientY: "",
     dragzone: "",
-    spareDragzone: ""
+    spareDragzone: "",
   }),
   actions: {
     checkDroppable(e, node) {
       if (this.isDragging == true) {
-        
         if (node) {
           if (node.id != this.currDrag) {
-        console.log("node.id = "+node.id);
-        this.currDrop = node.id;
-        console.log("currdrop ="+this.currDrop)
-        console.log("currdrag = "+this.currDrag)
-        this.isDroppable = true;
-        this.displayDroppable = node.isDroppable;
+            console.log("node.id = " + node.id);
+            this.currDrop = node.id;
+            console.log("currdrop =" + this.currDrop);
+            console.log("currdrag = " + this.currDrag);
+            this.isDroppable = true;
+            this.displayDroppable = node.isDroppable;
           } else {
             this.currDrop = "";
-        this.isDroppable = false;
+            this.isDroppable = false;
           }
-
-      } else {
-        this.currDrop = "";
-        this.isDroppable = false;
+        } else {
+          this.currDrop = "";
+          this.isDroppable = false;
+        }
+        console.log("isdroppable =" + this.isDroppable);
       }
-      console.log("isdroppable ="+this.isDroppable)
-    }
     },
     setCurrDragValue(arr, value) {
       arr.every((i) => {
@@ -90,20 +88,20 @@ export const useCanvasDndStore = defineStore({
       });
     },
     appendToCanvas() {
-        let counter = useCounterStore()
-        if (!this.currDrop && this.currDragValue) {
-            //append to canvas after appended
+      let counter = useCounterStore();
+      if (!this.currDrop && this.currDragValue) {
+        //append to canvas after appended
 
-            console.log("currdrag = " + this.currDrag)
-            this.setCurrDragValue(counter.data, this.currDrag);
-            this.dndRemove(counter.data)
+        console.log("currdrag = " + this.currDrag);
+        this.setCurrDragValue(counter.data, this.currDrag);
+        this.dndRemove(counter.data);
 
-            this.currDragValue.position = 'absolute'
-            counter.data.push(this.currDragValue)
-            console.log("currdragvalue = "+ this.currDragValue.position)
-            console.log("currdragvalueleft = "+ this.currDragValue.left)
-            console.log("currdragvaluetop = "+ this.currDragValue.top)
-            }
-    }
+        this.currDragValue.position = "absolute";
+        counter.data.push(this.currDragValue);
+        console.log("currdragvalue = " + this.currDragValue.position);
+        console.log("currdragvalueleft = " + this.currDragValue.left);
+        console.log("currdragvaluetop = " + this.currDragValue.top);
+      }
+    },
   },
 });
