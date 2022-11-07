@@ -97,12 +97,6 @@
           selectToi.selectedBox === node.id && canvasFF.isDragging == true,
       }"
     >
-      <div
-      :style="{justifyContent : selectToi.getJustify(node.justify),
-         alignItems: selectToi.getAlign(node.align),}"
-        v-if="canvasDnd.currDrop == node.id && canvasFF.isDragging === true"
-        class="w-4/5 h-0.5 bg-black m-auto absolute inset-0"
-      ></div>
       <UIBrowser
           v-if="node.children"
           :key="node.id"
@@ -209,11 +203,9 @@ const testDown = (e, currDrag) => {
 
     function mousemove(e) {
       isDragging = true;
-      
-      if (e.target) {
 
-      console.log("e clientX = "+e.clientX)
-      console.log("e clientY = "+e.clientY)}
+      selectToi.selectedBoxHTMLX = Math.round(e.clientX - prevX);
+      selectToi.selectedBoxHTMLY = Math.round(e.clientY - prevY);
 
       if(selectToi.selectedBoxData.parent){
         let dropzone = document.querySelector(`[data-id=${selectToi.selectedBoxData.parent}]`)
@@ -260,7 +252,6 @@ const testDown = (e, currDrag) => {
           }
 
           let y = canvasDnd.clientY;
-          console.log('clientY = '+e.clientY)
 
           let dragZone = getDragAfter(e.clientY)
 
@@ -268,12 +259,7 @@ const testDown = (e, currDrag) => {
               dragZone = canvasDnd.spareDragzone
             }
 
-          console.log("dragZone = "+dragZone);
-
-          console.log("currDrop = " + canvasDnd.currDrop);  
-
           canvasDnd.setCurrDragValue(selectToi.data, canvasDnd.currDrag);
-          console.log(canvasDnd.currDragValue);
           canvasDnd.dndRemove(selectToi.data);
 
           canvasDnd.currDragValue.parent = canvasDnd.currDrop;
@@ -290,15 +276,10 @@ const testDown = (e, currDrag) => {
 
       isDragging = false;
 
-      selectToi.selectedBoxHTMLX = document.querySelector(`[data-id=${selectToi.selectedBox}]`).getBoundingClientRect().x;
-      selectToi.selectedBoxHTMLY = document.querySelector(`[data-id=${selectToi.selectedBox}]`).getBoundingClientRect().y;
-
       window.removeEventListener("mousemove", mousemove);
       window.removeEventListener("mouseup", mouseup);
-      console.log("mouseup!");
 
       canvasFF.isDragging = false;
-      console.log("isDragging =" + canvasFF.isDragging);
     }
   }
 }

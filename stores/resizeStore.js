@@ -51,6 +51,7 @@ resizeBottomRight(e) {
         let prevWidth = selectToi.selectedBoxData.width;
         let prevHeight = selectToi.selectedBoxData.height;
         let prevWidth2 = selectToi.selectedBoxData.X;
+        let prevWidthX = selectToi.selectedBoxHTMLX;
       
         let prevX = e.clientX;
         let prevY = e.clientY;
@@ -61,12 +62,12 @@ resizeBottomRight(e) {
         window.addEventListener("mouseup", mouseup);
       
         function mousemove(e) {
-          selectToi.selectedBoxData.width = prevWidth + (prevX - e.clientX);
-          selectToi.selectedBoxData.height = prevHeight + (e.clientY - prevY);
-          selectToi.selectedBoxHTMLWidth = prevWidth + (prevX - e.clientX);
-          selectToi.selectedBoxHTMLHeight = prevHeight + (e.clientY - prevY);
-          selectToi.selectedBoxHTMLX = document.querySelector(`[data-id=${selectToi.selectedBox}]`).getBoundingClientRect().x;
-          selectToi.selectedBoxData.X = prevWidth2 + (e.clientX - prevX);
+          selectToi.selectedBoxData.width = Math.round(prevWidth + (prevX - e.clientX));
+          selectToi.selectedBoxData.height = Math.round(prevHeight + (e.clientY - prevY));
+          selectToi.selectedBoxHTMLWidth = Math.round(prevWidth + (prevX - e.clientX));
+          selectToi.selectedBoxHTMLHeight = Math.round(prevHeight + (e.clientY - prevY));
+          selectToi.selectedBoxHTMLX = Math.round(prevWidthX + (e.clientX - prevX)); 
+          selectToi.selectedBoxData.X = Math.round(prevWidth2 + (e.clientX - prevX));
           console.log("mousemove!");
         }
       
@@ -85,6 +86,8 @@ resizeBottomRight(e) {
 
         let prevWidth = selectToi.selectedBoxData.X;
         let prevHeight = selectToi.selectedBoxData.Y;
+        let prevWidthX = selectToi.selectedBoxHTMLX;
+        let prevHeightY = selectToi.selectedBoxHTMLY;
         let prevWidth2 = selectToi.selectedBoxData.width;
         let prevHeight2 = selectToi.selectedBoxData.height;
       
@@ -104,8 +107,8 @@ resizeBottomRight(e) {
 
           selectToi.selectedBoxHTMLWidth = prevWidth2 + (prevX - e.clientX);
           selectToi.selectedBoxHTMLHeight = prevHeight2 + (prevY - e.clientY);
-          selectToi.selectedBoxHTMLX = document.querySelector(`[data-id=${selectToi.selectedBox}]`).getBoundingClientRect().x;
-          selectToi.selectedBoxHTMLY = document.querySelector(`[data-id=${selectToi.selectedBox}]`).getBoundingClientRect().y;
+          selectToi.selectedBoxHTMLX = prevWidthX + (e.clientX - prevX);
+          selectToi.selectedBoxHTMLY = prevHeightY + (e.clientY - prevY);
           console.log("mousemove!");
         }
       
@@ -125,6 +128,7 @@ resizeBottomRight(e) {
         let prevWidth = selectToi.selectedBoxData.width;
         let prevHeight = selectToi.selectedBoxData.Y;
         let prevHeight2 = selectToi.selectedBoxData.height;
+        let prevHeightY = selectToi.selectedBoxHTMLY;
       
         let prevX = e.clientX;
         let prevY = e.clientY;
@@ -140,7 +144,9 @@ resizeBottomRight(e) {
           selectToi.selectedBoxData.height = prevHeight2 + (prevY - e.clientY);
           selectToi.selectedBoxHTMLWidth = prevWidth + (e.clientX - prevX);
           selectToi.selectedBoxHTMLHeight = prevHeight2 + (prevY - e.clientY);
-          selectToi.selectedBoxHTMLY = document.querySelector(`[data-id=${selectToi.selectedBox}]`).getBoundingClientRect().y;
+
+          selectToi.selectedBoxHTMLY = prevHeightY + (e.clientY - prevY);
+
           console.log("mousemove!");
         }
       
@@ -186,6 +192,7 @@ resizeBottomRight(e) {
 
         let prevWidth = selectToi.selectedBoxData.width;
         let prevWidth2 = selectToi.selectedBoxData.X;
+        let prevWidthX = selectToi.selectedBoxHTMLX;
       
         let prevX = e.clientX;
       
@@ -198,7 +205,7 @@ resizeBottomRight(e) {
           selectToi.selectedBoxData.width = prevWidth + (prevX - e.clientX);
           selectToi.selectedBoxData.X = prevWidth2 + (e.clientX - prevX)
           selectToi.selectedBoxHTMLWidth = prevWidth + (prevX - e.clientX)
-          selectToi.selectedBoxHTMLX= document.querySelector(`[data-id=${selectToi.selectedBox}]`).getBoundingClientRect().x;
+          selectToi.selectedBoxHTMLX= prevWidthX + (e.clientX - prevX);
         }
       
         function mouseup() {
@@ -216,6 +223,7 @@ resizeBottomRight(e) {
 
         let prevHeight = selectToi.selectedBoxData.height;
         let prevHeight2 = selectToi.selectedBoxData.Y;
+        let prevHeightY = selectToi.selectedBoxHTMLY;
       
         let prevY = e.clientY;
       
@@ -228,7 +236,7 @@ resizeBottomRight(e) {
           selectToi.selectedBoxData.height = prevHeight + (prevY - e.clientY);
           selectToi.selectedBoxData.Y = prevHeight2 + (e.clientY - prevY);
           selectToi.selectedBoxHTMLHeight= prevHeight + (prevY - e.clientY)
-          selectToi.selectedBoxHTMLY= document.querySelector(`[data-id=${selectToi.selectedBox}]`).getBoundingClientRect().y;
+          selectToi.selectedBoxHTMLY= prevHeightY + (e.clientY - prevY);
         }
       
         function mouseup() {

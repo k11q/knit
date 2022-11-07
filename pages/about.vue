@@ -244,7 +244,6 @@
               <div
                 v-show="selectToi.selectedBox && !canvasFF.isDragging"
                 class="absolute pointer-events-none"
-                style="transform: translate(-50vw, -50vh)"
                 :style="{
                   left: selectToi.selectedBoxHTMLX + 'px',
                   top: selectToi.selectedBoxHTMLY + 'px',
