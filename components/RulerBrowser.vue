@@ -1,11 +1,45 @@
 <template>
-  <template v-for="line in lines" :key="line.height">
-    <div style="left: line.left" class="h-1 bg-red-600 w-full absolute"></div>
-    <div style="top: line.top" class="h-1 bg-red-600 w-full absolute"></div>
+  <template v-for="line in lines" :key="line.height" class="overflow-visible">
+    <div
+      v-if="line.lineTop"
+      :style="{
+        top: line.lineTop + squareStore.offsetTop + 'px',
+        width: '100vw',
+      }"
+      class="h-[1px] bg-red-600 fixed pointer-events-none overflow-visible"
+    ></div>
+    <div
+      v-if="line.lineBottom"
+      :style="{
+        top: line.lineBottom + squareStore.offsetTop + 'px',
+        width: '100vw',
+      }"
+      class="h-[1px] bg-red-600 fixed pointer-events-none overflow-visible"
+    ></div>
+    <div
+      v-if="line.lineLeft"
+      :style="{
+        left: line.lineLeft + squareStore.offsetLeft + 'px',
+        height: '100vh',
+      }"
+      class="w-[1px] bg-red-600 fixed pointer-events-none overflow-visible"
+    ></div>
+    <div
+      v-if="line.lineRight"
+      :style="{
+        left: line.lineRight + squareStore.offsetLeft + 'px',
+        height: '100vh',
+      }"
+      class="w-[1px] bg-red-600 fixed pointer-events-none overflow-visible"
+    ></div>
   </template>
 </template>
 
-<script setup></script>
+<script setup>
+import { useSquareStore } from "~~/stores/dataSquare";
+
+const squareStore = useSquareStore();
+</script>
 
 <script>
 export default {

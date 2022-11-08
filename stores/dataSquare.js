@@ -82,8 +82,8 @@ export const useSquareStore = defineStore({
       const counter = useCounterStore();
       const canvasFF = useCanvasFF();
       const squareStore = useSquareStore();
-      const middlePointLeft = this.offsetLeft + vw(50);
-      const middlePointTop = this.offsetTop + vh(50);
+      const middlePointLeft = this.offsetLeft;
+      const middlePointTop = this.offsetTop;
 
       function vh(percent) {
         var h = Math.max(

@@ -150,11 +150,13 @@ import { useCounterStore } from "../stores/counter";
 import { useCanvasDndStore } from "../stores/canvasDnd";
 import { useCanvasFF } from "../stores/canvasFreeForm";
 import { useSquareStore } from "~~/stores/dataSquare";
+import { useCanvasMarkerStore } from "~~/stores/canvasMarker";
 
 const selectToi = useCounterStore();
 const canvasDnd = useCanvasDndStore();
 const canvasFF = useCanvasFF();
 const squareStore = useSquareStore();
+const canvasMarker = useCanvasMarkerStore();
 let editable = ref(false);
 
 const makeEditable = () => {
@@ -245,6 +247,73 @@ const testDown = (e, currDrag) => {
           selectToi.selectedBoxData.X = Math.round(e.clientX - prevX);
           selectToi.selectedBoxData.Y = Math.round(e.clientY - prevY);
         }
+
+        //ruler function
+        let targetChildren = selectToi.data;
+        let targetChildrenData = [];
+
+        targetChildren.forEach((i) => {
+          if (i.id !== selectToi.selectedBox) {
+            let lineLeft = i.X;
+            let lineTop = i.Y;
+            let lineRight = i.X + i.width;
+            let lineBottom = i.Y + i.height;
+            let newlineBottom;
+            let newlineTop;
+            let newlineLeft;
+            let newlineRight;
+
+            let distanceTopToLineTop = selectToi.selectedBoxData.Y - lineTop;
+            let distanceTopToLineBottom =
+              selectToi.selectedBoxData.Y - lineBottom;
+            let distanceBottomToLineTop =
+              selectToi.selectedBoxData.Y +
+              selectToi.selectedBoxData.height -
+              lineTop;
+            let distanceBottomToLineBottom =
+              selectToi.selectedBoxData.Y +
+              selectToi.selectedBoxData.height -
+              lineBottom;
+            let distanceLeftToLineLeft = selectToi.selectedBoxData.X - lineLeft;
+            let distanceLeftToLineRight =
+              selectToi.selectedBoxData.X - lineRight;
+            let distanceRightToLineLeft =
+              selectToi.selectedBoxData.X +
+              selectToi.selectedBoxData.width -
+              lineLeft;
+            let distanceRightToLineRight =
+              selectToi.selectedBoxData.X +
+              selectToi.selectedBoxData.width -
+              lineRight;
+
+            (distanceTopToLineTop < 5 && distanceTopToLineTop > -5) ||
+            (distanceBottomToLineTop < 5 && distanceBottomToLineTop > -5)
+              ? (newlineTop = i.Y)
+              : (lineTop = undefined);
+            (distanceTopToLineBottom < 5 && distanceTopToLineBottom > -5) ||
+            (distanceBottomToLineBottom < 5 && distanceBottomToLineBottom > -5)
+              ? (newlineBottom = i.Y + i.height)
+              : (newlineBottom = undefined);
+            (distanceLeftToLineLeft < 5 && distanceLeftToLineLeft > -5) ||
+            (distanceRightToLineLeft < 5 && distanceRightToLineLeft > -5)
+              ? (newlineLeft = i.X)
+              : (newlineLeft = undefined);
+            (distanceLeftToLineRight < 5 && distanceLeftToLineRight > -5) ||
+            (distanceRightToLineRight < 5 && distanceRightToLineRight > -5)
+              ? (newlineRight = i.X + i.width)
+              : (newlineRight = undefined);
+
+            targetChildrenData.push({
+              lineTop: newlineTop,
+              lineLeft: newlineLeft,
+              lineRight: newlineRight,
+              lineBottom: newlineBottom,
+            });
+          }
+        });
+
+        canvasMarker.lines = targetChildrenData;
+        console.log("targetchildren data =" + targetChildrenData);
 
         //sort childrens by dragging
         if (canvasDnd.isDroppable && canvasDnd.currDrop) {
