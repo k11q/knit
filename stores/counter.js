@@ -425,12 +425,8 @@ export const useCounterStore = defineStore({
       this.data.find((x) => x.id === this.selectedBox).width = e.target.value;
       return selectedBoxWidth;
     },
-    getHeight(height, unit) {
-      if (height) {
-        return height + unit;
-      } else {
-        return "auto";
-      }
+    getHeight(id) {
+      return document.querySelector(`[data-id=${id}]`).clientHeight;
     },
     getWidth(width, unit) {
       if (width) {
