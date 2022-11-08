@@ -193,9 +193,11 @@
     <div class="flex flex-row justify-between">
       <!--Left panel section-->
       <div
-        class="border-r w-60 flex flex-col flex-none overflow-scroll z-10 bg-white"
+        class="border-r w-60 flex flex-col flex-none h-full overflow-x-hidden overflow-y-scroll z-10 bg-white"
       >
-        <div class="h-10 border-b flex-none flex flex-row items-center px-2">
+        <div
+          class="h-10 border-b flex-none flex flex-row items-center px-2 sticky top-0 bg-white"
+        >
           <div
             class="px-2 h-full items-center flex flex-row cursor-pointer"
             :class="{
@@ -229,7 +231,7 @@
         </div>
         <!--layers tab content -->
         <div
-          class="flex flex-col w-full overflow-visible h-fit"
+          class="flex flex-col w-full h-fit"
           v-show="leftPanelStore.activeTab === 'layers'"
         >
           <TreeBrowser :nodes="selectToi.data" />
@@ -270,8 +272,8 @@
         <div
           v-if="selectToi.selectedBox && !canvasFF.isDragging"
           class="absolute pointer-events-none"
-          style="transform: translate(50vw, 50vh)"
           :style="{
+            transform: `translate3D(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px, 0px) rotate(${addaSquare.rotation}deg) scale(${addaSquare.scale})`,
             left: selectToi.selectedBoxHTMLX + 'px',
             top: selectToi.selectedBoxHTMLY + 'px',
             height: selectToi.selectedBoxData.height

@@ -122,12 +122,13 @@
     <p
       v-if="typeText(node.type)"
       class="text-center focus:outline-none hover:decoration-blue-600 hover:underline hover:decoration-2"
-      @click.stop.prevent="makeEditable"
-      contenteditable
+      @pointerdown.stop="testDown($event, node.id)"
+      @mousedown="selectToi.changeSelected($event, node.id)"
+      contenteditable="true"
       style="position: absolute"
       :style="{
-        height: full,
-        width: full,
+        height: 100 + 'px',
+        width: 100 + 'px',
         left: node.X + node.Xunit,
         top: node.Y + node.Yunit,
         fontSize: node.fontSize + node.fontUnit,
@@ -175,13 +176,11 @@ const typeText = (type) => {
   } else return false;
 };
 
+//dnd on canvas
 const testDown = (e, currDrag) => {
   if (!squareStore.dragPointer && !squareStore.draggingPointer) {
     let prevX = e.layerX;
     let prevY = e.layerY;
-
-    console.log("prevX = " + prevX);
-    console.log("prevY = " + prevY);
 
     let prevOffsetLeft = e.clientX - e.target.getBoundingClientRect().x;
     let prevOffsetTop = e.clientY - e.target.getBoundingClientRect().y;
@@ -190,11 +189,6 @@ const testDown = (e, currDrag) => {
     canvasDnd.isDragging = true;
     canvasDnd.currDrag = currDrag;
     let isDragging = false;
-
-    console.log("mousedown");
-
-    console.log("currDrop = " + canvasDnd.currDrop);
-    console.log("currDrag = " + canvasDnd.currDrag);
 
     //delete selected item
     document.addEventListener("keyup", (event) => {
@@ -311,11 +305,10 @@ const testDown = (e, currDrag) => {
             });
           }
         });
-
         canvasMarker.lines = targetChildrenData;
-        console.log("targetchildren data =" + targetChildrenData);
 
         //sort childrens by dragging
+        /* on hold
         if (canvasDnd.isDroppable && canvasDnd.currDrop) {
           canvasDnd.currDropHTML = e.target;
 
@@ -364,11 +357,13 @@ const testDown = (e, currDrag) => {
           canvasDnd.currDragValue.parent = "";
           canvasDnd.appendToCanvas();
         }
+        */
         canvasDnd.checkDroppable();
       }
 
       function mouseup() {
         isDragging = false;
+        canvasMarker.lines = [];
 
         window.removeEventListener("mousemove", mousemove);
         window.removeEventListener("mouseup", mouseup);

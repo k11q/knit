@@ -46,13 +46,11 @@ export const useSquareStore = defineStore({
       type: "text",
       textContent: "Text here",
       fontSize: 14,
-      color: "white",
       unit: "px",
       Xunit: "px",
       Yunit: "px",
       position: "absolute",
       parent: "",
-      children: [],
     },
     dataSquare: {
       id: "rectangle" + Math.random() * 100,
