@@ -241,6 +241,7 @@
       <div
         id="container"
         class="absolute inset-0 overflow-hidden min-h-screen min-w-full"
+        @wheel="wheel"
         @mousedown.stop.prevent="addaSquare.addSquare($event, selectToi.data)"
         :class="{
           'cursor-crosshair':
@@ -259,15 +260,7 @@
             transform: `translate3D(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px, 0px) rotate(${addaSquare.rotation}deg) scale(${addaSquare.scale})`,
           }"
         >
-          <div>
-            <div
-              data-id="placeholder"
-              class="absolute inset-0 overflow-visible"
-              :style="canvasFF.adjustScale"
-            >
-              <UIBrowser :nodes="selectToi.data" />
-            </div>
-          </div>
+          <UIBrowser :nodes="selectToi.data" />
         </div>
         <div
           v-if="selectToi.selectedBox && !canvasFF.isDragging"
@@ -382,6 +375,7 @@
           >
             <span>Action</span>
           </div>
+          {{ noTouch }}
         </div>
         <!--style tab content-->
         <div
@@ -2920,6 +2914,16 @@ const resizeStore = useResizeStore();
 const rightPanelStore = useRightPanelStore();
 const leftPanelStore = useLeftPanelStore();
 const canvasMarker = useCanvasMarkerStore();
+const noTouch = ref("");
+
+function wheel() {
+  event.preventDefault();
+
+  addaSquare.scale += event.deltaY * -0.01;
+
+  // Restrict scale
+  addaSquare.scale = Math.min(Math.max(0.125, scale), 4);
+}
 
 onMounted(() => {
   addaSquare.offsetLeft = vw(50);

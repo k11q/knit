@@ -16,12 +16,14 @@ export const useSquareStore = defineStore({
     draggingPointer: false,
     offsetLeft: 0,
     offsetTop: 0,
+    scale: 1,
+    originX: "",
+    originY: "",
 
     //zoom n gesture
     rotation: 0,
     gestureStartRotation: 0,
     gestureStartScale: 0,
-    scale: 1,
     posX: 0,
     posY: 0,
     startX: 0,
