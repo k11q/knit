@@ -152,15 +152,3 @@ onMounted(() => {
   }
 });
 </script>
-
-<script>
-export default {
-  name: "Canvas",
-  props: {},
-  data() {
-    return {};
-  },
-  emits: "",
-  methods: {},
-};
-</script>

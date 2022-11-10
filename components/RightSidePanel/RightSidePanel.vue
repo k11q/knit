@@ -2484,15 +2484,3 @@ import { useRightPanelStore } from "../../stores/rightPanelStore";
 const selectToi = useCounterStore();
 const rightPanelStore = useRightPanelStore();
 </script>
-
-<script>
-export default {
-  name: "RightSidePanel",
-  props: {},
-  data() {
-    return {};
-  },
-  emits: "",
-  methods: {},
-};
-</script>

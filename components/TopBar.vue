@@ -192,15 +192,3 @@ import { useCanvasFF } from "../stores/canvasFreeForm";
 const addaSquare = useSquareStore();
 const canvasFF = useCanvasFF();
 </script>
-
-<script>
-export default {
-  name: "TopBar",
-  props: {},
-  data() {
-    return {};
-  },
-  emits: "",
-  methods: {},
-};
-</script>

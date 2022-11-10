@@ -53,15 +53,3 @@ import { useLeftPanelStore } from "../../stores/leftPanelStore";
 const selectToi = useCounterStore();
 const leftPanelStore = useLeftPanelStore();
 </script>
-
-<script>
-export default {
-  name: "LeftSidePanel",
-  props: {},
-  data() {
-    return {};
-  },
-  emits: "",
-  methods: {},
-};
-</script>
