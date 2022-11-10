@@ -114,13 +114,25 @@
 <script setup>
 import { useCounterStore } from "../stores/counter";
 import { useTreeDndStore } from "~~/stores/treeDnd";
-import { useCanvasDndStore } from "~~/stores/canvasDnd";
 import { useSquareStore } from "~~/stores/dataSquare";
 
 const selectToi = useCounterStore();
 const treeDnd = useTreeDndStore();
-const canvasDnd = useCanvasDndStore();
 const squareStore = useSquareStore();
+const props = defineProps({
+  modelValue: String,
+  nodes: Array,
+  depth: {
+    type: Number,
+    default: 1,
+  },
+});
+let expanded = ref(true);
+const emit = defineEmits("update:modelValue");
+
+function changePageTitle(title) {
+  this.$emit("update:modelValue", title); // previously was `this.$emit('input', title)`
+}
 
 const dragAndDrop = (e, currDrag) => {
   if (!squareStore.dragPointer && !squareStore.draggingPointer) {
@@ -151,31 +163,6 @@ const dragAndDrop = (e, currDrag) => {
       window.removeEventListener("mouseup", mouseup);
     }
   }
-};
-</script>
-
-<script>
-export default {
-  name: "TreeBrowser",
-  props: {
-    modelValue: String,
-    nodes: Array,
-    depth: {
-      type: Number,
-      default: 1,
-    },
-  },
-  data() {
-    return {
-      expanded: true,
-    };
-  },
-  emits: ["update:modelValue"],
-  methods: {
-    changePageTitle(title) {
-      this.$emit("update:modelValue", title); // previously was `this.$emit('input', title)`
-    },
-  },
 };
 </script>
 
