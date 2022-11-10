@@ -186,8 +186,8 @@
 </template>
 
 <script setup>
-import { useSquareStore } from "../stores/dataSquare";
-import { useCanvasFF } from "../stores/canvasFreeForm";
+import { useSquareStore } from "../../stores/dataSquare";
+import { useCanvasFF } from "../../stores/canvasFreeForm";
 
 const addaSquare = useSquareStore();
 const canvasFF = useCanvasFF();
