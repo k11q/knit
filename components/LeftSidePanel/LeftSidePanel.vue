@@ -37,12 +37,7 @@
       </div>
     </div>
     <!--layers tab content -->
-    <div
-      class="flex flex-col w-full h-fit"
-      v-show="leftPanelStore.activeTab === 'layers'"
-    >
-      <TreeBrowser :nodes="selectToi.data" />
-    </div>
+    <LeftSidePanelTabsTabLayers />
   </div>
 </template>
 
