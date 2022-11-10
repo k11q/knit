@@ -47,8 +47,8 @@
 </template>
 
 <script setup>
-import { useCounterStore } from "../stores/counter";
-import { useLeftPanelStore } from "../stores/leftPanelStore";
+import { useCounterStore } from "../../stores/counter";
+import { useLeftPanelStore } from "../../stores/leftPanelStore";
 
 const selectToi = useCounterStore();
 const leftPanelStore = useLeftPanelStore();
