@@ -304,6 +304,11 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
+"@headlessui/vue@^1.7.3":
+  version "1.7.4"
+  resolved "https://registry.yarnpkg.com/@headlessui/vue/-/vue-1.7.4.tgz#c554e9ac893a2ec2f58eb8b6b9d80b8be03c5d0e"
+  integrity sha512-QHRlKCK/zRpjSjhth7c2CZvx5eMDFflXauqRdRJgp1CwScx6PwCpWiwDsjQcYM4z8Yik2ZvyX8W4PFT2Wsqqyw==
+
 "@humanwhocodes/config-array@^0.11.6":
   version "0.11.7"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.11.7.tgz#38aec044c6c828f6ed51d5d7ae3d9b9faf6dbb0f"
@@ -3762,6 +3767,15 @@ nuxi@3.0.0-rc.13:
   integrity sha512-Uh+Vk6mj0Zm5QttwdNFGQG0tjCXNjpc4e9NLRWpCjCCfBk5owBo2axxoeqfqIZMs6vUuCQCa7sLXQuoumyVjcQ==
   optionalDependencies:
     fsevents "~2.3.2"
+
+nuxt-headlessui@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/nuxt-headlessui/-/nuxt-headlessui-1.0.1.tgz#3b197d3bbfa3ebac573e6b1ed185f36fd7fa1436"
+  integrity sha512-5BzDb+ucLW5CE+oa06mnimy8n//Y/Til/5ehaeQK6NIn4rfpzyLmbqX+N5pwAVsXb76kEk8bugcDe9TwLG7zOg==
+  dependencies:
+    "@headlessui/vue" "^1.7.3"
+    "@nuxt/kit" "^3.0.0-rc.12"
+    pathe "^0.3.9"
 
 nuxt@3.0.0-rc.13:
   version "3.0.0-rc.13"

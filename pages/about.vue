@@ -2,12 +2,10 @@
   <div
     class="flex flex-col h-screen overflow-hidden max-h-screen min-h-screen text-xs bg-neutral-200"
   >
-    <!--Topbar section-->
     <TopBar />
 
     <!--Main section-->
     <div class="flex flex-row justify-between">
-      <!--Left panel section-->
       <LeftSidePanel />
       <!--Canvas section-->
       <div
@@ -110,8 +108,6 @@
           <RulerBrowser :lines="canvasMarker.lines" />
         </div>
       </div>
-      <!--Right panel section-->
-
       <RightSidePanel />
     </div>
   </div>
@@ -141,10 +137,7 @@ const addaSquare = useSquareStore();
 const canvasDnd = useCanvasDndStore();
 const canvasFF = useCanvasFF();
 const resizeStore = useResizeStore();
-const rightPanelStore = useRightPanelStore();
-const leftPanelStore = useLeftPanelStore();
 const canvasMarker = useCanvasMarkerStore();
-const noTouch = ref("");
 
 function wheel() {
   event.preventDefault();
