@@ -113,8 +113,8 @@
 
 <script setup>
 import { useCounterStore } from "../stores/counter";
-import { useTreeDndStore } from "~~/stores/treeDnd";
-import { useSquareStore } from "~~/stores/dataSquare";
+import { useTreeDndStore } from "../stores/treeDnd";
+import { useSquareStore } from "../stores/dataSquare";
 
 const selectToi = useCounterStore();
 const treeDnd = useTreeDndStore();
@@ -131,7 +131,7 @@ let expanded = ref(true);
 const emit = defineEmits("update:modelValue");
 
 function changePageTitle(title) {
-  this.$emit("update:modelValue", title); // previously was `this.$emit('input', title)`
+  emit("update:modelValue", title); // previously was `this.$emit('input', title)`
 }
 
 const dragAndDrop = (e, currDrag) => {

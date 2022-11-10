@@ -5,4 +5,5 @@ export default defineNuxtConfig({
   headlessui: {
     prefix: "Headless",
   },
+  srcDir: "src/",
 });

@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import { useCounterStore } from "./counter";
 
 export const useTreeDndStore = defineStore({
   id: "treeDnd",

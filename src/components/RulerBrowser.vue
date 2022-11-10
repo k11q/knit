@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-import { useSquareStore } from "~~/stores/dataSquare";
+import { useSquareStore } from "../stores/dataSquare";
 
 const squareStore = useSquareStore();
 </script>
