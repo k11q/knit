@@ -373,32 +373,21 @@ const testDown = (e, currDrag) => {
     }
   }
 };
-</script>
 
-<script>
-export default {
-  name: "UIBrowser",
-  props: {
-    modelValue: String,
-    nodes: Array,
-    depth: {
-      type: Number,
-      default: 0,
-    },
+const props = defineProps({
+  modelValue: String,
+  nodes: Array,
+  depth: {
+    type: Number,
+    default: 0,
   },
-  data() {
-    return {
-      expanded: true,
-      prevX: "",
-    };
-  },
-  emits: ["update:modelValue"],
-  methods: {
-    changePageTitle(title) {
-      this.$emit("update:modelValue", title); // previously was `this.$emit('input', title)`
-    },
-  },
-};
+});
+const expanded = ref(true);
+const prevX = ref("");
+const emit = defineEmits("update:modelValue");
+function changePageTitle(title) {
+  this.$emit("update:modelValue", title); // previously was `this.$emit('input', title)`
+}
 </script>
 
 <style>
