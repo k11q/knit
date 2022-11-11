@@ -45,20 +45,27 @@
       >
         <div class="pointer-events-auto">
           <p
-            class="absolute left-0 right-0 top-full mt-2 flex flex-row justify-center flex-nowrap"
+            class="absolute left-0 right-0 top-full mt-2 flex flex-row justify-center flex-nowrap items-center"
           >
             <span
-              class="bg-blue-600 text-white cursor-default px-1 py-0.5 rounded text-[11px] flex-nowrap flex"
+              class="bg-blue-600 text-white cursor-default rounded flex-nowrap flex"
+              :style="{
+                fontSize: `${(11 * 1) / addaSquare.scale}px`,
+                paddingTop: `${(2 * 1) / addaSquare.scale}px`,
+                paddingBottom: `${(2 * 1) / addaSquare.scale}px`,
+                paddingRight: `${(4 * 1) / addaSquare.scale}px`,
+                paddingLeft: `${(4 * 1) / addaSquare.scale}px`,
+              }"
             >
               {{
                 selectToi.selectedBoxData.width
-                  ? selectToi.selectedBoxData.width
+                  ? Math.round(selectToi.selectedBoxData.width)
                   : "Fill"
               }}
               x
               {{
                 selectToi.selectedBoxData.height
-                  ? selectToi.selectedBoxData.height
+                  ? Math.round(selectToi.selectedBoxData.height)
                   : "Fill"
               }}
             </span>

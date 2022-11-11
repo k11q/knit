@@ -178,6 +178,7 @@ const testDown = (e, currDrag) => {
   if (!squareStore.dragPointer && !squareStore.draggingPointer) {
     let prevX = e.layerX;
     let prevY = e.layerY;
+    console.log("prevX = " + prevX);
 
     let prevOffsetLeft = e.clientX - e.target.getBoundingClientRect().x;
     let prevOffsetTop = e.clientY - e.target.getBoundingClientRect().y;
