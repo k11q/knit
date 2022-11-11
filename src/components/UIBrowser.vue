@@ -1,6 +1,5 @@
 <template>
   <template v-for="node in nodes" :key="node.id">
-    <!--Frame component-->
     <div
       v-if="typeFrame(node.type)"
       :style="{
@@ -69,7 +68,6 @@
         :depth="depth + 1"
       />
     </div>
-    <!--Box component-->
     <div
       v-if="node.type === 'box'"
       :style="{
@@ -118,7 +116,6 @@
         :depth="depth + 1"
       />
     </div>
-    <!--Text component-->
     <p
       v-if="typeText(node.type)"
       class="text-center focus:outline-none hover:decoration-blue-600 hover:underline hover:decoration-2"

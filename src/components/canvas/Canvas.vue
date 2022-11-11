@@ -1,7 +1,6 @@
 <template>
   <div
-    id="container"
-    class="absolute inset-0 overflow-hidden min-h-screen min-w-full"
+    class="absolute inset-0"
     @wheel="wheel"
     @mousedown.stop.prevent="addaSquare.addSquare($event, selectToi.data)"
     :class="{
@@ -14,9 +13,8 @@
     }"
   >
     <div
-      id="target"
       data-id="canvas"
-      class="flex flex-grow justify-center absolute inset-0 overflow-visible"
+      class="fixed top-0 left-0 w-0 h-0 overflow-visible"
       :style="{
         transform: `translate3D(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px, 0px) rotate(${addaSquare.rotation}deg) scale(${addaSquare.scale})`,
       }"
@@ -27,16 +25,15 @@
       v-if="selectToi.selectedBox && !canvasFF.isDragging"
       class="absolute pointer-events-none"
       :style="{
-        transform: `translate3D(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px, 0px) rotate(${addaSquare.rotation}deg) scale(${addaSquare.scale})`,
-        left: selectToi.selectedBoxHTMLX + 'px',
-        top: selectToi.selectedBoxHTMLY + 'px',
+        left: selectToi.selectedBoxHTMLX + addaSquare.offsetLeft + 'px',
+        top: selectToi.selectedBoxHTMLY + addaSquare.offsetTop + 'px',
         height: selectToi.selectedBoxData.height
-          ? selectToi.selectedBoxData.height + 'px'
+          ? selectToi.selectedBoxData.height * addaSquare.scale + 'px'
           : document.querySelector(
               `[data-id=${selectToi.selectedBoxData.parent}]`
             ).getBoundingClientRect.height,
         width: selectToi.selectedBoxData.width
-          ? selectToi.selectedBoxData.width + 'px'
+          ? selectToi.selectedBoxData.width * addaSquare.scale + 'px'
           : 'auto',
       }"
     >
