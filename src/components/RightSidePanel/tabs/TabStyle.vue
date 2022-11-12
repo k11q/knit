@@ -1880,7 +1880,7 @@
         </div>
       </div>
     </div>
-    <!-- Shadow section! -->
+    <!-- Effects/Shadow section! -->
     <div
       v-show="
         selectToi.selectedBoxData.type !== 'text' && selectToi.selectedBox
@@ -1889,6 +1889,140 @@
     >
       <div class="flex flex-row justify-between">
         <p class="font-medium">Effects</p>
+        <div
+          v-if="
+            !selectToi.selectedBoxData.boxShadowOffsetY &&
+            !selectToi.selectedBoxData.boxShadowOffsetX &&
+            !selectToi.selectedBoxData.boxShadowBlurRadius &&
+            !selectToi.selectedBoxData.boxShadowSpreadRadius
+          "
+          class="aspect-square h-full flex flex-col justify-center items-center"
+          @click="
+            () => {
+              selectToi.selectedBoxData.boxShadowOffsetY = 2;
+              selectToi.selectedBoxData.boxShadowOffsetX = 2;
+              selectToi.selectedBoxData.boxShadowBlurRadius = 2;
+              selectToi.selectedBoxData.boxShadowSpreadRadius = 2;
+              selectToi.selectedBoxData.boxShadowColor = 'black';
+              rightPanelStore.toggleShadow = true;
+            }
+          "
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </div>
+      </div>
+      <div
+        v-if="
+          selectToi.selectedBoxData.boxShadowOffsetY &&
+          selectToi.selectedBoxData.boxShadowOffsetX &&
+          selectToi.selectedBoxData.boxShadowBlurRadius &&
+          selectToi.selectedBoxData.boxShadowSpreadRadius
+        "
+        class="flex flex-col gap-4"
+      >
+        <div class="flex flex-row gap-3 flex-none justify-between w-full">
+          <div class="flex flex-row gap-2 justify-start items-center w-3/4">
+            <div class="h-full aspect-square items-center flex justify-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="17"
+                height="17"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="4"></circle>
+                <path d="M12 2v2"></path>
+                <path d="M12 20v2"></path>
+                <path d="m4.93 4.93 1.41 1.41"></path>
+                <path d="m17.66 17.66 1.41 1.41"></path>
+                <path d="M2 12h2"></path>
+                <path d="M20 12h2"></path>
+                <path d="m6.34 17.66-1.41 1.41"></path>
+                <path d="m19.07 4.93-1.41 1.41"></path>
+              </svg>
+            </div>
+            <select name="category" selected="drop shadow" class="w-full">
+              <option value="drop shadow">Drop shadow</option>
+              <option value="inner shadow">Inner Shadow</option>
+              <option value="outer glow">Outer glow</option>
+              <option value="inner glow">Inner glow</option>
+            </select>
+          </div>
+          <div class="flex flex-row gap-2 flex-none justify-end w-1/4">
+            <div class="aspect-square h-full flex items-center justify-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </div>
+
+            <div
+              class="aspect-square h-full flex items-center justify-center"
+              @click="
+                () => {
+                  selectToi.selectedBoxData.boxShadowOffsetY = 0;
+                  selectToi.selectedBoxData.boxShadowOffsetX = 0;
+                  selectToi.selectedBoxData.boxShadowBlurRadius = 0;
+                  selectToi.selectedBoxData.boxShadowSpreadRadius = 0;
+                  selectToi.selectedBoxData.boxShadowColor = '';
+                  rightPanelStore.toggleShadow = false;
+                }
+              "
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Export section! -->
+    <div
+      v-show="
+        selectToi.selectedBoxData.type !== 'text' && selectToi.selectedBox
+      "
+      class="flex flex-col gap-4 border-b py-4 px-4 border-gray-200"
+    >
+      <div class="flex flex-row justify-between">
+        <p class="font-medium">Export</p>
         <div
           v-if="
             !selectToi.selectedBoxData.boxShadowOffsetY &&

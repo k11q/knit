@@ -16,14 +16,16 @@
       data-id="canvas"
       class="fixed top-0 left-0 w-0 h-0 overflow-visible"
       :style="{
+        transformOrigin: `${addaSquare.originX}px ${addaSquare.originY}px`,
         transform: `translate3D(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px, 0px) rotate(${addaSquare.rotation}deg) scale(${addaSquare.scale})`,
       }"
     >
-      <UIBrowser :nodes="selectToi.data" />
+      <CanvasUIBrowser :nodes="selectToi.data" />
     </div>
     <div
       class="fixed top-0 left-0 w-0 h-0 overflow-visible"
       :style="{
+        transformOrigin: `${addaSquare.originX}px ${addaSquare.originY}px`,
         transform: `translate3D(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px, 0px) rotate(${addaSquare.rotation}deg) scale(${addaSquare.scale})`,
       }"
     >
@@ -136,21 +138,17 @@ const canvasFF = useCanvasFF();
 const resizeStore = useResizeStore();
 const canvasMarker = useCanvasMarkerStore();
 
-function wheel() {
+function wheel(event) {
   event.preventDefault();
-  console.log("e.deltaY = " + event.deltaY);
-  console.log("e.deltaX = " + event.deltaX);
-  console.log("e.touches = " + event.touches);
 
-  if (event.deltaX === 0) {
+  if (event.deltaX === 0 && event.ctrlKey) {
     addaSquare.scale += event.deltaY * -0.01;
+    addaSquare.originX = event.clientX - addaSquare.offsetLeft;
+    addaSquare.originY = event.clientY - addaSquare.offsetTop;
+  } else {
+    addaSquare.offsetLeft += -event.deltaX;
+    addaSquare.offsetTop += -event.deltaY;
   }
-
-  // Restrict scale
-  addaSquare.scale = Math.min(Math.max(0.125, scale), 4);
-
-  console.log("e.deltaY = " + event.deltaY);
-  console.log("e.deltaX = " + event.deltaX);
 }
 
 onMounted(() => {

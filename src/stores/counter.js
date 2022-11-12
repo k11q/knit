@@ -22,8 +22,6 @@ export const useCounterStore = defineStore({
       {
         id: "rectangle",
         type: "frame",
-        textContent: "",
-        color: "blue",
         bgColor: "blue",
         height: 500,
         width: 300,
@@ -45,8 +43,6 @@ export const useCounterStore = defineStore({
           {
             id: "rectangle5",
             type: "box",
-            textContent: "",
-            color: "red",
             bgColor: "red",
             height: 80,
             width: 80,
@@ -63,8 +59,6 @@ export const useCounterStore = defineStore({
           {
             id: "rectangle6",
             type: "box",
-            textContent: "",
-            color: "red",
             bgColor: "red",
             height: 80,
             width: 80,
@@ -81,8 +75,6 @@ export const useCounterStore = defineStore({
           {
             id: "rectangle18",
             type: "box",
-            textContent: "",
-            color: "red",
             bgColor: "red",
             height: 80,
             width: 80,
@@ -101,8 +93,6 @@ export const useCounterStore = defineStore({
       {
         id: "rectangle2",
         type: "frame",
-        textContent: "",
-        color: "blueviolet",
         bgColor: "blueviolet",
         height: 100,
         width: 100,
@@ -121,8 +111,6 @@ export const useCounterStore = defineStore({
           {
             id: "rectangle7",
             type: "box",
-            textContent: "",
-            color: "blue",
             bgColor: "blue",
             position: "absolute",
             flexDirection: "column",
@@ -134,8 +122,6 @@ export const useCounterStore = defineStore({
               {
                 id: "rectangle8",
                 type: "box",
-                textContent: "",
-                color: "red",
                 bgColor: "red",
                 position: "absolute",
                 flexDirection: "column",
@@ -148,8 +134,6 @@ export const useCounterStore = defineStore({
               {
                 id: "rectangle9",
                 type: "box",
-                textContent: "",
-                color: "red",
                 bgColor: "red",
                 height: 80,
                 width: 80,
@@ -164,8 +148,6 @@ export const useCounterStore = defineStore({
                   {
                     id: "rectangle10",
                     type: "box",
-                    textContent: "",
-                    color: "red",
                     bgColor: "red",
                     position: "absolute",
                     flexDirection: "column",
@@ -179,8 +161,6 @@ export const useCounterStore = defineStore({
                   {
                     id: "rectangle11",
                     type: "box",
-                    textContent: "",
-                    color: "red",
                     bgColor: "red",
                     height: 80,
                     width: 80,
