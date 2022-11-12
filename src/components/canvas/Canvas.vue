@@ -45,14 +45,17 @@
       >
         <div class="pointer-events-auto">
           <p
-            class="absolute left-0 right-0 top-full mt-2 flex flex-row justify-center flex-nowrap items-center"
+            class="absolute left-0 right-0 top-full flex flex-row justify-center"
+            :style="{ marginTop: `${(8 * 1) / addaSquare.scale}px` }"
           >
             <span
-              class="bg-blue-600 text-white cursor-default rounded flex-nowrap flex"
+              class="bg-blue-600 text-white cursor-default whitespace-nowrap"
               :style="{
                 fontSize: `${(11 * 1) / addaSquare.scale}px`,
-                paddingTop: `${(2 * 1) / addaSquare.scale}px`,
-                paddingBottom: `${(2 * 1) / addaSquare.scale}px`,
+                lineHeight: 1.5,
+                borderRadius: `${(4 * 1) / addaSquare.scale}px`,
+                paddingTop: `${2 * (1 / addaSquare.scale)}px`,
+                paddingBottom: `${2 * (1 / addaSquare.scale)}px`,
                 paddingRight: `${(4 * 1) / addaSquare.scale}px`,
                 paddingLeft: `${(4 * 1) / addaSquare.scale}px`,
               }"

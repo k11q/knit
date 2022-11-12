@@ -54,9 +54,14 @@
     >
       <p
         @mousedown="selectToi.changeSelected($event, node.id)"
-        class="absolute bottom-full left-0 mb-0.5 hover:text-blue-600"
+        class="absolute bottom-full left-0 hover:text-blue-600"
         :class="{
           'text-blue-600': selectToi.selectedBox === node.id,
+        }"
+        :style="{
+          fontSize: `${(12 * 1) / squareStore.scale}px`,
+          lineHeight: 1.4,
+          marginBottom: `${(2 * 1) / squareStore.scale}px`,
         }"
       >
         {{ node.id }}
@@ -178,7 +183,6 @@ const testDown = (e, currDrag) => {
   if (!squareStore.dragPointer && !squareStore.draggingPointer) {
     let prevX = e.layerX;
     let prevY = e.layerY;
-    console.log("prevX = " + prevX);
 
     let prevOffsetLeft = e.clientX - e.target.getBoundingClientRect().x;
     let prevOffsetTop = e.clientY - e.target.getBoundingClientRect().y;
@@ -218,8 +222,12 @@ const testDown = (e, currDrag) => {
       function mousemove(e) {
         isDragging = true;
 
-        selectToi.selectedBoxHTMLX = Math.round(e.clientX - prevX);
-        selectToi.selectedBoxHTMLY = Math.round(e.clientY - prevY);
+        selectToi.selectedBoxHTMLX =
+          (e.clientX * 1) / squareStore.scale - prevX;
+        selectToi.selectedBoxHTMLY =
+          (e.clientY * 1) / squareStore.scale - prevY;
+        console.log("eclientX = " + e.clientX);
+        console.log("eclientY = " + e.clientY);
 
         if (selectToi.selectedBoxData.parent) {
           let dropzone = document.querySelector(
@@ -229,15 +237,17 @@ const testDown = (e, currDrag) => {
           let dropzoneLeft = dropzonerect.x;
           let dropzoneTop = dropzonerect.y;
 
-          selectToi.selectedBoxData.X = Math.round(
-            e.clientX - dropzoneLeft - prevOffsetLeft
-          );
-          selectToi.selectedBoxData.Y = Math.round(
-            e.clientY - dropzoneTop - prevOffsetTop
-          );
+          selectToi.selectedBoxData.X =
+            (Math.round(e.clientX - dropzoneLeft - prevOffsetLeft) * 1) /
+            squareStore.scale;
+          selectToi.selectedBoxData.Y =
+            (Math.round(e.clientY - dropzoneTop - prevOffsetTop) * 1) /
+            squareStore.scale;
         } else {
-          selectToi.selectedBoxData.X = Math.round(e.clientX - prevX);
-          selectToi.selectedBoxData.Y = Math.round(e.clientY - prevY);
+          selectToi.selectedBoxData.X =
+            (e.clientX * 1) / squareStore.scale - prevX;
+          selectToi.selectedBoxData.Y =
+            (e.clientY * 1) / squareStore.scale - prevY;
         }
 
         //ruler function
