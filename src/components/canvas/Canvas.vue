@@ -141,10 +141,16 @@ const canvasMarker = useCanvasMarkerStore();
 function wheel(event) {
   event.preventDefault();
 
-  if (event.deltaX === 0 && event.ctrlKey) {
-    addaSquare.scale += event.deltaY * -0.01;
+  if (
+    event.deltaX === 0 &&
+    event.ctrlKey &&
+    addaSquare.scale >= 0.15 &&
+    addaSquare.scale <= 4
+  ) {
     addaSquare.originX = event.clientX - addaSquare.offsetLeft;
     addaSquare.originY = event.clientY - addaSquare.offsetTop;
+    addaSquare.scale += event.deltaY * -0.01;
+    addaSquare.scale = Math.max(0.15, Math.min(4, addaSquare.scale));
   } else {
     addaSquare.offsetLeft += -event.deltaX;
     addaSquare.offsetTop += -event.deltaY;
