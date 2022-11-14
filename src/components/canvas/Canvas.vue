@@ -17,7 +17,7 @@
       class="fixed top-0 left-0 w-0 h-0 overflow-visible"
       :style="{
         transformOrigin: `${addaSquare.originX}px ${addaSquare.originY}px`,
-        transform: `translate3D(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px, 0px) rotate(${addaSquare.rotation}deg) scale(${addaSquare.scale})`,
+        transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
       }"
     >
       <CanvasUIBrowser :nodes="selectToi.data" />
@@ -26,7 +26,7 @@
       class="fixed top-0 left-0 w-0 h-0 overflow-visible"
       :style="{
         transformOrigin: `${addaSquare.originX}px ${addaSquare.originY}px`,
-        transform: `translate3D(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px, 0px) rotate(${addaSquare.rotation}deg) scale(${addaSquare.scale})`,
+        transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
       }"
     >
       <div
@@ -140,17 +140,19 @@ const canvasMarker = useCanvasMarkerStore();
 
 function wheel(event) {
   event.preventDefault();
+  console.log("eventclientX = " + event.clientX);
+  console.log("eventclientY = " + event.clientY);
+  console.log("addaSquare.offsetLeft = " + addaSquare.offsetLeft);
+  console.log("addaSquare.offsetTop = " + addaSquare.offsetTop);
 
   if (
     event.deltaX === 0 &&
     event.ctrlKey &&
-    addaSquare.scale >= 0.15 &&
+    addaSquare.scale >= 0.02 &&
     addaSquare.scale <= 4
   ) {
-    addaSquare.originX = event.clientX - addaSquare.offsetLeft;
-    addaSquare.originY = event.clientY - addaSquare.offsetTop;
-    addaSquare.scale += event.deltaY * -0.01;
-    addaSquare.scale = Math.max(0.15, Math.min(4, addaSquare.scale));
+    addaSquare.scale += event.deltaY * -0.006;
+    addaSquare.scale = Math.max(0.02, Math.min(4, addaSquare.scale));
   } else {
     addaSquare.offsetLeft += -event.deltaX;
     addaSquare.offsetTop += -event.deltaY;

@@ -17,8 +17,8 @@ export const useSquareStore = defineStore({
     offsetLeft: 0,
     offsetTop: 0,
     scale: 1,
-    originX: "",
-    originY: "",
+    originX: 0,
+    originY: 0,
 
     //zoom n gesture
     rotation: 0,
@@ -69,14 +69,7 @@ export const useSquareStore = defineStore({
       children: [],
     },
   }),
-  getters: {
-    getPosition(state) {
-      return `transform: translate(${state.offsetLeft}px, ${state.offsetTop}px)`;
-    },
-    render() {
-      return `translate3D(${posX}px, ${posY}px, 0px) rotate(${rotation}deg) scale(${scale})`;
-    },
-  },
+  getters: {},
   actions: {
     addSquare(event, dataPushed) {
       const counter = useCounterStore();
@@ -84,6 +77,7 @@ export const useSquareStore = defineStore({
       const squareStore = useSquareStore();
       const middlePointLeft = this.offsetLeft;
       const middlePointTop = this.offsetTop;
+      console.log("mousedown = " + event.target);
 
       function vh(percent) {
         var h = Math.max(
@@ -142,8 +136,8 @@ export const useSquareStore = defineStore({
 
       if (this.addSquareActivated === true) {
         this.dataSquare.id = "box" + this.countBox;
-        this.dataSquare.X = event.clientX - 50 - middlePointLeft;
-        this.dataSquare.Y = event.clientY - 50 - middlePointTop;
+        this.dataSquare.X = (event.clientX - this.offsetLeft) / this.scale - 50;
+        this.dataSquare.Y = (event.clientY - this.offsetTop) / this.scale - 50;
         let clonedDataSquare = { ...this.dataSquare };
 
         this.turnOnNormalPointer();
@@ -152,8 +146,8 @@ export const useSquareStore = defineStore({
         this.countBox = this.countBox + 1;
       } else if (this.addTextActivated === true) {
         this.dataText.id = "text" + this.countBox;
-        this.dataText.X = event.clientX - 50 - middlePointLeft;
-        this.dataText.Y = event.clientY - 50 - middlePointTop;
+        this.dataText.X = (event.clientX - this.offsetLeft) / this.scale - 50;
+        this.dataText.Y = (event.clientY - this.offsetTop) / this.scale - 50;
         let clonedDataText = { ...this.dataText };
 
         this.turnOnNormalPointer();
@@ -163,8 +157,8 @@ export const useSquareStore = defineStore({
         this.countBox = this.countBox + 1;
       } else if (this.addFrameActivated === true) {
         this.dataFrame.id = "frame" + this.countBox;
-        this.dataFrame.X = event.clientX - 50 - middlePointLeft;
-        this.dataFrame.Y = event.clientY - 50 - middlePointTop;
+        this.dataFrame.X = (event.clientX - this.offsetLeft) / this.scale - 50;
+        this.dataFrame.Y = (event.clientY - this.offsetTop) / this.scale - 50;
         let clonedDataFrame = { ...this.dataFrame };
 
         this.turnOnNormalPointer();
