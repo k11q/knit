@@ -78,22 +78,22 @@
           <div
             @mousedown.stop.prevent="resizeStore.resizeTop"
             class="absolute bottom-full bg-blue-600 w-full hover:cursor-row-resize"
-            :style="{ height: `${(2 * 1) / addaSquare.scale}px` }"
+            :style="{ height: `${(1 * 1) / addaSquare.scale}px` }"
           />
           <div
             @mousedown.stop.prevent="resizeStore.resizeBottom"
             class="absolute top-full bg-blue-600 w-full hover:cursor-row-resize"
-            :style="{ height: `${(2 * 1) / addaSquare.scale}px` }"
+            :style="{ height: `${(1 * 1) / addaSquare.scale}px` }"
           />
           <div
             @mousedown.stop.prevent="resizeStore.resizeLeft"
             class="absolute right-full bg-blue-600 h-full hover:cursor-col-resize"
-            :style="{ width: `${(2 * 1) / addaSquare.scale}px` }"
+            :style="{ width: `${(1 * 1) / addaSquare.scale}px` }"
           />
           <div
             @mousedown.stop.prevent="resizeStore.resizeRight"
             class="absolute left-full bg-blue-600 h-full hover:cursor-col-resize"
-            :style="{ width: `${(2 * 1) / addaSquare.scale}px` }"
+            :style="{ width: `${(1 * 1) / addaSquare.scale}px` }"
           />
 
           <div
