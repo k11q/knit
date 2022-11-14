@@ -144,6 +144,9 @@ function wheel(event) {
   console.log("eventclientY = " + event.clientY);
   console.log("addaSquare.offsetLeft = " + addaSquare.offsetLeft);
   console.log("addaSquare.offsetTop = " + addaSquare.offsetTop);
+  const canvas = document.querySelector('[data-id="canvas"]');
+  const canvasRect = canvas.getBoundingClientRect();
+  console.log("canvasX = " + canvasRect.x);
 
   if (
     event.deltaX === 0 &&

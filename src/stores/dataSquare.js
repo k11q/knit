@@ -20,15 +20,6 @@ export const useSquareStore = defineStore({
     originX: 0,
     originY: 0,
 
-    //zoom n gesture
-    rotation: 0,
-    gestureStartRotation: 0,
-    gestureStartScale: 0,
-    posX: 0,
-    posY: 0,
-    startX: 0,
-    startY: 0,
-
     dataFrame: {
       id: "rectangle" + Math.random() * 100,
       type: "frame",
@@ -75,8 +66,6 @@ export const useSquareStore = defineStore({
       const counter = useCounterStore();
       const canvasFF = useCanvasFF();
       const squareStore = useSquareStore();
-      const middlePointLeft = this.offsetLeft;
-      const middlePointTop = this.offsetTop;
       console.log("mousedown = " + event.target);
 
       function vh(percent) {
@@ -138,6 +127,7 @@ export const useSquareStore = defineStore({
         this.dataSquare.id = "box" + this.countBox;
         this.dataSquare.X = (event.clientX - this.offsetLeft) / this.scale - 50;
         this.dataSquare.Y = (event.clientY - this.offsetTop) / this.scale - 50;
+        this.dataSquare.children = [];
         let clonedDataSquare = { ...this.dataSquare };
 
         this.turnOnNormalPointer();
@@ -159,6 +149,7 @@ export const useSquareStore = defineStore({
         this.dataFrame.id = "frame" + this.countBox;
         this.dataFrame.X = (event.clientX - this.offsetLeft) / this.scale - 50;
         this.dataFrame.Y = (event.clientY - this.offsetTop) / this.scale - 50;
+        this.dataFrame.children = [];
         let clonedDataFrame = { ...this.dataFrame };
 
         this.turnOnNormalPointer();

@@ -161,11 +161,6 @@ const canvasDnd = useCanvasDndStore();
 const canvasFF = useCanvasFF();
 const squareStore = useSquareStore();
 const canvasMarker = useCanvasMarkerStore();
-let editable = ref(false);
-
-const makeEditable = () => {
-  editable.value = true;
-};
 
 const typeFrame = (type) => {
   if (type === "frame") {
