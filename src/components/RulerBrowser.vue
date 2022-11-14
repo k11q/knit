@@ -3,7 +3,7 @@
     <div
       v-if="line.lineTop"
       :style="{
-        top: line.lineTop + squareStore.offsetTop + 'px',
+        top: line.lineTop * squareStore.scale + squareStore.offsetTop + 'px',
         width: '100vw',
       }"
       class="h-[1px] bg-red-600 fixed pointer-events-none overflow-visible"
@@ -11,7 +11,7 @@
     <div
       v-if="line.lineBottom"
       :style="{
-        top: line.lineBottom + squareStore.offsetTop + 'px',
+        top: line.lineBottom * squareStore.scale + squareStore.offsetTop + 'px',
         width: '100vw',
       }"
       class="h-[1px] bg-red-600 fixed pointer-events-none overflow-visible"
@@ -19,7 +19,7 @@
     <div
       v-if="line.lineLeft"
       :style="{
-        left: line.lineLeft + squareStore.offsetLeft + 'px',
+        left: line.lineLeft * squareStore.scale + squareStore.offsetLeft + 'px',
         height: '100vh',
       }"
       class="w-[1px] bg-red-600 fixed pointer-events-none overflow-visible"
@@ -27,7 +27,8 @@
     <div
       v-if="line.lineRight"
       :style="{
-        left: line.lineRight + squareStore.offsetLeft + 'px',
+        left:
+          line.lineRight * squareStore.scale + squareStore.offsetLeft + 'px',
         height: '100vh',
       }"
       class="w-[1px] bg-red-600 fixed pointer-events-none overflow-visible"
