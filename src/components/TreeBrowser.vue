@@ -17,11 +17,6 @@
       }"
       @mouseover.stop.prevent="treeDnd.checkDroppable($event, node)"
       @mousedown="dragAndDrop($event, node.id)"
-      @click="
-        () => {
-          node.expandTree = !node.expandTree;
-        }
-      "
     >
       <div
         v-if="
@@ -59,7 +54,15 @@
           'bottom-0 -mb-[5px]': treeDnd.currDropPosition === 'bottom',
         }"
       ></div>
-      <div class="absolute -ml-4" v-if="node.children && node.children.length">
+      <div
+        class="absolute -ml-4 hover:bg-gray-100 rounded-sm"
+        v-if="node.children && node.children.length"
+        @mousedown.prevent.stop="
+          () => {
+            node.expandTree = !node.expandTree;
+          }
+        "
+      >
         <svg
           v-if="!node.expandTree"
           width="13"

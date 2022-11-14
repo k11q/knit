@@ -45,7 +45,7 @@
       @mouseover="canvasDnd.checkDroppable($event, node)"
       @mousedown="selectToi.changeSelected($event, node.id)"
       @mouseleave.stop.prevent="canvasDnd.removeDroppable()"
-      class="hover:shadow-[0_0_0_2px_#2563eb]"
+      class="hover:outline outline-blue-600"
       :class="{
         ' bg-red-600': node.isDroppable == true,
         'pointer-events-none':
@@ -107,7 +107,7 @@
       @pointerdown.stop="testDown($event, node.id)"
       @mouseover.stop.prevent="canvasDnd.checkDroppable($event, node)"
       @mousedown="selectToi.changeSelected($event, node.id)"
-      class="hover:shadow-[0_0_0_2px_#2563eb]"
+      class="hover:outline outline-blue-600"
       @mouseleave.stop.prevent="canvasDnd.removeDroppable()"
       :class="{
         ' bg-red-600': node.isDroppable == true,
@@ -128,7 +128,6 @@
       @pointerdown.stop="testDown($event, node.id)"
       @mousedown="selectToi.changeSelected($event, node.id)"
       contenteditable="true"
-      style="position: absolute"
       :style="{
         height: 100 + 'px',
         width: 100 + 'px',
@@ -136,6 +135,7 @@
         top: node.Y + node.Yunit,
         fontSize: node.fontSize + node.fontUnit,
         color: node.color,
+        position: node.position,
       }"
       :data-id="node.id"
       data-component="Text"
