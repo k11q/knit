@@ -122,7 +122,7 @@
         :depth="depth + 1"
       />
     </div>
-    <p
+    <div
       v-if="typeText(node.type)"
       class="text-center hover:decoration-blue-600 hover:underline hover:decoration-2"
       contenteditable="true"
@@ -145,7 +145,7 @@
       }"
     >
       {{ node.textContent }}
-    </p>
+    </div>
   </template>
 </template>
 
@@ -217,11 +217,6 @@ const testDown = (e, currDrag) => {
 
       function mousemove(e) {
         isDragging = true;
-
-        selectToi.selectedBoxHTMLX = (e.clientX - prevX) / squareStore.scale;
-        selectToi.selectedBoxHTMLY = (e.clientY - prevY) / squareStore.scale;
-        console.log("eclientX = " + e.clientX);
-        console.log("eclientY = " + e.clientY);
 
         if (selectToi.selectedBoxData.parent) {
           let dropzone = document.querySelector(

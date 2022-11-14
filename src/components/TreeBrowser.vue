@@ -15,7 +15,7 @@
           treeDnd.currDrop === node.id &&
           selectToi.selectedBox !== node.id,
       }"
-      @mouseover.stop.prevent="treeDnd.checkDroppable($event, node)"
+      @mouseover="treeDnd.checkDroppable($event, node)"
       @mousedown="dragAndDrop($event, node.id)"
     >
       <div
@@ -135,7 +135,7 @@
           <line x1="12" y1="4" x2="12" y2="20"></line>
         </svg>
       </div>
-      <h1 class="">{{ node.id }}</h1>
+      <h1>{{ node.id }}</h1>
     </div>
     <template v-if="node.expandTree">
       <TreeBrowser

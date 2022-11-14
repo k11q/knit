@@ -201,7 +201,7 @@
     >
       <p class="font-medium">Background</p>
       <div class="flex flex-row gap-3 flex-none justify-between w-full">
-        <div class="flex flex-row gap-0.5 justify-start items-center w-2/3">
+        <div class="flex flex-row justify-start items-center w-2/3">
           <div
             class="h-full aspect-square items-center flex flex-none border"
             :style="{
@@ -211,9 +211,9 @@
           <input
             type="text"
             v-model="selectToi.canvas[0].bgColor"
-            class="w-full px-2"
+            class="w-3/4 pl-2"
           />
-          <input type="text" value="100%" class="w-full px-2" />
+          <input type="text" value="100%" class="w-1/2 px-2" />
         </div>
         <div class="flex flex-row gap-2 flex-none justify-end">
           <div class="aspect-square h-full">

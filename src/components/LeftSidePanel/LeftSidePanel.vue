@@ -1,9 +1,9 @@
 <template>
   <div
-    class="border-r w-60 flex flex-col flex-none h-full overflow-x-hidden overflow-y-scroll z-10 bg-white"
+    class="border-r w-60 flex flex-col flex-none h-screen overflow-x-hidden pb-16 z-10 bg-white"
   >
     <div
-      class="h-10 border-b flex-none flex flex-row items-center px-2 sticky top-0 bg-white"
+      class="h-10 border-b flex-none flex flex-row items-center px-2 sticky top-0 bg-white z-10"
     >
       <div
         class="px-2 h-full items-center flex flex-row cursor-pointer"
