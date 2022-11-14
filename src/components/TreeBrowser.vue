@@ -2,7 +2,7 @@
   <template v-for="node in nodes.slice().reverse()">
     <div
       :data-treeId="node.id"
-      :style="{ 'padding-left': `${depth * 20}px` }"
+      :style="{ 'padding-left': depth === 1 ? '16px' : depth * 20 + 'px' }"
       class="flex flex-row gap-2 py-[9px] border border-white box-border cursor-default items-center relative"
       :class="{
         'bg-blue-200 border-blue-200 hover:border-blue-200':

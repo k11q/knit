@@ -205,12 +205,12 @@
           <div
             class="h-full aspect-square items-center flex flex-none border"
             :style="{
-              'background-color': selectToi.selectedBoxData.bgColor,
+              'background-color': selectToi.canvas[0].bgColor,
             }"
           ></div>
           <input
             type="text"
-            v-model="selectToi.selectedBoxData.bgColor"
+            v-model="selectToi.canvas[0].bgColor"
             class="w-full px-2"
           />
           <input type="text" value="100%" class="w-full px-2" />

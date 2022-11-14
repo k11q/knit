@@ -125,12 +125,12 @@
     <p
       v-if="typeText(node.type)"
       class="text-center hover:decoration-blue-600 hover:underline hover:decoration-2"
+      contenteditable="true"
       @pointerdown.stop="testDown($event, node.id)"
       @mousedown="selectToi.changeSelected($event, node.id)"
-      contenteditable="true"
       :style="{
-        height: 100 + 'px',
-        width: 100 + 'px',
+        height: node.height + 'px',
+        width: node.width + 'px',
         left: node.X + node.Xunit,
         top: node.Y + node.Yunit,
         fontSize: node.fontSize + node.fontUnit,
