@@ -218,6 +218,9 @@ const testDown = (e, currDrag) => {
       function mousemove(e) {
         isDragging = true;
 
+        selectToi.selectedBoxHTMLX = (e.clientX - prevX) / squareStore.scale;
+        selectToi.selectedBoxHTMLY = (e.clientY - prevY) / squareStore.scale;
+
         if (selectToi.selectedBoxData.parent) {
           let dropzone = document.querySelector(
             `[data-id=${selectToi.selectedBoxData.parent}]`
@@ -311,7 +314,6 @@ const testDown = (e, currDrag) => {
         canvasMarker.lines = targetChildrenData;
 
         //sort childrens by dragging
-        /*
         if (canvasDnd.isDroppable && canvasDnd.currDrop) {
           canvasDnd.currDropHTML = e.target;
 

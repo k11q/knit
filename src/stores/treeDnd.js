@@ -17,40 +17,6 @@ export const useTreeDndStore = defineStore({
     spareDragzone: "",
   }),
   actions: {
-    checkDroppable(e, node) {
-      if (node) {
-        if (node.id != this.currDrag) {
-          this.currDrop = node.id;
-
-          const currdropEl = document.querySelector(
-            `[data-treeId="${node.id}"]`
-          );
-          const currdropElRect = currdropEl.getBoundingClientRect();
-
-          if (e.clientY - currdropElRect.y >= (currdropElRect.height * 2) / 3) {
-            this.currDropPosition = "bottom";
-          } else if (
-            e.clientY - currdropElRect.y >
-            (currdropElRect.height * 1) / 3
-          ) {
-            this.currDropPosition = "middle";
-          } else {
-            this.currDropPosition = "top";
-          }
-          console.log("currposition = " + this.currDropPosition);
-
-          this.isDroppable = true;
-          this.displayDroppable = node.isDroppable;
-        } else {
-          this.currDrop = "";
-          this.isDroppable = false;
-        }
-      } else {
-        this.currDrop = "";
-        this.isDroppable = false;
-        console.log("isdroppable =" + this.isDroppable);
-      }
-    },
     setCurrDragValue(arr, value) {
       arr.every((i) => {
         if (i.id === value) {

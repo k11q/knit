@@ -57,6 +57,7 @@ export const useResizeStore = defineStore({
         let prevWidth = selectToi.selectedBoxData.width;
         let prevHeight = selectToi.selectedBoxData.height;
         let prevWidth2 = selectToi.selectedBoxData.X;
+        let prevWidthX = selectToi.selectedBoxHTMLX;
 
         let prevX = e.clientX;
         let prevY = e.clientY;
@@ -79,6 +80,9 @@ export const useResizeStore = defineStore({
           selectToi.selectedBoxHTMLHeight = Math.round(
             prevHeight + ((e.clientY - prevY) * 1) / squareStore.scale
           );
+          selectToi.selectedBoxHTMLX = Math.round(
+            prevWidthX + ((e.clientX - prevX) * 1) / squareStore.scale
+          );
           selectToi.selectedBoxData.X = Math.round(
             prevWidth2 + ((e.clientX - prevX) * 1) / squareStore.scale
           );
@@ -100,6 +104,8 @@ export const useResizeStore = defineStore({
 
         let prevWidth = selectToi.selectedBoxData.X;
         let prevHeight = selectToi.selectedBoxData.Y;
+        let prevWidthX = selectToi.selectedBoxHTMLX;
+        let prevHeightY = selectToi.selectedBoxHTMLY;
         let prevWidth2 = selectToi.selectedBoxData.width;
         let prevHeight2 = selectToi.selectedBoxData.height;
 
@@ -131,6 +137,12 @@ export const useResizeStore = defineStore({
           selectToi.selectedBoxHTMLHeight = Math.round(
             prevHeight2 + ((prevY - e.clientY) * 1) / squareStore.scale
           );
+          selectToi.selectedBoxHTMLX = Math.round(
+            prevWidthX + ((e.clientX - prevX) * 1) / squareStore.scale
+          );
+          selectToi.selectedBoxHTMLY = Math.round(
+            prevHeightY + ((e.clientY - prevY) * 1) / squareStore.scale
+          );
           console.log("mousemove!");
         }
 
@@ -150,6 +162,7 @@ export const useResizeStore = defineStore({
         let prevWidth = selectToi.selectedBoxData.width;
         let prevHeight = selectToi.selectedBoxData.Y;
         let prevHeight2 = selectToi.selectedBoxData.height;
+        let prevHeightY = selectToi.selectedBoxHTMLY;
 
         let prevX = e.clientX;
         let prevY = e.clientY;
@@ -174,6 +187,10 @@ export const useResizeStore = defineStore({
           );
           selectToi.selectedBoxHTMLHeight = Math.round(
             prevHeight2 + ((prevY - e.clientY) * 1) / squareStore.scale
+          );
+
+          selectToi.selectedBoxHTMLY = Math.round(
+            prevHeightY + ((e.clientY - prevY) * 1) / squareStore.scale
           );
 
           console.log("mousemove!");
@@ -225,6 +242,7 @@ export const useResizeStore = defineStore({
 
         let prevWidth = selectToi.selectedBoxData.width;
         let prevWidth2 = selectToi.selectedBoxData.X;
+        let prevWidthX = selectToi.selectedBoxHTMLX;
 
         let prevX = e.clientX;
 
@@ -243,6 +261,9 @@ export const useResizeStore = defineStore({
           selectToi.selectedBoxHTMLWidth = Math.round(
             prevWidth + ((prevX - e.clientX) * 1) / squareStore.scale
           );
+          selectToi.selectedBoxHTMLX = Math.round(
+            prevWidthX + ((e.clientX - prevX) * 1) / squareStore.scale
+          );
         }
 
         function mouseup() {
@@ -260,6 +281,7 @@ export const useResizeStore = defineStore({
 
         let prevHeight = selectToi.selectedBoxData.height;
         let prevHeight2 = selectToi.selectedBoxData.Y;
+        let prevHeightY = selectToi.selectedBoxHTMLY;
 
         let prevY = e.clientY;
 
@@ -277,6 +299,9 @@ export const useResizeStore = defineStore({
           );
           selectToi.selectedBoxHTMLHeight = Math.round(
             prevHeight + ((prevY - e.clientY) * 1) / squareStore.scale
+          );
+          selectToi.selectedBoxHTMLY = Math.round(
+            prevHeightY + ((e.clientY - prevY) * 1) / squareStore.scale
           );
         }
 

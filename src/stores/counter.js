@@ -9,6 +9,8 @@ export const useCounterStore = defineStore({
     dragDisplay: "",
     blueLine: "",
     selectedBoxData: "",
+    selectedBoxHTMLX: "",
+    selectedBoxHTMLY: "",
     prevX: 0,
     prevY: 0,
     selectedBoxHTMLWidth: "",
@@ -625,6 +627,9 @@ export const useCounterStore = defineStore({
           let parentOffsetLeft = parent.offsetLeft;
           let parentOffsetTop = parent.offsetTop;
 
+          this.selectedBoxHTMLX = Math.round(e.clientX - this.prevX);
+          this.selectedBoxHTMLY = Math.round(e.clientY - this.prevY);
+
           this.selectedBoxHTMLWidth = this.selectedBoxData.width;
           this.selectedBoxHTMLHeight = this.selectedBoxData.height;
 
@@ -638,6 +643,8 @@ export const useCounterStore = defineStore({
 
       this.selectedBox = newData.id;
       console.log("selectedbox" + this.selectedBox);
+      this.selectedBoxHTMLX = newData.X;
+      this.selectedBoxHTMLY = newData.Y;
       this.selectedBoxHTMLWidth = newData.width;
       this.selectedBoxHTMLHeight = newData.height;
 

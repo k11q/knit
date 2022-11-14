@@ -1,7 +1,7 @@
 <template>
   <template v-for="node in nodes.slice().reverse()">
     <div
-      :data-treeId="node.id"
+      :data-treeid="node.id"
       :style="{ 'padding-left': depth === 1 ? '16px' : depth * 20 + 'px' }"
       class="flex flex-row gap-2 py-[9px] border border-white box-border cursor-default items-center relative"
       :class="{
@@ -15,7 +15,6 @@
           treeDnd.currDrop === node.id &&
           selectToi.selectedBox !== node.id,
       }"
-      @mouseover="treeDnd.checkDroppable($event, node)"
       @mousedown="dragAndDrop($event, node.id)"
     >
       <div
@@ -135,7 +134,7 @@
           <line x1="12" y1="4" x2="12" y2="20"></line>
         </svg>
       </div>
-      <h1>{{ node.id }}</h1>
+      <h1 class="pointer-events-none">{{ node.id }}</h1>
     </div>
     <template v-if="node.expandTree">
       <TreeBrowser
@@ -174,11 +173,43 @@ const dragAndDrop = (e, currDrag) => {
     selectToi.changeSelected(e, currDrag);
     treeDnd.currDrag = currDrag;
 
-    window.addEventListener("mousemove", mousemove);
+    window.addEventListener("mousemove", mousemove, e);
     window.addEventListener("mouseup", mouseup);
 
     function mousemove(e) {
       treeDnd.isDragging = true;
+      const currDropId = document.elementFromPoint(e.clientX, e.clientY).dataset
+        .treeid;
+      console.log(
+        document.elementFromPoint(e.clientX, e.clientY).dataset.treeid
+      );
+      if (currDropId) {
+        if (currDropId != treeDnd.currDrag) {
+          treeDnd.currDrop = currDropId;
+
+          const currdropEl = document.elementFromPoint(e.clientX, e.clientY);
+          const currdropElRect = currdropEl.getBoundingClientRect();
+
+          if (e.clientY - currdropElRect.y >= (currdropElRect.height * 3) / 5) {
+            treeDnd.currDropPosition = "bottom";
+          } else if (
+            e.clientY - currdropElRect.y >
+            (currdropElRect.height * 2) / 5
+          ) {
+            treeDnd.currDropPosition = "middle";
+          } else {
+            treeDnd.currDropPosition = "top";
+          }
+
+          treeDnd.isDroppable = true;
+        } else {
+          treeDnd.currDrop = "";
+          treeDnd.isDroppable = false;
+        }
+      } else {
+        treeDnd.currDrop = "";
+        treeDnd.isDroppable = false;
+      }
     }
 
     function mouseup(e) {

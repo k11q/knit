@@ -33,8 +33,8 @@
         v-if="selectToi.selectedBox && !canvasFF.isDragging"
         class="absolute pointer-events-none"
         :style="{
-          left: selectToi.selectedBoxData.X + 'px',
-          top: selectToi.selectedBoxData.Y + 'px',
+          left: selectToi.selectedBoxHTMLX + 'px',
+          top: selectToi.selectedBoxHTMLY + 'px',
           height: selectToi.selectedBoxData.height
             ? selectToi.selectedBoxData.height + 'px'
             : document.querySelector(
