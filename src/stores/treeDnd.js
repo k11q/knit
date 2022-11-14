@@ -124,6 +124,7 @@ export const useTreeDndStore = defineStore({
         if (i.id === this.currDrop) {
           if (currDrop) {
             i.children.push(this.currDragValue);
+            i.expandTree = true;
             return false;
           }
         } else {

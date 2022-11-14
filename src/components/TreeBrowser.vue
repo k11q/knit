@@ -3,7 +3,7 @@
     <div
       :data-treeId="node.id"
       :style="{ 'padding-left': `${depth * 20}px` }"
-      class="node flex flex-row gap-2 py-[9px] px-3 border border-white box-border cursor-default items-center relative"
+      class="flex flex-row gap-2 py-[9px] border border-white box-border cursor-default items-center relative"
       :class="{
         'bg-blue-200 border-blue-200 hover:border-blue-200':
           selectToi.selectedBox === node.id,
@@ -17,6 +17,11 @@
       }"
       @mouseover.stop.prevent="treeDnd.checkDroppable($event, node)"
       @mousedown="dragAndDrop($event, node.id)"
+      @click="
+        () => {
+          node.expandTree = !node.expandTree;
+        }
+      "
     >
       <div
         v-if="
@@ -54,6 +59,28 @@
           'bottom-0 -mb-[5px]': treeDnd.currDropPosition === 'bottom',
         }"
       ></div>
+      <div class="absolute -ml-4" v-if="node.children && node.children.length">
+        <svg
+          v-if="!node.expandTree"
+          width="13"
+          height="13"
+          viewBox="0 0 13 13"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M9 6.5L3.75 9.9641L3.75 3.0359L9 6.5Z" fill="#BCBCBC" />
+        </svg>
+        <svg
+          v-if="node.expandTree"
+          width="13"
+          height="13"
+          viewBox="0 0 13 13"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M6.5 10L3.0359 4.75L9.9641 4.75L6.5 10Z" fill="#BCBCBC" />
+        </svg>
+      </div>
       <div class="flex flex-col items-center justify-center w-3 flex-none">
         <svg
           v-if="node.type == 'frame'"
@@ -75,13 +102,17 @@
 
         <svg
           v-if="node.type == 'box'"
+          xmlns="http://www.w3.org/2000/svg"
           width="13"
           height="13"
-          viewBox="0 0 11 11"
+          viewBox="0 0 24 24"
           fill="none"
-          xmlns="http://www.w3.org/2000/svg"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         >
-          <rect x="1" y="1" width="9" height="9" rx="1.5" stroke="black" />
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
         </svg>
 
         <svg
@@ -103,18 +134,20 @@
       </div>
       <h1 class="">{{ node.id }}</h1>
     </div>
-    <TreeBrowser
-      :nodes="node.children"
-      :depth="depth + 1"
-      v-model="modelValue"
-    />
+    <template v-if="node.expandTree">
+      <TreeBrowser
+        :nodes="node.children"
+        :depth="depth + 1"
+        :v-model="modelValue"
+      />
+    </template>
   </template>
 </template>
 
 <script setup>
-import { useCounterStore } from "../stores/counter";
-import { useTreeDndStore } from "../stores/treeDnd";
-import { useSquareStore } from "../stores/dataSquare";
+import { useCounterStore } from "@/stores/counter";
+import { useTreeDndStore } from "@/stores/treeDnd";
+import { useSquareStore } from "@/stores/dataSquare";
 
 const selectToi = useCounterStore();
 const treeDnd = useTreeDndStore();
@@ -127,7 +160,6 @@ const props = defineProps({
     default: 1,
   },
 });
-let expanded = ref(true);
 const emit = defineEmits("update:modelValue");
 
 function changePageTitle(title) {
@@ -165,9 +197,3 @@ const dragAndDrop = (e, currDrag) => {
   }
 };
 </script>
-
-<style>
-.node {
-  text-align: left;
-}
-</style>
