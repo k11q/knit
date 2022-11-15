@@ -1,11 +1,14 @@
 <template>
   <div
-    class="h-12 border-b flex flex-row flex-none justify-between z-10 bg-[#1C1C1C] border-[#282828]"
+    class="h-14 border-b flex flex-row flex-none justify-between z-10 bg-[#1C1C1C] border-[#282828] p-2"
   >
-    <div class="flex flex-row">
-      <NuxtLink to="/dashboard">
+    <div class="flex flex-row gap-2">
+      <NuxtLink
+        to="/dashboard"
+        class="aspect-square flex items-center justify-center text-center cursor-default h-full"
+      >
         <div
-          class="aspect-square flex items-center justify-center w-12 text-center cursor-default hover:bg-[#232323]"
+          class="aspect-square flex items-center justify-center text-center cursor-default hover:bg-[#2E2E2E] h-full rounded opacity-60 hover:opacity-100"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -24,13 +27,13 @@
         </div>
       </NuxtLink>
       <div
-        class="aspect-square flex items-center justify-center w-12 text-center cursor-default"
+        class="aspect-square flex items-center justify-center text-center cursor-default h-full flex-none rounded hover:opacity-100"
         @mousedown="canvasFF.dragCanvasStart"
         @mousemove="canvasFF.dragCanvasMove"
         @mouseup="canvasFF.dragCanvasUp"
         :class="{
-          'bg-[#232323]': addaSquare.normalPointer === true,
-          'hover:bg-[#232323]': addaSquare.normalPointer === false,
+          'bg-[#2E2E2E] opacity-100': addaSquare.normalPointer === true,
+          'hover:bg-[#2E2E2E] opacity-60': addaSquare.normalPointer === false,
         }"
         @click="addaSquare.turnOnNormalPointer"
       >
@@ -49,13 +52,13 @@
         </svg>
       </div>
       <div
-        class="aspect-square flex items-center justify-center w-12 text-center cursor-default"
+        class="aspect-square flex items-center justify-center text-center cursor-default h-full flex-none rounded hover:opacity-100"
         @click="addaSquare.turnOnDragPointer"
         :class="{
-          'bg-[#232323]':
+          'bg-[#2E2E2E] opacity-100':
             addaSquare.dragPointer === true ||
             addaSquare.draggingPointer === true,
-          'hover:bg-[#232323]':
+          'hover:bg-[#2E2E2E] opacity-60':
             addaSquare.dragPointer === false &&
             addaSquare.draggingPointer === false,
         }"
@@ -80,11 +83,12 @@
         </svg>
       </div>
       <div
-        class="aspect-square flex items-center justify-center w-12 text-center cursor-default"
+        class="aspect-square flex items-center justify-center text-center cursor-default h-full flex-none rounded hover:opacity-100"
         @click="addaSquare.turnOnAddFrameActivated"
         :class="{
-          'bg-[#232323]': addaSquare.addFrameActivated === true,
-          'hover:bg-[#232323]': addaSquare.addFrameActivated === false,
+          'bg-[#2E2E2E] opacity-100': addaSquare.addFrameActivated === true,
+          'hover:bg-[#2E2E2E] opacity-60':
+            addaSquare.addFrameActivated === false,
         }"
       >
         <svg
@@ -105,11 +109,12 @@
         </svg>
       </div>
       <div
-        class="aspect-square flex items-center justify-center w-12 text-center cursor-default"
+        class="aspect-square flex items-center justify-center text-center cursor-default h-full flex-none rounded hover:opacity-100"
         @click="addaSquare.turnOnAddSquareActivated"
         :class="{
-          'bg-[#232323]': addaSquare.addSquareActivated === true,
-          'hover:bg-[#232323]': addaSquare.addSquareActivated === false,
+          'bg-[#2E2E2E] opacity-100': addaSquare.addSquareActivated === true,
+          'hover:bg-[#2E2E2E] opacity-60':
+            addaSquare.addSquareActivated === false,
         }"
       >
         <svg
@@ -127,11 +132,12 @@
         </svg>
       </div>
       <div
-        class="aspect-square flex items-center justify-center w-12 text-center cursor-default"
+        class="aspect-square flex items-center justify-center text-center cursor-default h-full flex-none rounded hover:opacity-100"
         @click="addaSquare.turnOnAddTextActivated"
         :class="{
-          'bg-[#232323]': addaSquare.addTextActivated === true,
-          'hover:bg-[#232323]': addaSquare.addTextActivated === false,
+          'bg-[#2E2E2E] opacity-100': addaSquare.addTextActivated === true,
+          'hover:bg-[#2E2E2E] opacity-60':
+            addaSquare.addTextActivated === false,
         }"
       >
         <svg
@@ -152,10 +158,10 @@
       </div>
     </div>
     <div class="flex flex-row">
-      <div class="aspect-square flex items-center justify-center w-12">
+      <div class="aspect-square flex items-center justify-center w-14">
         <div>icon</div>
       </div>
-      <div class="aspect-square flex items-center justify-center w-12">
+      <div class="aspect-square flex items-center justify-center w-14">
         <div>icon</div>
       </div>
     </div>

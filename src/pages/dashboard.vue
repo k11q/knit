@@ -7,11 +7,11 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 const client = useSupabaseClient();
 
-const { data: projects } = await useLazyAsyncData("projects", async () => {
-  const { data } = await client.from("projects").select("*");
+const { data: projects } = await useAsyncData("projects", async () => {
+  const { data } = await client.from("users").select("*");
   return data;
 });
 
