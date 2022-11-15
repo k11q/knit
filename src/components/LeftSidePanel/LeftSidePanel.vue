@@ -6,7 +6,7 @@
       class="h-10 border-b flex-none flex flex-row items-center px-2 sticky top-0 bg-white z-10"
     >
       <div
-        class="px-2 h-full items-center flex flex-row cursor-pointer"
+        class="px-2 h-full items-center flex flex-row cursor-default"
         :class="{
           'font-medium text-black': leftPanelStore.activeTab === 'layers',
           'text-neutral-400': leftPanelStore.activeTab !== 'layers',
@@ -16,7 +16,7 @@
         <span>Layers</span>
       </div>
       <div
-        class="px-2 h-full items-center flex flex-row cursor-pointer"
+        class="px-2 h-full items-center flex flex-row cursor-default"
         :class="{
           'font-medium text-black': leftPanelStore.activeTab === 'data',
           'text-neutral-400': leftPanelStore.activeTab !== 'data',
@@ -26,7 +26,7 @@
         <span>Data</span>
       </div>
       <div
-        class="px-2 h-full items-center flex flex-row cursor-pointer"
+        class="px-2 h-full items-center flex flex-row cursor-default"
         :class="{
           'font-medium text-black': leftPanelStore.activeTab === 'assets',
           'text-neutral-400': leftPanelStore.activeTab !== 'assets',

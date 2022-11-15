@@ -4,7 +4,7 @@
     v-show="leftPanelStore.activeTab === 'layers'"
   >
     <!--pages-->
-    <div class="flex flex-col border-b pt-2 pb-3 border-gray-200">
+    <div class="flex flex-col border-b pt-[5px] gap-[1px] pb-3 border-gray-200">
       <div class="flex flex-row justify-between pl-4 pr-2 items-center">
         <p class="font-medium">Pages</p>
         <div

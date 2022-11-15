@@ -6,7 +6,7 @@
       class="h-10 flex-none flex flex-row items-center px-2 sticky top-0 bg-white"
     >
       <div
-        class="px-2 h-full items-center flex flex-row cursor-pointer"
+        class="px-2 h-full items-center flex flex-row cursor-default"
         :class="{
           'font-medium text-black': rightPanelStore.activeTab === 'style',
           'text-neutral-400': rightPanelStore.activeTab !== 'style',
@@ -16,7 +16,7 @@
         <span>Style</span>
       </div>
       <div
-        class="px-2 h-full items-center flex flex-row cursor-pointer"
+        class="px-2 h-full items-center flex flex-row cursor-default"
         :class="{
           'font-medium text-black': rightPanelStore.activeTab === 'props',
           'text-neutral-400': rightPanelStore.activeTab !== 'props',
@@ -26,7 +26,7 @@
         <span>Props</span>
       </div>
       <div
-        class="px-2 h-full items-center flex flex-row cursor-pointer"
+        class="px-2 h-full items-center flex flex-row cursor-default"
         :class="{
           'font-medium text-black': rightPanelStore.activeTab === 'action',
           'text-neutral-400': rightPanelStore.activeTab !== 'action',

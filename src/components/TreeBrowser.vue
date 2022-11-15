@@ -184,7 +184,7 @@ const dragAndDrop = (e, currDrag) => {
         document.elementFromPoint(e.clientX, e.clientY).dataset.treeid
       );
       if (currDropId) {
-        if (currDropId != treeDnd.currDrag) {
+        if (currDropId !== treeDnd.currDrag) {
           treeDnd.currDrop = currDropId;
 
           const currdropEl = document.elementFromPoint(e.clientX, e.clientY);
@@ -213,7 +213,9 @@ const dragAndDrop = (e, currDrag) => {
     }
 
     function mouseup(e) {
-      if (treeDnd.isDragging === true) {
+      const currDropId = document.elementFromPoint(e.clientX, e.clientY).dataset
+        .treeid;
+      if (treeDnd.isDragging === true && currDropId !== treeDnd.currDrag) {
         treeDnd.setCurrDragValue(selectToi.data, treeDnd.currDrag);
         treeDnd.dndRemove(selectToi.data);
         if (treeDnd.currDropPosition === "top") {
