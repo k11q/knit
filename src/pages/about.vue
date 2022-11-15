@@ -3,11 +3,11 @@
     class="flex flex-col h-screen overflow-hidden max-h-screen min-h-screen text-xs bg-neutral-200"
     :style="{ backgroundColor: selectToi.canvas[0].bgColor }"
   >
-    <Canvas />
-    <TopBar />
+    <DesignerCanvas />
+    <DesignerTopBar />
     <div class="flex flex-row justify-between">
-      <LeftSidePanel />
-      <RightSidePanel />
+      <DesignerLeftSidePanel />
+      <DesignerRightSidePanel />
     </div>
   </div>
 </template>

@@ -37,7 +37,7 @@
       </div>
     </div>
     <!--layers tab content -->
-    <LeftSidePanelTabsTabLayers />
+    <DesignerLeftSidePanelTabsTabLayers />
   </div>
 </template>
 

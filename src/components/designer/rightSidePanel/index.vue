@@ -37,9 +37,9 @@
       </div>
       {{ noTouch }}
     </div>
-    <RightSidePanelTabsTabStyle />
-    <RightSidePanelTabsTabProps />
-    <RightSidePanelTabsTabAction />
+    <DesignerRightSidePanelTabsTabStyle />
+    <DesignerRightSidePanelTabsTabProps />
+    <DesignerRightSidePanelTabsTabAction />
   </div>
 </template>
 
