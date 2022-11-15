@@ -1,5 +1,6 @@
 <template>
   <div class="flex flex-col w-full">
+    <DashboardTopBar />
     <div class="px-8 py-4 border-b">Recently viewed</div>
     <div class="flex flex-col px-8 py-6 gap-6">
       <div class="grid grid-cols-4 gap-8">

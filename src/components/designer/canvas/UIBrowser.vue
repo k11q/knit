@@ -67,7 +67,7 @@
       >
         {{ node.id }}
       </p>
-      <CanvasUIBrowser
+      <DesignerCanvasUIBrowser
         v-if="node.children"
         :key="node.id"
         :nodes="node.children"
@@ -115,7 +115,7 @@
           selectToi.selectedBox === node.id && canvasFF.isDragging == true,
       }"
     >
-      <CanvasUIBrowser
+      <DesignerCanvasUIBrowser
         v-if="node.children"
         :key="node.id"
         :nodes="node.children"

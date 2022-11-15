@@ -20,7 +20,7 @@
         transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
       }"
     >
-      <CanvasUIBrowser :nodes="selectToi.data" />
+      <DesignerCanvasUIBrowser :nodes="selectToi.data" />
     </div>
     <div
       class="fixed top-0 left-0 w-0 h-0 overflow-visible"
@@ -126,11 +126,11 @@
 </template>
 
 <script setup>
-import { useCounterStore } from "../../stores/counter";
-import { useSquareStore } from "../../stores/dataSquare";
-import { useCanvasFF } from "../../stores/canvasFreeForm";
-import { useResizeStore } from "../../stores/resizeStore";
-import { useCanvasMarkerStore } from "../../stores/canvasMarker";
+import { useCounterStore } from "@/stores/counter";
+import { useSquareStore } from "@/stores/dataSquare";
+import { useCanvasFF } from "@/stores/canvasFreeForm";
+import { useResizeStore } from "@/stores/resizeStore";
+import { useCanvasMarkerStore } from "@/stores/canvasMarker";
 
 const selectToi = useCounterStore();
 const addaSquare = useSquareStore();

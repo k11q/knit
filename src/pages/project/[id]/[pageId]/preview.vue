@@ -46,7 +46,7 @@
           boxShadow: `${node.boxShadowOffsetY}px ${node.boxShadowOffsetX}px ${node.boxShadowBlurRadius}px ${node.boxShadowSpreadRadius}px ${node.boxShadowColor}`,
         }"
       >
-        <CanvasUIBrowser
+        <DesignerCanvasUIBrowser
           v-if="node.children"
           :key="node.id"
           :nodes="node.children"
@@ -83,7 +83,7 @@
           boxShadow: `${node.boxShadowOffsetY}px ${node.boxShadowOffsetX}px ${node.boxShadowBlurRadius}px ${node.boxShadowSpreadRadius}px ${node.boxShadowColor}`,
         }"
       >
-        <CanvasUIBrowser
+        <DesignerCanvasUIBrowser
           v-if="node.children"
           :key="node.id"
           :nodes="node.children"
