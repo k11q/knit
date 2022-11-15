@@ -7,16 +7,13 @@
   </div>
 </template>
 
-<script setup>
-import { useCounterStore } from "@/stores/counter";
-
-const selectToi = useCounterStore();
-
+<script setup lang="ts">
 const client = useSupabaseClient();
-const { data: project } = await useAsyncData("project", async () => {
-  const { data } = await client.from("project").select("*");
+
+const { data: projects } = await useLazyAsyncData("projects", async () => {
+  const { data } = await client.from("projects").select("*");
   return data;
 });
 
-console.log("data =" + project.value);
+console.log("data = " + projects.value);
 </script>
