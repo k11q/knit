@@ -5,7 +5,7 @@
       :style="{ 'padding-left': depth === 1 ? '16px' : depth * 20 + 'px' }"
       class="flex flex-row gap-2 py-[9px] border border-transparent box-border cursor-default items-center relative"
       :class="{
-        'bg-[#232323] border-[#232323] hover:border-[#232323]':
+        'bg-[#2E2E2E] border-[#232323] hover:border-[#232323]':
           selectToi.selectedBox === node.id,
         'opacity-30': selectToi.dragDisplay === node.id,
         'hover:border-blue-700':

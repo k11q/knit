@@ -722,7 +722,7 @@
         </div>
         <div class="flex flex-col gap-2 w-1/2">
           <div
-            class="w-[65px] h-[65px] border bg-gray-50 rounded-md border-gray-300 aspect-square grid grid-cols-3 flex-none items-start"
+            class="w-[65px] h-[65px] border rounded-md border-[#3E3E3E] bg-[#222222] aspect-square grid grid-cols-3 flex-none items-start"
           >
             <div
               class="aspect-square flex flex-row items-center justify-center relative"
@@ -736,7 +736,7 @@
                   selectToi.selectedBoxData.align !== 'start' ||
                   selectToi.selectedBoxData.justify !== 'start'
                 "
-                class="h-1 aspect-square rounded-full bg-gray-300"
+                class="h-1 aspect-square rounded-full bg-[#505050]"
               ></div>
               <svg
                 v-show="
@@ -774,7 +774,7 @@
                   selectToi.selectedBoxData.align !== 'center' ||
                   selectToi.selectedBoxData.justify !== 'start'
                 "
-                class="h-1 aspect-square rounded-full bg-gray-300"
+                class="h-1 aspect-square rounded-full bg-[#505050]"
               ></div>
               <svg
                 v-show="
@@ -829,7 +829,7 @@
                   selectToi.selectedBoxData.align !== 'end' ||
                   selectToi.selectedBoxData.justify !== 'start'
                 "
-                class="h-1 aspect-square rounded-full bg-gray-300"
+                class="h-1 aspect-square rounded-full bg-[#505050]"
               ></div>
               <svg
                 v-show="
@@ -878,7 +878,7 @@
                   selectToi.selectedBoxData.align !== 'start' ||
                   selectToi.selectedBoxData.justify !== 'center'
                 "
-                class="h-1 aspect-square rounded-full bg-gray-300"
+                class="h-1 aspect-square rounded-full bg-[#505050]"
               ></div>
               <svg
                 v-show="
@@ -927,7 +927,7 @@
                   selectToi.selectedBoxData.align !== 'center' ||
                   selectToi.selectedBoxData.justify !== 'center'
                 "
-                class="h-1 aspect-square rounded-full bg-gray-300"
+                class="h-1 aspect-square rounded-full bg-[#505050]"
               ></div>
               <svg
                 v-show="
@@ -979,7 +979,7 @@
                   selectToi.selectedBoxData.align !== 'end' ||
                   selectToi.selectedBoxData.justify !== 'center'
                 "
-                class="h-1 aspect-square rounded-full bg-gray-300"
+                class="h-1 aspect-square rounded-full bg-[#505050]"
               ></div>
               <svg
                 v-show="
@@ -1034,7 +1034,7 @@
                   selectToi.selectedBoxData.align !== 'start' ||
                   selectToi.selectedBoxData.justify !== 'end'
                 "
-                class="h-1 aspect-square rounded-full bg-gray-300"
+                class="h-1 aspect-square rounded-full bg-[#505050]"
               ></div>
               <svg
                 v-show="
@@ -1083,7 +1083,7 @@
                   selectToi.selectedBoxData.align !== 'center' ||
                   selectToi.selectedBoxData.justify !== 'end'
                 "
-                class="h-1 aspect-square rounded-full bg-gray-300"
+                class="h-1 aspect-square rounded-full bg-[#505050]"
               ></div>
               <svg
                 v-show="
@@ -1135,7 +1135,7 @@
                   selectToi.selectedBoxData.align !== 'end' ||
                   selectToi.selectedBoxData.justify !== 'end'
                 "
-                class="h-1 aspect-square rounded-full bg-gray-300"
+                class="h-1 aspect-square rounded-full bg-[#505050]"
               ></div>
               <svg
                 v-show="
