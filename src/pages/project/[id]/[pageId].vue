@@ -1,4 +1,4 @@
-<template>project {{ paramsId }} project {{ paramsPageId }}</template>
+<template>page {{ paramsId }} page {{ paramsPageId }}</template>
 
 <script setup>
 const route = useRoute();
