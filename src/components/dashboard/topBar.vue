@@ -1,45 +1,30 @@
 <template>
   <div
-    class="h-12 border-b flex flex-row flex-none justify-between z-10 bg-white"
+    class="h-14 border-b flex flex-row flex-none justify-between z-10 bg-white px-4"
   >
-    <div class="flex flex-row">Dashboardtopbar</div>
+    <div class="flex flex-row items-center py-[6px] flex-shrink">
+      <input
+        class="rounded-lg pl-6 h-full w-[500px] bg-gray-100"
+        placeholder="Search"
+      />
+    </div>
     <div class="flex flex-row gap-5 mr-5 items-center">
-      <div class="flex items-center justify-center">
-        <div class="bg-gray-400 rounded-full aspect-square h-6"></div>
-      </div>
-      <NuxtLink
-        :to="`/project/1/${selectToi.data.findIndex(
-          (p) => p.id === selectToi.selectedBoxData.id
-        )}/preview`"
-      >
-        <div
-          class="flex items-center justify-center text-center cursor-default hover:bg-blue-50 h-8 aspect-square"
+      <div class="flex items-center justify-center gap-8">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="19"
+          height="19"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="17"
-            height="17"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <polygon points="5 3 19 12 5 21 5 3"></polygon>
-          </svg>
-        </div>
-      </NuxtLink>
-      <div class="flex items-center justify-center">
-        <div>Export</div>
-      </div>
-      <div class="flex items-center justify-center">
-        <button class="bg-blue-600 px-2 py-1 text-white rounded-md border-none">
-          Deploy
-        </button>
-      </div>
-      <div class="flex items-center justify-center">
-        <button>100%</button>
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+        </svg>
+        <div class="bg-gray-400 rounded-full aspect-square h-6"></div>
       </div>
     </div>
   </div>

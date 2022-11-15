@@ -1,6 +1,13 @@
 <template>
   <PreviewTopBar />
-  <template v-for="node in [selectToi.data[paramsPageId]]" :key="node.id">
+  <template
+    v-for="node in [
+      selectToi.data[
+        selectToi.data.findIndex((p) => p.id === selectToi.selectedBoxData.id)
+      ],
+    ]"
+    :key="node.id"
+  >
     <template v-if="node.type === 'frame'">
       <div
         :style="{

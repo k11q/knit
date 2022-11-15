@@ -21,14 +21,15 @@
         <div>Haha hihi huu</div>
         <div>Haha hihi huu</div>
       </div>
-      <div class="grid grid-cols-4 gap-8">
-        <div
-          class="border aspect-[4/3] flex flex-col rounded"
-          v-for="canvas in selectToi.canvas"
-        >
-          <div class="flex-1"></div>
-          <div class="bg-gray-200 p-4">{{ canvas.id }}</div>
-        </div>
+      <div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-8">
+        <template v-for="canvas in selectToi.canvas">
+          <NuxtLink :to="`/project/${canvas.id}`" class="cursor-default">
+            <div class="border aspect-[4/3] flex flex-col rounded">
+              <div class="flex-1"></div>
+              <div class="bg-gray-200 p-4">{{ canvas.id }}</div>
+            </div>
+          </NuxtLink>
+        </template>
       </div>
     </div>
   </div>

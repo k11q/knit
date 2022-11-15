@@ -149,11 +149,7 @@
       <div class="flex items-center justify-center">
         <div class="bg-gray-400 rounded-full aspect-square h-6"></div>
       </div>
-      <NuxtLink
-        :to="`/project/1/${selectToi.data.findIndex(
-          (p) => p.id === selectToi.selectedBoxData.id
-        )}/preview`"
-      >
+      <NuxtLink :to="`/project/1/${selectToi.selectedBoxData.id}/preview`">
         <div
           class="flex items-center justify-center text-center cursor-default hover:bg-blue-50 h-8 aspect-square"
         >
