@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-14 border-b flex flex-row flex-none justify-between z-10 bg-white px-4"
+    class="h-[52px] border-b flex flex-row flex-none justify-between z-10 bg-white px-4"
   >
     <div class="flex flex-row items-center py-[6px] flex-shrink">
       <input

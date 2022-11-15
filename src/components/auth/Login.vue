@@ -1,3 +1,3 @@
 <template>
-  <AuthLogin />
+  <div>Log In</div>
 </template>

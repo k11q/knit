@@ -2,44 +2,13 @@
   <div
     class="border-r w-60 flex flex-col flex-none h-screen overflow-x-hidden pb-16 z-10 bg-white text-xs"
   >
-    <div
-      class="h-10 border-b flex-none flex flex-row items-center px-2 sticky top-0 bg-white z-10"
-    >
-      <div
-        class="px-2 h-full items-center flex flex-row cursor-default"
-        :class="{
-          'font-medium text-black': leftPanelStore.activeTab === 'layers',
-          'text-neutral-400': leftPanelStore.activeTab !== 'layers',
-        }"
-        @click="leftPanelStore.activeTab = 'layers'"
-      >
-        <span>Layers</span>
-      </div>
-      <div
-        class="px-2 h-full items-center flex flex-row cursor-default"
-        :class="{
-          'font-medium text-black': leftPanelStore.activeTab === 'data',
-          'text-neutral-400': leftPanelStore.activeTab !== 'data',
-        }"
-        @click="leftPanelStore.activeTab = 'data'"
-      >
-        <span>Data</span>
-      </div>
-      <div
-        class="px-2 h-full items-center flex flex-row cursor-default"
-        :class="{
-          'font-medium text-black': leftPanelStore.activeTab === 'assets',
-          'text-neutral-400': leftPanelStore.activeTab !== 'assets',
-        }"
-        @click="leftPanelStore.activeTab = 'assets'"
-      >
-        <span>Assets</span>
+    <div class="border-b px-6 h-[52px] flex flex-row gap-0.5 items-center">
+      <div>
+        <p>Khairul Haaziq</p>
+        <p class="opacity-60 text-xs">rhycoz@gmail.com</p>
       </div>
     </div>
-    <div
-      class="flex flex-col w-full h-fit"
-      v-show="leftPanelStore.activeTab === 'layers'"
-    >
+    <div class="flex flex-col w-full h-fit">
       <!--pages-->
       <div
         class="flex flex-col border-b pt-[5px] gap-[1px] pb-3 border-gray-200"
