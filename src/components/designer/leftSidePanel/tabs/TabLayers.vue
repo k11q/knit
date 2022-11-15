@@ -34,35 +34,34 @@
         </div>
       </div>
       <div class="flex flex-col">
-        <div
-          v-for="canvas in selectToi.canvas"
-          class="flex flex-row gap-2 hover:bg-gray-100 py-2 px-4"
-          @click="
-            () => {
-              selectToi.activeCanvas = canvas.id;
-            }
-          "
-        >
-          <div
-            class="flex flex-col items-center justify-center w-3 flex-none aspect-square"
+        <template v-for="canvas in selectToi.canvas">
+          <NuxtLink
+            :to="`/project/${paramsId}/${canvas.id}`"
+            class="cursor-default"
           >
-            <svg
-              v-if="selectToi.activeCanvas === canvas.id"
-              xmlns="http://www.w3.org/2000/svg"
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-          </div>
-          <p class="cursor-default focus:outline-none">{{ canvas.id }}</p>
-        </div>
+            <div class="flex flex-row gap-2 hover:bg-gray-100 py-2 px-4">
+              <div
+                class="flex flex-col items-center justify-center w-3 flex-none aspect-square"
+              >
+                <svg
+                  v-if="paramsPageId === canvas.id"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+              <p class="cursor-default focus:outline-none">{{ canvas.id }}</p>
+            </div>
+          </NuxtLink>
+        </template>
       </div>
     </div>
     <!--tree-->
@@ -73,6 +72,10 @@
 <script setup>
 import { useCounterStore } from "@/stores/counter";
 import { useLeftPanelStore } from "@/stores/leftPanelStore";
+
+const route = useRoute();
+const paramsId = route.params.id;
+const paramsPageId = route.params.pageId;
 
 const selectToi = useCounterStore();
 const leftPanelStore = useLeftPanelStore();

@@ -278,7 +278,6 @@ export const useCounterStore = defineStore({
       { id: "Page 2", bgColor: "#EFEFEF", children: [] },
       { id: "Page 3", bgColor: "#EFEFEF", children: [] },
     ],
-    activeCanvas: "Page 1",
     data: [
       {
         id: "rectangle",

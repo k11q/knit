@@ -76,17 +76,11 @@
           <div
             v-for="canvas in selectToi.canvas"
             class="flex flex-row gap-2 hover:bg-gray-100 py-2 px-4"
-            @click="
-              () => {
-                selectToi.activeCanvas = canvas.id;
-              }
-            "
           >
             <div
               class="flex flex-col items-center justify-center w-3 flex-none aspect-square"
             >
               <svg
-                v-if="selectToi.activeCanvas === canvas.id"
                 xmlns="http://www.w3.org/2000/svg"
                 width="12"
                 height="12"
