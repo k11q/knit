@@ -65,7 +65,7 @@
       </div>
     </div>
     <!--tree-->
-    <TreeBrowser :nodes="selectToi.data" />
+    <DesignerLeftSidePanelTabsLayersTreeBrowser :nodes="selectToi.data" />
   </div>
 </template>
 

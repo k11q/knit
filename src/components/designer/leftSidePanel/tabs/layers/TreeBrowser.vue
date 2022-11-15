@@ -83,7 +83,9 @@
           <path d="M6.5 10L3.0359 4.75L9.9641 4.75L6.5 10Z" fill="#BCBCBC" />
         </svg>
       </div>
-      <div class="flex flex-col items-center justify-center w-3 flex-none">
+      <div
+        class="flex flex-col items-center justify-center w-3 flex-none pointer-events-none"
+      >
         <svg
           v-if="node.type == 'frame'"
           xmlns="http://www.w3.org/2000/svg"
@@ -137,7 +139,7 @@
       <h1 class="pointer-events-none">{{ node.id }}</h1>
     </div>
     <template v-if="node.expandTree">
-      <TreeBrowser
+      <DesignerLeftSidePanelTabsLayersTreeBrowser
         :nodes="node.children"
         :depth="depth + 1"
         :v-model="modelValue"
