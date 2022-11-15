@@ -57,7 +57,7 @@
         class="absolute bottom-full left-0 hover:text-blue-600"
         :class="{
           'text-blue-600': selectToi.selectedBox === node.id,
-          'text-neutral-400': selectToi.selectedBox !== node.id,
+          'opacity-40': selectToi.selectedBox !== node.id,
         }"
         :style="{
           fontSize: `${(12 * 1) / squareStore.scale}px`,

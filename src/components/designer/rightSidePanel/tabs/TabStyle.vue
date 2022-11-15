@@ -3,13 +3,13 @@
     <!--Alignment text props-->
     <div
       v-show="selectToi.selectedBox"
-      class="flex flex-col gap-4 border-b pt-2 pb-4 px-4 border-gray-200"
+      class="flex flex-col gap-4 border-b pt-2 pb-4 px-4 border-[#282828]"
     >
       <div class="flex flex-row gap-3">
         <div
-          class="h-full aspect-square items-center flex flex-none text-neutral-400"
+          class="h-full aspect-square items-center flex flex-none opacity-40"
           :class="{
-            'text-black': selectToi.selectedBoxData.flexDirection === 'column',
+            'opacity-100': selectToi.selectedBoxData.flexDirection === 'column',
           }"
         >
           <svg
@@ -29,9 +29,9 @@
           </svg>
         </div>
         <div
-          class="h-full aspect-square items-center flex flex-none text-neutral-400"
+          class="h-full aspect-square items-center flex flex-none opacity-40"
           :class="{
-            'text-black': selectToi.selectedBoxData.flexDirection === 'row',
+            'opacity-100': selectToi.selectedBoxData.flexDirection === 'row',
           }"
         >
           <svg
@@ -53,9 +53,9 @@
           </svg>
         </div>
         <div
-          class="h-full aspect-square items-center flex flex-none text-neutral-400"
+          class="h-full aspect-square items-center flex flex-none opacity-40"
           :class="{
-            'text-black': selectToi.selectedBoxData.flexDirection === 'row',
+            'opacity-100': selectToi.selectedBoxData.flexDirection === 'row',
           }"
         >
           <svg
@@ -76,9 +76,9 @@
         </div>
 
         <div
-          class="h-full aspect-square items-center flex flex-none text-neutral-400"
+          class="h-full aspect-square items-center flex flex-none opacity-40"
           :class="{
-            'text-black': selectToi.selectedBoxData.flexDirection === 'row',
+            'opacity-100': selectToi.selectedBoxData.flexDirection === 'row',
           }"
         >
           <svg
@@ -98,9 +98,9 @@
           </svg>
         </div>
         <div
-          class="h-full aspect-square items-center flex flex-none text-neutral-400"
+          class="h-full aspect-square items-center flex flex-none opacity-40"
           :class="{
-            'text-black': selectToi.selectedBoxData.flexDirection === 'row',
+            'opacity-100': selectToi.selectedBoxData.flexDirection === 'row',
           }"
         >
           <svg
@@ -122,9 +122,9 @@
           </svg>
         </div>
         <div
-          class="h-full aspect-square items-center flex flex-none text-neutral-400"
+          class="h-full aspect-square items-center flex flex-none opacity-40"
           :class="{
-            'text-black': selectToi.selectedBoxData.flexDirection === 'row',
+            'opacity-100': selectToi.selectedBoxData.flexDirection === 'row',
           }"
         >
           <svg
@@ -144,9 +144,9 @@
           </svg>
         </div>
         <div
-          class="h-full aspect-square items-center flex flex-none text-neutral-400"
+          class="h-full aspect-square items-center flex flex-none opacity-40"
           :class="{
-            'text-black': selectToi.selectedBoxData.flexDirection === 'row',
+            'opacity-100': selectToi.selectedBoxData.flexDirection === 'row',
           }"
         >
           <svg
@@ -168,9 +168,9 @@
         </div>
 
         <div
-          class="h-full aspect-square items-center flex flex-none text-neutral-400"
+          class="h-full aspect-square items-center flex flex-none opacity-40"
           :class="{
-            'text-black': selectToi.selectedBoxData.flexDirection === 'row',
+            'opacity-100': selectToi.selectedBoxData.flexDirection === 'row',
           }"
         >
           <svg
@@ -197,7 +197,7 @@
     <!-- Background color  section! -->
     <div
       v-show="!selectToi.selectedBox"
-      class="flex flex-col gap-4 border-b py-4 px-4 border-gray-200"
+      class="flex flex-col gap-4 border-b py-4 px-4 border-[#282828]"
     >
       <p class="font-medium">Background</p>
       <div class="flex flex-row gap-3 flex-none justify-between w-full">
@@ -211,9 +211,9 @@
           <input
             type="text"
             v-model="selectToi.canvas[0].bgColor"
-            class="w-3/4 pl-2"
+            class="w-3/4 pl-2 bg-transparent"
           />
-          <input type="text" value="100%" class="w-1/2 px-2" />
+          <input type="text" value="100%" class="w-1/2 px-2 bg-transparent" />
         </div>
         <div class="flex flex-row gap-2 flex-none justify-end">
           <div class="aspect-square h-full">
@@ -254,30 +254,30 @@
     <!-- Dimensions section! -->
     <div
       v-show="selectToi.selectedBox"
-      class="flex flex-col gap-4 py-4 px-4 border-gray-200"
+      class="flex flex-col gap-4 py-4 px-4 border-[#282828]"
     >
       <p class="font-medium">Dimensions</p>
       <div class="flex flex-row">
         <div class="flex flex-row gap-0.5 justify-start items-center w-1/2">
           <div class="h-full aspect-square items-center flex flex-none">
-            <p class="text-neutral-400 text-center w-full">X</p>
+            <p class="opacity-40 text-center w-full">X</p>
           </div>
           <input
             type="number"
             placeholder="Auto"
             v-model="selectToi.selectedBoxData.X"
-            class="w-2/3 px-2"
+            class="w-2/3 px-2 bg-transparent"
           />
         </div>
         <div class="flex flex-row gap-0.5 justify-start items-center w-1/2">
           <div class="h-full aspect-square items-center flex flex-none">
-            <p class="text-neutral-400 text-center w-full">Y</p>
+            <p class="opacity-40 text-center w-full">Y</p>
           </div>
           <input
             type="number"
             placeholder="Auto"
             v-model="selectToi.selectedBoxData.Y"
-            class="w-2/3 px-2"
+            class="w-2/3 px-2 bg-transparent"
           />
         </div>
         <div
@@ -350,24 +350,24 @@
       <div class="flex flex-row">
         <div class="flex flex-row gap-0.5 justify-start items-center">
           <div class="h-full aspect-square items-center flex flex-none">
-            <p class="text-neutral-400 text-center w-full">W</p>
+            <p class="opacity-40 text-center w-full">W</p>
           </div>
           <input
             type="number"
             placeholder="Auto"
             v-model="selectToi.selectedBoxData.width"
-            class="w-2/3 px-2"
+            class="w-2/3 px-2 bg-transparent"
           />
         </div>
         <div class="flex flex-row gap-0.5 justify-start items-center">
           <div class="h-full aspect-square items-center flex flex-none">
-            <p class="text-neutral-400 text-center w-full">H</p>
+            <p class="opacity-40 text-center w-full">H</p>
           </div>
           <input
             type="number"
             v-model="selectToi.selectedBoxData.height"
             placeholder="Auto"
-            class="w-2/3 px-2"
+            class="w-2/3 px-2 bg-transparent"
           />
         </div>
 
@@ -379,8 +379,8 @@
             class="h-5 w-5 aspect-square items-center flex flex-none justify-center"
             @click="selectToi.selectedBoxData.flexGrow = 0"
             :class="{
-              'text-black': selectToi.selectedBoxData.flexGrow === 0,
-              'text-neutral-400': selectToi.selectedBoxData.flexGrow !== 0,
+              'opacity-100': selectToi.selectedBoxData.flexGrow === 0,
+              'opacity-40': selectToi.selectedBoxData.flexGrow !== 0,
             }"
           >
             <svg
@@ -407,8 +407,8 @@
               }
             "
             :class="{
-              'text-black': selectToi.selectedBoxData.flexGrow === 1,
-              'text-neutral-400': selectToi.selectedBoxData.flexGrow !== 1,
+              'opacity-100': selectToi.selectedBoxData.flexGrow === 1,
+              'opacity-40': selectToi.selectedBoxData.flexGrow !== 1,
             }"
           >
             <svg
@@ -432,9 +432,8 @@
             class="h-5 w-5 aspect-square items-center flex flex-none justify-center"
             @click="selectToi.selectedBoxData.alignSelf = 'auto'"
             :class="{
-              'text-black': selectToi.selectedBoxData.alignSelf === 'auto',
-              'text-neutral-400':
-                selectToi.selectedBoxData.alignSelf !== 'auto',
+              'opacity-100': selectToi.selectedBoxData.alignSelf === 'auto',
+              'opacity-40': selectToi.selectedBoxData.alignSelf !== 'auto',
             }"
           >
             <svg
@@ -461,9 +460,8 @@
               }
             "
             :class="{
-              'text-black': selectToi.selectedBoxData.alignSelf === 'stretch',
-              'text-neutral-400':
-                selectToi.selectedBoxData.alignSelf !== 'stretch',
+              'opacity-100': selectToi.selectedBoxData.alignSelf === 'stretch',
+              'opacity-40': selectToi.selectedBoxData.alignSelf !== 'stretch',
             }"
           >
             <svg
@@ -488,7 +486,7 @@
       <div class="flex flex-row">
         <div class="flex flex-row gap-0.5 justify-start items-center">
           <div
-            class="h-full aspect-square items-center flex flex-none justify-center text-neutral-400"
+            class="h-full aspect-square items-center flex flex-none justify-center opacity-40"
           >
             <svg
               width="15"
@@ -517,12 +515,12 @@
             type="number"
             placeholder="0"
             v-model="selectToi.selectedBoxData.rotation"
-            class="w-2/3 px-2"
+            class="w-2/3 px-2 bg-transparent"
           />
         </div>
         <div class="flex flex-row gap-0.5 justify-start items-center">
           <div
-            class="h-full aspect-square items-center flex flex-none justify-center text-neutral-400"
+            class="h-full aspect-square items-center flex flex-none justify-center opacity-40"
           >
             <svg
               width="15"
@@ -544,7 +542,7 @@
             type="number"
             v-model="selectToi.selectedBoxData.corner"
             placeholder="0"
-            class="w-2/3 px-2"
+            class="w-2/3 px-2 bg-transparent"
           />
         </div>
 
@@ -556,7 +554,7 @@
       v-show="
         selectToi.selectedBoxData.type !== 'text' && selectToi.selectedBox
       "
-      class="flex flex-col gap-4 p-4 border-gray-200 border-t"
+      class="flex flex-col gap-4 p-4 border-[#282828] border-t"
     >
       <div class="flex flex-row justify-between">
         <p class="font-medium">Auto layout</p>
@@ -600,10 +598,9 @@
               @click="selectToi.selectedBoxData.flexDirection = 'column'"
               class="aspect-square items-center flex flex-none"
               :class="{
-                'text-black':
+                'opacity-100':
                   selectToi.selectedBoxData.flexDirection === 'column',
-                'text-neutral-400':
-                  selectToi.selectedBoxData.flexDirection === 'row',
+                'opacity-40': selectToi.selectedBoxData.flexDirection === 'row',
               }"
             >
               <svg
@@ -626,8 +623,9 @@
               @click="selectToi.selectedBoxData.flexDirection = 'row'"
               class="aspect-square items-center flex flex-none"
               :class="{
-                'text-black': selectToi.selectedBoxData.flexDirection === 'row',
-                'text-neutral-400':
+                'opacity-100':
+                  selectToi.selectedBoxData.flexDirection === 'row',
+                'opacity-40':
                   selectToi.selectedBoxData.flexDirection === 'column',
               }"
             >
@@ -649,7 +647,7 @@
           </div>
           <div class="grid grid-cols-2 gap-2 items-start">
             <div
-              class="aspect-square items-center flex flex-col justify-center flex-none text-neutral-400 h-[18px]"
+              class="aspect-square items-center flex flex-col justify-center flex-none opacity-40 h-[18px]"
             >
               <svg
                 width="15"
@@ -687,13 +685,13 @@
                 type="number"
                 v-model="selectToi.selectedBoxData.gap"
                 placeholder="0"
-                class="w-8"
+                class="w-8 bg-transparent"
               />
             </div>
           </div>
           <div class="grid grid-cols-2 gap-2 items-start">
             <div
-              class="aspect-square items-center flex flex-col justify-center flex-none text-neutral-400 h-[18px]"
+              class="aspect-square items-center flex flex-col justify-center flex-none opacity-40 h-[18px]"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -717,7 +715,7 @@
                 type="number"
                 v-model="selectToi.selectedBoxData.paddingX"
                 placeholder="0"
-                class="w-8"
+                class="w-8 bg-transparent"
               />
             </div>
           </div>
@@ -1183,7 +1181,7 @@
           </div>
           <div class="grid grid-cols-2 gap-2 items-start w-fit">
             <div
-              class="aspect-square items-center flex flex-col justify-center flex-none text-neutral-400 h-[18px]"
+              class="aspect-square items-center flex flex-col justify-center flex-none opacity-40 h-[18px]"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -1207,7 +1205,7 @@
                 type="number"
                 v-model="selectToi.selectedBoxData.paddingY"
                 placeholder="0"
-                class="w-8"
+                class="w-8 bg-transparent"
               />
             </div>
           </div>
@@ -1215,7 +1213,7 @@
       </div>
     </div>
     <!-- Layout section2! padding n margin 
-          <div v-show="selectToi.selectedBox" class="flex flex-col gap-4 border-b pt-4 pb-4 border-gray-200">
+          <div v-show="selectToi.selectedBox" class="flex flex-col gap-4 border-b pt-4 pb-4 border-[#282828]">
             <div class="flex flex-col flex-none justify-between mx-4 border border-gray-300 rounded-xl">
               <div class="flex flex-row w-full">
                 <div class="w-1/5 border-b border-gray-300 h-8 skew-y-[30deg] translate-y-[-10px] translate-x-[-1px]"></div>
@@ -1245,7 +1243,7 @@
                       <div class="w-12 flex flex-none border-gray-300  flex-row justify-center items-center">
                         <input type="number" placeholder="0" v-model="selectToi.selectedBoxData.paddingLeft" class="inline-block text-center w-10 py-1 px-2">
                       </div>
-                      <div class=" w-10 border border-gray-300 flex rounded flex-row justify-center items-center text-neutral-400">
+                      <div class=" w-10 border border-gray-300 flex rounded flex-row justify-center items-center opacity-40">
                         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                       </div>
                       <div class="w-12 flex flex-none border-gray-300  flex-row justify-center items-center">
@@ -1283,7 +1281,7 @@
       v-show="
         selectToi.selectedBoxData.type !== 'text' && selectToi.selectedBox
       "
-      class="flex flex-col gap-4 border-y py-4 px-4 border-gray-200"
+      class="flex flex-col gap-4 border-y py-4 px-4 border-[#282828]"
     >
       <p class="font-medium">Fill</p>
       <div class="flex flex-row gap-3 flex-none justify-between w-full">
@@ -1297,9 +1295,9 @@
           <input
             type="text"
             v-model="selectToi.selectedBoxData.bgColor"
-            class="w-full px-2"
+            class="w-full px-2 bg-transparent"
           />
-          <input type="text" value="100%" class="w-full px-2" />
+          <input type="text" value="100%" class="w-full px-2 bg-transparent" />
         </div>
         <div class="flex flex-row gap-2 flex-none justify-end">
           <div class="aspect-square h-full">
@@ -1342,7 +1340,7 @@
       v-show="
         selectToi.selectedBoxData.type !== 'text' && selectToi.selectedBox
       "
-      class="flex flex-col gap-4 border-b py-4 px-4 border-gray-200"
+      class="flex flex-col gap-4 border-b py-4 px-4 border-[#282828]"
     >
       <div class="flex flex-row justify-between">
         <p class="font-medium">Stroke</p>
@@ -1396,10 +1394,14 @@
             <input
               type="text"
               v-model="selectToi.selectedBoxData.strokeColor"
-              class="w-full px-2"
+              class="w-full px-2 bg-transparent"
               placeholder="transparent"
             />
-            <input type="text" value="100%" class="w-full px-2" />
+            <input
+              type="text"
+              value="100%"
+              class="w-full px-2 bg-transparent"
+            />
           </div>
           <div class="flex flex-row gap-2 flex-none justify-end">
             <div class="aspect-square h-full">
@@ -1447,14 +1449,14 @@
         </div>
         <div class="flex flex-row gap-3 flex-none justify-between w-full">
           <div class="flex flex-row gap-0.5 justify-between w-full px-0">
-            <select class="w-full -ml-1" selected="inside">
+            <select class="w-full -ml-1 bg-transparent" selected="inside">
               <option value="inside">Inside</option>
               <option value="center">Center</option>
               <option value="outside">Outside</option>
             </select>
             <div class="flex flex-row w-1/2 flex-none px-2">
               <div
-                class="h-full aspect-square items-center flex flex-none text-neutral-400"
+                class="h-full aspect-square items-center flex flex-none opacity-40"
               >
                 <svg
                   width="14"
@@ -1489,7 +1491,7 @@
               <input
                 type="number"
                 v-model="selectToi.selectedBoxData.strokeSize"
-                class="w-full px-2"
+                class="w-full px-2 bg-transparent"
                 placeholder="0"
               />
             </div>
@@ -1539,7 +1541,7 @@
       v-show="
         selectToi.selectedBoxData.type === 'text' && selectToi.selectedBox
       "
-      class="flex flex-col gap-4 border-b py-4 px-4 border-gray-200"
+      class="flex flex-col gap-4 border-b py-4 px-4 border-[#282828]"
     >
       <p class="font-medium">Text</p>
 
@@ -1548,7 +1550,7 @@
           <input
             type="text"
             v-model="selectToi.selectedBoxData.textContent"
-            class="w-full"
+            class="w-full bg-transparent"
           />
         </div>
         <div class="flex flex-row gap-2 flex-none justify-end">
@@ -1573,7 +1575,11 @@
       </div>
       <div class="flex flex-row gap-3 flex-none justify-between w-full">
         <div class="flex flex-row gap-0.5 justify-between w-full">
-          <input type="text" value="Font Family" class="w-full" />
+          <input
+            type="text"
+            value="Font Family"
+            class="w-full bg-transparent"
+          />
           <div class="flex flex-row w-1/2 flex-none px-2">
             <div class="h-full aspect-square items-center flex flex-none">
               <svg
@@ -1595,7 +1601,7 @@
             <input
               type="text"
               v-model="selectToi.selectedBoxData.fontSize"
-              class="w-full px-2"
+              class="w-full px-2 bg-transparent"
             />
           </div>
         </div>
@@ -1660,7 +1666,7 @@
             <input
               type="text"
               v-model="selectToi.selectedBoxData.fontSize"
-              class="w-full px-2"
+              class="w-full px-2 bg-transparent"
             />
           </div>
           <div class="flex flex-row w-1/2 flex-none px-2">
@@ -1684,7 +1690,7 @@
             <input
               type="text"
               v-model="selectToi.selectedBoxData.fontSize"
-              class="w-full px-2"
+              class="w-full px-2 bg-transparent"
             />
           </div>
         </div>
@@ -1826,7 +1832,7 @@
       v-show="
         selectToi.selectedBoxData.type === 'text' && selectToi.selectedBox
       "
-      class="flex flex-col gap-4 border-b py-4 px-4 border-gray-200"
+      class="flex flex-col gap-4 border-b py-4 px-4 border-[#282828]"
     >
       <p class="font-medium">Fill</p>
       <div class="flex flex-row gap-3 flex-none justify-between w-full">
@@ -1840,9 +1846,9 @@
           <input
             type="text"
             v-model="selectToi.selectedBoxData.color"
-            class="w-full px-2"
+            class="w-full px-2 bg-transparent"
           />
-          <input type="text" value="100%" class="w-full px-2" />
+          <input type="text" value="100%" class="w-full px-2 bg-transparent" />
         </div>
         <div class="flex flex-row gap-2 flex-none justify-end">
           <div class="aspect-square h-full">
@@ -1885,7 +1891,7 @@
       v-show="
         selectToi.selectedBoxData.type !== 'text' && selectToi.selectedBox
       "
-      class="flex flex-col gap-4 border-b py-4 px-4 border-gray-200"
+      class="flex flex-col gap-4 border-b py-4 px-4 border-[#282828]"
     >
       <div class="flex flex-row justify-between">
         <p class="font-medium">Effects</p>
@@ -1958,7 +1964,11 @@
                 <path d="m19.07 4.93-1.41 1.41"></path>
               </svg>
             </div>
-            <select name="category" selected="drop shadow" class="w-full">
+            <select
+              name="category"
+              selected="drop shadow"
+              class="w-full bg-transparent"
+            >
               <option value="drop shadow">Drop shadow</option>
               <option value="inner shadow">Inner Shadow</option>
               <option value="outer glow">Outer glow</option>
@@ -2019,7 +2029,7 @@
       v-show="
         selectToi.selectedBoxData.type !== 'text' && selectToi.selectedBox
       "
-      class="flex flex-col gap-4 border-b py-4 px-4 border-gray-200"
+      class="flex flex-col gap-4 border-b py-4 px-4 border-[#282828]"
     >
       <div class="flex flex-row justify-between">
         <p class="font-medium">Export</p>
@@ -2092,7 +2102,11 @@
                 <path d="m19.07 4.93-1.41 1.41"></path>
               </svg>
             </div>
-            <select name="category" selected="drop shadow" class="w-full">
+            <select
+              name="category"
+              selected="drop shadow"
+              class="w-full bg-transparent"
+            >
               <option value="drop shadow">Drop shadow</option>
               <option value="inner shadow">Inner Shadow</option>
               <option value="outer glow">Outer glow</option>

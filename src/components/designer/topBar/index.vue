@@ -1,11 +1,11 @@
 <template>
   <div
-    class="h-12 border-b flex flex-row flex-none justify-between z-10 bg-white"
+    class="h-12 border-b flex flex-row flex-none justify-between z-10 bg-[#1C1C1C] border-[#282828]"
   >
     <div class="flex flex-row">
       <NuxtLink to="/dashboard">
         <div
-          class="aspect-square flex items-center justify-center w-12 text-center cursor-default hover:bg-blue-50"
+          class="aspect-square flex items-center justify-center w-12 text-center cursor-default hover:bg-[#232323]"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -29,8 +29,8 @@
         @mousemove="canvasFF.dragCanvasMove"
         @mouseup="canvasFF.dragCanvasUp"
         :class="{
-          'bg-blue-200': addaSquare.normalPointer === true,
-          'hover:bg-blue-50': addaSquare.normalPointer === false,
+          'bg-[#232323]': addaSquare.normalPointer === true,
+          'hover:bg-[#232323]': addaSquare.normalPointer === false,
         }"
         @click="addaSquare.turnOnNormalPointer"
       >
@@ -52,10 +52,10 @@
         class="aspect-square flex items-center justify-center w-12 text-center cursor-default"
         @click="addaSquare.turnOnDragPointer"
         :class="{
-          'bg-blue-200':
+          'bg-[#232323]':
             addaSquare.dragPointer === true ||
             addaSquare.draggingPointer === true,
-          'hover:bg-blue-50':
+          'hover:bg-[#232323]':
             addaSquare.dragPointer === false &&
             addaSquare.draggingPointer === false,
         }"
@@ -83,8 +83,8 @@
         class="aspect-square flex items-center justify-center w-12 text-center cursor-default"
         @click="addaSquare.turnOnAddFrameActivated"
         :class="{
-          'bg-blue-200': addaSquare.addFrameActivated === true,
-          'hover:bg-blue-50': addaSquare.addFrameActivated === false,
+          'bg-[#232323]': addaSquare.addFrameActivated === true,
+          'hover:bg-[#232323]': addaSquare.addFrameActivated === false,
         }"
       >
         <svg
@@ -108,34 +108,30 @@
         class="aspect-square flex items-center justify-center w-12 text-center cursor-default"
         @click="addaSquare.turnOnAddSquareActivated"
         :class="{
-          'bg-blue-200': addaSquare.addSquareActivated === true,
-          'hover:bg-blue-50': addaSquare.addSquareActivated === false,
+          'bg-[#232323]': addaSquare.addSquareActivated === true,
+          'hover:bg-[#232323]': addaSquare.addSquareActivated === false,
         }"
       >
         <svg
-          width="16"
-          height="16"
-          viewBox="0 0 15 15"
-          fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         >
-          <rect
-            x="1"
-            y="1"
-            width="13"
-            height="13"
-            rx="2"
-            stroke="black"
-            stroke-width="1.5"
-          />
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
         </svg>
       </div>
       <div
         class="aspect-square flex items-center justify-center w-12 text-center cursor-default"
         @click="addaSquare.turnOnAddTextActivated"
         :class="{
-          'bg-blue-200': addaSquare.addTextActivated === true,
-          'hover:bg-blue-50': addaSquare.addTextActivated === false,
+          'bg-[#232323]': addaSquare.addTextActivated === true,
+          'hover:bg-[#232323]': addaSquare.addTextActivated === false,
         }"
       >
         <svg
@@ -156,9 +152,7 @@
       </div>
     </div>
     <div class="flex flex-row">
-      <div
-        class="aspect-square flex items-center justify-center bg-gray-100 w-12"
-      >
+      <div class="aspect-square flex items-center justify-center w-12">
         <div>icon</div>
       </div>
       <div class="aspect-square flex items-center justify-center w-12">
@@ -171,7 +165,7 @@
       </div>
       <NuxtLink :to="`/project/1/${selectToi.selectedBoxData.id}/preview`">
         <div
-          class="flex items-center justify-center text-center cursor-default hover:bg-blue-50 h-8 aspect-square"
+          class="flex items-center justify-center text-center cursor-default hover:bg-[#232323] h-8 aspect-square"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -192,7 +186,9 @@
         <div>Export</div>
       </div>
       <div class="flex items-center justify-center">
-        <button class="bg-blue-600 px-2 py-1 text-white rounded-md border-none">
+        <button
+          class="bg-blue-600 px-2 py-1 text-[#EDEDED] rounded-md border-none"
+        >
           Deploy
         </button>
       </div>

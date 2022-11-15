@@ -51,7 +51,7 @@
             :style="{ marginTop: `${(8 * 1) / addaSquare.scale}px` }"
           >
             <span
-              class="bg-blue-600 text-white cursor-default whitespace-nowrap"
+              class="bg-blue-600 text-[#EDEDED] cursor-default whitespace-nowrap"
               :style="{
                 fontSize: `${(11 * 1) / addaSquare.scale}px`,
                 lineHeight: 1.5,
@@ -98,22 +98,22 @@
 
           <div
             @mousedown.stop.prevent="resizeStore.resizeTopLeft"
-            class="absolute -top-1 -left-1 h-2 w-2 bg-white border-blue-600 border hover:cursor-nwse-resize"
+            class="absolute -top-1 -left-1 h-2 w-2 bg-[#EDEDED] border-blue-600 border hover:cursor-nwse-resize"
             :style="{ transform: `scale( ${1 / addaSquare.scale})` }"
           />
           <div
             @mousedown.stop.prevent="resizeStore.resizeTopRight"
-            class="absolute -top-1 -right-1 h-2 w-2 bg-white border-blue-600 border hover:cursor-nesw-resize"
+            class="absolute -top-1 -right-1 h-2 w-2 bg-[#EDEDED] border-blue-600 border hover:cursor-nesw-resize"
             :style="{ transform: `scale( ${1 / addaSquare.scale})` }"
           />
           <div
             @mousedown.stop.prevent="resizeStore.resizeBottomRight"
-            class="absolute -bottom-1 -right-1 h-2 w-2 bg-white border-blue-600 border hover:cursor-nwse-resize"
+            class="absolute -bottom-1 -right-1 h-2 w-2 bg-[#EDEDED] border-blue-600 border hover:cursor-nwse-resize"
             :style="{ transform: `scale( ${1 / addaSquare.scale})` }"
           />
           <div
             @mousedown.stop.prevent="resizeStore.resizeBottomLeft"
-            class="absolute -bottom-1 -left-1 h-2 w-2 bg-white border-blue-600 border hover:cursor-nesw-resize"
+            class="absolute -bottom-1 -left-1 h-2 w-2 bg-[#EDEDED] border-blue-600 border hover:cursor-nesw-resize"
             :style="{ transform: `scale( ${1 / addaSquare.scale})` }"
           />
         </div>

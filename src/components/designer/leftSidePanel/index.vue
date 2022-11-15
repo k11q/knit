@@ -1,15 +1,15 @@
 <template>
   <div
-    class="border-r w-60 flex flex-col flex-none h-screen overflow-x-hidden pb-16 z-10 bg-white"
+    class="border-r w-60 flex flex-col flex-none h-screen overflow-x-hidden pb-16 z-10 border-[#282828] bg-[#1C1C1C]"
   >
     <div
-      class="h-10 border-b flex-none flex flex-row items-center px-2 sticky top-0 bg-white z-10"
+      class="h-10 border-b flex-none flex flex-row items-center px-2 sticky top-0 bg-[#1C1C1C] border-[#282828] z-10"
     >
       <div
         class="px-2 h-full items-center flex flex-row cursor-default"
         :class="{
-          'font-medium text-black': leftPanelStore.activeTab === 'layers',
-          'text-neutral-400': leftPanelStore.activeTab !== 'layers',
+          'font-medium': leftPanelStore.activeTab === 'layers',
+          'opacity-40': leftPanelStore.activeTab !== 'layers',
         }"
         @click="leftPanelStore.activeTab = 'layers'"
       >
@@ -18,8 +18,8 @@
       <div
         class="px-2 h-full items-center flex flex-row cursor-default"
         :class="{
-          'font-medium text-black': leftPanelStore.activeTab === 'data',
-          'text-neutral-400': leftPanelStore.activeTab !== 'data',
+          'font-medium ': leftPanelStore.activeTab === 'data',
+          'opacity-40': leftPanelStore.activeTab !== 'data',
         }"
         @click="leftPanelStore.activeTab = 'data'"
       >
@@ -28,8 +28,8 @@
       <div
         class="px-2 h-full items-center flex flex-row cursor-default"
         :class="{
-          'font-medium text-black': leftPanelStore.activeTab === 'assets',
-          'text-neutral-400': leftPanelStore.activeTab !== 'assets',
+          'font-medium': leftPanelStore.activeTab === 'assets',
+          'opacity-40': leftPanelStore.activeTab !== 'assets',
         }"
         @click="leftPanelStore.activeTab = 'assets'"
       >

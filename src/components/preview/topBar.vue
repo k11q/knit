@@ -3,7 +3,7 @@
     <div>This is a preview page</div>
     <button
       @click.prevent="$router.back()"
-      class="rounded bg-black text-white px-2 py-1 text-xs cursor-default"
+      class="rounded bg-black text-[#EDEDED] px-2 py-1 text-xs cursor-default"
     >
       Back to designer
     </button>

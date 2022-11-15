@@ -3,14 +3,14 @@
     <div
       :data-treeid="node.id"
       :style="{ 'padding-left': depth === 1 ? '16px' : depth * 20 + 'px' }"
-      class="flex flex-row gap-2 py-[9px] border border-white box-border cursor-default items-center relative"
+      class="flex flex-row gap-2 py-[9px] border border-transparent box-border cursor-default items-center relative"
       :class="{
-        'bg-blue-200 border-blue-200 hover:border-blue-200':
+        'bg-[#232323] border-[#232323] hover:border-[#232323]':
           selectToi.selectedBox === node.id,
         'opacity-30': selectToi.dragDisplay === node.id,
         'hover:border-blue-700':
           !treeDnd.isDragging && selectToi.selectedBox !== node.id,
-        'border-blue-700':
+        '!border-blue-700':
           treeDnd.currDropPosition === 'middle' &&
           treeDnd.currDrop === node.id &&
           selectToi.selectedBox !== node.id,
@@ -35,7 +35,7 @@
           treeDnd.isDragging &&
           treeDnd.currDropPosition !== 'middle'
         "
-        class="h-2 w-2 bg-white border-2 border-blue-600 rounded-full absolute z-10"
+        class="h-2 w-2 bg-[#EDEDED] border-2 border-blue-600 rounded-full absolute z-10"
         :class="{
           'top-0 -mt-[5px]': treeDnd.currDropPosition === 'top',
           'bottom-0 -mb-[5px]': treeDnd.currDropPosition === 'bottom',
@@ -47,14 +47,14 @@
           treeDnd.isDragging &&
           treeDnd.currDropPosition !== 'middle'
         "
-        class="h-2 w-2 bg-white border-2 border-blue-600 rounded-full absolute right-0 -mr-[5px] z-10"
+        class="h-2 w-2 bg-[#EDEDED] border-2 border-blue-600 rounded-full absolute right-0 -mr-[5px] z-10"
         :class="{
           'top-0 -mt-[5px]': treeDnd.currDropPosition === 'top',
           'bottom-0 -mb-[5px]': treeDnd.currDropPosition === 'bottom',
         }"
       ></div>
       <div
-        class="absolute -ml-4 hover:bg-gray-100 rounded-sm"
+        class="absolute -ml-4 hover:bg-[#232323] rounded-sm"
         v-if="node.children && node.children.length"
         @mousedown.prevent.stop="
           () => {
@@ -70,7 +70,7 @@
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <path d="M9 6.5L3.75 9.9641L3.75 3.0359L9 6.5Z" fill="#BCBCBC" />
+          <path d="M9 6.5L3.75 9.9641L3.75 3.0359L9 6.5Z" fill="#505050" />
         </svg>
         <svg
           v-if="node.expandTree"
@@ -80,11 +80,11 @@
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <path d="M6.5 10L3.0359 4.75L9.9641 4.75L6.5 10Z" fill="#BCBCBC" />
+          <path d="M6.5 10L3.0359 4.75L9.9641 4.75L6.5 10Z" fill="#505050" />
         </svg>
       </div>
       <div
-        class="flex flex-col items-center justify-center w-3 flex-none pointer-events-none"
+        class="flex flex-col items-center justify-center w-3 flex-none pointer-events-none opacity-80"
       >
         <svg
           v-if="node.type == 'frame'"
@@ -228,6 +228,7 @@ const dragAndDrop = (e, currDrag) => {
           treeDnd.dndAppendMiddle(selectToi.data, treeDnd.currDrop);
         }
       }
+      treeDnd.currDrop = "";
       treeDnd.isDragging = false;
       window.removeEventListener("mousemove", mousemove);
       window.removeEventListener("mouseup", mouseup);

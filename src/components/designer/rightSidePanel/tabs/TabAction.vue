@@ -5,7 +5,7 @@
       v-show="
         selectToi.selectedBoxData.type !== 'text' && selectToi.selectedBox
       "
-      class="flex flex-col gap-4 border-y py-4 px-4 border-gray-200"
+      class="flex flex-col gap-4 border-y py-4 px-4 border-[#282828]"
     >
       <div class="flex flex-row justify-between">
         <p class="font-medium">Stroke</p>
@@ -59,10 +59,14 @@
             <input
               type="text"
               v-model="selectToi.selectedBoxData.strokeColor"
-              class="w-full px-2"
+              class="w-full px-2 bg-transparent"
               placeholder="transparent"
             />
-            <input type="text" value="100%" class="w-full px-2" />
+            <input
+              type="text"
+              value="100%"
+              class="w-full px-2 bg-transparent"
+            />
           </div>
           <div class="flex flex-row gap-2 flex-none justify-end">
             <div class="aspect-square h-full">
@@ -113,7 +117,7 @@
             <input
               type="text"
               v-model="selectToi.selectedBoxData.strokeType"
-              class="w-full"
+              class="w-full bg-transparent"
             />
             <div class="flex flex-row w-1/2 flex-none px-2">
               <div class="h-full aspect-square items-center flex flex-none">
@@ -150,7 +154,7 @@
               <input
                 type="number"
                 v-model="selectToi.selectedBoxData.strokeSize"
-                class="w-full px-2"
+                class="w-full px-2 bg-transparent"
                 placeholder="0"
               />
             </div>

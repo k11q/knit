@@ -1,11 +1,11 @@
 <template>
   <div class="flex flex-col w-full">
     <DashboardTopBar />
-    <div class="px-8 py-4 border-b">Recently viewed</div>
+    <div class="px-8 py-4 border-b border-[#282828]">Recently viewed</div>
     <div class="flex flex-col px-8 py-6 gap-6">
-      <div class="grid grid-cols-4 gap-8">
+      <div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-8">
         <div
-          class="flex flex-row gap-4 border py-3 px-4 rounded-md items-center"
+          class="flex flex-row gap-4 border py-3 px-4 rounded-md items-center bg-[#2E2E2E] border-[#3E3E3E] hover:border-[#505050] hover:bg-[#343434] transition-all duration-300"
         >
           <svg
             class="opacity-80"
@@ -26,11 +26,11 @@
           </svg>
           <div class="flex flex-col gap-0.5">
             <p>New design file</p>
-            <p class="opacity-60 text-xs">Description</p>
+            <p class="opacity-50 text-xs">Description</p>
           </div>
         </div>
         <div
-          class="flex flex-row gap-4 border py-3 px-4 rounded-md items-center"
+          class="flex flex-row gap-4 border py-3 px-4 rounded-md items-center bg-[#2E2E2E] border-[#3E3E3E] hover:border-[#505050] hover:bg-[#343434] transition-all duration-300"
         >
           <svg
             class="opacity-80"
@@ -51,11 +51,11 @@
           </svg>
           <div class="flex flex-col gap-0.5">
             <p>New jam file</p>
-            <p class="opacity-60 text-xs">Description</p>
+            <p class="opacity-50 text-xs">Description</p>
           </div>
         </div>
         <div
-          class="flex flex-row gap-4 border py-3 px-4 rounded-md items-center"
+          class="flex flex-row gap-4 border py-3 px-4 rounded-md items-center bg-[#2E2E2E] border-[#3E3E3E] hover:border-[#505050] hover:bg-[#343434] transition-all duration-300"
         >
           <svg
             class="opacity-80"
@@ -76,14 +76,18 @@
           </svg>
           <div class="flex flex-col gap-0.5">
             <p>Import file</p>
-            <p class="opacity-60 text-xs">Description</p>
+            <p class="opacity-50 text-xs">Description</p>
           </div>
         </div>
       </div>
       <div class="flex flex-row justify-between">
         <div class="flex flex-row gap-[3px] items-center">
-          <p class="text-[11px] opacity-60">Filter:</p>
-          <select name="" id="" class="text-xs focus:outline-none">
+          <p class="text-[11px] opacity-40">Filter:</p>
+          <select
+            name=""
+            id=""
+            class="text-xs focus:outline-none bg-transparent"
+          >
             <option value="">All files</option>
             <option value="">Design files</option>
             <option value="">Jam files</option>
@@ -91,8 +95,12 @@
           </select>
         </div>
         <div class="flex flex-row gap-[3px] items-center">
-          <p class="text-[11px] opacity-60">Sort:</p>
-          <select name="" id="" class="text-xs focus:outline-none">
+          <p class="text-[11px] opacity-40">Sort:</p>
+          <select
+            name=""
+            id=""
+            class="text-xs focus:outline-none bg-transparent"
+          >
             <option value="">Last viewed</option>
             <option value="">Date created</option>
             <option value="">Alphabetical</option>
@@ -143,11 +151,11 @@
       <div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-8">
         <template v-for="canvas in selectToi.canvas">
           <NuxtLink :to="`/project/1/${canvas.id}`" class="cursor-default">
-            <div class="border aspect-[4/3] flex flex-col rounded-md">
-              <div class="flex-1"></div>
-              <div
-                class="flex flex-row gap-4 py-3 px-4 bg-gray-100 items-center"
-              >
+            <div
+              class="border aspect-[4/3] flex flex-col rounded-md border-[#3E3E3E] bg-[#2E2E2E] overflow-clip hover:border-[#505050] hover:bg-[#343434] transition-all duration-300"
+            >
+              <div class="flex-1 bg-[#222222]"></div>
+              <div class="flex flex-row gap-4 py-3 px-4 items-center">
                 <svg
                   class="opacity-80"
                   xmlns="http://www.w3.org/2000/svg"
@@ -167,7 +175,7 @@
                 </svg>
                 <div class="flex flex-col gap-[1px]">
                   <p>{{ canvas.id }}</p>
-                  <p class="opacity-60 text-xs">Description</p>
+                  <p class="opacity-50 text-xs">Description</p>
                 </div>
               </div>
             </div>

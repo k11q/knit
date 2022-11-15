@@ -1,10 +1,10 @@
 <template>
   <div
-    class="h-[52px] border-b flex flex-row flex-none justify-between z-10 bg-white px-4"
+    class="h-[52px] border-b flex flex-row flex-none justify-between z-10 px-4 border-[#282828]"
   >
     <div class="flex flex-row items-center py-[6px] flex-shrink">
       <input
-        class="rounded-lg pl-6 h-full w-[500px] bg-gray-100"
+        class="rounded-lg pl-6 h-full w-[500px] bg-[#232323] placeholder-white placeholder-opacity-20"
         placeholder="Search"
       />
     </div>

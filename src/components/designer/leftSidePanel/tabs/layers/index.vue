@@ -4,7 +4,9 @@
     v-show="leftPanelStore.activeTab === 'layers'"
   >
     <!--pages-->
-    <div class="flex flex-col border-b pt-[5px] gap-[1px] pb-3 border-gray-200">
+    <div
+      class="flex flex-col border-b pt-[5px] gap-[1px] pb-3 border-[#282828]"
+    >
       <div class="flex flex-row justify-between pl-4 pr-2 items-center">
         <p class="font-medium">Pages</p>
         <div
@@ -39,7 +41,7 @@
             :to="`/project/${paramsId}/${canvas.id}`"
             class="cursor-default"
           >
-            <div class="flex flex-row gap-2 hover:bg-gray-100 py-2 px-4">
+            <div class="flex flex-row gap-2 hover:bg-[#232323] py-2 px-4">
               <div
                 class="flex flex-col items-center justify-center w-3 flex-none aspect-square"
               >

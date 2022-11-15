@@ -1,15 +1,15 @@
 <template>
   <div
-    class="border-l w-60 flex flex-col h-screen overflow-x-hidden pb-16 z-10 bg-white"
+    class="border-l w-60 flex flex-col h-screen overflow-x-hidden pb-16 z-10 bg-[#1C1C1C] border-[#282828]"
   >
     <div
-      class="h-10 flex-none flex flex-row items-center px-2 sticky top-0 bg-white"
+      class="h-10 flex-none flex flex-row items-center px-2 sticky top-0 bg-[#1C1C1C]"
     >
       <div
         class="px-2 h-full items-center flex flex-row cursor-default"
         :class="{
-          'font-medium text-black': rightPanelStore.activeTab === 'style',
-          'text-neutral-400': rightPanelStore.activeTab !== 'style',
+          'font-medium': rightPanelStore.activeTab === 'style',
+          'opacity-40': rightPanelStore.activeTab !== 'style',
         }"
         @click="rightPanelStore.activeTab = 'style'"
       >
@@ -18,8 +18,8 @@
       <div
         class="px-2 h-full items-center flex flex-row cursor-default"
         :class="{
-          'font-medium text-black': rightPanelStore.activeTab === 'props',
-          'text-neutral-400': rightPanelStore.activeTab !== 'props',
+          'font-medium': rightPanelStore.activeTab === 'props',
+          'opacity-40': rightPanelStore.activeTab !== 'props',
         }"
         @click="rightPanelStore.activeTab = 'props'"
       >
@@ -28,8 +28,8 @@
       <div
         class="px-2 h-full items-center flex flex-row cursor-default"
         :class="{
-          'font-medium text-black': rightPanelStore.activeTab === 'action',
-          'text-neutral-400': rightPanelStore.activeTab !== 'action',
+          'font-medium': rightPanelStore.activeTab === 'action',
+          'opacity-40': rightPanelStore.activeTab !== 'action',
         }"
         @click="rightPanelStore.activeTab = 'action'"
       >
