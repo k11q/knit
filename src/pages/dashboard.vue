@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-const { data: projects } = await useFetch("/api/projects");
+const { data: projects } = useFetch(() => "/api/projects");
 
 console.log("projects = " + projects.value);
 </script>
