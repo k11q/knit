@@ -8,12 +8,7 @@
 </template>
 
 <script setup>
-const client = useSupabaseClient();
+const { data: projects } = await useFetch("/api/projects");
 
-const { data: projects } = await useAsyncData("projects", async () => {
-  const { data } = await client.from("users").select("*");
-  return data;
-});
-
-console.log("data = " + projects.value);
+console.log("projects = " + projects.value);
 </script>
