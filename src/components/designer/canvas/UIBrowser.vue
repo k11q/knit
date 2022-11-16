@@ -41,9 +41,7 @@
       :data-id="node.id"
       data-component="Frame"
       @pointerdown.stop="testDown($event, node.id)"
-      @mouseover="canvasDnd.checkDroppable($event, node)"
       @mousedown="selectToi.changeSelected($event, node.id, node.type)"
-      @mouseleave.stop.prevent="canvasDnd.removeDroppable()"
       class="hover:outline outline-[#0191FA]"
       :class="{
         ' bg-red-600': node.isDroppable == true,
@@ -104,7 +102,7 @@
       :data-id="node.id"
       data-component="Box"
       @pointerdown.stop="testDown($event, node.id)"
-      @mouseover.stop.prevent="canvasDnd.checkDroppable($event, node)"
+      @mouseover="canvasDnd.checkDroppable($event, node)"
       @mousedown="selectToi.changeSelected($event, node.id, node.type)"
       class="hover:outline outline-[#0191FA]"
       @mouseleave.stop.prevent="canvasDnd.removeDroppable()"
@@ -128,8 +126,6 @@
       @mousedown="selectToi.changeSelected($event, node.id, node.type)"
       @dblclick="makeEditable"
       :style="{
-        height: '',
-        width: '',
         left: node.X + node.Xunit,
         top: node.Y + node.Yunit,
         fontSize: node.fontSize + 'px',
@@ -210,9 +206,6 @@ const testDown = (e, currDrag) => {
 
       function mousemove(e) {
         isDragging = true;
-
-        selectToi.selectedBoxHTMLX = (e.clientX - prevX) / squareStore.scale;
-        selectToi.selectedBoxHTMLY = (e.clientY - prevY) / squareStore.scale;
 
         if (selectToi.selectedBoxData.parent) {
           let dropzone = document.querySelector(
@@ -362,6 +355,13 @@ const testDown = (e, currDrag) => {
       function mouseup() {
         isDragging = false;
         canvasMarker.lines = [];
+
+        selectToi.selectedBoxHTMLX =
+          (e.target.getBoundingClientRect().x - squareStore.offsetLeft) /
+          squareStore.scale;
+        selectToi.selectedBoxHTMLY =
+          (e.target.getBoundingClientRect().y - squareStore.offsetTop) /
+          squareStore.scale;
 
         window.removeEventListener("mousemove", mousemove);
         window.removeEventListener("mouseup", mouseup);

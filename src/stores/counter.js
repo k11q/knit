@@ -610,31 +610,26 @@ export const useCounterStore = defineStore({
         this.prevX = e.layerX;
         this.prevY = e.layerY;
 
-        console.log("prevX = " + this.prevX);
-        console.log("prevY = " + this.prevY);
-
         this.selectedBox = id;
-        console.log("selectedbox" + this.selectedBox);
+
         if (e.target) {
           let selectedTarget = e.target.getBoundingClientRect();
-          let selectedElement = document.querySelector(`[data-id=${id}]`);
-          console.log("selected target = " + selectedTarget);
-
-          console.log("selectedX =" + selectedTarget.x);
-          console.log("selectedY =" + selectedTarget.y);
 
           this.getChildElement(this.data, id);
-          let parent = selectedElement.offsetParent;
-          let parentOffsetLeft = parent.offsetLeft;
-          let parentOffsetTop = parent.offsetTop;
 
-          this.selectedBoxHTMLX = Math.round(e.clientX - this.prevX);
-          this.selectedBoxHTMLY = Math.round(e.clientY - this.prevY);
+          this.selectedBoxHTMLX = Math.round(
+            (selectedTarget.x - squareStore.offsetLeft) / squareStore.scale
+          );
+          this.selectedBoxHTMLY = Math.round(
+            (selectedTarget.y - squareStore.offsetTop) / squareStore.scale
+          );
 
-          this.selectedBoxHTMLWidth = this.selectedBoxData.width;
-          this.selectedBoxHTMLHeight = this.selectedBoxData.height;
-
-          console.log(this.selectedBoxData);
+          this.selectedBoxHTMLWidth = Math.round(
+            selectedTarget.width / squareStore.scale
+          );
+          this.selectedBoxHTMLHeight = Math.round(
+            selectedTarget.height / squareStore.scale
+          );
         }
       }
     },

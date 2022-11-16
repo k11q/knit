@@ -35,14 +35,8 @@
         :style="{
           left: selectToi.selectedBoxHTMLX + 'px',
           top: selectToi.selectedBoxHTMLY + 'px',
-          height: selectToi.selectedBoxData.height
-            ? selectToi.selectedBoxData.height + 'px'
-            : document.querySelector(
-                `[data-id=${selectToi.selectedBoxData.parent}]`
-              ).getBoundingClientRect.height,
-          width: selectToi.selectedBoxData.width
-            ? selectToi.selectedBoxData.width + 'px'
-            : 'auto',
+          height: selectToi.selectedBoxHTMLHeight + 'px',
+          width: selectToi.selectedBoxHTMLWidth + 'px',
         }"
       >
         <div class="pointer-events-auto">
