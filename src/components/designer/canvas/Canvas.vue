@@ -29,6 +29,7 @@
         transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
       }"
     >
+      <!--
       <div
         v-if="selectToi.selectedBox && !canvasFF.isDragging"
         class="absolute pointer-events-none"
@@ -118,6 +119,7 @@
           />
         </div>
       </div>
+      -->
     </div>
     <div class="absolute inset-0 overflow-visible pointer-events-none">
       <RulerBrowser :lines="canvasMarker.lines" />

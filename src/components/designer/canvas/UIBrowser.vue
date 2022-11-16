@@ -23,7 +23,6 @@
         justifyContent: selectToi.getJustify(node.justify),
         alignItems: selectToi.getAlign(node.align),
         position: node.position,
-        color: node.color,
         paddingLeft: node.paddingX + 'px',
         paddingTop: node.paddingY + 'px',
         paddingRight: node.paddingX + 'px',
@@ -52,6 +51,83 @@
           selectToi.selectedBox === node.id && canvasFF.isDragging == true,
       }"
     >
+      <div
+        v-if="selectToi.selectedBox === node.id && !canvasFF.isDragging"
+        class="absolute pointer-events-none inset-0 z-[999]"
+      >
+        <div class="pointer-events-auto">
+          <p
+            class="absolute left-0 right-0 top-full flex flex-row justify-center"
+            :style="{ marginTop: `${(8 * 1) / squareStore.scale}px` }"
+          >
+            <span
+              class="bg-[#0191FA] text-[#EDEDED] cursor-default whitespace-nowrap"
+              :style="{
+                fontSize: `${(11 * 1) / squareStore.scale}px`,
+                lineHeight: 1.5,
+                borderRadius: `${(4 * 1) / squareStore.scale}px`,
+                paddingTop: `${2 * (1 / squareStore.scale)}px`,
+                paddingBottom: `${2 * (1 / squareStore.scale)}px`,
+                paddingRight: `${(4 * 1) / squareStore.scale}px`,
+                paddingLeft: `${(4 * 1) / squareStore.scale}px`,
+              }"
+            >
+              {{
+                selectToi.selectedBoxData.width
+                  ? Math.round(selectToi.selectedBoxData.width)
+                  : "Fill"
+              }}
+              x
+              {{
+                selectToi.selectedBoxData.height
+                  ? Math.round(selectToi.selectedBoxData.height)
+                  : "Fill"
+              }}
+            </span>
+          </p>
+          <div
+            @mousedown.stop.prevent="resizeStore.resizeTop"
+            class="absolute bottom-full bg-[#0191FA] w-full hover:cursor-row-resize"
+            :style="{ height: `${(1 * 1) / squareStore.scale}px` }"
+          />
+          <div
+            @mousedown.stop.prevent="resizeStore.resizeBottom"
+            class="absolute top-full bg-[#0191FA] w-full hover:cursor-row-resize"
+            :style="{ height: `${(1 * 1) / squareStore.scale}px` }"
+          />
+          <div
+            @mousedown.stop.prevent="resizeStore.resizeLeft"
+            class="absolute right-full bg-[#0191FA] h-full hover:cursor-col-resize"
+            :style="{ width: `${(1 * 1) / squareStore.scale}px` }"
+          />
+          <div
+            @mousedown.stop.prevent="resizeStore.resizeRight"
+            class="absolute left-full bg-[#0191FA] h-full hover:cursor-col-resize"
+            :style="{ width: `${(1 * 1) / squareStore.scale}px` }"
+          />
+
+          <div
+            @mousedown.stop.prevent="resizeStore.resizeTopLeft"
+            class="absolute -top-1 -left-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nwse-resize"
+            :style="{ transform: `scale( ${1 / squareStore.scale})` }"
+          />
+          <div
+            @mousedown.stop.prevent="resizeStore.resizeTopRight"
+            class="absolute -top-1 -right-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nesw-resize"
+            :style="{ transform: `scale( ${1 / squareStore.scale})` }"
+          />
+          <div
+            @mousedown.stop.prevent="resizeStore.resizeBottomRight"
+            class="absolute -bottom-1 -right-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nwse-resize"
+            :style="{ transform: `scale( ${1 / squareStore.scale})` }"
+          />
+          <div
+            @mousedown.stop.prevent="resizeStore.resizeBottomLeft"
+            class="absolute -bottom-1 -left-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nesw-resize"
+            :style="{ transform: `scale( ${1 / squareStore.scale})` }"
+          />
+        </div>
+      </div>
       <p
         @mousedown="selectToi.changeSelected($event, node.id)"
         class="absolute bottom-full left-0 hover:text-[#0191FA]"
@@ -115,6 +191,83 @@
           selectToi.selectedBox === node.id && canvasFF.isDragging == true,
       }"
     >
+      <div
+        v-if="selectToi.selectedBox === node.id && !canvasFF.isDragging"
+        class="absolute pointer-events-none inset-0 z-[999]"
+      >
+        <div class="pointer-events-auto">
+          <p
+            class="absolute left-0 right-0 top-full flex flex-row justify-center"
+            :style="{ marginTop: `${(8 * 1) / squareStore.scale}px` }"
+          >
+            <span
+              class="bg-[#0191FA] text-[#EDEDED] cursor-default whitespace-nowrap"
+              :style="{
+                fontSize: `${(11 * 1) / squareStore.scale}px`,
+                lineHeight: 1.5,
+                borderRadius: `${(4 * 1) / squareStore.scale}px`,
+                paddingTop: `${2 * (1 / squareStore.scale)}px`,
+                paddingBottom: `${2 * (1 / squareStore.scale)}px`,
+                paddingRight: `${(4 * 1) / squareStore.scale}px`,
+                paddingLeft: `${(4 * 1) / squareStore.scale}px`,
+              }"
+            >
+              {{
+                selectToi.selectedBoxData.width
+                  ? Math.round(selectToi.selectedBoxData.width)
+                  : "Fill"
+              }}
+              x
+              {{
+                selectToi.selectedBoxData.height
+                  ? Math.round(selectToi.selectedBoxData.height)
+                  : "Fill"
+              }}
+            </span>
+          </p>
+          <div
+            @mousedown.stop.prevent="resizeStore.resizeTop"
+            class="absolute bottom-full bg-[#0191FA] w-full hover:cursor-row-resize"
+            :style="{ height: `${(1 * 1) / squareStore.scale}px` }"
+          />
+          <div
+            @mousedown.stop.prevent="resizeStore.resizeBottom"
+            class="absolute top-full bg-[#0191FA] w-full hover:cursor-row-resize"
+            :style="{ height: `${(1 * 1) / squareStore.scale}px` }"
+          />
+          <div
+            @mousedown.stop.prevent="resizeStore.resizeLeft"
+            class="absolute right-full bg-[#0191FA] h-full hover:cursor-col-resize"
+            :style="{ width: `${(1 * 1) / squareStore.scale}px` }"
+          />
+          <div
+            @mousedown.stop.prevent="resizeStore.resizeRight"
+            class="absolute left-full bg-[#0191FA] h-full hover:cursor-col-resize"
+            :style="{ width: `${(1 * 1) / squareStore.scale}px` }"
+          />
+
+          <div
+            @mousedown.stop.prevent="resizeStore.resizeTopLeft"
+            class="absolute -top-1 -left-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nwse-resize"
+            :style="{ transform: `scale( ${1 / squareStore.scale})` }"
+          />
+          <div
+            @mousedown.stop.prevent="resizeStore.resizeTopRight"
+            class="absolute -top-1 -right-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nesw-resize"
+            :style="{ transform: `scale( ${1 / squareStore.scale})` }"
+          />
+          <div
+            @mousedown.stop.prevent="resizeStore.resizeBottomRight"
+            class="absolute -bottom-1 -right-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nwse-resize"
+            :style="{ transform: `scale( ${1 / squareStore.scale})` }"
+          />
+          <div
+            @mousedown.stop.prevent="resizeStore.resizeBottomLeft"
+            class="absolute -bottom-1 -left-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nesw-resize"
+            :style="{ transform: `scale( ${1 / squareStore.scale})` }"
+          />
+        </div>
+      </div>
       <DesignerCanvasUIBrowser
         v-if="node.children"
         :key="node.id"
@@ -122,15 +275,13 @@
         :depth="depth + 1"
       />
     </div>
-    <p
+    <div
       v-if="node.type === 'text'"
       class="text-center hover:decoration-[#0191FA] hover:underline hover:decoration-2"
       @pointerdown="testDown($event, node.id)"
       @mousedown="selectToi.changeSelected($event, node.id, node.type)"
       @dblclick="makeEditable"
       :style="{
-        height: '',
-        width: '',
         left: node.X + node.Xunit,
         top: node.Y + node.Yunit,
         fontSize: node.fontSize + 'px',
@@ -146,22 +297,101 @@
       :contenteditable="editable"
     >
       {{ node.textContent }}
-    </p>
+      <div
+        v-if="selectToi.selectedBox === node.id && !canvasFF.isDragging"
+        class="absolute pointer-events-none inset-0 z-[999]"
+      >
+        <div class="pointer-events-auto">
+          <p
+            class="absolute left-0 right-0 top-full flex flex-row justify-center"
+            :style="{ marginTop: `${(8 * 1) / squareStore.scale}px` }"
+          >
+            <span
+              class="bg-[#0191FA] text-[#EDEDED] cursor-default whitespace-nowrap"
+              :style="{
+                fontSize: `${(11 * 1) / squareStore.scale}px`,
+                lineHeight: 1.5,
+                borderRadius: `${(4 * 1) / squareStore.scale}px`,
+                paddingTop: `${2 * (1 / squareStore.scale)}px`,
+                paddingBottom: `${2 * (1 / squareStore.scale)}px`,
+                paddingRight: `${(4 * 1) / squareStore.scale}px`,
+                paddingLeft: `${(4 * 1) / squareStore.scale}px`,
+              }"
+            >
+              {{
+                selectToi.selectedBoxData.width
+                  ? Math.round(selectToi.selectedBoxData.width)
+                  : "Fill"
+              }}
+              x
+              {{
+                selectToi.selectedBoxData.height
+                  ? Math.round(selectToi.selectedBoxData.height)
+                  : "Fill"
+              }}
+            </span>
+          </p>
+          <div
+            @mousedown.stop.prevent="resizeStore.resizeTop"
+            class="absolute bottom-full bg-[#0191FA] w-full hover:cursor-row-resize"
+            :style="{ height: `${(1 * 1) / squareStore.scale}px` }"
+          />
+          <div
+            @mousedown.stop.prevent="resizeStore.resizeBottom"
+            class="absolute top-full bg-[#0191FA] w-full hover:cursor-row-resize"
+            :style="{ height: `${(1 * 1) / squareStore.scale}px` }"
+          />
+          <div
+            @mousedown.stop.prevent="resizeStore.resizeLeft"
+            class="absolute right-full bg-[#0191FA] h-full hover:cursor-col-resize"
+            :style="{ width: `${(1 * 1) / squareStore.scale}px` }"
+          />
+          <div
+            @mousedown.stop.prevent="resizeStore.resizeRight"
+            class="absolute left-full bg-[#0191FA] h-full hover:cursor-col-resize"
+            :style="{ width: `${(1 * 1) / squareStore.scale}px` }"
+          />
+
+          <div
+            @mousedown.stop.prevent="resizeStore.resizeTopLeft"
+            class="absolute -top-1 -left-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nwse-resize"
+            :style="{ transform: `scale( ${1 / squareStore.scale})` }"
+          />
+          <div
+            @mousedown.stop.prevent="resizeStore.resizeTopRight"
+            class="absolute -top-1 -right-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nesw-resize"
+            :style="{ transform: `scale( ${1 / squareStore.scale})` }"
+          />
+          <div
+            @mousedown.stop.prevent="resizeStore.resizeBottomRight"
+            class="absolute -bottom-1 -right-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nwse-resize"
+            :style="{ transform: `scale( ${1 / squareStore.scale})` }"
+          />
+          <div
+            @mousedown.stop.prevent="resizeStore.resizeBottomLeft"
+            class="absolute -bottom-1 -left-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nesw-resize"
+            :style="{ transform: `scale( ${1 / squareStore.scale})` }"
+          />
+        </div>
+      </div>
+    </div>
   </template>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { useCounterStore } from "@/stores/counter";
 import { useCanvasDndStore } from "@/stores/canvasDnd";
 import { useCanvasFF } from "@/stores/canvasFreeForm";
 import { useSquareStore } from "@/stores/dataSquare";
 import { useCanvasMarkerStore } from "@/stores/canvasMarker";
+import { useResizeStore } from "@/stores/resizeStore";
 
 const selectToi = useCounterStore();
 const canvasDnd = useCanvasDndStore();
 const canvasFF = useCanvasFF();
 const squareStore = useSquareStore();
 const canvasMarker = useCanvasMarkerStore();
+const resizeStore = useResizeStore();
 let editable = ref(false);
 
 function makeEditable() {

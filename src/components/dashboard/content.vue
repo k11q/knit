@@ -2,7 +2,7 @@
   <div class="flex flex-col w-full">
     <DashboardTopBar />
     <div class="px-8 py-4 border-b border-[#282828]">Recently viewed</div>
-    <div class="flex flex-col px-8 py-6 gap-6">
+    <div class="flex flex-col px-8 py-6 gap-6 overflow-scroll">
       <div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-8">
         <div
           class="flex flex-row gap-4 border py-3 px-4 rounded-md items-center bg-[#2E2E2E] border-[#3E3E3E] hover:border-[#505050] hover:bg-[#343434] transition-all duration-300"
