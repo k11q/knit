@@ -51,7 +51,7 @@
             :style="{ marginTop: `${(8 * 1) / addaSquare.scale}px` }"
           >
             <span
-              class="bg-blue-600 text-[#EDEDED] cursor-default whitespace-nowrap"
+              class="bg-[#0191FA] text-[#EDEDED] cursor-default whitespace-nowrap"
               :style="{
                 fontSize: `${(11 * 1) / addaSquare.scale}px`,
                 lineHeight: 1.5,
@@ -77,43 +77,43 @@
           </p>
           <div
             @mousedown.stop.prevent="resizeStore.resizeTop"
-            class="absolute bottom-full bg-blue-600 w-full hover:cursor-row-resize"
+            class="absolute bottom-full bg-[#0191FA] w-full hover:cursor-row-resize"
             :style="{ height: `${(1 * 1) / addaSquare.scale}px` }"
           />
           <div
             @mousedown.stop.prevent="resizeStore.resizeBottom"
-            class="absolute top-full bg-blue-600 w-full hover:cursor-row-resize"
+            class="absolute top-full bg-[#0191FA] w-full hover:cursor-row-resize"
             :style="{ height: `${(1 * 1) / addaSquare.scale}px` }"
           />
           <div
             @mousedown.stop.prevent="resizeStore.resizeLeft"
-            class="absolute right-full bg-blue-600 h-full hover:cursor-col-resize"
+            class="absolute right-full bg-[#0191FA] h-full hover:cursor-col-resize"
             :style="{ width: `${(1 * 1) / addaSquare.scale}px` }"
           />
           <div
             @mousedown.stop.prevent="resizeStore.resizeRight"
-            class="absolute left-full bg-blue-600 h-full hover:cursor-col-resize"
+            class="absolute left-full bg-[#0191FA] h-full hover:cursor-col-resize"
             :style="{ width: `${(1 * 1) / addaSquare.scale}px` }"
           />
 
           <div
             @mousedown.stop.prevent="resizeStore.resizeTopLeft"
-            class="absolute -top-1 -left-1 h-2 w-2 bg-[#EDEDED] border-blue-600 border hover:cursor-nwse-resize"
+            class="absolute -top-1 -left-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nwse-resize"
             :style="{ transform: `scale( ${1 / addaSquare.scale})` }"
           />
           <div
             @mousedown.stop.prevent="resizeStore.resizeTopRight"
-            class="absolute -top-1 -right-1 h-2 w-2 bg-[#EDEDED] border-blue-600 border hover:cursor-nesw-resize"
+            class="absolute -top-1 -right-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nesw-resize"
             :style="{ transform: `scale( ${1 / addaSquare.scale})` }"
           />
           <div
             @mousedown.stop.prevent="resizeStore.resizeBottomRight"
-            class="absolute -bottom-1 -right-1 h-2 w-2 bg-[#EDEDED] border-blue-600 border hover:cursor-nwse-resize"
+            class="absolute -bottom-1 -right-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nwse-resize"
             :style="{ transform: `scale( ${1 / addaSquare.scale})` }"
           />
           <div
             @mousedown.stop.prevent="resizeStore.resizeBottomLeft"
-            class="absolute -bottom-1 -left-1 h-2 w-2 bg-[#EDEDED] border-blue-600 border hover:cursor-nesw-resize"
+            class="absolute -bottom-1 -left-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nesw-resize"
             :style="{ transform: `scale( ${1 / addaSquare.scale})` }"
           />
         </div>

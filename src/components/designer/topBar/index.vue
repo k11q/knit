@@ -193,7 +193,7 @@
       </div>
       <div class="flex items-center justify-center">
         <button
-          class="bg-blue-600 px-2 py-1 text-[#EDEDED] rounded-md border-none"
+          class="bg-[#0191FA] px-2 py-1 text-[#EDEDED] rounded-md border-none"
         >
           Deploy
         </button>

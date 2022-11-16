@@ -45,7 +45,7 @@
       @mouseover="canvasDnd.checkDroppable($event, node)"
       @mousedown="selectToi.changeSelected($event, node.id)"
       @mouseleave.stop.prevent="canvasDnd.removeDroppable()"
-      class="hover:outline outline-blue-600"
+      class="hover:outline outline-[#0191FA]"
       :class="{
         ' bg-red-600': node.isDroppable == true,
         'pointer-events-none':
@@ -54,9 +54,9 @@
     >
       <p
         @mousedown="selectToi.changeSelected($event, node.id)"
-        class="absolute bottom-full left-0 hover:text-blue-600"
+        class="absolute bottom-full left-0 hover:text-[#0191FA]"
         :class="{
-          'text-blue-600': selectToi.selectedBox === node.id,
+          'text-[#0191FA]': selectToi.selectedBox === node.id,
           'opacity-40': selectToi.selectedBox !== node.id,
         }"
         :style="{
@@ -107,7 +107,7 @@
       @pointerdown.stop="testDown($event, node.id)"
       @mouseover.stop.prevent="canvasDnd.checkDroppable($event, node)"
       @mousedown="selectToi.changeSelected($event, node.id)"
-      class="hover:outline outline-blue-600"
+      class="hover:outline outline-[#0191FA]"
       @mouseleave.stop.prevent="canvasDnd.removeDroppable()"
       :class="{
         ' bg-red-600': node.isDroppable == true,
@@ -124,7 +124,7 @@
     </div>
     <div
       v-if="typeText(node.type)"
-      class="text-center hover:decoration-blue-600 hover:underline hover:decoration-2"
+      class="text-center hover:decoration-[#0191FA] hover:underline hover:decoration-2"
       contenteditable="true"
       @pointerdown.stop="testDown($event, node.id)"
       @mousedown="selectToi.changeSelected($event, node.id)"
@@ -140,7 +140,7 @@
       :data-id="node.id"
       data-component="Text"
       :class="{
-        'decoration-blue-600 underline decoration-1 ':
+        'decoration-[#0191FA] underline decoration-1 ':
           selectToi.selectedBox === node.id,
       }"
     >

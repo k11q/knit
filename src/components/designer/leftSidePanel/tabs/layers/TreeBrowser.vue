@@ -8,9 +8,9 @@
         'bg-[#2E2E2E] border-[#232323] hover:border-[#232323]':
           selectToi.selectedBox === node.id,
         'opacity-30': selectToi.dragDisplay === node.id,
-        'hover:border-blue-700':
+        'hover:border-[#0191FA]':
           !treeDnd.isDragging && selectToi.selectedBox !== node.id,
-        '!border-blue-700':
+        '!border-[#0191FA]':
           treeDnd.currDropPosition === 'middle' &&
           treeDnd.currDrop === node.id &&
           selectToi.selectedBox !== node.id,
@@ -23,7 +23,7 @@
           treeDnd.isDragging &&
           treeDnd.currDropPosition !== 'middle'
         "
-        class="h-0.5 bg-blue-600 absolute w-full z-10"
+        class="h-0.5 bg-[#0191FA] absolute w-full z-10"
         :class="{
           'bottom-full ': treeDnd.currDropPosition === 'top',
           'top-full ': treeDnd.currDropPosition === 'bottom',
@@ -35,7 +35,7 @@
           treeDnd.isDragging &&
           treeDnd.currDropPosition !== 'middle'
         "
-        class="h-2 w-2 bg-[#EDEDED] border-2 border-blue-600 rounded-full absolute z-10"
+        class="h-2 w-2 bg-[#EDEDED] border-2 border-[#0191FA] rounded-full absolute z-10"
         :class="{
           'top-0 -mt-[5px]': treeDnd.currDropPosition === 'top',
           'bottom-0 -mb-[5px]': treeDnd.currDropPosition === 'bottom',
@@ -47,7 +47,7 @@
           treeDnd.isDragging &&
           treeDnd.currDropPosition !== 'middle'
         "
-        class="h-2 w-2 bg-[#EDEDED] border-2 border-blue-600 rounded-full absolute right-0 -mr-[5px] z-10"
+        class="h-2 w-2 bg-[#EDEDED] border-2 border-[#0191FA] rounded-full absolute right-0 -mr-[5px] z-10"
         :class="{
           'top-0 -mt-[5px]': treeDnd.currDropPosition === 'top',
           'bottom-0 -mb-[5px]': treeDnd.currDropPosition === 'bottom',
