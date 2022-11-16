@@ -14,6 +14,8 @@
           treeDnd.currDropPosition === 'middle' &&
           treeDnd.currDrop === node.id &&
           selectToi.selectedBox !== node.id,
+        'opacity-50': treeDnd.currDrag === node.id,
+        'opacity-100': treeDnd.currDrag !== node.id,
       }"
       @mousedown="dragAndDrop($event, node.id)"
     >
@@ -35,7 +37,7 @@
           treeDnd.isDragging &&
           treeDnd.currDropPosition !== 'middle'
         "
-        class="h-2 w-2 bg-[#EDEDED] border-2 border-[#0191FA] rounded-full absolute z-10"
+        class="h-2 w-2 bg-[#EDEDED] border-2 border-[#0191FA] rounded-full -ml-1 absolute z-10"
         :class="{
           'top-0 -mt-[5px]': treeDnd.currDropPosition === 'top',
           'bottom-0 -mb-[5px]': treeDnd.currDropPosition === 'bottom',
@@ -47,7 +49,7 @@
           treeDnd.isDragging &&
           treeDnd.currDropPosition !== 'middle'
         "
-        class="h-2 w-2 bg-[#EDEDED] border-2 border-[#0191FA] rounded-full absolute right-0 -mr-[5px] z-10"
+        class="h-2 w-2 bg-[#EDEDED] border-2 border-[#0191FA] rounded-full absolute right-1 -mr-[5px] z-10"
         :class="{
           'top-0 -mt-[5px]': treeDnd.currDropPosition === 'top',
           'bottom-0 -mb-[5px]': treeDnd.currDropPosition === 'bottom',
@@ -173,12 +175,12 @@ function changePageTitle(title) {
 const dragAndDrop = (e, currDrag) => {
   if (!squareStore.dragPointer && !squareStore.draggingPointer) {
     selectToi.changeSelected(e, currDrag);
-    treeDnd.currDrag = currDrag;
 
     window.addEventListener("mousemove", mousemove, e);
     window.addEventListener("mouseup", mouseup);
 
     function mousemove(e) {
+      treeDnd.currDrag = currDrag;
       treeDnd.isDragging = true;
       const currDropId = document.elementFromPoint(e.clientX, e.clientY).dataset
         .treeid;
@@ -228,6 +230,7 @@ const dragAndDrop = (e, currDrag) => {
           treeDnd.dndAppendMiddle(selectToi.data, treeDnd.currDrop);
         }
       }
+      treeDnd.currDrag = "";
       treeDnd.currDrop = "";
       treeDnd.isDragging = false;
       window.removeEventListener("mousemove", mousemove);
