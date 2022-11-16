@@ -2165,7 +2165,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useCounterStore } from "@/stores/counter";
 import { useRightPanelStore } from "@/stores/rightPanelStore";
 

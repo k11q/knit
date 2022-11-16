@@ -30,7 +30,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useSquareStore } from "@/stores/dataSquare";
 import { useCanvasFF } from "@/stores/canvasFreeForm";
 import { useCounterStore } from "@/stores/counter";

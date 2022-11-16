@@ -116,7 +116,7 @@
   </template>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useCounterStore } from "@/stores/counter";
 import { useCanvasDndStore } from "@/stores/canvasDnd";
 import { useCanvasFF } from "@/stores/canvasFreeForm";

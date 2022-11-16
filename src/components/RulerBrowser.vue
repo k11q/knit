@@ -36,22 +36,12 @@
   </template>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useSquareStore } from "../stores/dataSquare";
 
 const squareStore = useSquareStore();
-</script>
 
-<script>
-export default {
-  name: "rulerBrowser",
-  props: {
-    lines: Array,
-  },
-  data() {
-    return {};
-  },
-  emits: [],
-  methods: {},
-};
+const props = defineProps({
+  lines: Array,
+});
 </script>

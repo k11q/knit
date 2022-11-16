@@ -12,7 +12,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useCounterStore } from "@/stores/counter";
 
 const selectToi = useCounterStore();

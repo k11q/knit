@@ -7,8 +7,4 @@
   </div>
 </template>
 
-<script setup>
-const { data: projects } = await useFetch("/api/projects");
-
-console.log("projects = " + projects.value);
-</script>
+<script setup lang="ts"></script>

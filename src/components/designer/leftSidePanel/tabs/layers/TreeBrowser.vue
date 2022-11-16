@@ -148,7 +148,7 @@
   </template>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useCounterStore } from "@/stores/counter";
 import { useTreeDndStore } from "@/stores/treeDnd";
 import { useSquareStore } from "@/stores/dataSquare";

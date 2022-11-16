@@ -114,10 +114,8 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useCounterStore } from "@/stores/counter";
-import { useLeftPanelStore } from "@/stores/leftPanelStore";
 
 const selectToi = useCounterStore();
-const leftPanelStore = useLeftPanelStore();
 </script>

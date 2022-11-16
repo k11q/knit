@@ -27,9 +27,9 @@
         class="flex-grow bg-transparent px-4 py-2 focus:outline-none placeholder-[#EDEDED] placeholder-opacity-40"
       />
     </div>
-    <div class="flex flex-col">
+    <div class="flex flex-col px-2">
       <div
-        class="flex flex-row gap-[10px] px-4 py-2 items-center border border-transparent hover:border-blue-600"
+        class="flex flex-row gap-[10px] px-2 py-2 items-center border border-transparent hover:bg-[#2E2E2E] rounded-md"
       >
         <div
           class="aspect-square h-[14px] flex items-center justify-center opacity-60"
@@ -51,7 +51,7 @@
         <p class="flex-grow">projects</p>
       </div>
       <div
-        class="flex flex-row gap-[10px] px-4 py-2 items-center border border-transparent hover:border-blue-600"
+        class="flex flex-row gap-[10px] px-2 py-2 items-center border border-transparent hover:bg-[#2E2E2E] rounded-md"
       >
         <div
           class="aspect-square h-[14px] flex items-center justify-center opacity-60"

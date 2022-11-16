@@ -149,8 +149,11 @@
         </div>
       </div>
       <div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-8">
-        <template v-for="canvas in selectToi.canvas">
-          <NuxtLink :to="`/project/1/${canvas.id}`" class="cursor-default">
+        <template v-for="project in projects">
+          <NuxtLink
+            :to="`/project/${project.id}/${project.name}`"
+            class="cursor-default"
+          >
             <div
               class="border aspect-[4/3] flex flex-col rounded-md border-[#3E3E3E] bg-[#2E2E2E] overflow-clip hover:border-[#505050] hover:bg-[#343434] transition-all duration-300"
             >
@@ -174,8 +177,8 @@
                   <polyline points="14 2 14 8 20 8"></polyline>
                 </svg>
                 <div class="flex flex-col gap-[1px]">
-                  <p>{{ canvas.id }}</p>
-                  <p class="opacity-50 text-xs">Description</p>
+                  <p>{{ project.name }}</p>
+                  <p class="opacity-50 text-xs">{{ project.description }}</p>
                 </div>
               </div>
             </div>
@@ -186,8 +189,10 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useCounterStore } from "@/stores/counter";
+
+const { data: projects } = await useFetch("/api/projects");
 
 const selectToi = useCounterStore();
 </script>
