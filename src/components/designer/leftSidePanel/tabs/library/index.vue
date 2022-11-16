@@ -27,9 +27,9 @@
         class="flex-grow bg-transparent px-4 py-2 focus:outline-none placeholder-[#EDEDED] placeholder-opacity-40"
       />
     </div>
-    <div class="flex flex-col border-t border-[#282828] py-2">
-      <div class="flex flex-row gap-[10px] pl-4 pr-2 items-center">
-        <p class="flex-grow opacity-60">Font</p>
+    <div class="flex flex-col border-t border-[#282828] p-2">
+      <div class="flex flex-row gap-[10px] pl-2 items-center">
+        <p class="flex-grow opacity-80">Font</p>
         <div
           class="aspect-square h-8 flex flex-col justify-center items-center rounded opacity-80 hover:bg-[#2E2E2E] hover:opacity-100 transition-all duration-300"
         >
@@ -50,29 +50,29 @@
         </div>
       </div>
       <div
-        class="flex flex-row gap-[10px] px-4 py-2 items-center border border-transparent hover:border-blue-600"
+        class="flex flex-row gap-[10px] px-2 py-2 items-center border border-transparent hover:bg-[#2E2E2E] rounded-md opacity-80 hover:opacity-100"
       >
         <div
-          class="aspect-square h-[14px] flex items-center justify-center opacity-60"
+          class="aspect-square h-[14px] flex items-center justify-center opacity-80"
         >
           <p>Ag</p>
         </div>
         <p class="flex-grow">Inter</p>
       </div>
       <div
-        class="flex flex-row gap-[10px] px-4 py-2 items-center border border-transparent hover:border-blue-600"
+        class="flex flex-row gap-[10px] px-2 py-2 items-center border border-transparent hover:bg-[#2E2E2E] rounded-md opacity-80 hover:opacity-100"
       >
         <div
-          class="aspect-square h-[14px] flex items-center justify-center opacity-60"
+          class="aspect-square h-[14px] flex items-center justify-center opacity-80"
         >
           <p>Ag</p>
         </div>
         <p class="flex-grow">SF Pro</p>
       </div>
     </div>
-    <div class="flex flex-col border-t border-[#282828] py-2">
-      <div class="flex flex-row gap-[10px] pl-4 pr-2 items-center">
-        <p class="flex-grow opacity-60">Text</p>
+    <div class="flex flex-col border-t border-[#282828] p-2">
+      <div class="flex flex-row gap-[10px] pl-2 items-center">
+        <p class="flex-grow opacity-80">Text</p>
         <div
           class="aspect-square h-8 flex flex-col justify-center items-center rounded opacity-80 hover:bg-[#2E2E2E] hover:opacity-100 transition-all duration-300"
         >
@@ -93,39 +93,39 @@
         </div>
       </div>
       <div
-        class="flex flex-row gap-[10px] px-4 py-2 items-center border border-transparent hover:border-blue-600"
+        class="flex flex-row gap-[10px] px-2 py-2 items-center border border-transparent hover:bg-[#2E2E2E] rounded-md opacity-80 hover:opacity-100"
       >
         <div
-          class="aspect-square h-[14px] flex items-center justify-center opacity-60"
+          class="aspect-square h-[14px] flex items-center justify-center opacity-80"
         >
           <p>Ag</p>
         </div>
         <p class="flex-grow">text-xs</p>
       </div>
       <div
-        class="flex flex-row gap-[10px] px-4 py-2 items-center border border-transparent hover:border-blue-600"
+        class="flex flex-row gap-[10px] px-2 py-2 items-center border border-transparent hover:bg-[#2E2E2E] rounded-md opacity-80 hover:opacity-100"
       >
         <div
-          class="aspect-square h-[14px] flex items-center justify-center opacity-60"
+          class="aspect-square h-[14px] flex items-center justify-center opacity-80"
         >
           <p>Ag</p>
         </div>
         <p class="flex-grow">text-sm</p>
       </div>
       <div
-        class="flex flex-row gap-[10px] px-4 py-2 items-center border border-transparent hover:border-blue-600"
+        class="flex flex-row gap-[10px] px-2 py-2 items-center border border-transparent hover:bg-[#2E2E2E] rounded-md opacity-80 hover:opacity-100"
       >
         <div
-          class="aspect-square h-[14px] flex items-center justify-center opacity-60"
+          class="aspect-square h-[14px] flex items-center justify-center opacity-80"
         >
           <p>Ag</p>
         </div>
         <p class="flex-grow">text-md</p>
       </div>
     </div>
-    <div class="flex flex-col border-t border-[#282828] py-2">
-      <div class="flex flex-row gap-[10px] pl-4 pr-2 items-center">
-        <p class="flex-grow opacity-60">Colors</p>
+    <div class="flex flex-col border-t border-[#282828] p-2">
+      <div class="flex flex-row gap-[10px] pl-2 items-center">
+        <p class="flex-grow opacity-80">Colors</p>
         <div
           class="aspect-square h-8 flex flex-col justify-center items-center rounded opacity-80 hover:bg-[#2E2E2E] hover:opacity-100 transition-all duration-300"
         >
@@ -146,28 +146,28 @@
         </div>
       </div>
       <div
-        class="flex flex-row gap-[10px] px-4 py-2 items-center border border-transparent hover:border-blue-600"
+        class="flex flex-row gap-[10px] px-2 py-2 items-center border border-transparent hover:bg-[#2E2E2E] rounded-md"
       >
         <div class="aspect-square h-[14px] bg-slate-300 rounded-full"></div>
-        <p class="flex-grow">Color 1</p>
+        <p class="flex-grow opacity-80">Color 1</p>
       </div>
       <div
-        class="flex flex-row gap-[10px] px-4 py-2 items-center border border-transparent hover:border-blue-600"
+        class="flex flex-row gap-[10px] px-2 py-2 items-center border border-transparent hover:bg-[#2E2E2E] rounded-md"
       >
         <div class="aspect-square h-[14px] bg-slate-300 rounded-full"></div>
-        <p class="flex-grow">Color 1</p>
+        <p class="flex-grow opacity-80">Color 1</p>
       </div>
       <div
-        class="flex flex-row gap-[10px] px-4 py-2 items-center border border-transparent hover:border-blue-600"
+        class="flex flex-row gap-[10px] px-2 py-2 items-center border border-transparent hover:bg-[#2E2E2E] rounded-md"
       >
         <div class="aspect-square h-[14px] bg-slate-300 rounded-full"></div>
-        <p class="flex-grow">Color 1</p>
+        <p class="flex-grow opacity-80">Color 1</p>
       </div>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { useCounterStore } from "@/stores/counter";
 
 const route = useRoute();
