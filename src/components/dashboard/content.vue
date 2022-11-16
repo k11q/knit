@@ -194,5 +194,7 @@ import { useCounterStore } from "@/stores/counter";
 
 const { data: projects } = await useFetch("/api/projects");
 
+console.log(projects.value);
+
 const selectToi = useCounterStore();
 </script>
