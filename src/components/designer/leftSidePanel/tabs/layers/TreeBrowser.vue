@@ -14,7 +14,7 @@
           treeDnd.currDropPosition === 'middle' &&
           treeDnd.currDrop === node.id &&
           selectToi.selectedBox !== node.id,
-        'opacity-50': treeDnd.currDrag === node.id,
+        'opacity-40': treeDnd.currDrag === node.id,
         'opacity-100': treeDnd.currDrag !== node.id,
       }"
       @mousedown="dragAndDrop($event, node.id)"

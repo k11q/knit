@@ -597,12 +597,14 @@ export const useCounterStore = defineStore({
     addSquare(dataSquare) {
       this.data.push(dataSquare);
     },
-    changeSelected(e, id) {
+    changeSelected(e, id, type) {
       const squareStore = useSquareStore();
 
       if (squareStore.dragPointer || squareStore.draggingPointer) {
       } else {
-        e.preventDefault();
+        if (type !== "text") {
+          e.preventDefault();
+        }
         e.stopPropagation();
 
         this.prevX = e.layerX;

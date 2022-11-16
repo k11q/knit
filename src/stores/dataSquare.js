@@ -35,7 +35,7 @@ export const useSquareStore = defineStore({
       children: [],
     },
     dataText: {
-      id: "rectangle" + Math.random() * 100,
+      id: "text" + Math.random() * 100,
       type: "text",
       textContent: "Text here",
       fontSize: 14,
@@ -44,6 +44,7 @@ export const useSquareStore = defineStore({
       Yunit: "px",
       position: "absolute",
       parent: "",
+      children: [],
     },
     dataSquare: {
       id: "rectangle" + Math.random() * 100,
@@ -138,6 +139,7 @@ export const useSquareStore = defineStore({
         this.dataText.id = "text" + this.countBox;
         this.dataText.X = (event.clientX - this.offsetLeft) / this.scale - 50;
         this.dataText.Y = (event.clientY - this.offsetTop) / this.scale - 50;
+        this.dataSquare.children = [];
         let clonedDataText = { ...this.dataText };
 
         this.turnOnNormalPointer();

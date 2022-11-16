@@ -199,7 +199,7 @@
         </button>
       </div>
       <div class="flex items-center justify-center">
-        <button>100%</button>
+        <button>{{ `${(addaSquare.scale * 100).toFixed(2)}` }}%</button>
       </div>
     </div>
   </div>

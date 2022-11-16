@@ -1,7 +1,7 @@
 <template>
   <template v-for="node in nodes" :key="node.id">
     <div
-      v-if="typeFrame(node.type)"
+      v-if="node.type === 'frame'"
       :style="{
         backgroundColor: node.bgColor,
         height: node.height ? node.height + node.unit : 'auto',
@@ -43,7 +43,7 @@
       data-component="Frame"
       @pointerdown.stop="testDown($event, node.id)"
       @mouseover="canvasDnd.checkDroppable($event, node)"
-      @mousedown="selectToi.changeSelected($event, node.id)"
+      @mousedown="selectToi.changeSelected($event, node.id, node.type)"
       @mouseleave.stop.prevent="canvasDnd.removeDroppable()"
       class="hover:outline outline-[#0191FA]"
       :class="{
@@ -106,7 +106,7 @@
       data-component="Box"
       @pointerdown.stop="testDown($event, node.id)"
       @mouseover.stop.prevent="canvasDnd.checkDroppable($event, node)"
-      @mousedown="selectToi.changeSelected($event, node.id)"
+      @mousedown="selectToi.changeSelected($event, node.id, node.type)"
       class="hover:outline outline-[#0191FA]"
       @mouseleave.stop.prevent="canvasDnd.removeDroppable()"
       :class="{
@@ -122,15 +122,15 @@
         :depth="depth + 1"
       />
     </div>
-    <div
-      v-if="typeText(node.type)"
+    <p
+      v-if="node.type === 'text'"
       class="text-center hover:decoration-[#0191FA] hover:underline hover:decoration-2"
-      contenteditable="true"
-      @pointerdown.stop="testDown($event, node.id)"
-      @mousedown="selectToi.changeSelected($event, node.id)"
+      @pointerdown="testDown($event, node.id)"
+      @mousedown="selectToi.changeSelected($event, node.id, node.type)"
+      @dblclick="makeEditable"
       :style="{
-        height: node.height + 'px',
-        width: node.width + 'px',
+        height: '',
+        width: '',
         left: node.X + node.Xunit,
         top: node.Y + node.Yunit,
         fontSize: node.fontSize + node.fontUnit,
@@ -143,9 +143,10 @@
         'decoration-[#0191FA] underline decoration-1 ':
           selectToi.selectedBox === node.id,
       }"
+      :contenteditable="editable"
     >
       {{ node.textContent }}
-    </div>
+    </p>
   </template>
 </template>
 
@@ -161,18 +162,11 @@ const canvasDnd = useCanvasDndStore();
 const canvasFF = useCanvasFF();
 const squareStore = useSquareStore();
 const canvasMarker = useCanvasMarkerStore();
+let editable = ref(false);
 
-const typeFrame = (type) => {
-  if (type === "frame") {
-    return true;
-  } else return false;
-};
-
-const typeText = (type) => {
-  if (type === "text") {
-    return true;
-  } else return false;
-};
+function makeEditable() {
+  editable.value = !editable.value;
+}
 
 //dnd on canvas
 const testDown = (e, currDrag) => {
@@ -387,8 +381,7 @@ const props = defineProps({
     default: 0,
   },
 });
-const expanded = ref(true);
-const prevX = ref("");
+
 const emit = defineEmits("update:modelValue");
 function changePageTitle(title) {
   emit("update:modelValue", title); // previously was `this.$emit('input', title)`
