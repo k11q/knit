@@ -7,7 +7,7 @@
       <div class="flex flex-row justify-between pl-4 pr-2 items-center">
         <p class="font-medium">Pages</p>
         <div
-          class="aspect-square h-8 flex flex-col justify-center items-center hover:bg-gray-100 rounded"
+          class="aspect-square h-8 flex flex-col justify-center items-center opacity-80 hover:bg-[#2E2E2E] hover:opacity-100 transition-all duration-300 rounded"
           @click="
             () => {
               selectToi.canvas.push({
@@ -32,48 +32,47 @@
           </svg>
         </div>
       </div>
-      <div class="flex flex-col">
+      <div class="flex flex-col px-2">
         <template v-for="canvas in selectToi.canvas">
-          <NuxtLink
-            :to="`/project/${paramsId}/${canvas.id}`"
-            class="cursor-default"
+          <div
+            class="flex flex-row gap-[10px] px-2 py-2 items-center border border-transparent hover:bg-[#2E2E2E] rounded-md"
           >
-            <div class="flex flex-row gap-2 hover:bg-[#232323] py-2 px-4">
-              <div
-                class="flex flex-col items-center justify-center w-3 flex-none aspect-square"
+            <div
+              class="aspect-square h-[14px] flex items-center justify-center opacity-60"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
               >
-                <svg
-                  v-if="paramsPageId === canvas.id"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-              </div>
-              <p class="cursor-default focus:outline-none">{{ canvas.id }}</p>
+                <path
+                  d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"
+                ></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+              </svg>
             </div>
-          </NuxtLink>
+            <p class="flex-grow">{{ canvas.id }}</p>
+          </div>
         </template>
       </div>
     </div>
-    <!--tree-->
-    <DesignerLeftSidePanelTabsLayersTreeBrowser :nodes="selectToi.data" />
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { useCounterStore } from "@/stores/counter";
+import { useLeftPanelStore } from "@/stores/leftPanelStore";
 
 const route = useRoute();
 const paramsId = route.params.id;
 const paramsPageId = route.params.pageId;
 
 const selectToi = useCounterStore();
+const leftPanelStore = useLeftPanelStore();
 </script>
