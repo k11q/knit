@@ -157,6 +157,15 @@
       <DesignerLeftSidePanelTabsLayers
         v-if="leftPanelStore.activeTab === 'layers'"
       />
+      <DesignerLeftSidePanelTabsLibrary
+        v-if="leftPanelStore.activeTab === 'library'"
+      />
+      <DesignerLeftSidePanelTabsAssets
+        v-if="leftPanelStore.activeTab === 'assets'"
+      />
+      <DesignerLeftSidePanelTabsData
+        v-if="leftPanelStore.activeTab === 'data'"
+      />
     </div>
   </div>
 </template>

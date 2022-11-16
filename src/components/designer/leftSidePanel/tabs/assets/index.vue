@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col pt-[5px] gap-[1px] pb-3">
     <div class="flex flex-row justify-between pl-4 pr-2 items-center pb-[5px]">
-      <p class="font-medium">Add element</p>
+      <p class="font-medium">Assets</p>
       <div
         class="aspect-square h-8 flex flex-col justify-center items-center rounded opacity-80 hover:bg-[#2E2E2E] hover:opacity-100 transition-all duration-300"
       >
