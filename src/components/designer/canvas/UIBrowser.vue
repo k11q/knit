@@ -133,7 +133,7 @@
         width: '',
         left: node.X + node.Xunit,
         top: node.Y + node.Yunit,
-        fontSize: node.fontSize + node.fontUnit,
+        fontSize: node.fontSize + 'px',
         color: node.color,
         position: node.position,
       }"

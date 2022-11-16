@@ -97,7 +97,7 @@
           width: depth === 1 ? '' : node.width + 'px',
           left: depth === 1 ? '' : node.X + node.Xunit,
           top: depth === 1 ? '' : node.Y + node.Yunit,
-          fontSize: node.fontSize + node.fontUnit,
+          fontSize: node.fontSize + 'px',
           color: node.color,
           position: depth === 1 ? '' : node.position,
         }"

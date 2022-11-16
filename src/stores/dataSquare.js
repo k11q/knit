@@ -35,9 +35,11 @@ export const useSquareStore = defineStore({
       children: [],
     },
     dataText: {
-      id: "text" + Math.random() * 100,
       type: "text",
       textContent: "Text here",
+      color: "black",
+      height: 100,
+      width: 100,
       fontSize: 14,
       unit: "px",
       Xunit: "px",
@@ -132,22 +134,23 @@ export const useSquareStore = defineStore({
         let clonedDataSquare = { ...this.dataSquare };
 
         this.turnOnNormalPointer();
-        dataPushed.push(clonedDataSquare);
+        dataPushed.push({ ...clonedDataSquare });
         counter.changeSelectedNewlyAdded(event, clonedDataSquare);
         this.countBox = this.countBox + 1;
-      } else if (this.addTextActivated === true) {
+      }
+      if (this.addTextActivated === true) {
         this.dataText.id = "text" + this.countBox;
         this.dataText.X = (event.clientX - this.offsetLeft) / this.scale - 50;
         this.dataText.Y = (event.clientY - this.offsetTop) / this.scale - 50;
-        this.dataSquare.children = [];
+        this.dataText.children = [];
         let clonedDataText = { ...this.dataText };
 
+        dataPushed.push({ ...clonedDataText });
         this.turnOnNormalPointer();
-
-        dataPushed.push(clonedDataText);
-        counter.changeSelectedNewlyAdded(e, clonedDataText);
+        counter.changeSelectedNewlyAdded(event, clonedDataText);
         this.countBox = this.countBox + 1;
-      } else if (this.addFrameActivated === true) {
+      }
+      if (this.addFrameActivated === true) {
         this.dataFrame.id = "frame" + this.countBox;
         this.dataFrame.X = (event.clientX - this.offsetLeft) / this.scale - 50;
         this.dataFrame.Y = (event.clientY - this.offsetTop) / this.scale - 50;
@@ -156,7 +159,7 @@ export const useSquareStore = defineStore({
 
         this.turnOnNormalPointer();
 
-        dataPushed.push(clonedDataFrame);
+        dataPushed.push({ ...clonedDataFrame });
         counter.changeSelectedNewlyAdded(event, clonedDataFrame);
         this.countBox = this.countBox + 1;
       }
