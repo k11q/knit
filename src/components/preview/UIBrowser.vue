@@ -1,13 +1,5 @@
 <template>
-  <PreviewTopBar />
-  <template
-    v-for="node in [
-      selectToi.data[
-        selectToi.data.findIndex((p) => p.id === selectToi.selectedBoxData.id)
-      ],
-    ]"
-    :key="node.id"
-  >
+  <template v-for="node in nodes" :key="node.id">
     <template v-if="node.type === 'frame'">
       <div
         :style="{
@@ -53,7 +45,7 @@
           boxShadow: `${node.boxShadowOffsetY}px ${node.boxShadowOffsetX}px ${node.boxShadowBlurRadius}px ${node.boxShadowSpreadRadius}px ${node.boxShadowColor}`,
         }"
       >
-        <PreviewUIBrowser
+        <DesignerCanvasUIBrowser
           v-if="node.children"
           :key="node.id"
           :nodes="node.children"
@@ -90,7 +82,7 @@
           boxShadow: `${node.boxShadowOffsetY}px ${node.boxShadowOffsetX}px ${node.boxShadowBlurRadius}px ${node.boxShadowSpreadRadius}px ${node.boxShadowColor}`,
         }"
       >
-        <PreviewUIBrowser
+        <DesignerCanvasUIBrowser
           v-if="node.children"
           :key="node.id"
           :nodes="node.children"
