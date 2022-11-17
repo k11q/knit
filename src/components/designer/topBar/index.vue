@@ -198,8 +198,8 @@
           Deploy
         </button>
       </div>
-      <div class="flex items-center justify-center">
-        <button>{{ `${(addaSquare.scale * 100).toFixed(2)}` }}%</button>
+      <div class="flex items-center justify-center w-10">
+        <p>{{ `${(addaSquare.scale * 100).toFixed(2)}` }}%</p>
       </div>
     </div>
   </div>

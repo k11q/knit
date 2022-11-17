@@ -41,7 +41,6 @@
       :data-id="node.id"
       data-component="Frame"
       @pointerdown.stop="testDown($event, node.id)"
-      @mouseover="canvasDnd.checkDroppable($event, node)"
       @mousedown="selectToi.changeSelected($event, node.id, node.type)"
       class="hover:outline outline-[#0191FA]"
       :class="{
@@ -223,71 +222,111 @@ const testDown = (e, currDrag) => {
             (Math.round(e.clientY - dropzoneTop - prevOffsetTop) * 1) /
             squareStore.scale;
         } else {
-          selectToi.selectedBoxData.X = (e.clientX - prevX) / squareStore.scale;
-          selectToi.selectedBoxData.Y = (e.clientY - prevY) / squareStore.scale;
+          selectToi.selectedBoxData.X = Math.round(
+            (e.clientX - prevX) / squareStore.scale
+          );
+          selectToi.selectedBoxData.Y = Math.round(
+            (e.clientY - prevY) / squareStore.scale
+          );
         }
 
         //ruler function
-        let targetChildren = selectToi.data;
+        let targetChildren = [
+          ...document.querySelector(`[data-id=${currDrag}]`).parentElement
+            .children,
+        ];
         let targetChildrenData = [];
 
         targetChildren.forEach((i) => {
-          if (i.id !== selectToi.selectedBox) {
-            let lineLeft = i.X;
-            let lineTop = i.Y;
-            let lineRight = i.X + i.width;
-            let lineBottom = i.Y + i.height;
+          if (i.dataset.id !== selectToi.selectedBox) {
+            let lineLeft = i.getBoundingClientRect().x / squareStore.scale;
+            let lineTop = i.getBoundingClientRect().y / squareStore.scale;
+            let lineRight =
+              (i.getBoundingClientRect().x + i.getBoundingClientRect().width) /
+              squareStore.scale;
+            let lineBottom =
+              (i.getBoundingClientRect().y + i.getBoundingClientRect().height) /
+              squareStore.scale;
             let newlineBottom;
             let newlineTop;
             let newlineLeft;
             let newlineRight;
 
-            let distanceTopToLineTop = selectToi.selectedBoxData.Y - lineTop;
+            let distanceTopToLineTop =
+              document
+                .querySelector(`[data-id=${currDrag}]`)
+                .getBoundingClientRect().y - lineTop;
             let distanceTopToLineBottom =
-              selectToi.selectedBoxData.Y - lineBottom;
+              document
+                .querySelector(`[data-id=${currDrag}]`)
+                .getBoundingClientRect().y - lineBottom;
             let distanceBottomToLineTop =
-              selectToi.selectedBoxData.Y +
-              selectToi.selectedBoxData.height -
+              document
+                .querySelector(`[data-id=${currDrag}]`)
+                .getBoundingClientRect().y +
+              document
+                .querySelector(`[data-id=${currDrag}]`)
+                .getBoundingClientRect().height -
               lineTop;
             let distanceBottomToLineBottom =
-              selectToi.selectedBoxData.Y +
-              selectToi.selectedBoxData.height -
+              document
+                .querySelector(`[data-id=${currDrag}]`)
+                .getBoundingClientRect().y +
+              document
+                .querySelector(`[data-id=${currDrag}]`)
+                .getBoundingClientRect().height -
               lineBottom;
-            let distanceLeftToLineLeft = selectToi.selectedBoxData.X - lineLeft;
+            let distanceLeftToLineLeft =
+              document
+                .querySelector(`[data-id=${currDrag}]`)
+                .getBoundingClientRect().x - lineLeft;
             let distanceLeftToLineRight =
-              selectToi.selectedBoxData.X - lineRight;
+              document
+                .querySelector(`[data-id=${currDrag}]`)
+                .getBoundingClientRect().x - lineRight;
             let distanceRightToLineLeft =
-              selectToi.selectedBoxData.X +
-              selectToi.selectedBoxData.width -
+              document
+                .querySelector(`[data-id=${currDrag}]`)
+                .getBoundingClientRect().x +
+              document
+                .querySelector(`[data-id=${currDrag}]`)
+                .getBoundingClientRect().width -
               lineLeft;
             let distanceRightToLineRight =
-              selectToi.selectedBoxData.X +
-              selectToi.selectedBoxData.width -
+              document
+                .querySelector(`[data-id=${currDrag}]`)
+                .getBoundingClientRect().x +
+              document
+                .querySelector(`[data-id=${currDrag}]`)
+                .getBoundingClientRect().width -
               lineRight;
 
             (distanceTopToLineTop < 4 / squareStore.scale &&
               distanceTopToLineTop > -4 / squareStore.scale) ||
             (distanceBottomToLineTop < 4 / squareStore.scale &&
               distanceBottomToLineTop > -4 / squareStore.scale)
-              ? (newlineTop = i.Y)
+              ? (newlineTop = i.getBoundingClientRect().y)
               : (lineTop = undefined);
             (distanceTopToLineBottom < 4 / squareStore.scale &&
               distanceTopToLineBottom > -4 / squareStore.scale) ||
             (distanceBottomToLineBottom < 4 / squareStore.scale &&
               distanceBottomToLineBottom > -4 / squareStore.scale)
-              ? (newlineBottom = i.Y + i.height)
+              ? (newlineBottom =
+                  i.getBoundingClientRect().y +
+                  i.getBoundingClientRect().height)
               : (newlineBottom = undefined);
             (distanceLeftToLineLeft < 4 / squareStore.scale &&
               distanceLeftToLineLeft > -4 / squareStore.scale) ||
             (distanceRightToLineLeft < 4 / squareStore.scale &&
               distanceRightToLineLeft > -4 / squareStore.scale)
-              ? (newlineLeft = i.X)
+              ? (newlineLeft = i.getBoundingClientRect().x)
               : (newlineLeft = undefined);
             (distanceLeftToLineRight < 4 / squareStore.scale &&
               distanceLeftToLineRight > -4 / squareStore.scale) ||
             (distanceRightToLineRight < 4 / squareStore.scale &&
               distanceRightToLineRight > -4 / squareStore.scale)
-              ? (newlineRight = i.X + i.width)
+              ? (newlineRight =
+                  i.getBoundingClientRect().x + i.getBoundingClientRect().width)
               : (newlineRight = undefined);
 
             targetChildrenData.push({
