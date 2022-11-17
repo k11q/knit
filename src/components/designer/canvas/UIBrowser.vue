@@ -42,7 +42,8 @@
       data-component="Frame"
       @pointerdown.stop="testDown($event, node.id)"
       @mousedown="selectToi.changeSelected($event, node.id, node.type)"
-      class="hover:outline outline-[#0191FA]"
+      @mouseover="hoverEvent($event, node.id)"
+      @mouseout="mouseoutEvent($event, node.id)"
       :class="{
         ' bg-red-600': node.isDroppable == true,
         'pointer-events-none':
@@ -102,8 +103,9 @@
       :data-id="node.id"
       data-component="Box"
       @pointerdown.stop="testDown($event, node.id)"
-      @mouseover="canvasDnd.checkDroppable($event, node)"
       @mousedown="selectToi.changeSelected($event, node.id, node.type)"
+      @mouseover="hoverEvent($event, node.id)"
+      @mouseout="mouseoutEvent($event, node.id)"
       class="hover:outline outline-[#0191FA]"
       @mouseleave.stop.prevent="canvasDnd.removeDroppable()"
       :class="{
@@ -121,9 +123,11 @@
     </div>
     <p
       v-if="node.type === 'text'"
-      class="text-center hover:decoration-[#0191FA] hover:underline hover:decoration-2 focus:outline-[#0191FA]"
+      class="text-center hover:decoration-[#0191FA] hover:underline hover:decoration-2 focus:outline-none cursor-default"
       @pointerdown="testDown($event, node.id)"
       @mousedown="selectToi.changeSelected($event, node.id, node.type)"
+      @mouseover="hoverEvent($event, node.id)"
+      @mouseout="mouseoutEvent($event, node.id)"
       @dblclick="makeEditable"
       :style="{
         left: node.X + node.Xunit,
@@ -131,6 +135,7 @@
         fontSize: node.fontSize + 'px',
         color: node.color,
         position: node.position,
+        lineHeight: node.lineHeight ? node.lineHeight : 1.3,
       }"
       :data-id="node.id"
       data-component="Text"
@@ -139,6 +144,7 @@
           selectToi.selectedBox === node.id,
       }"
       :contenteditable="editable"
+      @input="selectToi.selectedBoxData.textContent = $event.target.innerText"
     >
       {{ node.textContent }}
     </p>
@@ -409,6 +415,30 @@ const testDown = (e, currDrag) => {
     }
   }
 };
+
+function hoverEvent(e, id) {
+  selectToi.treeHover = true;
+  let target = document.querySelector(`[data-id=${id}]`);
+  let selectedTarget = target.getBoundingClientRect();
+
+  selectToi.treeHoverHTMLX = Math.round(
+    (selectedTarget.x - squareStore.offsetLeft) / squareStore.scale
+  );
+  selectToi.treeHoverHTMLY = Math.round(
+    (selectedTarget.y - squareStore.offsetTop) / squareStore.scale
+  );
+
+  selectToi.treeHoverHTMLWidth = Math.round(
+    selectedTarget.width / squareStore.scale
+  );
+  selectToi.treeHoverHTMLHeight = Math.round(
+    selectedTarget.height / squareStore.scale
+  );
+}
+
+function mouseoutEvent(e, id) {
+  selectToi.treeHover = false;
+}
 
 const props = defineProps({
   modelValue: String,

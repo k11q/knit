@@ -8,7 +8,7 @@
     @focus="show = true"
     @blur="show = false"
     @mouseenter="onMouseenter"
-    @mouseleave="onMouseleave"
+    @mouseout="onMouseleave"
   >
     <slot />
 
@@ -63,7 +63,7 @@ export default {
       if (this.focus) return;
       setTimeout(() => {
         this.show = false;
-      }, 200);
+      }, 300);
     },
   },
 };

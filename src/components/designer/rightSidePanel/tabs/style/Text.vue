@@ -2,11 +2,11 @@
   <!-- Text section! -->
   <div
     v-show="selectToi.selectedBoxData.type === 'text' && selectToi.selectedBox"
-    class="flex flex-col gap-4 border-y py-4 px-4 border-[#282828]"
+    class="flex flex-col gap-3 border-y py-4 px-4 border-[#282828]"
   >
     <p class="font-medium">Text</p>
 
-    <div class="flex flex-row gap-3 flex-none justify-between w-full">
+    <div class="flex flex-row gap-3 flex-none justify-between w-full h-6">
       <div class="flex flex-row gap-0.5 justify-between w-full">
         <select type="text" class="w-full bg-transparent -ml-1">
           <option value="Inter">Inter</option>
@@ -16,7 +16,7 @@
         <div class="aspect-square h-full flex-none"></div>
       </div>
     </div>
-    <div class="flex flex-row justify-between flex-grow">
+    <div class="flex flex-row justify-between flex-grow h-6">
       <div class="flex flex-row flex-grow w-full">
         <select class="flex bg-transparent -ml-1 focus:outline-none flex-grow">
           <option value="Medium">Medium</option>
@@ -39,7 +39,12 @@
         >
           <UIIcon name="line-height" :size="15" />
         </div>
-        <input type="text" value="Auto" class="w-full pl-2 bg-transparent" />
+        <input
+          type="text"
+          v-model="selectToi.selectedBoxData.lineHeight"
+          placeholder="Auto"
+          class="w-full pl-2 bg-transparent"
+        />
       </div>
       <div class="flex flex-row flex-grow -ml-1">
         <div
@@ -160,6 +165,7 @@
         <UIIcon name="more-horizontal" :size="17" />
       </div>
     </div>
+    {{ selectToi.selectedBoxData.textContent }}
   </div>
 </template>
 
