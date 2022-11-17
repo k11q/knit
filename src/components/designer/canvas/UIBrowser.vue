@@ -239,14 +239,12 @@ const testDown = (e, currDrag) => {
 
         targetChildren.forEach((i) => {
           if (i.dataset.id !== selectToi.selectedBox) {
-            let lineLeft = i.getBoundingClientRect().x / squareStore.scale;
-            let lineTop = i.getBoundingClientRect().y / squareStore.scale;
+            let lineLeft = i.getBoundingClientRect().x;
+            let lineTop = i.getBoundingClientRect().y;
             let lineRight =
-              (i.getBoundingClientRect().x + i.getBoundingClientRect().width) /
-              squareStore.scale;
+              i.getBoundingClientRect().x + i.getBoundingClientRect().width;
             let lineBottom =
-              (i.getBoundingClientRect().y + i.getBoundingClientRect().height) /
-              squareStore.scale;
+              i.getBoundingClientRect().y + i.getBoundingClientRect().height;
             let newlineBottom;
             let newlineTop;
             let newlineLeft;
