@@ -1,5 +1,5 @@
 <template>
-  <div
+  <aside
     class="border-l w-60 flex flex-col h-screen overflow-x-hidden pb-16 z-10 bg-[#1C1C1C] border-[#282828]"
   >
     <div
@@ -40,7 +40,7 @@
     <DesignerRightSidePanelTabsStyle />
     <DesignerRightSidePanelTabsTabProps />
     <DesignerRightSidePanelTabsTabAction />
-  </div>
+  </aside>
 </template>
 
 <script setup lang="ts">

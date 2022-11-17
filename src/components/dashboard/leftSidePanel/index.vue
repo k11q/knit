@@ -1,5 +1,5 @@
 <template>
-  <div
+  <aside
     class="border-r w-60 flex flex-col flex-none h-screen overflow-x-hidden pb-16 z-10 text-xs border-[#282828]"
   >
     <div
@@ -111,7 +111,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </aside>
 </template>
 
 <script setup lang="ts">

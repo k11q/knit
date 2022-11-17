@@ -121,7 +121,7 @@
     </div>
     <p
       v-if="node.type === 'text'"
-      class="text-center hover:decoration-[#0191FA] hover:underline hover:decoration-2"
+      class="text-center hover:decoration-[#0191FA] hover:underline hover:decoration-2 focus:outline-[#0191FA]"
       @pointerdown="testDown($event, node.id)"
       @mousedown="selectToi.changeSelected($event, node.id, node.type)"
       @dblclick="makeEditable"

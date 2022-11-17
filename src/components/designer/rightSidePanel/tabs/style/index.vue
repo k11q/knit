@@ -283,7 +283,7 @@
         <div
           class="aspect-square h-full"
           :class="{
-            'bg-gray-200': selectToi.selectedBoxData.position === 'absolute',
+            'bg-[#2E2E2E]': selectToi.selectedBoxData.position === 'absolute',
           }"
           @click="
             () => {

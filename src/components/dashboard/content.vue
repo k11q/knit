@@ -107,7 +107,7 @@
           </select>
           <div class="flex flex-row gap-2 ml-4">
             <div
-              class="flex items-center justify-center h-6 aspect-square rounded-sm hover:bg-gray-100"
+              class="flex items-center justify-center h-6 aspect-square rounded-sm hover:bg-[#2E2E2E]"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -127,7 +127,7 @@
               </svg>
             </div>
             <div
-              class="flex items-center justify-center h-6 aspect-square rounded-sm hover:bg-gray-100"
+              class="flex items-center justify-center h-6 aspect-square rounded-sm hover:bg-[#2E2E2E]"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

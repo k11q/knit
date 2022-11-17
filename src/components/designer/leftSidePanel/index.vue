@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row flex-none bg-[#1C1C1C] z-10">
+  <aside class="flex flex-row flex-none bg-[#1C1C1C] z-10">
     <div
       class="w-14 border-r border-[#282828] p-2 gap-2 flex flex-col flex-none"
     >
@@ -212,7 +212,7 @@
       <DesignerLeftSidePanelTabsAssets v-if="activeTab === 'assets'" />
       <DesignerLeftSidePanelTabsSettings v-if="activeTab === 'settings'" />
     </div>
-  </div>
+  </aside>
 </template>
 
 <script setup lang="ts">

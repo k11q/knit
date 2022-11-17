@@ -33,8 +33,10 @@
       <div class="aspect-square h-full flex-none"></div>
     </div>
     <div class="flex flex-row justify-between flex-grow">
-      <div class="flex flex-row flex-grow">
-        <div class="h-full aspect-square items-center flex flex-none">
+      <div class="flex flex-row flex-grow -ml-1">
+        <div
+          class="h-6 justify-center aspect-square items-center flex flex-none"
+        >
           <svg
             class="opacity-40"
             width="15"
@@ -84,10 +86,12 @@
             </defs>
           </svg>
         </div>
-        <input type="text" value="Auto" class="w-full px-2 bg-transparent" />
+        <input type="text" value="Auto" class="w-full pl-2 bg-transparent" />
       </div>
-      <div class="flex flex-row flex-grow">
-        <div class="h-full aspect-square items-center flex flex-none">
+      <div class="flex flex-row flex-grow -ml-1">
+        <div
+          class="h-6 justify-center aspect-square items-center flex flex-none"
+        >
           <svg
             class="opacity-40"
             width="15"
@@ -137,13 +141,15 @@
             </defs>
           </svg>
         </div>
-        <input type="text" value="0%" class="w-full px-2 bg-transparent" />
+        <input type="text" value="0%" class="w-full pl-2 bg-transparent" />
       </div>
-      <div class="aspect-square h-full flex-none"></div>
+      <div class="aspect-square h-6 flex-none"></div>
     </div>
     <div class="flex flex-row justify-between flex-grow">
-      <div class="flex flex-row flex-grow w-full">
-        <div class="h-full aspect-square items-center flex flex-none">
+      <div class="flex flex-row flex-grow w-full -ml-1">
+        <div
+          class="h-6 justify-center rounded aspect-square items-center flex flex-none"
+        >
           <svg
             class="opacity-40"
             width="15"
@@ -253,11 +259,11 @@
             </defs>
           </svg>
         </div>
-        <input type="number" value="0" class="w-full px-2 bg-transparent" />
+        <input type="number" value="0" class="w-full pl-2 bg-transparent" />
       </div>
-      <div class="flex flex-row flex-grow w-full">
+      <div class="flex flex-row flex-grow w-full -ml-1">
         <div
-          class="h-6 justify-center rounded aspect-square items-center flex flex-none opacity-40"
+          class="h-6 justify-center rounded aspect-square items-center flex flex-none bg-[#2E2E2E]"
         >
           <svg
             width="15"
@@ -347,7 +353,7 @@
           </svg>
         </div>
         <div
-          class="h-6 justify-center rounded aspect-square items-center flex flex-none bg-[#2E2E2E]"
+          class="h-6 opacity-40 justify-center rounded aspect-square items-center flex flex-none"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -383,16 +389,17 @@
           </svg>
         </div>
       </div>
-      <div class="aspect-square h-full flex-none"></div>
+      <div class="aspect-square h-6 flex-none"></div>
     </div>
     <div class="flex flex-row justify-between flex-grow">
-      <div class="flex flex-row flex-grow w-full gap-2">
-        <div class="h-full aspect-square items-center flex flex-none">
+      <div class="flex flex-row flex-grow w-full -ml-1">
+        <div
+          class="h-6 justify-center rounded aspect-square items-center flex flex-none bg-[#2E2E2E]"
+        >
           <svg
-            class="opacity-40"
             xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
+            width="15"
+            height="15"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -406,12 +413,13 @@
           </svg>
         </div>
 
-        <div class="h-full aspect-square items-center flex flex-none">
+        <div
+          class="h-6 justify-center rounded aspect-square items-center flex flex-none opacity-40"
+        >
           <svg
-            class="opacity-40"
             xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
+            width="15"
+            height="15"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -424,12 +432,13 @@
             <line x1="19" y1="18" x2="5" y2="18"></line>
           </svg>
         </div>
-        <div class="h-full aspect-square items-center flex flex-none">
+        <div
+          class="h-6 justify-center rounded aspect-square items-center flex flex-none opacity-40"
+        >
           <svg
-            class="opacity-40"
             xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
+            width="15"
+            height="15"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -443,10 +452,11 @@
           </svg>
         </div>
       </div>
-      <div class="flex flex-row flex-grow w-full gap-2">
-        <div class="h-full aspect-square items-center flex flex-none">
+      <div class="flex flex-row flex-grow w-full -ml-1">
+        <div
+          class="h-6 justify-center rounded bg-[#2E2E2E] aspect-square items-center flex flex-none"
+        >
           <svg
-            class="opacity-40"
             width="15"
             height="15"
             viewBox="0 0 15 15"
@@ -526,9 +536,10 @@
             </defs>
           </svg>
         </div>
-        <div class="h-full aspect-square items-center flex flex-none">
+        <div
+          class="h-6 justify-center rounded opacity-40 aspect-square items-center flex flex-none"
+        >
           <svg
-            class="opacity-40"
             width="15"
             height="15"
             viewBox="0 0 15 15"
@@ -665,9 +676,10 @@
             </defs>
           </svg>
         </div>
-        <div class="h-full aspect-square items-center flex flex-none">
+        <div
+          class="h-6 justify-center rounded opacity-40 aspect-square items-center flex flex-none"
+        >
           <svg
-            class="opacity-40"
             width="15"
             height="15"
             viewBox="0 0 15 15"
@@ -748,7 +760,7 @@
           </svg>
         </div>
       </div>
-      <div class="aspect-square h-full flex-none">
+      <div class="aspect-square flex items-center justify-center h-6 flex-none">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="17"

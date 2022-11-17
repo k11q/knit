@@ -7,7 +7,7 @@
       <div class="flex flex-row justify-between pl-4 pr-2 items-center">
         <p class="font-medium">Pages</p>
         <div
-          class="aspect-square h-8 flex flex-col justify-center items-center hover:bg-gray-100 rounded"
+          class="aspect-square h-8 flex flex-col justify-center items-center hover:bg-[#2E2E2E] rounded"
           @click="
             () => {
               selectToi.canvas.push({

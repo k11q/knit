@@ -38,8 +38,6 @@ export const useSquareStore = defineStore({
       type: "text",
       textContent: "Text here",
       color: "black",
-      height: 100,
-      width: 100,
       fontSize: 14,
       unit: "px",
       Xunit: "px",
