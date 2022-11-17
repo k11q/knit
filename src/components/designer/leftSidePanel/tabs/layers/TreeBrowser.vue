@@ -1,5 +1,5 @@
 <template>
-  <template v-for="node in nodes.slice().reverse()">
+  <div v-for="node in nodes.slice().reverse()" :key="node.id">
     <div
       :data-treeid="node.id"
       :style="{ 'padding-left': depth === 1 ? '16px' : depth * 20 + 'px' }"
@@ -149,7 +149,7 @@
         :v-model="modelValue"
       />
     </template>
-  </template>
+  </div>
 </template>
 
 <script setup lang="ts">
