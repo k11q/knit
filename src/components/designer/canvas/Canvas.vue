@@ -112,6 +112,16 @@
           />
         </div>
       </div>
+      <div
+        v-if="selectToi.treeHover"
+        class="absolute pointer-events-none outline outline-[#0191FA]"
+        :style="{
+          left: selectToi.treeHoverHTMLX + 'px',
+          top: selectToi.treeHoverHTMLY + 'px',
+          height: selectToi.treeHoverHTMLHeight + 'px',
+          width: selectToi.treeHoverHTMLWidth + 'px',
+        }"
+      ></div>
     </div>
     <div class="absolute inset-0 overflow-visible pointer-events-none">
       <RulerBrowser :lines="canvasMarker.lines" />

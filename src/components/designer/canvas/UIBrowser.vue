@@ -41,6 +41,7 @@
       :data-id="node.id"
       data-component="Frame"
       @pointerdown.stop="testDown($event, node.id)"
+      @mouseover="canvasDnd.checkDroppable($event, node)"
       @mousedown="selectToi.changeSelected($event, node.id, node.type)"
       class="hover:outline outline-[#0191FA]"
       :class="{

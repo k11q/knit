@@ -15,6 +15,11 @@ export const useCounterStore = defineStore({
     prevY: 0,
     selectedBoxHTMLWidth: "",
     selectedBoxHTMLHight: "",
+    treeHover: false,
+    treeHoverHTMLX: "",
+    treeHoverHTMLY: "",
+    treeHoverHTMLWidth: "",
+    treeHoverHTMLHight: "",
     newSquare: false,
     dataTransfer: null,
     returnedElementData: "",
@@ -613,7 +618,8 @@ export const useCounterStore = defineStore({
         this.selectedBox = id;
 
         if (e.target) {
-          let selectedTarget = e.target.getBoundingClientRect();
+          let target = document.querySelector(`[data-id=${id}]`);
+          let selectedTarget = target.getBoundingClientRect();
 
           this.getChildElement(this.data, id);
 

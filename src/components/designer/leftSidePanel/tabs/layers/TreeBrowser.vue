@@ -18,6 +18,8 @@
         'opacity-100': treeDnd.currDrag !== node.id,
       }"
       @mousedown="dragAndDrop($event, node.id)"
+      @mouseover="hoverEvent($event, node.id)"
+      @mouseout="mouseoutEvent($event, node.id)"
     >
       <div
         v-if="
@@ -166,7 +168,33 @@ const props = defineProps({
     default: 1,
   },
 });
+
+const savedOutline = ref("");
 const emit = defineEmits("update:modelValue");
+
+function hoverEvent(e, id) {
+  selectToi.treeHover = true;
+  let target = document.querySelector(`[data-id=${id}]`);
+  let selectedTarget = target.getBoundingClientRect();
+
+  selectToi.treeHoverHTMLX = Math.round(
+    (selectedTarget.x - squareStore.offsetLeft) / squareStore.scale
+  );
+  selectToi.treeHoverHTMLY = Math.round(
+    (selectedTarget.y - squareStore.offsetTop) / squareStore.scale
+  );
+
+  selectToi.treeHoverHTMLWidth = Math.round(
+    selectedTarget.width / squareStore.scale
+  );
+  selectToi.treeHoverHTMLHeight = Math.round(
+    selectedTarget.height / squareStore.scale
+  );
+}
+
+function mouseoutEvent(e, id) {
+  selectToi.treeHover = false;
+}
 
 function changePageTitle(title) {
   emit("update:modelValue", title); // previously was `this.$emit('input', title)`
@@ -184,9 +212,6 @@ const dragAndDrop = (e, currDrag) => {
       treeDnd.isDragging = true;
       const currDropId = document.elementFromPoint(e.clientX, e.clientY).dataset
         .treeid;
-      console.log(
-        document.elementFromPoint(e.clientX, e.clientY).dataset.treeid
-      );
       if (currDropId) {
         if (currDropId !== treeDnd.currDrag) {
           treeDnd.currDrop = currDropId;
