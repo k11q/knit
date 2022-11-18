@@ -128,7 +128,7 @@
       @mousedown="selectToi.changeSelected($event, node.id, node.type)"
       @mouseover="hoverEvent($event, node.id)"
       @mouseout="mouseoutEvent($event, node.id)"
-      @dblclick="makeEditable"
+      @dblclick.prevent="(target = node.id), $event.target.value.focus()"
       :style="{
         left: node.X + node.Xunit,
         top: node.Y + node.Yunit,
@@ -139,11 +139,11 @@
       }"
       :data-id="node.id"
       data-component="Text"
+      :contenteditable="node.id === target && selectToi.selectedBox === node.id"
       :class="{
         'decoration-[#0191FA] underline decoration-1 ':
           selectToi.selectedBox === node.id,
       }"
-      :contenteditable="editable"
       @input="selectToi.selectedBoxData.textContent = $event.target.innerText"
     >
       {{ node.textContent }}
@@ -157,17 +157,14 @@ import { useCanvasDndStore } from "@/stores/canvasDnd";
 import { useCanvasFF } from "@/stores/canvasFreeForm";
 import { useSquareStore } from "@/stores/dataSquare";
 import { useCanvasMarkerStore } from "@/stores/canvasMarker";
+import { onClickOutside } from "@vueuse/core";
 
 const selectToi = useCounterStore();
 const canvasDnd = useCanvasDndStore();
 const canvasFF = useCanvasFF();
 const squareStore = useSquareStore();
 const canvasMarker = useCanvasMarkerStore();
-let editable = ref(false);
-
-function makeEditable() {
-  editable.value = !editable.value;
-}
+const target = ref("");
 
 //dnd on canvas
 const testDown = (e, currDrag) => {
@@ -417,7 +414,11 @@ const testDown = (e, currDrag) => {
 };
 
 function hoverEvent(e, id) {
-  selectToi.treeHover = true;
+  if (selectToi.selectedBox === id) {
+    selectToi.treeHover = false;
+  } else {
+    selectToi.treeHover = true;
+  }
   let target = document.querySelector(`[data-id=${id}]`);
   let selectedTarget = target.getBoundingClientRect();
 

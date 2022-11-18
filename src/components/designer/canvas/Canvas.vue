@@ -14,9 +14,9 @@
   >
     <div
       data-id="canvas"
-      class="fixed top-0 left-0 w-0 h-0 overflow-visible"
+      class="w-0 h-0 overflow-visible"
       :style="{
-        transformOrigin: `${addaSquare.originX}px ${addaSquare.originY}px`,
+        transformOrigin: `0px 0px`,
         transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
       }"
     >
@@ -37,7 +37,7 @@
           top: selectToi.treeHoverHTMLY + 'px',
           height: selectToi.treeHoverHTMLHeight + 'px',
           width: selectToi.treeHoverHTMLWidth + 'px',
-          outline: `${2 / addaSquare.scale}px solid #0191FA`,
+          outline: `${1 / addaSquare.scale}px solid #0191FA`,
         }"
       ></div>
       <div

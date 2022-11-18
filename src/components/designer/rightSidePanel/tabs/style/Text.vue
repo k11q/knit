@@ -165,7 +165,6 @@
         <UIIcon name="more-horizontal" :size="17" />
       </div>
     </div>
-    {{ selectToi.selectedBoxData.textContent }}
   </div>
 </template>
 

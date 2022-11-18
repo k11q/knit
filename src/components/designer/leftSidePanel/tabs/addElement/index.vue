@@ -22,9 +22,9 @@
       </div>
     </div>
     <p class="flex px-4 pb-4 pt-2 opacity-80">Layout</p>
-    <div class="grid grid-cols-2 gap-4 px-4">
+    <div class="grid grid-cols-3 gap-2 px-2">
       <div
-        class="border aspect-square flex flex-col rounded-md border-[#505050] bg-[#292929] overflow-clip opacity-80 hover:opacity-100"
+        class="border aspect-[3/4] flex flex-col rounded-md border-[#505050] bg-[#292929] overflow-clip opacity-80 hover:opacity-100"
       >
         <div class="flex-1 flex items-center justify-center">
           <svg
@@ -61,10 +61,10 @@
             />
           </svg>
         </div>
-        <p class="px-2 pb-2 -mt-1 text-center">Flexbox</p>
+        <p class="px-2 pb-2 -mt-1 text-center text-[11px]">Flexbox</p>
       </div>
       <div
-        class="border aspect-square flex flex-col rounded-md border-[#505050] bg-[#292929] overflow-clip opacity-80 hover:opacity-100"
+        class="border aspect-[3/4] flex flex-col rounded-md border-[#505050] bg-[#292929] overflow-clip opacity-80 hover:opacity-100"
       >
         <div class="flex-1 flex items-center justify-center">
           <svg
@@ -117,13 +117,13 @@
             />
           </svg>
         </div>
-        <p class="px-2 pb-2 -mt-1 text-center">Grid</p>
+        <p class="px-2 pb-2 -mt-1 text-center text-[11px]">Grid</p>
       </div>
     </div>
-    <p class="flex px-4 pb-4 pt-6 opacity-80">Layout</p>
-    <div class="grid grid-cols-2 gap-4 px-4">
+    <p class="flex px-4 pb-4 pt-6 opacity-80">Basic</p>
+    <div class="grid grid-cols-3 gap-2 px-2">
       <div
-        class="border aspect-square flex flex-col rounded-md border-[#505050] bg-[#292929] overflow-clip opacity-80 hover:opacity-100"
+        class="border aspect-[3/4] flex flex-col rounded-md border-[#505050] bg-[#292929] overflow-clip opacity-80 hover:opacity-100"
         @click="addaSquare.turnOnAddTextActivated"
       >
         <div class="flex-1 flex items-center justify-center text-[#6C6C6C]">
@@ -143,10 +143,10 @@
             <line x1="12" y1="4" x2="12" y2="20"></line>
           </svg>
         </div>
-        <p class="px-2 pb-2 -mt-1 text-center">Text</p>
+        <p class="px-2 pb-2 -mt-1 text-center text-[11px]">Text</p>
       </div>
       <div
-        class="border aspect-square flex flex-col rounded-md border-[#505050] bg-[#292929] overflow-clip opacity-80 hover:opacity-100"
+        class="border aspect-[3/4] flex flex-col rounded-md border-[#505050] bg-[#292929] overflow-clip opacity-80 hover:opacity-100"
       >
         <div class="flex-1 flex items-center justify-center text-[#6C6C6C]">
           <svg
@@ -165,7 +165,7 @@
             <line x1="17" y1="18" x2="3" y2="18"></line>
           </svg>
         </div>
-        <p class="px-2 pb-2 -mt-1 text-center">Paragraph</p>
+        <p class="pb-2 -mt-1 text-center text-[11px]">Paragraph</p>
       </div>
     </div>
   </div>
