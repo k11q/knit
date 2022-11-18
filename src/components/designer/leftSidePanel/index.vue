@@ -119,11 +119,7 @@
           stroke-linecap="round"
           stroke-linejoin="round"
         >
-          <rect x="9" y="2" width="6" height="6"></rect>
-          <rect x="16" y="16" width="6" height="6"></rect>
-          <rect x="2" y="16" width="6" height="6"></rect>
-          <path d="M5 16v-4h14v4"></path>
-          <path d="M12 12V8"></path>
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
         </svg>
       </div>
       <!--data-->

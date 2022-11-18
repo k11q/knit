@@ -38,6 +38,7 @@
         alignSelf: node.alignSelf,
         boxShadow: `${node.boxShadowOffsetY}px ${node.boxShadowOffsetX}px ${node.boxShadowBlurRadius}px ${node.boxShadowSpreadRadius}px ${node.boxShadowColor}`,
       }"
+      data-droppable="true"
       :data-id="node.id"
       data-component="Frame"
       @pointerdown.stop="testDown($event, node.id)"
@@ -187,15 +188,7 @@ const testDown = (e: Event, currDrag: String) => {
     let isDragging = false;
 
     //delete selected item
-    document.addEventListener("keyup", (event) => {
-      if (
-        event.key == "Backspace" ||
-        (event.key == "Delete" && selectToi.selectedBox)
-      ) {
-        canvasDnd.dndRemove(selectToi.data);
-        selectToi.clearSelected();
-      }
-    });
+    useDeleteElement(e, currDrag);
 
     if (!selectToi.selectedBox) {
       document.removeEventListener("keyup", (event) => {
@@ -218,7 +211,12 @@ const testDown = (e: Event, currDrag: String) => {
         isDragging = true;
 
         let targetId = useGetElementIdFromPoint(e);
+
         console.log("targetId = " + targetId);
+        if (targetId) {
+          let target = useGetClosestDroppableId(e);
+          console.log("closesti = " + target);
+        }
         if (selectToi.selectedBoxData.parent) {
           let dropzone = document.querySelector(
             `[data-id=${selectToi.selectedBoxData.parent}]`
