@@ -6,6 +6,5 @@ export const useRightPanelStore = defineStore({
   state: () => ({
     toggleStroke: false,
     toggleShadow: false,
-    activeTab: "style",
   }),
 });

@@ -1,5 +1,5 @@
 <template>
-  <div v-show="rightPanelStore.activeTab === 'style'" class="flex flex-col">
+  <div class="flex flex-col">
     <!--Alignment text props-->
     <div
       v-show="selectToi.selectedBox"

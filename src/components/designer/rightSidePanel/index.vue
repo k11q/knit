@@ -8,44 +8,45 @@
       <div
         class="px-2 h-full items-center flex flex-row cursor-default"
         :class="{
-          'font-medium': rightPanelStore.activeTab === 'style',
-          'opacity-40': rightPanelStore.activeTab !== 'style',
+          'font-medium': activeTab === 'style',
+          'opacity-40': activeTab !== 'style',
         }"
-        @click="rightPanelStore.activeTab = 'style'"
+        @click="activeTab = 'style'"
       >
         <span>Style</span>
       </div>
       <div
         class="px-2 h-full items-center flex flex-row cursor-default"
         :class="{
-          'font-medium': rightPanelStore.activeTab === 'props',
-          'opacity-40': rightPanelStore.activeTab !== 'props',
+          'font-medium': activeTab === 'action',
+          'opacity-40': activeTab !== 'action',
         }"
-        @click="rightPanelStore.activeTab = 'props'"
+        @click="activeTab = 'action'"
       >
-        <span>Props</span>
+        <span>Action</span>
       </div>
       <div
         class="px-2 h-full items-center flex flex-row cursor-default"
         :class="{
-          'font-medium': rightPanelStore.activeTab === 'action',
-          'opacity-40': rightPanelStore.activeTab !== 'action',
+          'font-medium': activeTab === 'props',
+          'opacity-40': activeTab !== 'props',
         }"
-        @click="rightPanelStore.activeTab = 'action'"
+        @click="activeTab = 'props'"
       >
-        <span>Action</span>
+        <span>Props</span>
       </div>
-      {{ noTouch }}
     </div>
-    <DesignerRightSidePanelTabsStyle />
-    <DesignerRightSidePanelTabsTabProps />
-    <DesignerRightSidePanelTabsTabAction />
+    <DesignerRightSidePanelTabsStyle v-if="activeTab === 'style'" />
+    <DesignerRightSidePanelTabsTabProps v-if="activeTab === 'props'" />
+    <DesignerRightSidePanelTabsTabAction v-if="activeTab === 'action'" />
   </aside>
 </template>
 
 <script setup lang="ts">
 import { useCounterStore } from "@/stores/counter";
 import { useRightPanelStore } from "@/stores/rightPanelStore";
+
+let activeTab = ref("style");
 
 const selectToi = useCounterStore();
 const rightPanelStore = useRightPanelStore();

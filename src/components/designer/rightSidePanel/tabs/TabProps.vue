@@ -1,5 +1,5 @@
 <template>
-  <div v-show="rightPanelStore.activeTab === 'props'" class="flex flex-col">
+  <div class="flex flex-col">
     <!-- Stroke section! -->
     <div
       v-show="

@@ -3,29 +3,6 @@
     <div
       class="w-14 border-r border-[#282828] p-2 gap-2 flex flex-col flex-none"
     >
-      <div
-        class="aspect-square flex items-center justify-center text-center cursor-default w-full flex-none rounded hover:bg-[#2E2E2E] hover:opacity-100 transition-all duration-300"
-        :class="{
-          'opacity-100 bg-[#2E2E2E]': activeTab === 'addElement',
-          'opacity-60': activeTab !== 'addElement',
-        }"
-        @click="activeTab = 'addElement'"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <line x1="12" y1="5" x2="12" y2="19"></line>
-          <line x1="5" y1="12" x2="19" y2="12"></line>
-        </svg>
-      </div>
       <!--navigator/layers-->
       <div
         class="aspect-square flex items-center justify-center text-center cursor-default w-full flex-none rounded hover:bg-[#2E2E2E] hover:opacity-100 transition-all duration-300"
@@ -72,6 +49,32 @@
           </defs>
         </svg>
       </div>
+      <!--add elements/components-->
+      <div
+        class="aspect-square flex items-center justify-center text-center cursor-default w-full flex-none rounded hover:bg-[#2E2E2E] hover:opacity-100 transition-all duration-300"
+        :class="{
+          'opacity-100 bg-[#2E2E2E]': activeTab === 'addElement',
+          'opacity-60': activeTab !== 'addElement',
+        }"
+        @click="activeTab = 'addElement'"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M5.5 8.5 9 12l-3.5 3.5L2 12l3.5-3.5Z"></path>
+          <path d="m12 2 3.5 3.5L12 9 8.5 5.5 12 2Z"></path>
+          <path d="M18.5 8.5 22 12l-3.5 3.5L15 12l3.5-3.5Z"></path>
+          <path d="m12 15 3.5 3.5L12 22l-3.5-3.5L12 15Z"></path>
+        </svg>
+      </div>
       <!--library-->
       <div
         class="aspect-square flex items-center justify-center text-center cursor-default w-full flex-none rounded hover:bg-[#2E2E2E] hover:opacity-100 transition-all duration-300"
@@ -94,6 +97,33 @@
         >
           <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
           <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+        </svg>
+      </div>
+      <!--actions-->
+      <div
+        class="aspect-square flex items-center justify-center text-center cursor-default w-full flex-none rounded hover:bg-[#2E2E2E] hover:opacity-100 transition-all duration-300"
+        :class="{
+          'opacity-100 bg-[#2E2E2E]': activeTab === 'actions',
+          'opacity-60': activeTab !== 'actions',
+        }"
+        @click="activeTab = 'actions'"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <rect x="9" y="2" width="6" height="6"></rect>
+          <rect x="16" y="16" width="6" height="6"></rect>
+          <rect x="2" y="16" width="6" height="6"></rect>
+          <path d="M5 16v-4h14v4"></path>
+          <path d="M12 12V8"></path>
         </svg>
       </div>
       <!--data-->
@@ -207,6 +237,7 @@
       <DesignerLeftSidePanelTabsAddElement v-if="activeTab === 'addElement'" />
       <DesignerLeftSidePanelTabsLayers v-if="activeTab === 'layers'" />
       <DesignerLeftSidePanelTabsLibrary v-if="activeTab === 'library'" />
+      <DesignerLeftSidePanelTabsActions v-if="activeTab === 'actions'" />
       <DesignerLeftSidePanelTabsData v-if="activeTab === 'data'" />
       <DesignerLeftSidePanelTabsPages v-if="activeTab === 'pages'" />
       <DesignerLeftSidePanelTabsAssets v-if="activeTab === 'assets'" />

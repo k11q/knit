@@ -128,7 +128,7 @@
       @mousedown="selectToi.changeSelected($event, node.id, node.type)"
       @mouseover="hoverEvent($event, node.id)"
       @mouseout="mouseoutEvent($event, node.id)"
-      @dblclick.prevent="(target = node.id), $event.target.value.focus()"
+      @dblclick.prevent="makeEditable($event, node.id)"
       :style="{
         left: node.X + node.Xunit,
         top: node.Y + node.Yunit,
@@ -145,9 +145,8 @@
           selectToi.selectedBox === node.id,
       }"
       @input="selectToi.selectedBoxData.textContent = $event.target.innerText"
-    >
-      {{ node.textContent }}
-    </p>
+      v-text="node.textContent"
+    ></p>
   </template>
 </template>
 
@@ -166,8 +165,15 @@ const squareStore = useSquareStore();
 const canvasMarker = useCanvasMarkerStore();
 const target = ref("");
 
+function makeEditable(e: Event, id: String) {
+  target.value = id;
+  setTimeout(() => {
+    (e.target.value as HTMLParagraphElement).select();
+  }, 100);
+}
+
 //dnd on canvas
-const testDown = (e, currDrag) => {
+const testDown = (e: Event, currDrag: String) => {
   if (!squareStore.dragPointer && !squareStore.draggingPointer) {
     let prevX = e.clientX - e.target.offsetLeft * squareStore.scale;
     let prevY = e.clientY - e.target.offsetTop * squareStore.scale;
@@ -202,6 +208,7 @@ const testDown = (e, currDrag) => {
         }
       });
     }
+    useSelectedKeyboardShortcuts(e, currDrag);
 
     if (canvasFF.isDragging == true) {
       window.addEventListener("mousemove", mousemove);
@@ -210,6 +217,8 @@ const testDown = (e, currDrag) => {
       function mousemove(e) {
         isDragging = true;
 
+        let targetId = useGetElementIdFromPoint(e);
+        console.log("targetId = " + targetId);
         if (selectToi.selectedBoxData.parent) {
           let dropzone = document.querySelector(
             `[data-id=${selectToi.selectedBoxData.parent}]`
