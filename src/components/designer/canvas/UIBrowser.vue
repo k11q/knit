@@ -228,7 +228,10 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
           currDragElement.style.opacity = 100;
           canvasMarker.setRuler = true;
         } else if (target && closest) {
-          if (selectToi.selectedBox === closestTarget) {
+          if (
+            selectToi.selectedBox === closestTarget ||
+            currDragElement.parentElement === closest
+          ) {
             selectToi.treeHover = false;
             currDragElement.style.opacity = 100;
             canvasMarker.setRuler = true;
