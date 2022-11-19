@@ -1,4 +1,5 @@
 export default function (e) {
-  let target = useGetElementFromPoint(e);
+  const target = useGetElementFromPoint(e);
+  const closest = target.closest("[data-droppable='true']");
   return target.closest("[data-droppable='true']");
 }

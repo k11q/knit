@@ -12,6 +12,7 @@
       'cursor-grabbing': addaSquare.draggingPointer === true,
     }"
   >
+    <!--canvas and UI elements-->
     <div
       data-id="canvas"
       class="w-0 h-0 overflow-visible"
@@ -21,14 +22,16 @@
     >
       <DesignerCanvasUIBrowser :nodes="selectToi.data" />
     </div>
+    <!--Other elements parent container-->
     <div
       class="fixed top-0 left-0 w-0 h-0 overflow-visible"
       :style="{
         transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
       }"
     >
+      <!--Hover outline-->
       <div
-        v-if="selectToi.treeHover"
+        v-show="selectToi.treeHover"
         class="absolute pointer-events-none"
         :style="{
           left: selectToi.treeHoverHTMLX + 'px',
@@ -38,8 +41,9 @@
           outline: `${1 / addaSquare.scale}px solid #0191FA`,
         }"
       ></div>
+      <!--Selected outline n resizer-->
       <div
-        v-if="selectToi.selectedBox && !canvasFF.isDragging"
+        v-show="selectToi.selectedBox && !canvasFF.isDragging"
         class="absolute pointer-events-none"
         :style="{
           left: selectToi.selectedBoxHTMLX + 'px',
@@ -121,7 +125,34 @@
           />
         </div>
       </div>
+      <!--Marker when droppable-->
+      <div
+        v-show="showMarker"
+        class="absolute pointer-events-none"
+        :style="{
+          left: dropMarker.markerLeft,
+          top: dropMarker.markerTop,
+          height: dropMarker.markerHeight,
+          width: dropMarker.markerWidth,
+          backgroundColor: '#0191FA',
+        }"
+      ></div>
+      <!--Selected outline when droppable-->
+      <div
+        v-show="showMarker"
+        class="absolute pointer-events-none"
+        :style="{
+          left: selectToi.selectedBoxData.X + 'px',
+          top: selectToi.selectedBoxData.Y + 'px',
+          height: selectToi.selectedBoxData.height + 'px',
+          width: selectToi.selectedBoxData.width + 'px',
+          outline: `${1 / addaSquare.scale}px solid #0191FA`,
+        }"
+      ></div>
+      <!--Drop marker-->
+      <div v-show="showMarker">RED BLOCK</div>
     </div>
+    <!--Ruler element-->
     <div class="absolute inset-0 overflow-visible pointer-events-none">
       <RulerBrowser :lines="canvasMarker.lines" />
     </div>
@@ -134,12 +165,15 @@ import { useSquareStore } from "@/stores/dataSquare";
 import { useCanvasFF } from "@/stores/canvasFreeForm";
 import { useResizeStore } from "@/stores/resizeStore";
 import { useCanvasMarkerStore } from "@/stores/canvasMarker";
+import { useDropMarker } from "@/stores/dropMarker";
 
 const selectToi = useCounterStore();
 const addaSquare = useSquareStore();
 const canvasFF = useCanvasFF();
 const resizeStore = useResizeStore();
 const canvasMarker = useCanvasMarkerStore();
+const showMarker = useShowMarker();
+const dropMarker = useDropMarker();
 
 function wheel(event) {
   event.preventDefault();

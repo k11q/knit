@@ -152,6 +152,7 @@ import { useCanvasDndStore } from "@/stores/canvasDnd";
 import { useCanvasFF } from "@/stores/canvasFreeForm";
 import { useSquareStore } from "@/stores/dataSquare";
 import { useCanvasMarkerStore } from "@/stores/canvasMarker";
+import { useDropMarker } from "@/stores/dropMarker";
 import { onClickOutside } from "@vueuse/core";
 
 const selectToi = useCounterStore();
@@ -160,6 +161,8 @@ const canvasFF = useCanvasFF();
 const squareStore = useSquareStore();
 const canvasMarker = useCanvasMarkerStore();
 const target = ref("");
+const showMarker = useShowMarker();
+const dropMarker = useDropMarker();
 
 function makeEditable(e: Event, id: String) {
   target.value = id;
@@ -218,15 +221,22 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
         }
 
         console.log("targetId = " + targetId);
+        if (!closest) {
+          showMarker.value = false;
+        }
         if (target && closest) {
+          showMarker.value = true;
+          dropMarker.setMarker(e);
           console.log("closesti = " + closestTarget);
+          console.log("closestcolorstyle = " + closest.style.backgroundColor);
+          console.log("closestdirection = " + closest.style.flexDirection);
+          console.log("closestpaddingleft = " + closest.style.paddingLeft);
+
           if (selectToi.selectedBox === closestTarget) {
             selectToi.treeHover = false;
           } else {
             selectToi.treeHover = true;
           }
-        }
-        if (target && closest) {
           let selectedTarget = closest.getBoundingClientRect();
 
           selectToi.treeHoverHTMLX = Math.round(
