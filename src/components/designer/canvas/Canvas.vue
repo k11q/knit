@@ -125,7 +125,7 @@
           />
         </div>
       </div>
-      <!--Marker when droppable-->
+      <!--Drop marker-->
       <div
         v-show="showMarker"
         class="absolute pointer-events-none"
@@ -149,11 +149,12 @@
           outline: `${1 / addaSquare.scale}px solid #0191FA`,
         }"
       ></div>
-      <!--Drop marker-->
-      <div v-show="showMarker">RED BLOCK</div>
     </div>
     <!--Ruler element-->
-    <div class="absolute inset-0 overflow-visible pointer-events-none">
+    <div
+      v-show="canvasMarker.setRuler"
+      class="absolute inset-0 overflow-visible pointer-events-none"
+    >
       <RulerBrowser :lines="canvasMarker.lines" />
     </div>
   </div>

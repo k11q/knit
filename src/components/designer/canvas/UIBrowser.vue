@@ -219,39 +219,45 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
         if (closest) {
           closestTarget = useGetClosestDroppableId(e);
         }
+        let currDragElement = document.querySelector(`[data-id=${currDrag}]`);
+        let prevOpacity = currDragElement.style.opacity;
 
         console.log("targetId = " + targetId);
         if (!closest) {
           showMarker.value = false;
-        }
-        if (target && closest) {
-          showMarker.value = true;
-          dropMarker.setMarker(e);
-          console.log("closesti = " + closestTarget);
-          console.log("closestcolorstyle = " + closest.style.backgroundColor);
-          console.log("closestdirection = " + closest.style.flexDirection);
-          console.log("closestpaddingleft = " + closest.style.paddingLeft);
-
+          currDragElement.style.opacity = 100;
+          canvasMarker.setRuler = true;
+        } else if (target && closest) {
           if (selectToi.selectedBox === closestTarget) {
             selectToi.treeHover = false;
+            currDragElement.style.opacity = 100;
+            canvasMarker.setRuler = true;
           } else {
+            canvasMarker.setRuler = false;
+            showMarker.value = true;
+            dropMarker.setMarker(e);
+            currDragElement.style.opacity = 0;
+            console.log("closesti = " + closestTarget);
+            console.log("closestcolorstyle = " + closest.style.backgroundColor);
+            console.log("closestdirection = " + closest.style.flexDirection);
+            console.log("closestpaddingleft = " + closest.style.paddingLeft);
             selectToi.treeHover = true;
+            let selectedTarget = closest.getBoundingClientRect();
+
+            selectToi.treeHoverHTMLX = Math.round(
+              (selectedTarget.x - squareStore.offsetLeft) / squareStore.scale
+            );
+            selectToi.treeHoverHTMLY = Math.round(
+              (selectedTarget.y - squareStore.offsetTop) / squareStore.scale
+            );
+
+            selectToi.treeHoverHTMLWidth = Math.round(
+              selectedTarget.width / squareStore.scale
+            );
+            selectToi.treeHoverHTMLHeight = Math.round(
+              selectedTarget.height / squareStore.scale
+            );
           }
-          let selectedTarget = closest.getBoundingClientRect();
-
-          selectToi.treeHoverHTMLX = Math.round(
-            (selectedTarget.x - squareStore.offsetLeft) / squareStore.scale
-          );
-          selectToi.treeHoverHTMLY = Math.round(
-            (selectedTarget.y - squareStore.offsetTop) / squareStore.scale
-          );
-
-          selectToi.treeHoverHTMLWidth = Math.round(
-            selectedTarget.width / squareStore.scale
-          );
-          selectToi.treeHoverHTMLHeight = Math.round(
-            selectedTarget.height / squareStore.scale
-          );
         }
 
         if (selectToi.selectedBoxData.parent) {
@@ -278,7 +284,9 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
         }
 
         //ruler function
-        useSetRuler(e, currDrag);
+        if (canvasMarker.setRuler) {
+          useSetRuler(e, currDrag);
+        }
 
         //sort childrens by dragging
         if (canvasDnd.isDroppable && canvasDnd.currDrop) {
