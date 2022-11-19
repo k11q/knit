@@ -41,9 +41,7 @@
       data-droppable="true"
       :data-id="node.id"
       data-component="Frame"
-      @pointerdown.stop="testDown($event, node.id)"
-      @mousedown="selectToi.changeSelected($event, node.id, node.type)"
-      @mouseover="hoverEvent($event, node.id)"
+      @mousedown="testDown($event, node.id, node.type)"
       @mouseout="mouseoutEvent($event, node.id)"
       :class="{
         ' bg-red-600': node.isDroppable == true,
@@ -103,11 +101,9 @@
       }"
       :data-id="node.id"
       data-component="Box"
-      @pointerdown.stop="testDown($event, node.id)"
-      @mousedown="selectToi.changeSelected($event, node.id, node.type)"
-      @mouseover="hoverEvent($event, node.id)"
+      data-droppable="false"
+      @mousedown="testDown($event, node.id, node.type)"
       @mouseout="mouseoutEvent($event, node.id)"
-      class="hover:outline outline-[#0191FA]"
       @mouseleave.stop.prevent="canvasDnd.removeDroppable()"
       :class="{
         ' bg-red-600': node.isDroppable == true,
@@ -125,9 +121,7 @@
     <p
       v-if="node.type === 'text'"
       class="text-center hover:decoration-[#0191FA] hover:underline hover:decoration-2 focus:outline-none cursor-default"
-      @pointerdown="testDown($event, node.id)"
-      @mousedown="selectToi.changeSelected($event, node.id, node.type)"
-      @mouseover="hoverEvent($event, node.id)"
+      @mousedown="testDown($event, node.id, node.type)"
       @mouseout="mouseoutEvent($event, node.id)"
       @dblclick.prevent="makeEditable($event, node.id)"
       :style="{
@@ -140,6 +134,7 @@
       }"
       :data-id="node.id"
       data-component="Text"
+      data-droppable="false"
       :contenteditable="node.id === target && selectToi.selectedBox === node.id"
       :class="{
         'decoration-[#0191FA] underline decoration-1 ':
@@ -174,7 +169,7 @@ function makeEditable(e: Event, id: String) {
 }
 
 //dnd on canvas
-const testDown = (e: Event, currDrag: String) => {
+const testDown = (e: Event, currDrag: String, currType: String) => {
   if (!squareStore.dragPointer && !squareStore.draggingPointer) {
     let prevX = e.clientX - e.target.offsetLeft * squareStore.scale;
     let prevY = e.clientY - e.target.offsetTop * squareStore.scale;
@@ -187,21 +182,25 @@ const testDown = (e: Event, currDrag: String) => {
     canvasDnd.currDrag = currDrag;
     let isDragging = false;
 
-    //delete selected item
-    useDeleteElement(e, currDrag);
+    selectToi.changeSelected(e, currDrag, currType);
 
-    if (!selectToi.selectedBox) {
-      document.removeEventListener("keyup", (event) => {
-        if (
-          event.key == "Backspace" ||
-          (event.key == "Delete" && selectToi.selectedBox)
-        ) {
-          canvasDnd.dndRemove(selectToi.data);
-          selectToi.clearSelected();
-        }
-      });
+    //delete selected item
+
+    document.removeEventListener("keyup", keyup);
+    document.addEventListener("keyup", keyup);
+
+    function keyup() {
+      if (
+        event.key == "Backspace" ||
+        (event.key == "Delete" && selectToi.selectedBox)
+      ) {
+        canvasDnd.dndRemove(selectToi.data);
+        selectToi.clearSelected();
+      }
     }
+    /*
     useSelectedKeyboardShortcuts(e, currDrag);
+    */
 
     if (canvasFF.isDragging == true) {
       window.addEventListener("mousemove", mousemove);
@@ -211,12 +210,40 @@ const testDown = (e: Event, currDrag: String) => {
         isDragging = true;
 
         let targetId = useGetElementIdFromPoint(e);
+        let target = useGetElementFromPoint(e);
+        let closest = useGetClosestElement(e);
+        let closestTarget;
+        if (closest) {
+          closestTarget = useGetClosestDroppableId(e);
+        }
 
         console.log("targetId = " + targetId);
-        if (targetId) {
-          let target = useGetClosestDroppableId(e);
-          console.log("closesti = " + target);
+        if (target && closest) {
+          console.log("closesti = " + closestTarget);
+          if (selectToi.selectedBox === closestTarget) {
+            selectToi.treeHover = false;
+          } else {
+            selectToi.treeHover = true;
+          }
         }
+        if (target && closest) {
+          let selectedTarget = closest.getBoundingClientRect();
+
+          selectToi.treeHoverHTMLX = Math.round(
+            (selectedTarget.x - squareStore.offsetLeft) / squareStore.scale
+          );
+          selectToi.treeHoverHTMLY = Math.round(
+            (selectedTarget.y - squareStore.offsetTop) / squareStore.scale
+          );
+
+          selectToi.treeHoverHTMLWidth = Math.round(
+            selectedTarget.width / squareStore.scale
+          );
+          selectToi.treeHoverHTMLHeight = Math.round(
+            selectedTarget.height / squareStore.scale
+          );
+        }
+
         if (selectToi.selectedBoxData.parent) {
           let dropzone = document.querySelector(
             `[data-id=${selectToi.selectedBoxData.parent}]`
@@ -241,111 +268,7 @@ const testDown = (e: Event, currDrag: String) => {
         }
 
         //ruler function
-        let targetChildren = [
-          ...document.querySelector(`[data-id=${currDrag}]`).parentElement
-            .children,
-        ];
-        let targetChildrenData = [];
-
-        targetChildren.forEach((i) => {
-          if (i.dataset.id !== selectToi.selectedBox) {
-            let lineLeft = i.getBoundingClientRect().x;
-            let lineTop = i.getBoundingClientRect().y;
-            let lineRight =
-              i.getBoundingClientRect().x + i.getBoundingClientRect().width;
-            let lineBottom =
-              i.getBoundingClientRect().y + i.getBoundingClientRect().height;
-            let newlineBottom;
-            let newlineTop;
-            let newlineLeft;
-            let newlineRight;
-
-            let distanceTopToLineTop =
-              document
-                .querySelector(`[data-id=${currDrag}]`)
-                .getBoundingClientRect().y - lineTop;
-            let distanceTopToLineBottom =
-              document
-                .querySelector(`[data-id=${currDrag}]`)
-                .getBoundingClientRect().y - lineBottom;
-            let distanceBottomToLineTop =
-              document
-                .querySelector(`[data-id=${currDrag}]`)
-                .getBoundingClientRect().y +
-              document
-                .querySelector(`[data-id=${currDrag}]`)
-                .getBoundingClientRect().height -
-              lineTop;
-            let distanceBottomToLineBottom =
-              document
-                .querySelector(`[data-id=${currDrag}]`)
-                .getBoundingClientRect().y +
-              document
-                .querySelector(`[data-id=${currDrag}]`)
-                .getBoundingClientRect().height -
-              lineBottom;
-            let distanceLeftToLineLeft =
-              document
-                .querySelector(`[data-id=${currDrag}]`)
-                .getBoundingClientRect().x - lineLeft;
-            let distanceLeftToLineRight =
-              document
-                .querySelector(`[data-id=${currDrag}]`)
-                .getBoundingClientRect().x - lineRight;
-            let distanceRightToLineLeft =
-              document
-                .querySelector(`[data-id=${currDrag}]`)
-                .getBoundingClientRect().x +
-              document
-                .querySelector(`[data-id=${currDrag}]`)
-                .getBoundingClientRect().width -
-              lineLeft;
-            let distanceRightToLineRight =
-              document
-                .querySelector(`[data-id=${currDrag}]`)
-                .getBoundingClientRect().x +
-              document
-                .querySelector(`[data-id=${currDrag}]`)
-                .getBoundingClientRect().width -
-              lineRight;
-
-            (distanceTopToLineTop < 4 / squareStore.scale &&
-              distanceTopToLineTop > -4 / squareStore.scale) ||
-            (distanceBottomToLineTop < 4 / squareStore.scale &&
-              distanceBottomToLineTop > -4 / squareStore.scale)
-              ? (newlineTop = i.getBoundingClientRect().y)
-              : (lineTop = undefined);
-            (distanceTopToLineBottom < 4 / squareStore.scale &&
-              distanceTopToLineBottom > -4 / squareStore.scale) ||
-            (distanceBottomToLineBottom < 4 / squareStore.scale &&
-              distanceBottomToLineBottom > -4 / squareStore.scale)
-              ? (newlineBottom =
-                  i.getBoundingClientRect().y +
-                  i.getBoundingClientRect().height)
-              : (newlineBottom = undefined);
-            (distanceLeftToLineLeft < 4 / squareStore.scale &&
-              distanceLeftToLineLeft > -4 / squareStore.scale) ||
-            (distanceRightToLineLeft < 4 / squareStore.scale &&
-              distanceRightToLineLeft > -4 / squareStore.scale)
-              ? (newlineLeft = i.getBoundingClientRect().x)
-              : (newlineLeft = undefined);
-            (distanceLeftToLineRight < 4 / squareStore.scale &&
-              distanceLeftToLineRight > -4 / squareStore.scale) ||
-            (distanceRightToLineRight < 4 / squareStore.scale &&
-              distanceRightToLineRight > -4 / squareStore.scale)
-              ? (newlineRight =
-                  i.getBoundingClientRect().x + i.getBoundingClientRect().width)
-              : (newlineRight = undefined);
-
-            targetChildrenData.push({
-              lineTop: newlineTop,
-              lineLeft: newlineLeft,
-              lineRight: newlineRight,
-              lineBottom: newlineBottom,
-            });
-          }
-        });
-        canvasMarker.lines = targetChildrenData;
+        useSetRuler(e, currDrag);
 
         //sort childrens by dragging
         if (canvasDnd.isDroppable && canvasDnd.currDrop) {
@@ -419,31 +342,6 @@ const testDown = (e: Event, currDrag: String) => {
     }
   }
 };
-
-function hoverEvent(e, id) {
-  if (selectToi.selectedBox === id) {
-    selectToi.treeHover = false;
-  } else {
-    selectToi.treeHover = true;
-  }
-  let target = document.querySelector(`[data-id=${id}]`);
-  let selectedTarget = target.getBoundingClientRect();
-
-  selectToi.treeHoverHTMLX = Math.round(
-    (selectedTarget.x - squareStore.offsetLeft) / squareStore.scale
-  );
-  selectToi.treeHoverHTMLY = Math.round(
-    (selectedTarget.y - squareStore.offsetTop) / squareStore.scale
-  );
-
-  selectToi.treeHoverHTMLWidth = Math.round(
-    selectedTarget.width / squareStore.scale
-  );
-  selectToi.treeHoverHTMLHeight = Math.round(
-    selectedTarget.height / squareStore.scale
-  );
-}
-
 function mouseoutEvent(e, id) {
   selectToi.treeHover = false;
 }

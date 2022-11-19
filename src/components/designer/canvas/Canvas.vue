@@ -16,7 +16,6 @@
       data-id="canvas"
       class="w-0 h-0 overflow-visible"
       :style="{
-        transformOrigin: `0px 0px`,
         transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
       }"
     >
@@ -25,7 +24,6 @@
     <div
       class="fixed top-0 left-0 w-0 h-0 overflow-visible"
       :style="{
-        transformOrigin: `${addaSquare.originX}px ${addaSquare.originY}px`,
         transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
       }"
     >
@@ -159,8 +157,19 @@ function wheel(event) {
     addaSquare.scale >= 0.02 &&
     addaSquare.scale <= 4
   ) {
+    let zoom = event.deltaY * -0.006;
+    let prevScale = addaSquare.scale;
+    let prevOffsetLeft = addaSquare.offsetLeft;
+    let prevOffsetTop = addaSquare.offsetTop;
+    let mouseX = event.clientX - prevOffsetLeft;
+    let mouseY = event.clientY - prevOffsetTop;
+
     addaSquare.scale += event.deltaY * -0.006;
     addaSquare.scale = Math.max(0.02, Math.min(4, addaSquare.scale));
+    /* hold -- scale at mousepoint
+    addaSquare.offsetLeft -= mouseX*addaSquare.scale - mouseX*prevScale
+    addaSquare.offsetTop -= mouseY*addaSquare.scale - mouseY*prevScale
+    */
   } else {
     addaSquare.offsetLeft += -event.deltaX;
     addaSquare.offsetTop += -event.deltaY;

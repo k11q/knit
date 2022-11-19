@@ -1,4 +1,4 @@
 export default function (e) {
-  let target = useGetElementFromPoint(e);
-  return target.closest("[data-droppable='true']").dataset.id;
+  let closest = useGetClosestElement(e);
+  return closest.dataset.id;
 }
