@@ -2,52 +2,16 @@
   <template v-for="node in nodes" :key="node.id">
     <div
       v-if="node.type === 'frame'"
-      :style="{
-        backgroundColor: node.bgColor,
-        height: node.height ? node.height + node.unit : 'auto',
-        width: node.width ? node.width + node.unit : 'auto',
-        left:
-          node.position === 'absolute'
-            ? node.X + node.Xunit
-            : document.querySelector(
-                `[data-id=${selectToi.selectedBoxData.parent}]`
-              ).getBoundingClientRect.x,
-        top:
-          node.position === 'absolute'
-            ? node.Y + node.Yunit
-            : document.querySelector(
-                `[data-id=${selectToi.selectedBoxData.parent}]`
-              ).getBoundingClientRect.y,
-        display: 'flex',
-        flexDirection: node.flexDirection,
-        justifyContent: selectToi.getJustify(node.justify),
-        alignItems: selectToi.getAlign(node.align),
-        position: node.position,
-        paddingLeft: node.paddingX + 'px',
-        paddingTop: node.paddingY + 'px',
-        paddingRight: node.paddingX + 'px',
-        paddingBottom: node.paddingY + 'px',
-        marginLeft: node.marginLeft + 'px',
-        marginTop: node.marginTop + 'px',
-        marginRight: node.marginRight + 'px',
-        marginBottom: node.margingBottom + 'px',
-        borderRadius: node.corner + 'px',
-        border: node.strokeSize + 'px ' + 'solid ' + node.strokeColor,
-        gap: node.gap + 'px',
-        flexGrow: node.flexGrow,
-        alignSelf: node.alignSelf,
-        boxShadow: `${node.boxShadowOffsetY}px ${node.boxShadowOffsetX}px ${node.boxShadowBlurRadius}px ${node.boxShadowSpreadRadius}px ${node.boxShadowColor}`,
-      }"
       data-droppable="true"
       :data-id="node.id"
       data-component="Frame"
       @mousedown="testDown($event, node.id, node.type)"
       @mouseout="mouseoutEvent($event, node.id)"
       :class="{
-        ' bg-red-600': node.isDroppable == true,
         'pointer-events-none':
           selectToi.selectedBox === node.id && canvasFF.isDragging == true,
       }"
+      v-bind="node.attr"
     >
       <p
         @mousedown="selectToi.changeSelected($event, node.id)"
@@ -73,32 +37,6 @@
     </div>
     <div
       v-if="node.type === 'box'"
-      :style="{
-        backgroundColor: node.bgColor,
-        height: node.height ? node.height + node.unit : 'auto',
-        width: node.width ? node.width + node.unit : 'auto',
-        left: node.X + node.Xunit,
-        top: node.Y + node.Yunit,
-        position: node.position,
-        display: 'flex',
-        flexDirection: node.flexDirection,
-        justifyContent: selectToi.getJustify(node.justify),
-        color: node.color,
-        paddingLeft: node.paddingX + 'px',
-        paddingTop: node.paddingY + 'px',
-        paddingRight: node.paddingX + 'px',
-        paddingBottom: node.paddingY + 'px',
-        marginLeft: node.marginLeft + 'px',
-        marginTop: node.marginTop + 'px',
-        marginRight: node.marginRight + 'px',
-        marginBottom: node.marginBottom + 'px',
-        borderRadius: node.corner + 'px',
-        border: node.strokeSize + 'px ' + 'solid ' + node.strokeColor,
-        gap: node.gap + 'px',
-        flexGrow: node.flexGrow,
-        alignSelf: node.alignSelf,
-        boxShadow: `${node.boxShadowOffsetY}px ${node.boxShadowOffsetX}px ${node.boxShadowBlurRadius}px ${node.boxShadowSpreadRadius}px ${node.boxShadowColor}`,
-      }"
       :data-id="node.id"
       data-component="Box"
       data-droppable="false"
@@ -106,10 +44,10 @@
       @mouseout="mouseoutEvent($event, node.id)"
       @mouseleave.stop.prevent="canvasDnd.removeDroppable()"
       :class="{
-        ' bg-red-600': node.isDroppable == true,
         'pointer-events-none':
           selectToi.selectedBox === node.id && canvasFF.isDragging == true,
       }"
+      v-bind="node.attr"
     >
       <DesignerCanvasUIBrowser
         v-if="node.children"
@@ -124,14 +62,6 @@
       @mousedown="testDown($event, node.id, node.type)"
       @mouseout="mouseoutEvent($event, node.id)"
       @dblclick.prevent="makeEditable($event, node.id)"
-      :style="{
-        left: node.X + node.Xunit,
-        top: node.Y + node.Yunit,
-        fontSize: node.fontSize + 'px',
-        color: node.color,
-        position: node.position,
-        lineHeight: node.lineHeight ? node.lineHeight : 1.3,
-      }"
       :data-id="node.id"
       data-component="Text"
       data-droppable="false"
@@ -142,6 +72,7 @@
       }"
       @input="selectToi.selectedBoxData.textContent = $event.target.innerText"
       v-text="node.textContent"
+      v-bind="node.attr"
     ></p>
   </template>
 </template>
@@ -184,6 +115,8 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
     canvasDnd.isDragging = true;
     canvasDnd.currDrag = currDrag;
     let isDragging = false;
+    let currDragElement = document.querySelector(`[data-id=${currDrag}]`);
+    let prevOpacity = currDragElement.style.opacity;
 
     selectToi.changeSelected(e, currDrag, currType);
 
@@ -219,13 +152,10 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
         if (closest) {
           closestTarget = useGetClosestDroppableId(e);
         }
-        let currDragElement = document.querySelector(`[data-id=${currDrag}]`);
-        let prevOpacity = currDragElement.style.opacity;
 
-        console.log("targetId = " + targetId);
         if (!closest) {
           showMarker.value = false;
-          currDragElement.style.opacity = 100;
+          currDragElement.style.opacity = prevOpacity;
           canvasMarker.setRuler = true;
         } else if (target && closest) {
           if (
@@ -233,7 +163,7 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
             currDragElement.parentElement === closest
           ) {
             selectToi.treeHover = false;
-            currDragElement.style.opacity = 100;
+            currDragElement.style.opacity = prevOpacity;
             canvasMarker.setRuler = true;
           } else {
             canvasMarker.setRuler = false;
@@ -271,19 +201,17 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
           let dropzoneLeft = dropzonerect.x;
           let dropzoneTop = dropzonerect.y;
 
-          selectToi.selectedBoxData.X =
+          selectToi.selectedBoxData.attr.style.left =
             (Math.round(e.clientX - dropzoneLeft - prevOffsetLeft) * 1) /
             squareStore.scale;
-          selectToi.selectedBoxData.Y =
+          selectToi.selectedBoxData.attr.style.top =
             (Math.round(e.clientY - dropzoneTop - prevOffsetTop) * 1) /
             squareStore.scale;
         } else {
-          selectToi.selectedBoxData.X = Math.round(
-            (e.clientX - prevX) / squareStore.scale
-          );
-          selectToi.selectedBoxData.Y = Math.round(
-            (e.clientY - prevY) / squareStore.scale
-          );
+          selectToi.selectedBoxData.attr.style.left =
+            Math.round((e.clientX - prevX) / squareStore.scale) + "px";
+          selectToi.selectedBoxData.attr.style.top =
+            Math.round((e.clientY - prevY) / squareStore.scale) + "px";
         }
 
         //ruler function

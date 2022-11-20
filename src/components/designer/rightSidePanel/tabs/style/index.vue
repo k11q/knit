@@ -265,7 +265,13 @@
           <input
             type="number"
             placeholder="Auto"
-            v-model="selectToi.selectedBoxData.X"
+            :value="parseInt(selectToi.selectedBoxData.attr?.style.left, 10)"
+            @input="
+              (event) => {
+                selectToi.selectedBoxData.attr.style.left =
+                  event.target.value + 'px';
+              }
+            "
             class="w-2/3 px-2 bg-transparent"
           />
         </div>
@@ -276,7 +282,13 @@
           <input
             type="number"
             placeholder="Auto"
-            v-model="selectToi.selectedBoxData.Y"
+            :value="parseInt(selectToi.selectedBoxData.attr?.style.top, 10)"
+            @input="
+              (event) => {
+                selectToi.selectedBoxData.attr.style.top =
+                  event.target.value + 'px';
+              }
+            "
             class="w-2/3 px-2 bg-transparent"
           />
         </div>
@@ -287,10 +299,10 @@
           }"
           @click="
             () => {
-              if (selectToi.selectedBoxData.position != 'absolute') {
-                selectToi.selectedBoxData.position = 'absolute';
+              if (selectToi.selectedBoxData.attr.style.position != 'absolute') {
+                selectToi.selectedBoxData.attr.style.position = 'absolute';
               } else {
-                selectToi.selectedBoxData.position = 'static';
+                selectToi.selectedBoxData.attr.style.position = 'static';
               }
             }
           "
@@ -355,7 +367,13 @@
           <input
             type="number"
             placeholder="Auto"
-            v-model="selectToi.selectedBoxData.width"
+            :value="parseInt(selectToi.selectedBoxData.attr?.style.width, 10)"
+            @input="
+              (event) => {
+                selectToi.selectedBoxData.attr.style.width =
+                  event.target.value + 'px';
+              }
+            "
             class="w-2/3 px-2 bg-transparent"
           />
         </div>
@@ -365,7 +383,13 @@
           </div>
           <input
             type="number"
-            v-model="selectToi.selectedBoxData.height"
+            :value="parseInt(selectToi.selectedBoxData.attr?.style.height, 10)"
+            @input="
+              (event) => {
+                selectToi.selectedBoxData.attr.style.height =
+                  event.target.value + 'px';
+              }
+            "
             placeholder="Auto"
             class="w-2/3 px-2 bg-transparent"
           />
@@ -403,7 +427,7 @@
             @click="
               () => {
                 selectToi.selectedBoxData.flexGrow = 1;
-                delete selectToi.selectedBoxData.width;
+                delete selectToi.selectedBoxData.attr.style.width;
               }
             "
             :class="{
@@ -540,7 +564,15 @@
           </div>
           <input
             type="number"
-            v-model="selectToi.selectedBoxData.corner"
+            :value="
+              parseInt(selectToi.selectedBoxData.attr?.style.BorderRadius, 10)
+            "
+            @input="
+              (event) => {
+                selectToi.selectedBoxData.attr.style.BorderRadius =
+                  event.target.value + 'px';
+              }
+            "
             placeholder="0"
             class="w-2/3 px-2 bg-transparent"
           />
@@ -567,8 +599,8 @@
           class="aspect-square h-full flex flex-col justify-center items-center"
           @click="
             () => {
-              selectToi.selectedBoxData.strokeColor = 'black';
-              selectToi.selectedBoxData.strokeSize = 1;
+              selectToi.selectedBoxData.attr.style.borderColor = 'black';
+              selectToi.selectedBoxData.attr.style.borderWidth = '1px';
               rightPanelStore.toggleStroke = true;
             }
           "
@@ -595,12 +627,16 @@
         >
           <div class="flex flex-row gap-2 items-start">
             <div
-              @click="selectToi.selectedBoxData.flexDirection = 'column'"
+              @click="
+                selectToi.selectedBoxData.attr.style.flexDirection = 'column'
+              "
               class="aspect-square items-center flex flex-none"
               :class="{
                 'opacity-100':
-                  selectToi.selectedBoxData.flexDirection === 'column',
-                'opacity-40': selectToi.selectedBoxData.flexDirection === 'row',
+                  selectToi.selectedBoxData.attr?.style.flexDirection ===
+                  'column',
+                'opacity-40':
+                  selectToi.selectedBoxData.attr?.style.flexDirection === 'row',
               }"
             >
               <svg
@@ -620,13 +656,16 @@
             </div>
 
             <div
-              @click="selectToi.selectedBoxData.flexDirection = 'row'"
+              @click="
+                selectToi.selectedBoxData.attr.style.flexDirection = 'row'
+              "
               class="aspect-square items-center flex flex-none"
               :class="{
                 'opacity-100':
-                  selectToi.selectedBoxData.flexDirection === 'row',
+                  selectToi.selectedBoxData.attr?.style.flexDirection === 'row',
                 'opacity-40':
-                  selectToi.selectedBoxData.flexDirection === 'column',
+                  selectToi.selectedBoxData.attr?.style.flexDirection ===
+                  'column',
               }"
             >
               <svg
@@ -683,7 +722,13 @@
             <div class="aspect-square items-center flex flex-none h-[18px]">
               <input
                 type="number"
-                v-model="selectToi.selectedBoxData.gap"
+                :value="parseInt(selectToi.selectedBoxData.attr?.style.gap, 10)"
+                @input="
+                  (event) => {
+                    selectToi.selectedBoxData.attr.style.gap =
+                      event.target.value + 'px';
+                  }
+                "
                 placeholder="0"
                 class="w-8 bg-transparent"
               />
@@ -713,7 +758,20 @@
             <div class="aspect-square items-center flex flex-none h-[18px]">
               <input
                 type="number"
-                v-model="selectToi.selectedBoxData.paddingX"
+                :value="
+                  parseInt(
+                    selectToi.selectedBoxData.attr?.style.paddingLeft,
+                    10
+                  )
+                "
+                @input="
+                  (event) => {
+                    (selectToi.selectedBoxData.attr.style.paddingLeft =
+                      event.target.value + 'px'),
+                      (selectToi.selectedBoxData.attr.style.paddingRight =
+                        event.target.value + 'px');
+                  }
+                "
                 placeholder="0"
                 class="w-8 bg-transparent"
               />
@@ -1203,7 +1261,20 @@
             <div class="aspect-square items-center flex flex-none h-[18px]">
               <input
                 type="number"
-                v-model="selectToi.selectedBoxData.paddingY"
+                :value="
+                  parseInt(
+                    selectToi.selectedBoxData.attr?.style.paddingBottom,
+                    10
+                  )
+                "
+                @input="
+                  (event) => {
+                    (selectToi.selectedBoxData.attr.style.paddingBottom =
+                      event.target.value + 'px'),
+                      (selectToi.selectedBoxData.attr.style.paddingTop =
+                        event.target.value + 'px');
+                  }
+                "
                 placeholder="0"
                 class="w-8 bg-transparent"
               />
@@ -1289,12 +1360,19 @@
           <div
             class="h-full aspect-square items-center flex flex-none"
             :style="{
-              'background-color': selectToi.selectedBoxData.bgColor,
+              'background-color':
+                selectToi.selectedBoxData.attr?.style.backgroundColor,
             }"
           ></div>
           <input
             type="text"
-            v-model="selectToi.selectedBoxData.bgColor"
+            :value="selectToi.selectedBoxData.attr?.style.backgroundColor"
+            @input="
+              (event) => {
+                selectToi.selectedBoxData.attr.style.backgroundColor =
+                  event.target.value;
+              }
+            "
             class="w-full px-2 bg-transparent"
           />
           <input type="text" value="100%" class="w-full px-2 bg-transparent" />
@@ -1550,12 +1628,17 @@
           <div
             class="h-full aspect-square items-center flex flex-none border"
             :style="{
-              'background-color': selectToi.selectedBoxData.color,
+              'background-color': selectToi.selectedBoxData.attr?.style.color,
             }"
           ></div>
           <input
             type="text"
-            v-model="selectToi.selectedBoxData.color"
+            :value="selectToi.selectedBoxData.attr?.style.color"
+            @input="
+              (event) => {
+                selectToi.selectedBoxData.attr.style.color = event.target.value;
+              }
+            "
             class="w-full px-2 bg-transparent"
           />
           <input type="text" value="100%" class="w-full px-2 bg-transparent" />

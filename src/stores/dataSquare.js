@@ -23,40 +23,43 @@ export const useSquareStore = defineStore({
     dataFrame: {
       id: "rectangle" + Math.random() * 100,
       type: "frame",
-      bgColor: "white",
-      height: 100,
-      width: 100,
-      unit: "px",
-      Xunit: "px",
-      Yunit: "px",
-      position: "absolute",
-      flexDirection: "row",
+      attr: {
+        style: {
+          backgroundColor: "white",
+          height: "100px",
+          width: "100px",
+          position: "absolute",
+          flexDirection: "row",
+        },
+      },
       parent: "",
       children: [],
     },
     dataText: {
       type: "text",
       textContent: "Text here",
-      color: "black",
-      fontSize: 14,
-      unit: "px",
-      Xunit: "px",
-      Yunit: "px",
-      position: "absolute",
+      attr: {
+        style: {
+          color: "black",
+          fontSize: "14px",
+          position: "absolute",
+        },
+      },
       parent: "",
       children: [],
     },
     dataSquare: {
       id: "rectangle" + Math.random() * 100,
       type: "box",
-      bgColor: "white",
-      height: 100,
-      width: 100,
-      unit: "px",
-      Xunit: "px",
-      Yunit: "px",
-      position: "absolute",
-      flexDirection: "row",
+      attr: {
+        style: {
+          backgroundColor: "white",
+          height: "100px",
+          width: "100px",
+          position: "absolute",
+          flexDirection: "row",
+        },
+      },
       parent: "",
       children: [],
     },
@@ -126,10 +129,14 @@ export const useSquareStore = defineStore({
 
       if (this.addSquareActivated === true) {
         this.dataSquare.id = "box" + this.countBox;
-        this.dataSquare.X = (event.clientX - this.offsetLeft) / this.scale - 50;
-        this.dataSquare.Y = (event.clientY - this.offsetTop) / this.scale - 50;
+        this.dataSquare.attr.style.left =
+          (event.clientX - this.offsetLeft) / this.scale - 50 + "px";
+        this.dataSquare.attr.style.top =
+          (event.clientY - this.offsetTop) / this.scale - 50 + "px";
         this.dataSquare.children = [];
         let clonedDataSquare = { ...this.dataSquare };
+        clonedDataSquare.attr = { ...this.dataSquare.attr };
+        clonedDataSquare.attr.style = { ...this.dataSquare.attr.style };
 
         this.turnOnNormalPointer();
         dataPushed.push({ ...clonedDataSquare });
@@ -138,10 +145,14 @@ export const useSquareStore = defineStore({
       }
       if (this.addTextActivated === true) {
         this.dataText.id = "text" + this.countBox;
-        this.dataText.X = (event.clientX - this.offsetLeft) / this.scale - 50;
-        this.dataText.Y = (event.clientY - this.offsetTop) / this.scale - 50;
+        this.dataText.attr.style.left =
+          (event.clientX - this.offsetLeft) / this.scale - 50 + "px";
+        this.dataText.attr.style.top =
+          (event.clientY - this.offsetTop) / this.scale - 50 + "px";
         this.dataText.children = [];
         let clonedDataText = { ...this.dataText };
+        clonedDataText.attr = { ...this.dataText.attr };
+        clonedDataText.attr.style = { ...this.dataText.attr.style };
 
         dataPushed.push({ ...clonedDataText });
         this.turnOnNormalPointer();
@@ -150,10 +161,14 @@ export const useSquareStore = defineStore({
       }
       if (this.addFrameActivated === true) {
         this.dataFrame.id = "frame" + this.countBox;
-        this.dataFrame.X = (event.clientX - this.offsetLeft) / this.scale - 50;
-        this.dataFrame.Y = (event.clientY - this.offsetTop) / this.scale - 50;
+        this.dataFrame.attr.style.left =
+          (event.clientX - this.offsetLeft) / this.scale - 50 + "px";
+        this.dataFrame.attr.style.top =
+          (event.clientY - this.offsetTop) / this.scale - 50 + "px";
         this.dataFrame.children = [];
         let clonedDataFrame = { ...this.dataFrame };
+        clonedDataFrame.attr = { ...this.dataFrame.attr };
+        clonedDataFrame.attr.style = { ...this.dataFrame.attr.style };
 
         this.turnOnNormalPointer();
 

@@ -65,6 +65,7 @@
           display: 'flex',
           flexDirection: node.flexDirection,
           justifyContent: selectToi.getJustify(node.justify),
+          alignItems: selectToi.getAlign(node.align),
           color: node.color,
           paddingLeft: node.paddingX + 'px',
           paddingTop: node.paddingY + 'px',
@@ -108,7 +109,7 @@
   </template>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { useCounterStore } from "@/stores/counter";
 import { useCanvasDndStore } from "@/stores/canvasDnd";
 import { useCanvasFF } from "@/stores/canvasFreeForm";

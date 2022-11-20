@@ -35,12 +35,12 @@ export const useDropMarker = defineStore({
           (dropRect.y - squareStore.offsetTop) / squareStore.scale +
           "px";
         this.markerHeight = "4px";
-        this.markerWidth = selectToi.selectedBoxData.width + "px";
+        this.markerWidth = selectToi.selectedBoxData.attr.style.width;
       }
       if (drop.style.flexDirection === "row") {
         this.markerLeft = paddingLeft + selectToi.treeHoverHTMLX + "px";
         this.markerTop = paddingTop + selectToi.treeHoverHTMLY + "px";
-        this.markerHeight = selectToi.selectedBoxData.height + "px";
+        this.markerHeight = selectToi.selectedBoxData.attr.style.height;
         this.markerWidth = "4px";
       }
     },

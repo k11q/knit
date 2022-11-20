@@ -38,7 +38,7 @@
           top: selectToi.treeHoverHTMLY + 'px',
           height: selectToi.treeHoverHTMLHeight + 'px',
           width: selectToi.treeHoverHTMLWidth + 'px',
-          outline: `${1 / addaSquare.scale}px solid #0191FA`,
+          outline: `${1.5 / addaSquare.scale}px solid #0191FA`,
         }"
       ></div>
       <!--Selected outline n resizer-->
@@ -70,14 +70,14 @@
               }"
             >
               {{
-                selectToi.selectedBoxData.width
-                  ? Math.round(selectToi.selectedBoxData.width)
+                selectToi.selectedBoxWidth
+                  ? Math.round(selectToi.selectedBoxWidth)
                   : "Fill"
               }}
               x
               {{
-                selectToi.selectedBoxData.height
-                  ? Math.round(selectToi.selectedBoxData.height)
+                selectToi.selectedBoxHeight
+                  ? Math.round(selectToi.selectedBoxHeight)
                   : "Fill"
               }}
             </span>
@@ -139,14 +139,14 @@
       ></div>
       <!--Selected outline when droppable-->
       <div
-        v-show="showMarker"
+        v-if="showMarker"
         class="absolute pointer-events-none"
         :style="{
-          left: selectToi.selectedBoxData.X + 'px',
-          top: selectToi.selectedBoxData.Y + 'px',
-          height: selectToi.selectedBoxData.height + 'px',
-          width: selectToi.selectedBoxData.width + 'px',
-          outline: `${1 / addaSquare.scale}px solid #0191FA`,
+          left: selectToi.selectedBoxData.attr.style.left,
+          top: selectToi.selectedBoxData.attr.style.top,
+          height: selectToi.selectedBoxData.attr.style.height,
+          width: selectToi.selectedBoxData.attr.style.width,
+          outline: `${1.5 / addaSquare.scale}px dotted #0191FA`,
         }"
       ></div>
     </div>

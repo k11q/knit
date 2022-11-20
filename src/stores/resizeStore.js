@@ -14,8 +14,14 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        let prevWidth = selectToi.selectedBoxData.width;
-        let prevHeight = selectToi.selectedBoxData.height;
+        let prevWidth =
+          selectToi.selectedBoxData.attr.style.width.replace(/[^0-9\.]+/g, "") |
+          0;
+        let prevHeight =
+          selectToi.selectedBoxData.attr.style.height.replace(
+            /[^0-9\.]+/g,
+            ""
+          ) | 0;
 
         let prevX = e.clientX;
         let prevY = e.clientY;
@@ -26,12 +32,14 @@ export const useResizeStore = defineStore({
         window.addEventListener("mouseup", mouseup);
 
         function mousemove(e) {
-          selectToi.selectedBoxData.width = Math.round(
-            prevWidth + ((e.clientX - prevX) * 1) / squareStore.scale
-          );
-          selectToi.selectedBoxData.height = Math.round(
-            prevHeight + ((e.clientY - prevY) * 1) / squareStore.scale
-          );
+          selectToi.selectedBoxData.attr.style.width =
+            Math.round(
+              prevWidth + ((e.clientX - prevX) * 1) / squareStore.scale
+            ) + "px";
+          selectToi.selectedBoxData.attr.style.height =
+            Math.round(
+              prevHeight + ((e.clientY - prevY) * 1) / squareStore.scale
+            ) + "px";
           selectToi.selectedBoxHTMLWidth = Math.round(
             prevWidth + ((e.clientX - prevX) * 1) / squareStore.scale
           );
@@ -54,9 +62,19 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        let prevWidth = selectToi.selectedBoxData.width;
-        let prevHeight = selectToi.selectedBoxData.height;
-        let prevWidth2 = selectToi.selectedBoxData.X;
+        let prevWidth =
+          selectToi.selectedBoxData.attr.style.width.replace(/[^0-9\.]+/g, "") |
+          0;
+        let prevHeight =
+          selectToi.selectedBoxData.attr.style.height.replace(
+            /[^0-9\.]+/g,
+            ""
+          ) | 0;
+        let prevWidth2 =
+          selectToi.selectedBoxData.attr.style.left.replace(
+            /[^-?0-9\.]+/g,
+            ""
+          ) | 0;
         let prevWidthX = selectToi.selectedBoxHTMLX;
 
         let prevX = e.clientX;
@@ -68,12 +86,14 @@ export const useResizeStore = defineStore({
         window.addEventListener("mouseup", mouseup);
 
         function mousemove(e) {
-          selectToi.selectedBoxData.width = Math.round(
-            prevWidth + ((prevX - e.clientX) * 1) / squareStore.scale
-          );
-          selectToi.selectedBoxData.height = Math.round(
-            prevHeight + ((e.clientY - prevY) * 1) / squareStore.scale
-          );
+          selectToi.selectedBoxData.attr.style.width =
+            Math.round(
+              prevWidth + ((prevX - e.clientX) * 1) / squareStore.scale
+            ) + "px";
+          selectToi.selectedBoxData.attr.style.height =
+            Math.round(
+              prevHeight + ((e.clientY - prevY) * 1) / squareStore.scale
+            ) + "px";
           selectToi.selectedBoxHTMLWidth = Math.round(
             prevWidth + ((prevX - e.clientX) * 1) / squareStore.scale
           );
@@ -83,9 +103,10 @@ export const useResizeStore = defineStore({
           selectToi.selectedBoxHTMLX = Math.round(
             prevWidthX + ((e.clientX - prevX) * 1) / squareStore.scale
           );
-          selectToi.selectedBoxData.X = Math.round(
-            prevWidth2 + ((e.clientX - prevX) * 1) / squareStore.scale
-          );
+          selectToi.selectedBoxData.attr.style.left =
+            Math.round(
+              prevWidth2 + ((e.clientX - prevX) * 1) / squareStore.scale
+            ) + "px";
           console.log("mousemove!");
         }
 
@@ -102,12 +123,24 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        let prevWidth = selectToi.selectedBoxData.X;
-        let prevHeight = selectToi.selectedBoxData.Y;
+        let prevWidth =
+          selectToi.selectedBoxData.attr.style.left.replace(
+            /[^-?0-9\.]+/g,
+            ""
+          ) | 0;
+        let prevHeight =
+          selectToi.selectedBoxData.attr.style.top.replace(/[^-?0-9\.]+/g, "") |
+          0;
         let prevWidthX = selectToi.selectedBoxHTMLX;
         let prevHeightY = selectToi.selectedBoxHTMLY;
-        let prevWidth2 = selectToi.selectedBoxData.width;
-        let prevHeight2 = selectToi.selectedBoxData.height;
+        let prevWidth2 =
+          selectToi.selectedBoxData.attr.style.width.replace(/[^0-9\.]+/g, "") |
+          0;
+        let prevHeight2 =
+          selectToi.selectedBoxData.attr.style.height.replace(
+            /[^0-9\.]+/g,
+            ""
+          ) | 0;
 
         let prevX = e.clientX;
         let prevY = e.clientY;
@@ -118,18 +151,22 @@ export const useResizeStore = defineStore({
         window.addEventListener("mouseup", mouseup);
 
         function mousemove(e) {
-          selectToi.selectedBoxData.X = Math.round(
-            prevWidth + ((e.clientX - prevX) * 1) / squareStore.scale
-          );
-          selectToi.selectedBoxData.Y = Math.round(
-            prevHeight + ((e.clientY - prevY) * 1) / squareStore.scale
-          );
-          selectToi.selectedBoxData.width = Math.round(
-            prevWidth2 + ((prevX - e.clientX) * 1) / squareStore.scale
-          );
-          selectToi.selectedBoxData.height = Math.round(
-            prevHeight2 + ((prevY - e.clientY) * 1) / squareStore.scale
-          );
+          selectToi.selectedBoxData.attr.style.left =
+            Math.round(
+              prevWidth + ((e.clientX - prevX) * 1) / squareStore.scale
+            ) + "px";
+          selectToi.selectedBoxData.attr.style.top =
+            Math.round(
+              prevHeight + ((e.clientY - prevY) * 1) / squareStore.scale
+            ) + "px";
+          selectToi.selectedBoxData.attr.style.width =
+            Math.round(
+              prevWidth2 + ((prevX - e.clientX) * 1) / squareStore.scale
+            ) + "px";
+          selectToi.selectedBoxData.attr.style.height =
+            Math.round(
+              prevHeight2 + ((prevY - e.clientY) * 1) / squareStore.scale
+            ) + "px";
 
           selectToi.selectedBoxHTMLWidth = Math.round(
             prevWidth2 + ((prevX - e.clientX) * 1) / squareStore.scale
@@ -159,9 +196,17 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        let prevWidth = selectToi.selectedBoxData.width;
-        let prevHeight = selectToi.selectedBoxData.Y;
-        let prevHeight2 = selectToi.selectedBoxData.height;
+        let prevWidth =
+          selectToi.selectedBoxData.attr.style.width.replace(/[^0-9\.]+/g, "") |
+          0;
+        let prevHeight =
+          selectToi.selectedBoxData.attr.style.top.replace(/[^-?0-9\.]+/g, "") |
+          0;
+        let prevHeight2 =
+          selectToi.selectedBoxData.attr.style.height.replace(
+            /[^0-9\.]+/g,
+            ""
+          ) | 0;
         let prevHeightY = selectToi.selectedBoxHTMLY;
 
         let prevX = e.clientX;
@@ -173,15 +218,18 @@ export const useResizeStore = defineStore({
         window.addEventListener("mouseup", mouseup);
 
         function mousemove(e) {
-          selectToi.selectedBoxData.width = Math.round(
-            prevWidth + ((e.clientX - prevX) * 1) / squareStore.scale
-          );
-          selectToi.selectedBoxData.Y = Math.round(
-            prevHeight + ((e.clientY - prevY) * 1) / squareStore.scale
-          );
-          selectToi.selectedBoxData.height = Math.round(
-            prevHeight2 + ((prevY - e.clientY) * 1) / squareStore.scale
-          );
+          selectToi.selectedBoxData.attr.style.width =
+            Math.round(
+              prevWidth + ((e.clientX - prevX) * 1) / squareStore.scale
+            ) + "px";
+          selectToi.selectedBoxData.attr.style.top =
+            Math.round(
+              prevHeight + ((e.clientY - prevY) * 1) / squareStore.scale
+            ) + "px";
+          selectToi.selectedBoxData.attr.style.height =
+            Math.round(
+              prevHeight2 + ((prevY - e.clientY) * 1) / squareStore.scale
+            ) + "px";
           selectToi.selectedBoxHTMLWidth = Math.round(
             prevWidth + ((e.clientX - prevX) * 1) / squareStore.scale
           );
@@ -209,7 +257,9 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        let prevWidth = selectToi.selectedBoxData.width;
+        let prevWidth =
+          selectToi.selectedBoxData.attr.style.width.replace(/[^0-9\.]+/g, "") |
+          0;
 
         let prevX = e.clientX;
 
@@ -219,9 +269,10 @@ export const useResizeStore = defineStore({
         window.addEventListener("mouseup", mouseup);
 
         function mousemove(e) {
-          selectToi.selectedBoxData.width = Math.round(
-            prevWidth + ((e.clientX - prevX) * 1) / squareStore.scale
-          );
+          selectToi.selectedBoxData.attr.style.width =
+            Math.round(
+              prevWidth + ((e.clientX - prevX) * 1) / squareStore.scale
+            ) + "px";
           selectToi.selectedBoxHTMLWidth = Math.round(
             prevWidth + ((e.clientX - prevX) * 1) / squareStore.scale
           );
@@ -240,8 +291,14 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        let prevWidth = selectToi.selectedBoxData.width;
-        let prevWidth2 = selectToi.selectedBoxData.X;
+        let prevWidth =
+          selectToi.selectedBoxData.attr.style.width.replace(/[^0-9\.]+/g, "") |
+          0;
+        let prevWidth2 =
+          selectToi.selectedBoxData.attr.style.left.replace(
+            /[^-?0-9\.]+/g,
+            ""
+          ) | 0;
         let prevWidthX = selectToi.selectedBoxHTMLX;
 
         let prevX = e.clientX;
@@ -252,12 +309,14 @@ export const useResizeStore = defineStore({
         window.addEventListener("mouseup", mouseup);
 
         function mousemove(e) {
-          selectToi.selectedBoxData.width = Math.round(
-            prevWidth + ((prevX - e.clientX) * 1) / squareStore.scale
-          );
-          selectToi.selectedBoxData.X = Math.round(
-            prevWidth2 + ((e.clientX - prevX) * 1) / squareStore.scale
-          );
+          selectToi.selectedBoxData.attr.style.width =
+            Math.round(
+              prevWidth + ((prevX - e.clientX) * 1) / squareStore.scale
+            ) + "px";
+          selectToi.selectedBoxData.attr.style.left =
+            Math.round(
+              prevWidth2 + ((e.clientX - prevX) * 1) / squareStore.scale
+            ) + "px";
           selectToi.selectedBoxHTMLWidth = Math.round(
             prevWidth + ((prevX - e.clientX) * 1) / squareStore.scale
           );
@@ -279,8 +338,14 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        let prevHeight = selectToi.selectedBoxData.height;
-        let prevHeight2 = selectToi.selectedBoxData.Y;
+        let prevHeight =
+          selectToi.selectedBoxData.attr.style.height.replace(
+            /[^0-9\.]+/g,
+            ""
+          ) | 0;
+        let prevHeight2 =
+          selectToi.selectedBoxData.attr.style.top.replace(/[^-?0-9\.]+/g, "") |
+          0;
         let prevHeightY = selectToi.selectedBoxHTMLY;
 
         let prevY = e.clientY;
@@ -291,12 +356,14 @@ export const useResizeStore = defineStore({
         window.addEventListener("mouseup", mouseup);
 
         function mousemove(e) {
-          selectToi.selectedBoxData.height = Math.round(
-            prevHeight + ((prevY - e.clientY) * 1) / squareStore.scale
-          );
-          selectToi.selectedBoxData.Y = Math.round(
-            prevHeight2 + ((e.clientY - prevY) * 1) / squareStore.scale
-          );
+          selectToi.selectedBoxData.attr.style.height =
+            Math.round(
+              prevHeight + ((prevY - e.clientY) * 1) / squareStore.scale
+            ) + "px";
+          selectToi.selectedBoxData.attr.style.top =
+            Math.round(
+              prevHeight2 + ((e.clientY - prevY) * 1) / squareStore.scale
+            ) + "px";
           selectToi.selectedBoxHTMLHeight = Math.round(
             prevHeight + ((prevY - e.clientY) * 1) / squareStore.scale
           );
@@ -318,7 +385,11 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        let prevHeight = selectToi.selectedBoxData.height;
+        let prevHeight =
+          selectToi.selectedBoxData.attr.style.height.replace(
+            /[^0-9\.]+/g,
+            ""
+          ) | 0;
 
         let prevY = e.clientY;
 
@@ -328,9 +399,10 @@ export const useResizeStore = defineStore({
         window.addEventListener("mouseup", mouseup);
 
         function mousemove(e) {
-          selectToi.selectedBoxData.height = Math.round(
-            prevHeight + ((e.clientY - prevY) * 1) / squareStore.scale
-          );
+          selectToi.selectedBoxData.attr.style.height =
+            Math.round(
+              prevHeight + ((e.clientY - prevY) * 1) / squareStore.scale
+            ) + "px";
           selectToi.selectedBoxHTMLHeight = Math.round(
             prevHeight + ((e.clientY - prevY) * 1) / squareStore.scale
           );
