@@ -791,15 +791,19 @@
             >
               <div
                 v-show="
-                  selectToi.selectedBoxData.align !== 'start' ||
-                  selectToi.selectedBoxData.justify !== 'start'
+                  selectToi.selectedBoxData.attr?.style.alignItems !==
+                    'start' ||
+                  selectToi.selectedBoxData.attr?.style.justifyContent !==
+                    'start'
                 "
                 class="h-1 aspect-square rounded-full bg-[#505050]"
               ></div>
               <svg
                 v-show="
-                  selectToi.selectedBoxData.align === 'start' &&
-                  selectToi.selectedBoxData.justify === 'start'
+                  selectToi.selectedBoxData.attr?.style.alignItems ===
+                    'start' &&
+                  selectToi.selectedBoxData.attr?.style.justifyContent ===
+                    'start'
                 "
                 class="absolute top-0.5 left-0.5"
                 width="24"
@@ -829,15 +833,19 @@
             >
               <div
                 v-show="
-                  selectToi.selectedBoxData.align !== 'center' ||
-                  selectToi.selectedBoxData.justify !== 'start'
+                  selectToi.selectedBoxData.attr?.style.alignItems !==
+                    'center' ||
+                  selectToi.selectedBoxData.attr?.style.justifyContent !==
+                    'start'
                 "
                 class="h-1 aspect-square rounded-full bg-[#505050]"
               ></div>
               <svg
                 v-show="
-                  selectToi.selectedBoxData.align === 'center' &&
-                  selectToi.selectedBoxData.justify === 'start'
+                  selectToi.selectedBoxData.attr?.style.alignItems ===
+                    'center' &&
+                  selectToi.selectedBoxData.attr?.style.justifyContent ===
+                    'start'
                 "
                 class="absolute flex-none top-0.5"
                 width="24"
@@ -884,15 +892,17 @@
             >
               <div
                 v-show="
-                  selectToi.selectedBoxData.align !== 'end' ||
-                  selectToi.selectedBoxData.justify !== 'start'
+                  selectToi.selectedBoxData.attr?.style.alignItems !== 'end' ||
+                  selectToi.selectedBoxData.attr?.style.justifyContent !==
+                    'start'
                 "
                 class="h-1 aspect-square rounded-full bg-[#505050]"
               ></div>
               <svg
                 v-show="
-                  selectToi.selectedBoxData.align === 'end' &&
-                  selectToi.selectedBoxData.justify === 'start'
+                  selectToi.selectedBoxData.attr?.style.alignItems === 'end' &&
+                  selectToi.selectedBoxData.attr?.style.justifyContent ===
+                    'start'
                 "
                 class="absolute flex-none top-0.5 right-0.5"
                 width="24"
@@ -933,15 +943,19 @@
             >
               <div
                 v-show="
-                  selectToi.selectedBoxData.align !== 'start' ||
-                  selectToi.selectedBoxData.justify !== 'center'
+                  selectToi.selectedBoxData.attr?.style.alignItems !==
+                    'start' ||
+                  selectToi.selectedBoxData.attr?.style.justifyContent !==
+                    'center'
                 "
                 class="h-1 aspect-square rounded-full bg-[#505050]"
               ></div>
               <svg
                 v-show="
-                  selectToi.selectedBoxData.align === 'start' &&
-                  selectToi.selectedBoxData.justify === 'center'
+                  selectToi.selectedBoxData.attr?.style.alignItems ===
+                    'start' &&
+                  selectToi.selectedBoxData.attr?.style.justifyContent ===
+                    'center'
                 "
                 class="absolute flex-none left-0.5 text-gray-400"
                 width="24"
@@ -982,15 +996,19 @@
             >
               <div
                 v-show="
-                  selectToi.selectedBoxData.align !== 'center' ||
-                  selectToi.selectedBoxData.justify !== 'center'
+                  selectToi.selectedBoxData.attr?.style.alignItems !==
+                    'center' ||
+                  selectToi.selectedBoxData.attr?.style.justifyContent !==
+                    'center'
                 "
                 class="h-1 aspect-square rounded-full bg-[#505050]"
               ></div>
               <svg
                 v-show="
-                  selectToi.selectedBoxData.align === 'center' &&
-                  selectToi.selectedBoxData.justify === 'center'
+                  selectToi.selectedBoxData.attr?.style.alignItems ===
+                    'center' &&
+                  selectToi.selectedBoxData.attr?.style.justifyContent ===
+                    'center'
                 "
                 class="absolute inset-0 flex-none"
                 width="24"
@@ -1034,15 +1052,17 @@
             >
               <div
                 v-show="
-                  selectToi.selectedBoxData.align !== 'end' ||
-                  selectToi.selectedBoxData.justify !== 'center'
+                  selectToi.selectedBoxData.attr?.style.alignItems !== 'end' ||
+                  selectToi.selectedBoxData.attr?.style.justifyContent !==
+                    'center'
                 "
                 class="h-1 aspect-square rounded-full bg-[#505050]"
               ></div>
               <svg
                 v-show="
-                  selectToi.selectedBoxData.align === 'end' &&
-                  selectToi.selectedBoxData.justify === 'center'
+                  selectToi.selectedBoxData.attr?.style.alignItems === 'end' &&
+                  selectToi.selectedBoxData.attr?.style.justifyContent ===
+                    'center'
                 "
                 class="absolute flex-none right-0.5"
                 width="24"
@@ -1089,15 +1109,17 @@
             >
               <div
                 v-show="
-                  selectToi.selectedBoxData.align !== 'start' ||
-                  selectToi.selectedBoxData.justify !== 'end'
+                  selectToi.selectedBoxData.attr?.style.alignItems !==
+                    'start' ||
+                  selectToi.selectedBoxData.attr?.style.justifyContent !== 'end'
                 "
                 class="h-1 aspect-square rounded-full bg-[#505050]"
               ></div>
               <svg
                 v-show="
-                  selectToi.selectedBoxData.align === 'start' &&
-                  selectToi.selectedBoxData.justify === 'end'
+                  selectToi.selectedBoxData.attr?.style.alignItems ===
+                    'start' &&
+                  selectToi.selectedBoxData.attr?.style.justifyContent === 'end'
                 "
                 class="absolute flex-none left-0.5 bottom-0.5"
                 width="24"
@@ -1138,15 +1160,17 @@
             >
               <div
                 v-show="
-                  selectToi.selectedBoxData.align !== 'center' ||
-                  selectToi.selectedBoxData.justify !== 'end'
+                  selectToi.selectedBoxData.attr?.style.alignItems !==
+                    'center' ||
+                  selectToi.selectedBoxData.attr?.style.justifyContent !== 'end'
                 "
                 class="h-1 aspect-square rounded-full bg-[#505050]"
               ></div>
               <svg
                 v-show="
-                  selectToi.selectedBoxData.align === 'center' &&
-                  selectToi.selectedBoxData.justify === 'end'
+                  selectToi.selectedBoxData.attr?.style.alignItems ===
+                    'center' &&
+                  selectToi.selectedBoxData.attr?.style.justifyContent === 'end'
                 "
                 class="absolute flex-none bottom-0.5"
                 width="24"
@@ -1190,15 +1214,15 @@
             >
               <div
                 v-show="
-                  selectToi.selectedBoxData.align !== 'end' ||
-                  selectToi.selectedBoxData.justify !== 'end'
+                  selectToi.selectedBoxData.attr?.style.alignItems !== 'end' ||
+                  selectToi.selectedBoxData.attr?.style.justifyContent !== 'end'
                 "
                 class="h-1 aspect-square rounded-full bg-[#505050]"
               ></div>
               <svg
                 v-show="
-                  selectToi.selectedBoxData.align === 'end' &&
-                  selectToi.selectedBoxData.justify === 'end'
+                  selectToi.selectedBoxData.attr?.style.alignItems === 'end' &&
+                  selectToi.selectedBoxData.attr?.style.justifyContent === 'end'
                 "
                 class="absolute flex-none right-0.5 bottom-0.5"
                 width="24"

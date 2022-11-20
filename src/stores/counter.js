@@ -288,7 +288,11 @@ export const useCounterStore = defineStore({
         id: "rectangle",
         type: "frame",
         attr: {
+          onHover: () => {
+            console.log("hahaha");
+          },
           style: {
+            display: "flex",
             color: "blue",
             backgroundColor: "blue",
             height: "500px",
@@ -500,23 +504,11 @@ export const useCounterStore = defineStore({
     ],
   }),
   getters: {
-    selectedBoxColor(state) {
-      state.data.find((x) => x.id === state.selectedBox).color;
-    },
     selectedBoxHeight() {
       return parseInt(this.selectedBoxData.attr?.style.height, 10);
     },
     selectedBoxWidth() {
       return parseInt(this.selectedBoxData.attr?.style.width, 10);
-    },
-    selectedBoxLeft() {
-      return parseInt(this.selectedBoxData.attr?.style.left, 10);
-    },
-    selectedBoxTop() {
-      return parseInt(this.selectedBoxData.attr?.style.top, 10);
-    },
-    selectedBoxBorderRadius() {
-      return parseInt(this.selectedBoxData.attr?.style.borderRadius, 10);
     },
   },
   actions: {
@@ -565,11 +557,11 @@ export const useCounterStore = defineStore({
       });
     },
     changeAlign(value) {
-      this.selectedBoxData.align = value;
+      this.selectedBoxData.attr.style.alignItems = value;
       console.log("changed align! to " + value);
     },
     changeJustify(value) {
-      this.selectedBoxData.justify = value;
+      this.selectedBoxData.attr.style.justifyContent = value;
     },
     addSquare(dataSquare) {
       this.data.push(dataSquare);
@@ -682,13 +674,6 @@ export const useCounterStore = defineStore({
         return justify;
       } else {
         return "start";
-      }
-    },
-    getBorder(size, type, color) {
-      if (size && type && color) {
-        return size + "px " + type + " " + color;
-      } else {
-        return "none";
       }
     },
     findElement(arr, value) {
