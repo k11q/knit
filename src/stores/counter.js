@@ -286,7 +286,7 @@ export const useCounterStore = defineStore({
     data: [
       {
         id: "rectangle",
-        type: "frame",
+        type: "div",
         attr: {
           style: {
             display: "flex",
@@ -353,7 +353,7 @@ export const useCounterStore = defineStore({
       },
       {
         id: "rectangle2",
-        type: "frame",
+        type: "div",
         attr: {
           style: {
             color: "blueviolet",

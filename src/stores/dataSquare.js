@@ -22,9 +22,10 @@ export const useSquareStore = defineStore({
 
     dataFrame: {
       id: "rectangle" + Math.random() * 100,
-      type: "frame",
+      type: "div",
       attr: {
         style: {
+          display: "flex",
           backgroundColor: "white",
           height: "100px",
           width: "100px",
@@ -53,6 +54,7 @@ export const useSquareStore = defineStore({
       type: "box",
       attr: {
         style: {
+          display: "flex",
           backgroundColor: "white",
           height: "100px",
           width: "100px",
@@ -130,9 +132,10 @@ export const useSquareStore = defineStore({
       if (this.addSquareActivated === true) {
         this.dataSquare.id = "box" + this.countBox;
         this.dataSquare.attr.style.left =
-          (event.clientX - this.offsetLeft) / this.scale - 50 + "px";
+          Math.round((event.clientX - this.offsetLeft) / this.scale - 50) +
+          "px";
         this.dataSquare.attr.style.top =
-          (event.clientY - this.offsetTop) / this.scale - 50 + "px";
+          Math.round((event.clientY - this.offsetTop) / this.scale - 50) + "px";
         this.dataSquare.children = [];
         let clonedDataSquare = { ...this.dataSquare };
         clonedDataSquare.attr = { ...this.dataSquare.attr };
@@ -146,9 +149,10 @@ export const useSquareStore = defineStore({
       if (this.addTextActivated === true) {
         this.dataText.id = "text" + this.countBox;
         this.dataText.attr.style.left =
-          (event.clientX - this.offsetLeft) / this.scale - 50 + "px";
+          Math.round((event.clientX - this.offsetLeft) / this.scale - 50) +
+          "px";
         this.dataText.attr.style.top =
-          (event.clientY - this.offsetTop) / this.scale - 50 + "px";
+          Math.round((event.clientY - this.offsetTop) / this.scale - 50) + "px";
         this.dataText.children = [];
         let clonedDataText = { ...this.dataText };
         clonedDataText.attr = { ...this.dataText.attr };
@@ -162,9 +166,10 @@ export const useSquareStore = defineStore({
       if (this.addFrameActivated === true) {
         this.dataFrame.id = "frame" + this.countBox;
         this.dataFrame.attr.style.left =
-          (event.clientX - this.offsetLeft) / this.scale - 50 + "px";
+          Math.round((event.clientX - this.offsetLeft) / this.scale - 50) +
+          "px";
         this.dataFrame.attr.style.top =
-          (event.clientY - this.offsetTop) / this.scale - 50 + "px";
+          Math.round((event.clientY - this.offsetTop) / this.scale - 50) + "px";
         this.dataFrame.children = [];
         let clonedDataFrame = { ...this.dataFrame };
         clonedDataFrame.attr = { ...this.dataFrame.attr };

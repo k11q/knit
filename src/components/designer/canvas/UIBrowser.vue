@@ -1,64 +1,47 @@
 <template>
   <template v-for="node in nodes" :key="node.id">
-    <div
-      v-if="node.type === 'frame'"
-      data-droppable="true"
+    <component
+      :is="node.type === 'text' ? 'p' : node.type"
+      :data-droppable="node.type === 'text' ? false : true"
       :data-id="node.id"
-      data-component="Frame"
+      :data-component="node.type"
       @mousedown="testDown($event, node.id, node.type)"
       @mouseout="mouseoutEvent($event, node.id)"
+      @dblclick.prevent="
+        node.type === 'text' ? makeEditable($event, node.id) : ''
+      "
+      @input="
+        node.type === 'text'
+          ? (selectToi.selectedBoxData.textContent = $event.target.innerText)
+          : ''
+      "
+      :contenteditable="
+        node.type === 'text' &&
+        node.id === target &&
+        selectToi.selectedBox === node.id
+      "
       :class="{
         'pointer-events-none':
-          selectToi.selectedBox === node.id && canvasFF.isDragging == true,
-      }"
-      v-bind="node.attr"
-    >
-      <DesignerCanvasUIBrowser
-        v-if="node.children"
-        :key="node.id"
-        :nodes="node.children"
-        :depth="depth + 1"
-      />
-    </div>
-    <div
-      v-if="node.type === 'box'"
-      :data-id="node.id"
-      data-component="Box"
-      data-droppable="false"
-      @mousedown="testDown($event, node.id, node.type)"
-      @mouseout="mouseoutEvent($event, node.id)"
-      @mouseleave.stop.prevent="canvasDnd.removeDroppable()"
-      :class="{
-        'pointer-events-none':
-          selectToi.selectedBox === node.id && canvasFF.isDragging == true,
-      }"
-      v-bind="node.attr"
-    >
-      <DesignerCanvasUIBrowser
-        v-if="node.children"
-        :key="node.id"
-        :nodes="node.children"
-        :depth="depth + 1"
-      />
-    </div>
-    <p
-      v-if="node.type === 'text'"
-      class="text-center hover:decoration-[#0191FA] hover:underline hover:decoration-2 focus:outline-none cursor-default"
-      @mousedown="testDown($event, node.id, node.type)"
-      @mouseout="mouseoutEvent($event, node.id)"
-      @dblclick.prevent="makeEditable($event, node.id)"
-      :data-id="node.id"
-      data-component="Text"
-      data-droppable="false"
-      :contenteditable="node.id === target && selectToi.selectedBox === node.id"
-      :class="{
+          selectToi.selectedBox === node.id &&
+          canvasFF.isDragging === true &&
+          node.type !== 'text',
+        'text-center hover:decoration-[#0191FA] hover:underline hover:decoration-2 focus:outline-none cursor-default':
+          node.type === 'text',
         'decoration-[#0191FA] underline decoration-1 ':
-          selectToi.selectedBox === node.id,
+          selectToi.selectedBox === node.id && node.type === 'text',
       }"
-      @input="selectToi.selectedBoxData.textContent = $event.target.innerText"
-      v-text="node.textContent"
       v-bind="node.attr"
-    ></p>
+    >
+      <template v-if="node.type === 'text'">
+        {{ node.textContent }}
+      </template>
+      <DesignerCanvasUIBrowser
+        v-if="(node.children && node.type === 'div') || node.type === 'box'"
+        :key="node.id"
+        :nodes="node.children"
+        :depth="depth + 1"
+      />
+    </component>
   </template>
 </template>
 

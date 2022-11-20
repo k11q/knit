@@ -91,7 +91,7 @@
         class="flex flex-col items-center justify-center w-3 flex-none pointer-events-none opacity-80"
       >
         <svg
-          v-if="node.type == 'frame'"
+          v-if="node.type == 'div'"
           xmlns="http://www.w3.org/2000/svg"
           width="13"
           height="13"
