@@ -288,9 +288,6 @@ export const useCounterStore = defineStore({
         id: "rectangle",
         type: "frame",
         attr: {
-          onHover: () => {
-            console.log("hahaha");
-          },
           style: {
             display: "flex",
             color: "blue",

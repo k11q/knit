@@ -13,21 +13,6 @@
       }"
       v-bind="node.attr"
     >
-      <p
-        @mousedown="selectToi.changeSelected($event, node.id)"
-        class="absolute bottom-full left-0 hover:text-[#0191FA]"
-        :class="{
-          'text-[#0191FA]': selectToi.selectedBox === node.id,
-          'opacity-40': selectToi.selectedBox !== node.id,
-        }"
-        :style="{
-          fontSize: `${(12 * 1) / squareStore.scale}px`,
-          lineHeight: 1.4,
-          marginBottom: `${(2 * 1) / squareStore.scale}px`,
-        }"
-      >
-        {{ node.id }}
-      </p>
       <DesignerCanvasUIBrowser
         v-if="node.children"
         :key="node.id"
@@ -168,12 +153,8 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
           } else {
             canvasMarker.setRuler = false;
             showMarker.value = true;
-            dropMarker.setMarker(e);
+            dropMarker.setMarker(e, currDragElement);
             currDragElement.style.opacity = 0;
-            console.log("closesti = " + closestTarget);
-            console.log("closestcolorstyle = " + closest.style.backgroundColor);
-            console.log("closestdirection = " + closest.style.flexDirection);
-            console.log("closestpaddingleft = " + closest.style.paddingLeft);
             selectToi.treeHover = true;
             let selectedTarget = closest.getBoundingClientRect();
 
