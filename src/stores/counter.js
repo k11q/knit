@@ -466,10 +466,8 @@ export const useCounterStore = defineStore({
           style: {
             fontSize: "14px",
             color: "purple",
-            height: "100px",
-            width: "100px",
-            X: "200px",
-            Y: "50px",
+            left: "200px",
+            top: "50px",
             position: "absolute",
             flexDirection: "column",
           },

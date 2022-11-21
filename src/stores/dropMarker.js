@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { useCounterStore } from "./counter";
 import { useSquareStore } from "./dataSquare";
+import { useCanvasDndStore } from "./canvasDnd";
 
 export const useDropMarker = defineStore({
   id: "dropMarker",
@@ -15,6 +16,7 @@ export const useDropMarker = defineStore({
     setMarker(e, currDragElement) {
       const selectToi = useCounterStore();
       const squareStore = useSquareStore();
+      const canvasDnd = useCanvasDndStore();
 
       let drop = useGetClosestElement(e);
 
@@ -78,6 +80,7 @@ export const useDropMarker = defineStore({
               "px";
           }
           if (getDragAfter(e.clientY).elementID) {
+            canvasDnd.dragzone = getDragAfter(e.clientY).elementID;
             markerPositionTop = getDragAfter(e.clientY).rect?.top;
             markerPositionLeft = getDragAfter(e.clientY).rect?.left;
             console.log("index = " + getDragAfter(e.clientY).index);

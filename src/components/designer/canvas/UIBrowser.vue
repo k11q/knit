@@ -86,6 +86,8 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
     let isDragging = false;
     let currDragElement = document.querySelector(`[data-id=${currDrag}]`);
     let prevOpacity = currDragElement.style.opacity;
+    let closest = null;
+    let closestTarget = "";
 
     selectToi.changeSelected(e, currDrag, currType);
 
@@ -116,8 +118,7 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
 
         let targetId = useGetElementIdFromPoint(e);
         let target = useGetElementFromPoint(e);
-        let closest = useGetClosestElement(e);
-        let closestTarget;
+        closest = useGetClosestElement(e);
         if (closest) {
           closestTarget = useGetClosestDroppableId(e);
         }
@@ -190,6 +191,44 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
       function mouseup() {
         isDragging = false;
         canvasMarker.lines = [];
+
+        if (closest && selectToi.selectedBox !== closestTarget) {
+          function dndAppend(arr, dragZone) {
+            arr.every((i) => {
+              if (i.id === closestTarget) {
+                i.children.splice(
+                  i.children.findIndex(({ id }) => id == dragZone),
+                  0,
+                  selectToi.selectedBoxData
+                );
+                return false;
+              } else {
+                dndAppend(i.children, dragZone);
+                return true;
+              }
+            });
+          }
+          function dndRemove(arr, currDrag) {
+            arr.every((i) => {
+              if (i.id === currDrag) {
+                arr.splice(
+                  arr.findIndex(({ id }) => id == currDrag),
+                  1
+                );
+                return false;
+              } else {
+                dndRemove(i.children, currDrag);
+                return true;
+              }
+            });
+          }
+          dndRemove(selectToi.data, currDrag);
+          selectToi.selectedBoxData.attr.style.position = "static";
+          dndAppend(selectToi.data, canvasDnd.dragzone);
+          showMarker.value = false;
+          currDragElement.style.opacity = prevOpacity;
+          canvasMarker.setRuler = true;
+        }
 
         selectToi.selectedBoxHTMLX =
           (currDragElement.getBoundingClientRect().x - squareStore.offsetLeft) /
