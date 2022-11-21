@@ -17,10 +17,13 @@
         }
       "
       @input="
-        node.type === 'text'
-          ? (selectToi.selectedBoxData.textContent = $event.target.innerText)
-          : ''
+        () => {
+          if (node.type === 'text') {
+            selectToi.selectedBoxData.textContent = $event.target.innerText;
+          }
+        }
       "
+      @blur="node.type === 'text' ? (target = '') : ''"
       :contenteditable="
         node.type === 'text' &&
         node.id === target &&
@@ -222,10 +225,11 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
               canvasDnd.dragzone = "";
             }
             if (
-              closest &&
-              selectToi.selectedBox !== closestTarget &&
-              !canvasDnd.dragzone &&
-              canvasDnd.dropzone
+              (closest &&
+                selectToi.selectedBox !== closestTarget &&
+                !canvasDnd.dragzone &&
+                canvasDnd.dropzone) ||
+              !closest.children.length
             ) {
               //append bottom/push
               function dndAppendBottom(arr, dropzone) {
@@ -267,7 +271,7 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
           .then(function () {
             selectToi.changeSelected(e, currDrag, currType);
           });
-
+        selectToi.changeSelected(e, currDrag, currType);
         window.removeEventListener("mousemove", mousemove);
         window.removeEventListener("mouseup", mouseup);
 

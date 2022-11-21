@@ -17,6 +17,7 @@
       data-id="canvas"
       class="w-0 h-0 overflow-visible"
       :style="{
+        willChange: 'transform',
         transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
       }"
     >
@@ -24,12 +25,18 @@
         <DesignerCanvasUIBrowser :nodes="selectToi.data" />
       </KeepAlive>
     </div>
+
     <KeepAlive>
       <div
         v-if="addaSquare.scale > 4"
         class="fixed flex pointer-events-none h-screen opacity-20"
         :style="{
-          transform: `translate(${addaSquare.offsetLeft}px, 0px)`,
+          left: '-50%',
+          width: 'fit-content',
+          transform: `translateX(${
+            addaSquare.offsetLeft -
+            Number(Math.round(Math.abs(addaSquare.getVw / addaSquare.scale)))
+          }px)`,
         }"
       >
         <div
@@ -49,13 +56,14 @@
         v-if="addaSquare.scale > 4"
         class="fixed flex flex-col pointer-events-none w-screen opacity-20"
         :style="{
-          transform: `translate(0px, ${addaSquare.offsetTop}px)`,
+          transform: `translateY(${
+            Number(addaSquare.offsetTop) -
+            Number(Math.round(addaSquare.offsetTop))
+          }px)`,
         }"
       >
         <div
-          v-for="n in Number(
-            Math.round(Math.abs(addaSquare.getVh / addaSquare.scale))
-          ) || 0"
+          v-for="n in Number(Math.round(Math.abs(addaSquare.offsetTop)))"
           class="box-border"
           :style="{
             height: 1 * addaSquare.scale + 'px',
@@ -64,27 +72,7 @@
         ></div>
       </div>
     </KeepAlive>
-    <KeepAlive>
-      <div
-        v-if="addaSquare.scale > 4"
-        class="fixed flex flex-col pointer-events-none w-screen opacity-20"
-        :style="{
-          top: '-100%',
-          transform: `translate(0px, ${addaSquare.offsetTop}px)`,
-        }"
-      >
-        <div
-          v-for="n in Number(
-            Math.round(Math.abs(addaSquare.getVh / addaSquare.scale))
-          ) || 0"
-          class="box-border"
-          :style="{
-            height: 1 * addaSquare.scale + 'px',
-            borderTop: '0.5px solid #939393',
-          }"
-        ></div>
-      </div>
-    </KeepAlive>
+
     <!--Other elements parent container-->
     <div
       class="fixed top-0 left-0 w-0 h-0 overflow-visible"
@@ -148,7 +136,10 @@
           <div
             @mousedown.stop.prevent="resizeStore.resizeTop"
             class="absolute bottom-full bg-[#0191FA] w-full hover:cursor-row-resize"
-            :style="{ height: `${(1 * 1) / addaSquare.scale}px` }"
+            :style="{
+              marginTop: `${-0.5 / addaSquare.scale}px`,
+              height: `${(1 * 1) / addaSquare.scale}px`,
+            }"
           />
           <div
             @mousedown.stop.prevent="resizeStore.resizeBottom"
@@ -259,6 +250,8 @@ function wheel(event) {
   } else {
     addaSquare.offsetLeft += -event.deltaX;
     addaSquare.offsetTop += -event.deltaY;
+    console.log("offsetleft = " + addaSquare.offsetLeft);
+    console.log("offsettop = " + addaSquare.offsetTop);
   }
 }
 
