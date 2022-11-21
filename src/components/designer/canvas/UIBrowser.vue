@@ -183,56 +183,6 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
           useSetRuler(e, currDrag);
         }
 
-        //sort childrens by dragging
-        if (canvasDnd.isDroppable && canvasDnd.currDrop) {
-          canvasDnd.currDropHTML = e.target;
-
-          let dropzoneChildren = [...canvasDnd.currDropHTML.children];
-
-          console.log("dropzoneChildren = " + dropzoneChildren);
-
-          function getDragAfter(y) {
-            return dropzoneChildren.reduce(
-              (closest, child) => {
-                const box = child.getBoundingClientRect();
-                console.log("box = " + box);
-                console.log("child id = " + child.dataset.id);
-                canvasDnd.spareDragzone = child.dataset.id;
-                const offset = y - child.offsetTop - child.offsetHeight / 2;
-                console.log("child offsettop = " + child.offsetTop);
-                if (child.dataset.id !== currDrag) {
-                  if (offset <= 0 && offset > closest.offset) {
-                    console.log("child id = " + child.dataset.id);
-                    return { offset: offset, elementID: child.dataset.id };
-                  } else {
-                    console.log("closest = " + closest);
-                    return closest;
-                  }
-                }
-              },
-              { offset: Number.NEGATIVE_INFINITY }
-            ).elementID;
-          }
-
-          let y = canvasDnd.clientY;
-
-          let dragZone = getDragAfter(e.clientY);
-
-          if (dragZone == undefined) {
-            dragZone = canvasDnd.spareDragzone;
-          }
-
-          canvasDnd.setCurrDragValue(selectToi.data, canvasDnd.currDrag);
-          canvasDnd.dndRemove(selectToi.data);
-
-          canvasDnd.currDragValue.parent = canvasDnd.currDrop;
-
-          canvasDnd.dndAppend(selectToi.data, dragZone);
-        } /* else if (!canvasDnd.isDroppable && canvasDnd.currDrop) {
-          canvasDnd.currDragValue.parent = "";
-          canvasDnd.appendToCanvas();
-        }
-        */
         canvasDnd.checkDroppable();
       }
 
@@ -241,10 +191,10 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
         canvasMarker.lines = [];
 
         selectToi.selectedBoxHTMLX =
-          (e.target.getBoundingClientRect().x - squareStore.offsetLeft) /
+          (currDragElement.getBoundingClientRect().x - squareStore.offsetLeft) /
           squareStore.scale;
         selectToi.selectedBoxHTMLY =
-          (e.target.getBoundingClientRect().y - squareStore.offsetTop) /
+          (currDragElement.getBoundingClientRect().y - squareStore.offsetTop) /
           squareStore.scale;
 
         window.removeEventListener("mousemove", mousemove);

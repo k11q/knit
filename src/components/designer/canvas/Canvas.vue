@@ -192,19 +192,12 @@ function wheel(event) {
     addaSquare.scale >= 0.02 &&
     addaSquare.scale <= 4
   ) {
-    let zoom = event.deltaY * -0.006;
-    let prevScale = addaSquare.scale;
-    let prevOffsetLeft = addaSquare.offsetLeft;
-    let prevOffsetTop = addaSquare.offsetTop;
-    let mouseX = event.clientX - prevOffsetLeft;
-    let mouseY = event.clientY - prevOffsetTop;
-
+    let xs = (event.clientX - addaSquare.offsetLeft) / addaSquare.scale;
+    let ys = (event.clientY - addaSquare.offsetTop) / addaSquare.scale;
     addaSquare.scale += event.deltaY * -0.006;
     addaSquare.scale = Math.max(0.02, Math.min(4, addaSquare.scale));
-    /* hold -- scale at mousepoint
-    addaSquare.offsetLeft -= mouseX*addaSquare.scale - mouseX*prevScale
-    addaSquare.offsetTop -= mouseY*addaSquare.scale - mouseY*prevScale
-    */
+    addaSquare.offsetLeft = event.clientX - xs * addaSquare.scale;
+    addaSquare.offsetTop = event.clientY - ys * addaSquare.scale;
   } else {
     addaSquare.offsetLeft += -event.deltaX;
     addaSquare.offsetTop += -event.deltaY;
