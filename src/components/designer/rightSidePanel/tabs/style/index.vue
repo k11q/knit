@@ -300,9 +300,17 @@
           @click="
             () => {
               if (selectToi.selectedBoxData.attr.style.position != 'absolute') {
+                selectToi.selectedBoxData.attr.style.left = selectToi.getLeft(
+                  selectToi.selectedBoxData.id
+                );
+                selectToi.selectedBoxData.attr.style.top = selectToi.getTop(
+                  selectToi.selectedBoxData.id
+                );
                 selectToi.selectedBoxData.attr.style.position = 'absolute';
               } else {
                 selectToi.selectedBoxData.attr.style.position = 'static';
+                delete selectToi.selectedBoxData.attr.style.left;
+                delete selectToi.selectedBoxData.attr.style.top;
               }
             }
           "

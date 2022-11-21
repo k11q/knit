@@ -53,7 +53,6 @@ import { useCanvasFF } from "@/stores/canvasFreeForm";
 import { useSquareStore } from "@/stores/dataSquare";
 import { useCanvasMarkerStore } from "@/stores/canvasMarker";
 import { useDropMarker } from "@/stores/dropMarker";
-import { onClickOutside } from "@vueuse/core";
 
 const selectToi = useCounterStore();
 const canvasDnd = useCanvasDndStore();
@@ -159,26 +158,10 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
           }
         }
 
-        if (selectToi.selectedBoxData.parent) {
-          let dropzone = document.querySelector(
-            `[data-id=${selectToi.selectedBoxData.parent}]`
-          );
-          let dropzonerect = dropzone.getBoundingClientRect();
-          let dropzoneLeft = dropzonerect.x;
-          let dropzoneTop = dropzonerect.y;
-
-          selectToi.selectedBoxData.attr.style.left =
-            (Math.round(e.clientX - dropzoneLeft - prevOffsetLeft) * 1) /
-            squareStore.scale;
-          selectToi.selectedBoxData.attr.style.top =
-            (Math.round(e.clientY - dropzoneTop - prevOffsetTop) * 1) /
-            squareStore.scale;
-        } else {
-          selectToi.selectedBoxData.attr.style.left =
-            Math.round((e.clientX - prevX) / squareStore.scale) + "px";
-          selectToi.selectedBoxData.attr.style.top =
-            Math.round((e.clientY - prevY) / squareStore.scale) + "px";
-        }
+        selectToi.selectedBoxData.attr.style.left =
+          Math.round((e.clientX - prevX) / squareStore.scale) + "px";
+        selectToi.selectedBoxData.attr.style.top =
+          Math.round((e.clientY - prevY) / squareStore.scale) + "px";
 
         //ruler function
         if (canvasMarker.setRuler) {
@@ -192,7 +175,13 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
         isDragging = false;
         canvasMarker.lines = [];
 
-        if (closest && selectToi.selectedBox !== closestTarget) {
+        if (
+          closest &&
+          selectToi.selectedBox !== closestTarget &&
+          canvasDnd.dragzone &&
+          !canvasDnd.dropzone
+        ) {
+          //append after
           function dndAppend(arr, dragZone) {
             arr.every((i) => {
               if (i.id === closestTarget) {
@@ -228,14 +217,54 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
           showMarker.value = false;
           currDragElement.style.opacity = prevOpacity;
           canvasMarker.setRuler = true;
+          canvasDnd.dragzone = "";
         }
-
+        if (
+          closest &&
+          selectToi.selectedBox !== closestTarget &&
+          !canvasDnd.dragzone &&
+          canvasDnd.dropzone
+        ) {
+          //append bottom/push
+          function dndAppendBottom(arr, dropzone) {
+            arr.every((i) => {
+              if (i.id === closestTarget) {
+                i.children.push(selectToi.selectedBoxData);
+                return false;
+              } else {
+                dndAppendBottom(i.children, dropzone);
+                return true;
+              }
+            });
+          }
+          function dndRemove(arr, currDrag) {
+            arr.every((i) => {
+              if (i.id === currDrag) {
+                arr.splice(
+                  arr.findIndex(({ id }) => id == currDrag),
+                  1
+                );
+                return false;
+              } else {
+                dndRemove(i.children, currDrag);
+                return true;
+              }
+            });
+          }
+          dndRemove(selectToi.data, currDrag);
+          selectToi.selectedBoxData.attr.style.position = "static";
+          dndAppendBottom(selectToi.data, canvasDnd.dropzone);
+          showMarker.value = false;
+          currDragElement.style.opacity = prevOpacity;
+          canvasMarker.setRuler = true;
+        }
         selectToi.selectedBoxHTMLX =
           (currDragElement.getBoundingClientRect().x - squareStore.offsetLeft) /
           squareStore.scale;
         selectToi.selectedBoxHTMLY =
           (currDragElement.getBoundingClientRect().y - squareStore.offsetTop) /
           squareStore.scale;
+        selectToi.changeSelected(e, currDrag, currType);
 
         window.removeEventListener("mousemove", mousemove);
         window.removeEventListener("mouseup", mouseup);

@@ -670,6 +670,30 @@ export const useCounterStore = defineStore({
         return "auto";
       }
     },
+    getLeft(id) {
+      const squareStore = useSquareStore();
+
+      let target = document.querySelector(`[data-id=${id}]`);
+      let targetRect = target.getBoundingClientRect();
+      let targetParent = document.querySelector(
+        `[data-id=${id}]`
+      ).parentElement;
+      let targetParentRect = targetParent.getBoundingClientRect();
+      let left = (targetRect.x - targetParentRect.x) / squareStore.scale + "px";
+      return left;
+    },
+    getTop(id) {
+      const squareStore = useSquareStore();
+
+      let target = document.querySelector(`[data-id=${id}]`);
+      let targetRect = target.getBoundingClientRect();
+      let targetParent = document.querySelector(
+        `[data-id=${id}]`
+      ).parentElement;
+      let targetParentRect = targetParent.getBoundingClientRect();
+      let top = (targetRect.y - targetParentRect.y) / squareStore.scale + "px";
+      return top;
+    },
     getAlign(align) {
       if (align) {
         return align;

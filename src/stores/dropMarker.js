@@ -71,6 +71,8 @@ export const useDropMarker = defineStore({
               dropzoneChildren[
                 dropzoneChildren.length - 1
               ].getBoundingClientRect();
+            canvasDnd.dropzone = drop.dataset.id;
+            canvasDnd.dragzone = "";
             markerPositionTop = dropPositionRect.top + dropPositionRect.height;
             markerPositionLeft = dropPositionRect.left;
             gap = parseFloat(drop.style.gap) || 0;
@@ -81,6 +83,7 @@ export const useDropMarker = defineStore({
           }
           if (getDragAfter(e.clientY).elementID) {
             canvasDnd.dragzone = getDragAfter(e.clientY).elementID;
+            canvasDnd.dropzone = "";
             markerPositionTop = getDragAfter(e.clientY).rect?.top;
             markerPositionLeft = getDragAfter(e.clientY).rect?.left;
             console.log("index = " + getDragAfter(e.clientY).index);
@@ -166,6 +169,8 @@ export const useDropMarker = defineStore({
               dropzoneChildren[
                 dropzoneChildren.length - 1
               ].getBoundingClientRect();
+            canvasDnd.dropzone = drop.dataset.id;
+            canvasDnd.dragzone = "";
             markerPositionLeft = dropPositionRect.left + dropPositionRect.width;
             markerPositionTop = dropPositionRect.top;
             gap = parseFloat(drop.style.gap) || 0;
@@ -175,6 +180,8 @@ export const useDropMarker = defineStore({
               "px";
           }
           if (getDragAfter(e.clientX).elementID) {
+            canvasDnd.dragzone = getDragAfter(e.clientX).elementID;
+            canvasDnd.dropzone = "";
             markerPositionLeft = getDragAfter(e.clientX).rect?.left;
             markerPositionTop = getDragAfter(e.clientX).rect?.top;
             console.log("index = " + getDragAfter(e.clientY).index);

@@ -204,7 +204,7 @@ function wheel(event) {
   }
 }
 
-onBeforeMount(() => {
+onMounted(() => {
   addaSquare.offsetLeft = vw(50);
   addaSquare.offsetTop = vh(50);
 

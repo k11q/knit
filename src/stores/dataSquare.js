@@ -136,8 +136,7 @@ export const useSquareStore = defineStore({
 
       if (this.addSquareActivated === true) {
         this.dataSquare.name = "box" + this.countBox;
-        this.dataSquare.id =
-          String.fromCharCode(97 + Math.floor(Math.random() * 26)) + uid();
+        this.dataSquare.id = useGetRandomLetter() + uid();
         this.dataSquare.attr.style.left =
           Math.round((event.clientX - this.offsetLeft) / this.scale - 50) +
           "px";
@@ -155,8 +154,7 @@ export const useSquareStore = defineStore({
       }
       if (this.addTextActivated === true) {
         this.dataText.name = "text" + this.countBox;
-        this.dataText.id =
-          String.fromCharCode(97 + Math.floor(Math.random() * 26)) + uid();
+        this.dataText.id = useGetRandomLetter() + uid();
         this.dataText.attr.style.left =
           Math.round((event.clientX - this.offsetLeft) / this.scale - 50) +
           "px";
@@ -174,8 +172,7 @@ export const useSquareStore = defineStore({
       }
       if (this.addFrameActivated === true) {
         this.dataFrame.name = "frame" + this.countBox;
-        this.dataFrame.id =
-          String.fromCharCode(97 + Math.floor(Math.random() * 26)) + uid();
+        this.dataFrame.id = useGetRandomLetter() + uid();
         this.dataFrame.attr.style.left =
           Math.round((event.clientX - this.offsetLeft) / this.scale - 50) +
           "px";

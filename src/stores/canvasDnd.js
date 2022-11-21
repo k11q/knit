@@ -13,6 +13,7 @@ export const useCanvasDndStore = defineStore({
     currDropHTML: "",
     clientY: "",
     dragzone: "",
+    dropzone: "",
     spareDragzone: "",
   }),
   actions: {
