@@ -25,8 +25,8 @@
         </svg>
       </div>
       <div>
-        <p>Khairul Haaziq</p>
-        <p class="opacity-40 text-xs">rhycoz@gmail.com</p>
+        <p>{{ user?.user_metadata.full_name }}</p>
+        <p class="opacity-40 text-xs">{{ user?.user_metadata.email }}</p>
       </div>
     </div>
     <div class="flex flex-col w-full h-fit">
@@ -114,8 +114,9 @@
   </aside>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { useCounterStore } from "@/stores/counter";
+const user = useSupabaseUser();
 
 const selectToi = useCounterStore();
 </script>
