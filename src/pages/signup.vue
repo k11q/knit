@@ -35,33 +35,33 @@ const emailSignUp = async () => {
   <div
     class="bg-[#181818] min-h-screen flex items-center justify-center text-xs text-[#EDEDED]"
   >
-    <form>
-      <div
-        class="rounded-xl p-8 bg-[#1F1F1F] gap-8 flex flex-col w-[440px] border-[#2A2A2A]"
-      >
-        <div class="flex flex-col w-full gap-3">
-          <p class="text-[#E0E0E0]">Log in with</p>
-          <div class="flex flex-col gap-2">
-            <button
-              class="px-4 py-[10px] bg-[#2A2A2A] rounded font-medium text-[13px]"
-              @click="login('google')"
-            >
-              Sign up with Google
-            </button>
-            <button
-              class="px-4 py-[10px] bg-[#2A2A2A] rounded font-medium text-[13px]"
-              @click="login('facebook')"
-            >
-              Sign up with Facebook
-            </button>
-            <button
-              class="px-4 py-[10px] bg-[#2A2A2A] rounded font-medium text-[13px]"
-              @click="login('github')"
-            >
-              Sign up with Github
-            </button>
-          </div>
+    <div
+      class="rounded-xl p-8 bg-[#1F1F1F] gap-8 flex flex-col w-[440px] border-[#2A2A2A]"
+    >
+      <div class="flex flex-col w-full gap-3">
+        <p class="text-[#E0E0E0]">Log in with</p>
+        <div class="flex flex-col gap-2">
+          <button
+            class="px-4 py-[10px] bg-[#2A2A2A] rounded font-medium text-[13px]"
+            @click="login('google')"
+          >
+            Sign up with Google
+          </button>
+          <button
+            class="px-4 py-[10px] bg-[#2A2A2A] rounded font-medium text-[13px]"
+            @click="login('facebook')"
+          >
+            Sign up with Facebook
+          </button>
+          <button
+            class="px-4 py-[10px] bg-[#2A2A2A] rounded font-medium text-[13px]"
+            @click="login('github')"
+          >
+            Sign up with Github
+          </button>
         </div>
+      </div>
+      <form>
         <div class="flex flex-col gap-5 items-start">
           <div class="flex flex-col gap-3 items-start w-full">
             <label for="firstName" class="text-[#E0E0E0]">First name</label>
@@ -69,7 +69,7 @@ const emailSignUp = async () => {
               type="text"
               required
               id="firstName"
-              class="bg-[#1F1F1F] border border-[#444444] pl-4 py-[10px] rounded w-full"
+              class="bg-[#1F1F1F] border border-[#444444] pl-4 py-[10px] rounded w-full autofill:bg-[#1F1F1F]"
               v-model="firstName"
             />
           </div>
@@ -79,7 +79,7 @@ const emailSignUp = async () => {
               type="text"
               required
               id="lastName"
-              class="bg-[#1F1F1F] border border-[#444444] pl-4 py-[10px] rounded w-full"
+              class="bg-[#1F1F1F] border border-[#444444] pl-4 py-[10px] rounded w-full autofill:bg-[#1F1F1F]"
               v-model="lastName"
             />
           </div>
@@ -89,7 +89,7 @@ const emailSignUp = async () => {
               type="text"
               required
               id="email"
-              class="bg-[#1F1F1F] border border-[#444444] pl-4 py-[10px] rounded w-full"
+              class="bg-[#1F1F1F] border border-[#444444] pl-4 py-[10px] rounded w-full autofill:bg-[#1F1F1F]"
               v-model="email"
             />
           </div>
@@ -99,7 +99,7 @@ const emailSignUp = async () => {
               type="password"
               required
               id="password"
-              class="bg-[#1F1F1F] border border-[#444444] pl-4 py-[10px] rounded w-full"
+              class="bg-[#1F1F1F] border border-[#444444] pl-4 py-[10px] rounded w-full autofill:bg-[#1F1F1F]"
               v-model="password"
             />
           </div>
@@ -110,7 +110,7 @@ const emailSignUp = async () => {
                 id="terms"
                 name="vehicle1"
                 value="Bike"
-                class="appearance-none rounded w-4 h-4 accent-[#47CE90] bg-[#1F1F1F] border border-[#444444]"
+                class="appearance-none rounded w-4 h-4 accent-[#47CE90] bg-[#1F1F1F] border border-[#444444] autofill:bg-[#1F1F1F]"
               />
               <label for="vehicle1" class="text-[#E0E0E0]"> Remember me</label>
             </div>
@@ -118,7 +118,7 @@ const emailSignUp = async () => {
           </div>
           <button
             class="px-4 py-[10px] bg-[#47CE90] rounded font-medium w-full text-[13px]"
-            @click="emailSignUp"
+            @click.prevent="emailSignUp"
           >
             Sign up
           </button>
@@ -131,7 +131,24 @@ const emailSignUp = async () => {
             </p>
           </nuxt-link>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </template>
+
+<style>
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  transition: background-color 600000s 0s, color 600000s 0s;
+}
+,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+}
+</style>

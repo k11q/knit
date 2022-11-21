@@ -30,33 +30,33 @@ const emailLogin = async () => {
   <div
     class="bg-[#181818] min-h-screen flex items-center justify-center text-xs text-[#EDEDED]"
   >
-    <form>
-      <div
-        class="rounded-xl p-8 bg-[#1F1F1F] gap-8 flex flex-col w-[440px] border-[#2A2A2A]"
-      >
-        <div class="flex flex-col w-full gap-3">
-          <p class="text-[#E0E0E0]">Log in with</p>
-          <div class="flex flex-col gap-2">
-            <button
-              class="px-4 py-[10px] bg-[#2A2A2A] rounded font-medium text-[13px]"
-              @click="login('google')"
-            >
-              Login with Google
-            </button>
-            <button
-              class="px-4 py-[10px] bg-[#2A2A2A] rounded font-medium text-[13px]"
-              @click="login('facebook')"
-            >
-              Login with Facebook
-            </button>
-            <button
-              class="px-4 py-[10px] bg-[#2A2A2A] rounded font-medium text-[13px]"
-              @click="login('github')"
-            >
-              Login with Github
-            </button>
-          </div>
+    <div
+      class="rounded-xl p-8 bg-[#1F1F1F] gap-8 flex flex-col w-[440px] border-[#2A2A2A]"
+    >
+      <div class="flex flex-col w-full gap-3">
+        <p class="text-[#E0E0E0]">Log in with</p>
+        <div class="flex flex-col gap-2">
+          <button
+            class="px-4 py-[10px] bg-[#2A2A2A] rounded font-medium text-[13px]"
+            @click="login('google')"
+          >
+            Login with Google
+          </button>
+          <button
+            class="px-4 py-[10px] bg-[#2A2A2A] rounded font-medium text-[13px]"
+            @click="login('facebook')"
+          >
+            Login with Facebook
+          </button>
+          <button
+            class="px-4 py-[10px] bg-[#2A2A2A] rounded font-medium text-[13px]"
+            @click="login('github')"
+          >
+            Login with Github
+          </button>
         </div>
+      </div>
+      <form>
         <div class="flex flex-col gap-5 items-start">
           <div class="flex flex-col gap-3 items-start w-full">
             <label for="email" class="text-[#E0E0E0]">Email</label>
@@ -64,7 +64,7 @@ const emailLogin = async () => {
               type="email"
               required
               id="email"
-              class="bg-[#1F1F1F] border border-[#444444] pl-4 py-[10px] rounded w-full"
+              class="bg-[#1F1F1F] border border-[#444444] pl-4 py-[10px] rounded w-full autofill:bg-[#1F1F1F]"
               v-model="email"
             />
           </div>
@@ -74,7 +74,7 @@ const emailLogin = async () => {
               type="password"
               required
               id="password"
-              class="bg-[#1F1F1F] border border-[#444444] pl-4 py-[10px] rounded w-full"
+              class="bg-[#1F1F1F] border border-[#444444] pl-4 py-[10px] rounded w-full autofill:bg-[#1F1F1F]"
               v-model="password"
             />
           </div>
@@ -93,7 +93,7 @@ const emailLogin = async () => {
           </div>
           <button
             class="px-4 py-[10px] bg-[#47CE90] rounded font-medium w-full text-[13px]"
-            @submit="emailLogin"
+            @click.prevent="emailLogin"
           >
             Login
           </button>
@@ -106,7 +106,24 @@ const emailLogin = async () => {
             </p>
           </nuxt-link>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </template>
+
+<style>
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  transition: background-color 600000s 0s, color 600000s 0s;
+}
+,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+}
+</style>
