@@ -16,8 +16,4 @@
 import { useCounterStore } from "@/stores/counter";
 
 const selectToi = useCounterStore();
-
-const route = useRoute();
-const paramsId = route.params.id;
-const paramsPageId = route.params.pageId;
 </script>

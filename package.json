@@ -30,7 +30,8 @@
     "@vueuse/nuxt": "^9.4.0",
     "eslint": "^8.27.0",
     "eslint-plugin-vue": "^9.7.0",
-    "prisma": "^4.5.0"
+    "prisma": "^4.5.0",
+    "uuid": "^9.0.0"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"

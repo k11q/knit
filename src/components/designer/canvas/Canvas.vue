@@ -194,7 +194,7 @@ function wheel(event) {
   ) {
     let xs = (event.clientX - addaSquare.offsetLeft) / addaSquare.scale;
     let ys = (event.clientY - addaSquare.offsetTop) / addaSquare.scale;
-    addaSquare.scale += event.deltaY * -0.006;
+    addaSquare.scale += event.deltaY * -0.009;
     addaSquare.scale = Math.max(0.02, Math.min(4, addaSquare.scale));
     addaSquare.offsetLeft = event.clientX - xs * addaSquare.scale;
     addaSquare.offsetTop = event.clientY - ys * addaSquare.scale;

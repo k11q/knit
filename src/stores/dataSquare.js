@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { useCounterStore } from "./counter";
 import { useCanvasFF } from "./canvasFreeForm";
+import { v4 as uuidv4 } from "uuid";
 
 export const useSquareStore = defineStore({
   id: "square",
@@ -72,7 +73,11 @@ export const useSquareStore = defineStore({
       const counter = useCounterStore();
       const canvasFF = useCanvasFF();
       const squareStore = useSquareStore();
-      console.log("mousedown = " + event.target);
+      const uid = () =>
+        String(Date.now().toString(32) + Math.random().toString(16)).replace(
+          /\./g,
+          ""
+        );
 
       function vh(percent) {
         var h = Math.max(
@@ -130,7 +135,9 @@ export const useSquareStore = defineStore({
       }
 
       if (this.addSquareActivated === true) {
-        this.dataSquare.id = "box" + this.countBox;
+        this.dataSquare.name = "box" + this.countBox;
+        this.dataSquare.id =
+          String.fromCharCode(97 + Math.floor(Math.random() * 26)) + uid();
         this.dataSquare.attr.style.left =
           Math.round((event.clientX - this.offsetLeft) / this.scale - 50) +
           "px";
@@ -147,7 +154,9 @@ export const useSquareStore = defineStore({
         this.countBox = this.countBox + 1;
       }
       if (this.addTextActivated === true) {
-        this.dataText.id = "text" + this.countBox;
+        this.dataText.name = "text" + this.countBox;
+        this.dataText.id =
+          String.fromCharCode(97 + Math.floor(Math.random() * 26)) + uid();
         this.dataText.attr.style.left =
           Math.round((event.clientX - this.offsetLeft) / this.scale - 50) +
           "px";
@@ -164,7 +173,9 @@ export const useSquareStore = defineStore({
         this.countBox = this.countBox + 1;
       }
       if (this.addFrameActivated === true) {
-        this.dataFrame.id = "frame" + this.countBox;
+        this.dataFrame.name = "frame" + this.countBox;
+        this.dataFrame.id =
+          String.fromCharCode(97 + Math.floor(Math.random() * 26)) + uid();
         this.dataFrame.attr.style.left =
           Math.round((event.clientX - this.offsetLeft) / this.scale - 50) +
           "px";

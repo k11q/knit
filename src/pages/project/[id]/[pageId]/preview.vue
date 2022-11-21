@@ -12,6 +12,7 @@
       :is="node.type === 'text' ? 'p' : node.type"
       v-bind="node.attr"
       :style="{
+        width: depth === 1 ? '100%' : node.attr.style.width,
         left: depth === 1 ? '' : node.attr.style.left,
         top: depth === 1 ? '' : node.attr.style.top,
       }"

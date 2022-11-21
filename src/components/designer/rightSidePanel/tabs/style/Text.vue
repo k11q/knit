@@ -26,7 +26,13 @@
         <div class="aspect-square h-full flex-none"></div>
         <input
           type="number"
-          v-model="selectToi.selectedBoxData.fontSize"
+          :value="parseInt(selectToi.selectedBoxData.attr?.style.fontSize, 10)"
+          @input="
+            (event) => {
+              selectToi.selectedBoxData.attr.style.fontSize =
+                event.target.value + 'px';
+            }
+          "
           class="w-full px-2 bg-transparent"
         />
       </div>
@@ -41,7 +47,15 @@
         </div>
         <input
           type="text"
-          v-model="selectToi.selectedBoxData.lineHeight"
+          :value="
+            parseInt(selectToi.selectedBoxData.attr?.style.lineHeight, 10)
+          "
+          @input="
+            (event) => {
+              selectToi.selectedBoxData.attr.style.lineHeight =
+                event.target.value + 'px';
+            }
+          "
           placeholder="Auto"
           class="w-full pl-2 bg-transparent"
         />

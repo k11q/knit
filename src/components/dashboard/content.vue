@@ -150,7 +150,7 @@
       </div>
       <div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-8">
         <template v-for="project in projects">
-          <NuxtLink :to="`/project/1/${project.id}`" class="cursor-default">
+          <NuxtLink :to="`/project/${project.id}`" class="cursor-default">
             <div
               class="border aspect-[4/3] flex flex-col rounded-md border-[#3E3E3E] bg-[#2E2E2E] overflow-clip hover:border-[#505050] hover:bg-[#343434] transition-all duration-300"
             >

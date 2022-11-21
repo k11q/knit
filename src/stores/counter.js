@@ -285,7 +285,8 @@ export const useCounterStore = defineStore({
     ],
     data: [
       {
-        id: "rectangle",
+        name: "rectangle",
+        id: "i78978978723sbwhbcwh",
         type: "div",
         attr: {
           style: {
@@ -302,7 +303,8 @@ export const useCounterStore = defineStore({
         },
         children: [
           {
-            id: "rectangle5",
+            name: "rectangle5",
+            id: "uhwahcwuhcw0ucfew8dwo",
             type: "box",
             attr: {
               style: {
@@ -318,7 +320,8 @@ export const useCounterStore = defineStore({
             parent: "rectangle",
           },
           {
-            id: "rectangle6",
+            name: "rectangle6",
+            id: "uscwahcag7hcea8hvewhvceh",
             type: "box",
             attr: {
               style: {
@@ -334,7 +337,8 @@ export const useCounterStore = defineStore({
             children: [],
           },
           {
-            id: "rectangle18",
+            name: "rectangle18",
+            id: "hsufhew9e8uejcecj9ece",
             type: "box",
             attr: {
               style: {
@@ -352,7 +356,8 @@ export const useCounterStore = defineStore({
         ],
       },
       {
-        id: "rectangle2",
+        name: "rectangle2",
+        id: "wcw7c9e8ujev79hn0unm2e",
         type: "div",
         attr: {
           style: {
@@ -368,7 +373,8 @@ export const useCounterStore = defineStore({
         },
         children: [
           {
-            id: "rectangle7",
+            name: "rectangle7",
+            id: "weifjewf9ue9vie0vjrwd",
             type: "box",
             attr: {
               style: {
@@ -381,7 +387,8 @@ export const useCounterStore = defineStore({
             parent: "rectangle2",
             children: [
               {
-                id: "rectangle8",
+                name: "rectangle8",
+                id: "iejeiec9wec9v9evjei",
                 type: "box",
                 attr: {
                   style: {
@@ -395,7 +402,8 @@ export const useCounterStore = defineStore({
                 children: [],
               },
               {
-                id: "rectangle9",
+                name: "rectangle9",
+                id: "uwhcuwe9vei09vjejve",
                 type: "box",
                 attr: {
                   style: {
@@ -410,7 +418,8 @@ export const useCounterStore = defineStore({
                 parent: "rectangle8",
                 children: [
                   {
-                    id: "rectangle10",
+                    name: "rectangle10",
+                    id: "owjfcniewceve99eiv9eive0",
                     type: "box",
                     attr: {
                       style: {
@@ -424,7 +433,8 @@ export const useCounterStore = defineStore({
                     children: [],
                   },
                   {
-                    id: "rectangle11",
+                    name: "rectangle11",
+                    id: "iwifjweioneoevneiune",
                     type: "box",
                     attr: {
                       style: {
@@ -449,7 +459,8 @@ export const useCounterStore = defineStore({
         ],
       },
       {
-        id: "rectangle3",
+        name: "rectangle3",
+        id: "iwjfeevrb-rb99ir8bu9",
         type: "text",
         attr: {
           style: {
@@ -467,7 +478,8 @@ export const useCounterStore = defineStore({
         children: [],
       },
       {
-        id: "rectangle4",
+        name: "rectangle4",
+        id: "jweijeojveoj9er0irb8u0rb",
         type: "text",
         textContent: "Test",
         attr: {
@@ -481,7 +493,8 @@ export const useCounterStore = defineStore({
         children: [],
       },
       {
-        id: "rectangle12",
+        name: "rectangle12",
+        id: "owpif9eipiojohuh90i",
         type: "box",
         attr: {
           style: {
