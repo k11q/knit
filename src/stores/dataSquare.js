@@ -45,6 +45,7 @@ export const useSquareStore = defineStore({
           color: "black",
           fontSize: "14px",
           position: "absolute",
+          lineHeight: "normal",
         },
       },
       parent: "",
@@ -67,7 +68,22 @@ export const useSquareStore = defineStore({
       children: [],
     },
   }),
-  getters: {},
+  getters: {
+    getVh() {
+      var h = Math.max(
+        document.documentElement.clientHeight,
+        window.innerHeight || 0
+      );
+      return (100 * h) / 100;
+    },
+    getVw() {
+      var h = Math.max(
+        document.documentElement.clientWidth,
+        window.innerWidth || 0
+      );
+      return (100 * h) / 100;
+    },
+  },
   actions: {
     addSquare(event, dataPushed) {
       const counter = useCounterStore();

@@ -1,5 +1,8 @@
 <template>
   <PreviewTopBar />
+  <Head>
+    <Style type="text/css" :children="selectToi.cssData" />
+  </Head>
   <template
     v-for="node in [
       selectToi.data[

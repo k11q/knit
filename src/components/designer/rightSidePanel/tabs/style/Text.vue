@@ -47,13 +47,11 @@
         </div>
         <input
           type="text"
-          :value="
-            parseInt(selectToi.selectedBoxData.attr?.style.lineHeight, 10)
-          "
+          :value="selectToi.selectedBoxData.attr?.style.lineHeight"
           @input="
             (event) => {
               selectToi.selectedBoxData.attr.style.lineHeight =
-                event.target.value + 'px';
+                event.target.value;
             }
           "
           placeholder="Auto"

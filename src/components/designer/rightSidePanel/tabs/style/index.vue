@@ -311,6 +311,8 @@
                 selectToi.selectedBoxData.attr.style.position = 'static';
                 delete selectToi.selectedBoxData.attr.style.left;
                 delete selectToi.selectedBoxData.attr.style.top;
+
+                selectToi.changeSelected(e, currDrag, currType);
               }
             }
           "
@@ -435,7 +437,7 @@
             @click="
               () => {
                 selectToi.selectedBoxData.flexGrow = 1;
-                delete selectToi.selectedBoxData.attr.style.width;
+                selectToi.selectedBoxData.attr.style.width = '100%';
               }
             "
             :class="{

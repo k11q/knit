@@ -17,43 +17,6 @@ export const useCanvasDndStore = defineStore({
     spareDragzone: "",
   }),
   actions: {
-    checkDroppable(e, node) {
-      if (this.isDragging == true) {
-        if (node) {
-          if (node.id != this.currDrag) {
-            console.log("node.id = " + node.id);
-            this.currDrop = node.id;
-            console.log("currdrop =" + this.currDrop);
-            console.log("currdrag = " + this.currDrag);
-            this.isDroppable = true;
-            this.displayDroppable = node.isDroppable;
-          } else {
-            this.currDrop = "";
-            this.isDroppable = false;
-          }
-        } else {
-          this.currDrop = "";
-          this.isDroppable = false;
-        }
-        console.log("isdroppable =" + this.isDroppable);
-      }
-    },
-    setCurrDragValue(arr, value) {
-      arr.every((i) => {
-        if (i.id === value) {
-          this.currDragValue = i;
-          return false;
-        } else {
-          this.setCurrDragValue(i.children, value);
-          return true;
-        }
-      });
-    },
-    removeDroppable() {
-      this.currDrop = "";
-      this.displayDroppable = false;
-      console.log("remove droppable");
-    },
     dndRemove(arr) {
       arr.every((i) => {
         if (i.id === this.currDrag) {
@@ -64,26 +27,6 @@ export const useCanvasDndStore = defineStore({
           return false;
         } else {
           this.dndRemove(i.children, this.currDrag);
-          return true;
-        }
-      });
-    },
-    dndAppend(arr, dragZone) {
-      arr.every((i) => {
-        if (i.id === this.currDrop) {
-          if (dragZone) {
-            i.children.splice(
-              i.children.findIndex(({ id }) => id == dragZone),
-              0,
-              this.currDragValue
-            );
-            return false;
-          } else {
-            i.children = [...i.children, this.currDragValue];
-            return false;
-          }
-        } else {
-          this.dndAppend(i.children, dragZone);
           return true;
         }
       });

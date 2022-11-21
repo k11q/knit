@@ -510,6 +510,7 @@ export const useCounterStore = defineStore({
         children: [],
       },
     ],
+    cssData: "",
   }),
   getters: {
     selectedBoxHeight() {

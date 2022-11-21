@@ -20,8 +20,71 @@
         transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
       }"
     >
-      <DesignerCanvasUIBrowser :nodes="selectToi.data" />
+      <KeepAlive>
+        <DesignerCanvasUIBrowser :nodes="selectToi.data" />
+      </KeepAlive>
     </div>
+    <KeepAlive>
+      <div
+        v-if="addaSquare.scale > 4"
+        class="fixed flex pointer-events-none h-screen opacity-20"
+        :style="{
+          transform: `translate(${addaSquare.offsetLeft}px, 0px)`,
+        }"
+      >
+        <div
+          v-for="n in Number(
+            Math.round(Math.abs(addaSquare.getVw / addaSquare.scale))
+          ) || 0"
+          class="box-border"
+          :style="{
+            width: 1 * addaSquare.scale + 'px',
+            borderLeft: '0.5px solid #939393',
+          }"
+        ></div>
+      </div>
+    </KeepAlive>
+    <KeepAlive>
+      <div
+        v-if="addaSquare.scale > 4"
+        class="fixed flex flex-col pointer-events-none w-screen opacity-20"
+        :style="{
+          transform: `translate(0px, ${addaSquare.offsetTop}px)`,
+        }"
+      >
+        <div
+          v-for="n in Number(
+            Math.round(Math.abs(addaSquare.getVh / addaSquare.scale))
+          ) || 0"
+          class="box-border"
+          :style="{
+            height: 1 * addaSquare.scale + 'px',
+            borderTop: '0.5px solid #D7D7D7',
+          }"
+        ></div>
+      </div>
+    </KeepAlive>
+    <KeepAlive>
+      <div
+        v-if="addaSquare.scale > 4"
+        class="fixed flex flex-col pointer-events-none w-screen opacity-20"
+        :style="{
+          top: '-100%',
+          transform: `translate(0px, ${addaSquare.offsetTop}px)`,
+        }"
+      >
+        <div
+          v-for="n in Number(
+            Math.round(Math.abs(addaSquare.getVh / addaSquare.scale))
+          ) || 0"
+          class="box-border"
+          :style="{
+            height: 1 * addaSquare.scale + 'px',
+            borderTop: '0.5px solid #939393',
+          }"
+        ></div>
+      </div>
+    </KeepAlive>
     <!--Other elements parent container-->
     <div
       class="fixed top-0 left-0 w-0 h-0 overflow-visible"
@@ -139,13 +202,13 @@
       ></div>
       <!--Selected outline when droppable-->
       <div
-        v-if="showMarker"
+        v-show="showMarker"
         class="absolute pointer-events-none"
         :style="{
-          left: selectToi.selectedBoxData.attr.style.left,
-          top: selectToi.selectedBoxData.attr.style.top,
-          height: selectToi.selectedBoxData.attr.style.height,
-          width: selectToi.selectedBoxData.attr.style.width,
+          left: selectToi.selectedBoxData.attr?.style.left,
+          top: selectToi.selectedBoxData.attr?.style.top,
+          height: selectToi.selectedBoxData.attr?.style.height,
+          width: selectToi.selectedBoxData.attr?.style.width,
           outline: `${1.5 / addaSquare.scale}px dotted #0191FA`,
         }"
       ></div>
@@ -178,24 +241,19 @@ const dropMarker = useDropMarker();
 
 function wheel(event) {
   event.preventDefault();
-  console.log("eventclientX = " + event.clientX);
-  console.log("eventclientY = " + event.clientY);
-  console.log("addaSquare.offsetLeft = " + addaSquare.offsetLeft);
-  console.log("addaSquare.offsetTop = " + addaSquare.offsetTop);
   const canvas = document.querySelector('[data-id="canvas"]');
   const canvasRect = canvas.getBoundingClientRect();
-  console.log("canvasX = " + canvasRect.x);
 
   if (
     event.deltaX === 0 &&
     event.ctrlKey &&
     addaSquare.scale >= 0.02 &&
-    addaSquare.scale <= 4
+    addaSquare.scale <= 25.6
   ) {
     let xs = (event.clientX - addaSquare.offsetLeft) / addaSquare.scale;
     let ys = (event.clientY - addaSquare.offsetTop) / addaSquare.scale;
-    addaSquare.scale += event.deltaY * -0.009;
-    addaSquare.scale = Math.max(0.02, Math.min(4, addaSquare.scale));
+    addaSquare.scale += event.deltaY * -0.009 * addaSquare.scale;
+    addaSquare.scale = Math.max(0.02, Math.min(25.6, addaSquare.scale));
     addaSquare.offsetLeft = event.clientX - xs * addaSquare.scale;
     addaSquare.offsetTop = event.clientY - ys * addaSquare.scale;
   } else {
