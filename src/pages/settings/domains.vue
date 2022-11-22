@@ -1,0 +1,1 @@
+<template>doamin page</template>

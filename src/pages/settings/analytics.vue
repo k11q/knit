@@ -1,0 +1,1 @@
+<template>analytics page</template>

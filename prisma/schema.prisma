@@ -13,6 +13,7 @@ model projects {
   name        String?
   description String?
   nodes       Json[]    @db.Json
+  user_id     String?   @db.Uuid
 }
 
 model library {

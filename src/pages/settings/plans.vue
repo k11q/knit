@@ -1,0 +1,1 @@
+<template>plans page</template>
