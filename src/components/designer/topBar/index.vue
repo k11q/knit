@@ -112,7 +112,7 @@
       </div>
       <div class="flex items-center justify-center">
         <NuxtLink
-          :to="`http://${route.params.id}.${domain}/${selectToi.selectedBoxData.name}`"
+          :to="`http://${route.params.id}.localhost:3000/${selectToi.selectedBoxData.name}`"
         >
           <button
             class="bg-[#0191FA] px-2 py-1 text-[#EDEDED] rounded-md border-none"
@@ -137,7 +137,4 @@ const addaSquare = useSquareStore();
 const canvasFF = useCanvasFF();
 const selectToi = useCounterStore();
 const route = useRoute();
-const domain = location.host;
-
-console.log("domain = " + domain);
 </script>

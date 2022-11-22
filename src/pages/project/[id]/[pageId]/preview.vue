@@ -1,8 +1,5 @@
 <template>
   <PreviewTopBar />
-  <Head>
-    <Style type="text/css" :children="selectToi.cssData" />
-  </Head>
   <template
     v-for="node in [
       selectToi.data[
@@ -12,7 +9,7 @@
     :key="node.id"
   >
     <component
-      :is="node.type === 'text' ? 'p' : node.type"
+      :is="node.type === 'text' || node.type === 'box' ? 'div' : node.type"
       v-bind="node.attr"
       :style="{
         width: depth === 1 ? '100%' : node.attr.style.width,
@@ -20,9 +17,7 @@
         top: depth === 1 ? '' : node.attr.style.top,
       }"
     >
-      <template v-if="node.type === 'text'">
-        {{ node.textContent }}
-      </template>
+      {{ node.type === "text" ? node.textContent : null }}
       <PreviewUIBrowser
         v-if="(node.children && node.type === 'div') || node.type === 'box'"
         :key="node.id"

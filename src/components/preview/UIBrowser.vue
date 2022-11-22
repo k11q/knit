@@ -1,7 +1,7 @@
 <template>
   <template v-for="node in nodes" :key="node.id">
     <component
-      :is="node.type === 'text' ? 'p' : node.type"
+      :is="node.type === 'text' || node.type === 'box' ? 'div' : node.type"
       v-bind="node.attr"
       :style="{
         width: depth === 1 ? '' : node.attr.style.width,
@@ -9,9 +9,7 @@
         top: depth === 1 ? '' : node.attr.style.top,
       }"
     >
-      <template v-if="node.type === 'text'">
-        {{ node.textContent }}
-      </template>
+      {{ node.type === "text" ? node.textContent : null }}
       <DesignerCanvasUIBrowser
         v-if="(node.children && node.type === 'div') || node.type === 'box'"
         :key="node.id"
@@ -23,21 +21,6 @@
 </template>
 
 <script setup>
-import { useCounterStore } from "@/stores/counter";
-import { useCanvasDndStore } from "@/stores/canvasDnd";
-import { useCanvasFF } from "@/stores/canvasFreeForm";
-import { useSquareStore } from "@/stores/dataSquare";
-import { useCanvasMarkerStore } from "@/stores/canvasMarker";
-
-const selectToi = useCounterStore();
-const canvasDnd = useCanvasDndStore();
-const canvasFF = useCanvasFF();
-const squareStore = useSquareStore();
-const canvasMarker = useCanvasMarkerStore();
-const route = useRoute();
-const paramsId = route.params.id;
-const paramsPageId = route.params.pageId;
-
 const props = defineProps({
   modelValue: String,
   nodes: Array,
@@ -47,7 +30,4 @@ const props = defineProps({
   },
 });
 const emit = defineEmits("update:modelValue");
-function changePageTitle(title) {
-  emit("update:modelValue", title); // previously was `this.$emit('input', title)`
-}
 </script>

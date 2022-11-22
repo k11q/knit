@@ -67,7 +67,7 @@
         "
       >
         <svg
-          v-if="!node.expandTree"
+          v-if="node.expandTree"
           width="13"
           height="13"
           viewBox="0 0 13 13"
@@ -77,7 +77,7 @@
           <path d="M9 6.5L3.75 9.9641L3.75 3.0359L9 6.5Z" fill="#505050" />
         </svg>
         <svg
-          v-if="node.expandTree"
+          v-if="!node.expandTree"
           width="13"
           height="13"
           viewBox="0 0 13 13"
@@ -144,9 +144,9 @@
         {{ node.type == "text" ? node.textContent : node.name }}
       </h1>
     </div>
-    <template v-if="node.expandTree">
+    <template v-if="!node.expandTree">
       <DesignerLeftSidePanelTabsLayersTreeBrowser
-        :nodes="node.children"
+        :nodes="node.children.slice().reverse()"
         :depth="depth + 1"
         :v-model="modelValue"
       />

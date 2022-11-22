@@ -6,8 +6,8 @@
       :data-id="node.id"
       :data-component="node.type"
       @mousedown="testDown($event, node.id, node.type)"
-      @mouseout="mouseoutEvent($event, node.id)"
-      @mouseover.stop="hoverEvent($event, node.id)"
+      @mouseout="selectToi.treeHover = false"
+      @mouseover.stop="useSetOutlineHover($event, node.id)"
       @dblclick.prevent="
         () => {
           if (node.type === 'text') {
@@ -278,47 +278,12 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
     }
   }
 };
-function mouseoutEvent(e, id) {
-  selectToi.treeHover = false;
-}
-
-function hoverEvent(e, id) {
-  selectToi.treeHover = true;
-  let target = document.querySelector(`[data-id=${id}]`);
-  let selectedTarget = target.getBoundingClientRect();
-
-  selectToi.treeHoverHTMLX = Math.round(
-    (selectedTarget.x - squareStore.offsetLeft) / squareStore.scale
-  );
-  selectToi.treeHoverHTMLY = Math.round(
-    (selectedTarget.y - squareStore.offsetTop) / squareStore.scale
-  );
-
-  selectToi.treeHoverHTMLWidth = Math.round(
-    selectedTarget.width / squareStore.scale
-  );
-  selectToi.treeHoverHTMLHeight = Math.round(
-    selectedTarget.height / squareStore.scale
-  );
-}
 
 const props = defineProps({
-  modelValue: String,
   nodes: Array,
   depth: {
     type: Number,
     default: 0,
   },
 });
-
-const emit = defineEmits("update:modelValue");
-function changePageTitle(title) {
-  emit("update:modelValue", title); // previously was `this.$emit('input', title)`
-}
 </script>
-
-<style>
-.node {
-  text-align: left;
-}
-</style>
