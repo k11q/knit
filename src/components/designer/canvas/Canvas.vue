@@ -26,53 +26,6 @@
       </KeepAlive>
     </div>
 
-    <KeepAlive>
-      <div
-        v-if="addaSquare.scale > 4"
-        class="fixed flex pointer-events-none h-screen opacity-20"
-        :style="{
-          left: '-50%',
-          width: 'fit-content',
-          transform: `translateX(${
-            addaSquare.offsetLeft -
-            Number(Math.round(Math.abs(addaSquare.getVw / addaSquare.scale)))
-          }px)`,
-        }"
-      >
-        <div
-          v-for="n in Number(
-            Math.round(Math.abs(addaSquare.getVw / addaSquare.scale))
-          ) || 0"
-          class="box-border"
-          :style="{
-            width: 1 * addaSquare.scale + 'px',
-            borderLeft: '0.5px solid #939393',
-          }"
-        ></div>
-      </div>
-    </KeepAlive>
-    <KeepAlive>
-      <div
-        v-if="addaSquare.scale > 4"
-        class="fixed flex flex-col pointer-events-none w-screen opacity-20"
-        :style="{
-          transform: `translateY(${
-            Number(addaSquare.offsetTop) -
-            Number(Math.round(addaSquare.offsetTop))
-          }px)`,
-        }"
-      >
-        <div
-          v-for="n in Number(Math.round(Math.abs(addaSquare.offsetTop)))"
-          class="box-border"
-          :style="{
-            height: 1 * addaSquare.scale + 'px',
-            borderTop: '0.5px solid #D7D7D7',
-          }"
-        ></div>
-      </div>
-    </KeepAlive>
-
     <!--Other elements parent container-->
     <div
       class="fixed top-0 left-0 w-0 h-0 overflow-visible"
@@ -141,7 +94,6 @@
             @mousedown.stop.prevent="resizeStore.resizeTop"
             class="absolute bottom-full bg-[#0191FA] w-full hover:cursor-row-resize"
             :style="{
-              marginTop: `${-0.5 / addaSquare.scale}px`,
               height: `${(1 * 1) / addaSquare.scale}px`,
             }"
           />
@@ -153,7 +105,9 @@
           <div
             @mousedown.stop.prevent="resizeStore.resizeLeft"
             class="absolute right-full bg-[#0191FA] h-full hover:cursor-col-resize"
-            :style="{ width: `${(1 * 1) / addaSquare.scale}px` }"
+            :style="{
+              width: `${(1 * 1) / addaSquare.scale}px`,
+            }"
           />
           <div
             @mousedown.stop.prevent="resizeStore.resizeRight"
