@@ -31,7 +31,7 @@ const emailLogin = async () => {
     class="bg-[#181818] min-h-screen flex items-center justify-center text-xs text-[#EDEDED]"
   >
     <div
-      class="rounded-xl p-8 bg-[#1F1F1F] gap-8 flex flex-col w-[440px] border-[#2A2A2A]"
+      class="rounded-xl p-8 bg-[#1F1F1F] gap-8 flex flex-col w-[500px] border-[#2A2A2A]"
     >
       <div class="flex flex-col w-full gap-3">
         <p class="text-[#E0E0E0]">Log in with</p>
@@ -64,7 +64,7 @@ const emailLogin = async () => {
               type="email"
               required
               id="email"
-              class="bg-[#1F1F1F] border border-[#444444] pl-4 py-[10px] rounded w-full autofill:bg-[#1F1F1F]"
+              class="bg-[#1F1F1F] border border-[#444444] pl-4 py-[10px] rounded w-full autofill:bg-[#1F1F1F] focus:outline-[#47CE90]"
               v-model="email"
             />
           </div>
@@ -74,7 +74,7 @@ const emailLogin = async () => {
               type="password"
               required
               id="password"
-              class="bg-[#1F1F1F] border border-[#444444] pl-4 py-[10px] rounded w-full autofill:bg-[#1F1F1F]"
+              class="bg-[#1F1F1F] border border-[#444444] pl-4 py-[10px] rounded w-full autofill:bg-[#1F1F1F] focus:outline-[#47CE90]"
               v-model="password"
             />
           </div>

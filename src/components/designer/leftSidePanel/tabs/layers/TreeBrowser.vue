@@ -140,7 +140,9 @@
           <line x1="12" y1="4" x2="12" y2="20"></line>
         </svg>
       </div>
-      <h1 class="pointer-events-none">{{ node.name }}</h1>
+      <h1 class="pointer-events-none">
+        {{ node.type == "text" ? node.textContent : node.name }}
+      </h1>
     </div>
     <template v-if="node.expandTree">
       <DesignerLeftSidePanelTabsLayersTreeBrowser

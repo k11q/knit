@@ -1,7 +1,7 @@
 <template>
   <template v-for="node in nodes" :key="node.id">
     <component
-      :is="node.type === 'text' ? 'p' : node.type"
+      :is="node.type === 'text' || node.type === 'box' ? 'div' : node.type"
       :data-droppable="node.type === 'text' ? false : true"
       :data-id="node.id"
       :data-component="node.type"
@@ -16,12 +16,10 @@
           }
         }
       "
-      @input="
-        () => {
-          if (node.type === 'text') {
-            selectToi.selectedBoxData.textContent = $event.target.innerText;
-          }
-        }
+      @input.prevent="
+        node.type === 'text'
+          ? (selectToi.selectedBoxData.textContent = $event.target?.textContent)
+          : ''
       "
       @blur="node.type === 'text' ? (target = '') : ''"
       :contenteditable="
@@ -229,7 +227,7 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
                 selectToi.selectedBox !== closestTarget &&
                 !canvasDnd.dragzone &&
                 canvasDnd.dropzone) ||
-              !closest.children.length
+              !closest.children?.length
             ) {
               //append bottom/push
               function dndAppendBottom(arr, dropzone) {

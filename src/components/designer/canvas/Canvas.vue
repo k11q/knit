@@ -77,6 +77,7 @@
     <div
       class="fixed top-0 left-0 w-0 h-0 overflow-visible"
       :style="{
+        willChange: 'transform',
         transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
       }"
     >
@@ -85,6 +86,7 @@
         v-show="selectToi.treeHover"
         class="absolute pointer-events-none"
         :style="{
+          willChange: 'left, top, height, width',
           left: selectToi.treeHoverHTMLX + 'px',
           top: selectToi.treeHoverHTMLY + 'px',
           height: selectToi.treeHoverHTMLHeight + 'px',
@@ -97,6 +99,7 @@
         v-show="selectToi.selectedBox && !canvasFF.isDragging"
         class="absolute pointer-events-none"
         :style="{
+          willChange: 'left, top, height, width',
           left: selectToi.selectedBoxHTMLX + 'px',
           top: selectToi.selectedBoxHTMLY + 'px',
           height: selectToi.selectedBoxHTMLHeight + 'px',
@@ -196,6 +199,7 @@
         v-show="showMarker"
         class="absolute pointer-events-none"
         :style="{
+          willChange: 'left, top, height, width, outline',
           left: selectToi.selectedBoxData.attr?.style.left,
           top: selectToi.selectedBoxData.attr?.style.top,
           height: selectToi.selectedBoxData.attr?.style.height,
