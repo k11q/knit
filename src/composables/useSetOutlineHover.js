@@ -1,7 +1,7 @@
 import { useCounterStore } from "@/stores/counter";
 import { useSquareStore } from "@/stores/dataSquare";
 
-export default function (e, id) {
+export default function (id) {
   const selectToi = useCounterStore();
   const squareStore = useSquareStore();
 

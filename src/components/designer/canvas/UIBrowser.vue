@@ -7,7 +7,7 @@
       :data-component="node.type"
       @mousedown="testDown($event, node.id, node.type)"
       @mouseout="selectToi.treeHover = false"
-      @mouseover.stop="useSetOutlineHover($event, node.id)"
+      @mouseover.stop="useSetOutlineHover(node.id)"
       @dblclick.prevent="
         () => {
           if (node.type === 'text') {
@@ -90,6 +90,7 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
     let closestTarget = "";
 
     selectToi.changeSelected(e, currDrag, currType);
+    useSetOutlineSelector(currDrag);
 
     //delete selected item
 
@@ -267,9 +268,9 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
           })
 
           .then(function () {
-            selectToi.changeSelected(e, currDrag, currType);
+            useSetOutlineSelector(currDrag);
           });
-        selectToi.changeSelected(e, currDrag, currType);
+        useSetOutlineSelector(currDrag);
         window.removeEventListener("mousemove", mousemove);
         window.removeEventListener("mouseup", mouseup);
 

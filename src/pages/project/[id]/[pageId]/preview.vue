@@ -30,30 +30,14 @@
 
 <script setup lang="ts">
 import { useCounterStore } from "@/stores/counter";
-import { useCanvasDndStore } from "@/stores/canvasDnd";
-import { useCanvasFF } from "@/stores/canvasFreeForm";
-import { useSquareStore } from "@/stores/dataSquare";
-import { useCanvasMarkerStore } from "@/stores/canvasMarker";
 
 const selectToi = useCounterStore();
-const canvasDnd = useCanvasDndStore();
-const canvasFF = useCanvasFF();
-const squareStore = useSquareStore();
-const canvasMarker = useCanvasMarkerStore();
-const route = useRoute();
-const paramsId = route.params.id;
-const paramsPageId = route.params.pageId;
 
 const props = defineProps({
-  modelValue: String,
   nodes: Array,
   depth: {
     type: Number,
     default: 1,
   },
 });
-const emit = defineEmits("update:modelValue");
-function changePageTitle(title) {
-  emit("update:modelValue", title); // previously was `this.$emit('input', title)`
-}
 </script>

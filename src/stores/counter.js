@@ -9,17 +9,17 @@ export const useCounterStore = defineStore({
     dragDisplay: "",
     blueLine: "",
     selectedBoxData: "",
-    selectedBoxHTMLX: "",
-    selectedBoxHTMLY: "",
+    selectedBoxHTMLX: NaN,
+    selectedBoxHTMLY: NaN,
     prevX: 0,
     prevY: 0,
-    selectedBoxHTMLWidth: "",
-    selectedBoxHTMLHight: "",
+    selectedBoxHTMLWidth: NaN,
+    selectedBoxHTMLHeight: NaN,
     treeHover: false,
-    treeHoverHTMLX: "",
-    treeHoverHTMLY: "",
-    treeHoverHTMLWidth: "",
-    treeHoverHTMLHight: "",
+    treeHoverHTMLX: NaN,
+    treeHoverHTMLY: NaN,
+    treeHoverHTMLWidth: NaN,
+    treeHoverHTMLHight: NaN,
     newSquare: false,
     dataTransfer: null,
     returnedElementData: "",
@@ -591,24 +591,7 @@ export const useCounterStore = defineStore({
         this.selectedBox = id;
 
         if (e.target) {
-          let target = document.querySelector(`[data-id=${id}]`);
-          let selectedTarget = target.getBoundingClientRect();
-
           this.getChildElement(this.data, id);
-
-          this.selectedBoxHTMLX = Math.round(
-            (selectedTarget.x - squareStore.offsetLeft) / squareStore.scale
-          );
-          this.selectedBoxHTMLY = Math.round(
-            (selectedTarget.y - squareStore.offsetTop) / squareStore.scale
-          );
-
-          this.selectedBoxHTMLWidth = Math.round(
-            selectedTarget.width / squareStore.scale
-          );
-          this.selectedBoxHTMLHeight = Math.round(
-            selectedTarget.height / squareStore.scale
-          );
         }
       }
     },
