@@ -20,6 +20,7 @@ export const useCounterStore = defineStore({
     treeHoverHTMLY: NaN,
     treeHoverHTMLWidth: NaN,
     treeHoverHTMLHight: NaN,
+    treeHoverSize: 1,
     newSquare: false,
     dataTransfer: null,
     returnedElementData: "",

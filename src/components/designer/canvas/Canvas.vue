@@ -44,8 +44,12 @@
           top: selectToi.treeHoverHTMLY + 'px',
           height: selectToi.treeHoverHTMLHeight + 'px',
           width: selectToi.treeHoverHTMLWidth + 'px',
-          border: `${1 / addaSquare.scale}px solid #0191FA`,
-          outline: `${1 / addaSquare.scale}px solid #0191FA`,
+          border: `${
+            selectToi.treeHoverSize / addaSquare.scale
+          }px solid #0191FA`,
+          outline: `${
+            selectToi.treeHoverSize / addaSquare.scale
+          }px solid #0191FA`,
         }"
       ></div>
       <!--Selected outline n resizer-->

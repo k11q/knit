@@ -128,6 +128,7 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
           showMarker.value = false;
           currDragElement.style.opacity = prevOpacity;
           canvasMarker.setRuler = true;
+          selectToi.treeHoverSize = 1;
         } else if (target && closest) {
           if (
             selectToi.selectedBox === closestTarget ||
@@ -158,6 +159,7 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
               selectedTarget.height / squareStore.scale
             );
           }
+          selectToi.treeHoverSize = 0.5;
         }
 
         selectToi.selectedBoxData.attr.style.left =
@@ -270,6 +272,7 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
           .then(function () {
             useSetOutlineSelector(currDrag);
           });
+        selectToi.treeHoverSize = 1;
         useSetOutlineSelector(currDrag);
         window.removeEventListener("mousemove", mousemove);
         window.removeEventListener("mouseup", mouseup);
