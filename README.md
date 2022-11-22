@@ -2,6 +2,11 @@
 
 Look at the [nuxt 3 documentation](https://v3.nuxtjs.org) to learn more.
 
+Step 1: Proof of concept and understand the high level architecture
+Step 2: Initializing the biggest features
+Step 3: Fix all bugs and cleanup codespace
+Step 4: Beta
+
 ## Setup
 
 Make sure to install the dependencies:
