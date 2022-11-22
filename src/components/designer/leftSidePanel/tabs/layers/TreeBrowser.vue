@@ -3,11 +3,13 @@
     <div
       :data-treeid="node.id"
       :data-depth="depth"
+      :data-parentIsSelected="parentIsSelected"
       :style="{ 'padding-left': depth === 1 ? '16px' : depth * 20 + 'px' }"
       class="flex flex-row gap-2 py-[9px] border border-transparent box-border cursor-default items-center relative"
       :class="{
         'bg-[#2E2E2E] border-[#232323] hover:border-[#232323]':
           selectToi.selectedBox === node.id,
+        'bg-[#242424]': parentIsSelected === true,
         'opacity-30': selectToi.dragDisplay === node.id,
         'hover:border-[#0191FA]':
           !treeDnd.isDragging && selectToi.selectedBox !== node.id,
@@ -17,6 +19,7 @@
           selectToi.selectedBox !== node.id,
         'opacity-40': treeDnd.currDrag === node.id,
         'opacity-100': treeDnd.currDrag !== node.id,
+        'opacity-30': treeDnd.currDrag && parentIsSelected === true,
       }"
       @mousedown="dragAndDrop($event, node.id)"
       @mouseover="useSetOutlineHover(node.id)"
@@ -148,6 +151,9 @@
     <template v-if="!node.expandTree">
       <DesignerLeftSidePanelTabsLayersTreeBrowser
         :nodes="node.children.slice().reverse()"
+        :parentIsSelected="
+          selectToi.selectedBox === node.id ? true : parentIsSelected
+        "
         :depth="depth + 1"
         :v-model="modelValue"
       />
@@ -166,6 +172,7 @@ const squareStore = useSquareStore();
 const props = defineProps({
   modelValue: String,
   nodes: Array,
+  parentIsSelected: Boolean,
   depth: {
     type: Number,
     default: 1,
@@ -190,10 +197,14 @@ const dragAndDrop = (e, currDrag) => {
     function mousemove(e) {
       treeDnd.currDrag = currDrag;
       treeDnd.isDragging = true;
-      const currDropId = document.elementFromPoint(e.clientX, e.clientY).dataset
-        .treeid;
+      const currDrop = document.elementFromPoint(e.clientX, e.clientY);
+      const currDropId = currDrop.dataset.treeid;
+      const currDropIsParentSelected = currDrop.dataset.parentisselected;
       if (currDropId) {
-        if (currDropId !== treeDnd.currDrag) {
+        if (
+          currDropId !== treeDnd.currDrag &&
+          currDropIsParentSelected !== "true"
+        ) {
           treeDnd.currDrop = currDropId;
 
           const currdropEl = document.elementFromPoint(e.clientX, e.clientY);
@@ -225,7 +236,12 @@ const dragAndDrop = (e, currDrag) => {
       const currDrop = document.elementFromPoint(e.clientX, e.clientY);
       const currDropId = currDrop.dataset.treeid;
       const currDropDepth = currDrop.dataset.depth;
-      if (treeDnd.isDragging === true && currDropId !== treeDnd.currDrag) {
+      const currDropIsParentSelected = currDrop.dataset.parentisselected;
+      if (
+        treeDnd.isDragging === true &&
+        currDropId !== treeDnd.currDrag &&
+        currDropIsParentSelected !== "true"
+      ) {
         treeDnd.setCurrDragValue(selectToi.data, treeDnd.currDrag);
         treeDnd.dndRemove(selectToi.data);
         if (treeDnd.currDropPosition === "top") {

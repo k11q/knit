@@ -496,6 +496,7 @@ export const useCounterStore = defineStore({
         name: "rectangle12",
         id: "owpif9eipiojohuh90i",
         type: "box",
+        repeat: true,
         attr: {
           style: {
             left: "500px",
