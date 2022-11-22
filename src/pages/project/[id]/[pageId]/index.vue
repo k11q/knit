@@ -14,9 +14,4 @@
 
 <script setup lang="ts">
 import { useCounterStore } from "@/stores/counter";
-
-const selectToi = useCounterStore();
-definePageMeta({
-  middleware: "auth",
-});
 </script>

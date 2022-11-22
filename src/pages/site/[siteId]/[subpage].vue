@@ -2,7 +2,7 @@
   <PreviewTopBar />
   <template
     v-for="node in [
-      selectToi.data[selectToi.data.findIndex((p) => p.id === profile)],
+      selectToi.data[selectToi.data.findIndex((p) => p.name === profile)],
     ]"
     :key="node.id"
   >

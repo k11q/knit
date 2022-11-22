@@ -86,7 +86,9 @@
       <div class="flex items-center justify-center">
         <div class="bg-gray-400 rounded-full aspect-square h-6"></div>
       </div>
-      <NuxtLink :to="`project/${selectToi.selectedBoxData.id}/preview`">
+      <NuxtLink
+        :to="`/project/${route.params.id}/${selectToi.selectedBoxData.name}/preview`"
+      >
         <div
           class="flex items-center justify-center text-center cursor-default hover:bg-[#232323] h-8 aspect-square"
         >
@@ -110,7 +112,7 @@
       </div>
       <div class="flex items-center justify-center">
         <NuxtLink
-          :to="`http://${route.params.id}.localhost:3000/${selectToi.selectedBoxData.id}`"
+          :to="`http://${route.params.id}.${domain}/${selectToi.selectedBoxData.name}`"
         >
           <button
             class="bg-[#0191FA] px-2 py-1 text-[#EDEDED] rounded-md border-none"
@@ -135,4 +137,7 @@ const addaSquare = useSquareStore();
 const canvasFF = useCanvasFF();
 const selectToi = useCounterStore();
 const route = useRoute();
+const domain = location.host;
+
+console.log("domain = " + domain);
 </script>
