@@ -87,7 +87,7 @@
         <div class="bg-gray-400 rounded-full aspect-square h-6"></div>
       </div>
       <NuxtLink
-        :to="`/project/${route.params.id}/${selectToi.selectedBoxData.name}/preview`"
+        :to="`/p/${route.params.id}/${selectToi.selectedBoxData.name}/preview`"
       >
         <div
           class="flex items-center justify-center text-center cursor-default hover:bg-[#232323] h-8 aspect-square"

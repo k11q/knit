@@ -7,7 +7,13 @@
       :data-component="node.type"
       @mousedown="testDown($event, node.id, node.type)"
       @mouseout="selectToi.treeHover = false"
-      @mouseover.stop="useSetOutlineHover(node.id)"
+      @mouseover.stop="
+        () => {
+          if (selectToi.selectedBox !== node.id) {
+            useSetOutlineHover(node.id);
+          }
+        }
+      "
       @dblclick.prevent="
         () => {
           if (node.type === 'text') {
@@ -289,5 +295,19 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
+});
+
+useHead({
+  link: [
+    {
+      rel: "preconnect",
+      href: "https://fonts.googleapis.com",
+    },
+    {
+      rel: "stylesheet",
+      href: "https://fonts.googleapis.com/css2?family=Roboto&display=swap",
+      crossorigin: "",
+    },
+  ],
 });
 </script>

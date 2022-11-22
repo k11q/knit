@@ -2,6 +2,7 @@
   <div v-for="node in nodes.slice().reverse()" :key="node.id">
     <div
       :data-treeid="node.id"
+      :data-depth="depth"
       :style="{ 'padding-left': depth === 1 ? '16px' : depth * 20 + 'px' }"
       class="flex flex-row gap-2 py-[9px] border border-transparent box-border cursor-default items-center relative"
       :class="{
@@ -181,6 +182,7 @@ function changePageTitle(title) {
 const dragAndDrop = (e, currDrag) => {
   if (!squareStore.dragPointer && !squareStore.draggingPointer) {
     selectToi.changeSelected(e, currDrag);
+    useSetOutlineSelector(currDrag);
 
     window.addEventListener("mousemove", mousemove, e);
     window.addEventListener("mouseup", mouseup);
@@ -220,19 +222,32 @@ const dragAndDrop = (e, currDrag) => {
     }
 
     function mouseup(e) {
-      const currDropId = document.elementFromPoint(e.clientX, e.clientY).dataset
-        .treeid;
+      const currDrop = document.elementFromPoint(e.clientX, e.clientY);
+      const currDropId = currDrop.dataset.treeid;
+      const currDropDepth = currDrop.dataset.depth;
       if (treeDnd.isDragging === true && currDropId !== treeDnd.currDrag) {
         treeDnd.setCurrDragValue(selectToi.data, treeDnd.currDrag);
         treeDnd.dndRemove(selectToi.data);
         if (treeDnd.currDropPosition === "top") {
-          treeDnd.dndAppendTop(selectToi.data, treeDnd.currDrop);
+          if (currDropDepth == 1) {
+            treeDnd.dndAppendTop(selectToi.data, treeDnd.currDrop);
+          } else {
+            treeDnd.dndAppendBottom(selectToi.data, treeDnd.currDrop);
+          }
         } else if (treeDnd.currDropPosition === "bottom") {
-          treeDnd.dndAppendBottom(selectToi.data, treeDnd.currDrop);
+          if (currDropDepth == 1) {
+            treeDnd.dndAppendBottom(selectToi.data, treeDnd.currDrop);
+          } else {
+            treeDnd.dndAppendTop(selectToi.data, treeDnd.currDrop);
+          }
         } else {
           treeDnd.dndAppendMiddle(selectToi.data, treeDnd.currDrop);
         }
       }
+      setTimeout(() => {
+        useSetOutlineSelector(currDrag);
+      }, 0);
+
       treeDnd.currDrag = "";
       treeDnd.currDrop = "";
       treeDnd.isDragging = false;

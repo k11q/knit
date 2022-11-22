@@ -52,6 +52,19 @@
           }px solid #0191FA`,
         }"
       ></div>
+      <!--Hover outline-->
+      <div
+        v-show="selectToi.showTextEditor"
+        class="absolute pointer-events-none"
+        :style="{
+          willChange: 'left, top, height, width',
+          left: selectToi.selectedBoxHTMLX + 'px',
+          top: selectToi.selectedBoxHTMLY + 'px',
+          height: selectToi.selectedBoxHTMLHeight + 'px',
+          width: selectToi.selectedBoxHTMLWidth + 'px',
+          backgroundColor: 'red',
+        }"
+      ></div>
       <!--Selected outline n resizer-->
       <div
         v-show="selectToi.selectedBox && !canvasFF.isDragging"

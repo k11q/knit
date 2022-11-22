@@ -23,6 +23,7 @@ export const useCounterStore = defineStore({
     treeHoverSize: 1,
     newSquare: false,
     dataTransfer: null,
+    showTextEditor: false,
     returnedElementData: "",
     canvas: [
       {
