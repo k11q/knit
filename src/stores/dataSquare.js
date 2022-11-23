@@ -45,7 +45,10 @@ export const useSquareStore = defineStore({
           color: "black",
           fontSize: "14px",
           position: "absolute",
-          lineHeight: "normal",
+          lineHeight: 1.2,
+          width: "auto",
+          height: "auto",
+          whiteSpace: "pre",
         },
       },
       parent: "",
@@ -164,27 +167,40 @@ export const useSquareStore = defineStore({
         clonedDataSquare.attr = { ...this.dataSquare.attr };
         clonedDataSquare.attr.style = { ...this.dataSquare.attr.style };
 
+        Promise.resolve()
+          .then(() => {
+            dataPushed.push({ ...clonedDataSquare });
+            counter.changeSelectedNewlyAdded(event, clonedDataSquare);
+          })
+          .then(() => {
+            useSetOutlineSelector(clonedDataSquare.id);
+          });
         this.turnOnNormalPointer();
-        dataPushed.push({ ...clonedDataSquare });
-        counter.changeSelectedNewlyAdded(event, clonedDataSquare);
         this.countBox = this.countBox + 1;
       }
       if (this.addTextActivated === true) {
         this.dataText.name = "text" + this.countBox;
         this.dataText.id = useGetRandomLetter() + uid();
         this.dataText.attr.style.left =
-          Math.round((event.clientX - this.offsetLeft) / this.scale - 50) +
+          Math.round((event.clientX - this.offsetLeft) / this.scale - 7.75) +
           "px";
         this.dataText.attr.style.top =
-          Math.round((event.clientY - this.offsetTop) / this.scale - 50) + "px";
+          Math.round((event.clientY - this.offsetTop) / this.scale - 7.75) +
+          "px";
         this.dataText.children = [];
         let clonedDataText = { ...this.dataText };
         clonedDataText.attr = { ...this.dataText.attr };
         clonedDataText.attr.style = { ...this.dataText.attr.style };
 
-        dataPushed.push({ ...clonedDataText });
+        Promise.resolve()
+          .then(() => {
+            dataPushed.push({ ...clonedDataText });
+            counter.changeSelectedNewlyAdded(event, clonedDataText);
+          })
+          .then(() => {
+            useSetOutlineSelector(clonedDataText.id);
+          });
         this.turnOnNormalPointer();
-        counter.changeSelectedNewlyAdded(event, clonedDataText);
         this.countBox = this.countBox + 1;
       }
       if (this.addFrameActivated === true) {
@@ -200,10 +216,15 @@ export const useSquareStore = defineStore({
         clonedDataFrame.attr = { ...this.dataFrame.attr };
         clonedDataFrame.attr.style = { ...this.dataFrame.attr.style };
 
+        Promise.resolve()
+          .then(() => {
+            dataPushed.push({ ...clonedDataFrame });
+            counter.changeSelectedNewlyAdded(event, clonedDataFrame);
+          })
+          .then(() => {
+            useSetOutlineSelector(clonedDataFrame.id);
+          });
         this.turnOnNormalPointer();
-
-        dataPushed.push({ ...clonedDataFrame });
-        counter.changeSelectedNewlyAdded(event, clonedDataFrame);
         this.countBox = this.countBox + 1;
       }
     },

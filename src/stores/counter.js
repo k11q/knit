@@ -473,6 +473,8 @@ export const useCounterStore = defineStore({
             top: "50px",
             position: "absolute",
             flexDirection: "column",
+            width: "fit-content",
+            height: "fit-content",
           },
         },
         textContent: "Haha",
@@ -489,6 +491,8 @@ export const useCounterStore = defineStore({
             left: "100px",
             top: "5px",
             position: "absolute",
+            width: "fit-content",
+            height: "fit-content",
           },
         },
         children: [],
@@ -604,23 +608,21 @@ export const useCounterStore = defineStore({
       this.prevY = e.layerY;
 
       this.selectedBox = newData.id;
-      this.selectedBoxHTMLX =
-        newData.attr.style.left.replace(/[^-?0-9\.]+/g, "") | 0;
-      this.selectedBoxHTMLY =
-        newData.attr.style.top.replace(/[^-?0-9\.]+/g, "") | 0;
-      this.selectedBoxHTMLWidth =
-        newData.attr.style.width.replace(/[^-?0-9\.]+/g, "") | 0;
-      this.selectedBoxHTMLHeight =
-        newData.attr.style.height.replace(/[^-?0-9\.]+/g, "") | 0;
-      this.getChildElement(this.data, newData.id);
+      if (e.target) {
+        this.getChildElement(this.data, newData.id);
+      }
     },
 
     clearSelected() {
-      let canvasDnd = useCanvasDndStore();
-      this.selectedTextEditor = "";
-      this.selectedBox = "";
-      canvasDnd.currDrag = "";
-      canvasDnd.currDragValue = "";
+      if (this.selectedTextEditor) {
+        useSetOutlineSelector(this.selectedTextEditor);
+        this.selectedTextEditor = "";
+      } else {
+        let canvasDnd = useCanvasDndStore();
+        this.selectedBox = "";
+        canvasDnd.currDrag = "";
+        canvasDnd.currDragValue = "";
+      }
     },
     changeColor(e) {
       this.data.find((x) => x.id === this.selectedBox).color = e;

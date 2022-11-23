@@ -29,7 +29,7 @@
         v-if="node.type === 'text' && selectToi.selectedTextEditor !== node.id"
         v-html="node.textContent"
       >
-        <span v-html="node.textContent"></span>
+        <span v-html="node.textContent" class="cursor-default"></span>
       </template>
       <Tiptap
         v-if="node.type === 'text' && selectToi.selectedTextEditor === node.id"
@@ -70,9 +70,6 @@ function makeEditable(e: Event, id: String) {
 //dnd on canvas
 const testDown = (e: Event, currDrag: String, currType: String) => {
   if (!squareStore.dragPointer && !squareStore.draggingPointer) {
-    let prevX = e.clientX - e.target.offsetLeft * squareStore.scale;
-    let prevY = e.clientY - e.target.offsetTop * squareStore.scale;
-
     let prevOffsetLeft = e.clientX - e.target.getBoundingClientRect().x;
     let prevOffsetTop = e.clientY - e.target.getBoundingClientRect().y;
 
@@ -81,12 +78,26 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
     canvasDnd.currDrag = currDrag;
     let isDragging = false;
     let currDragElement = document.querySelector(`[data-id=${currDrag}]`);
+    let currDragElementRect = currDragElement?.getBoundingClientRect();
     let prevOpacity = currDragElement.style.opacity;
     let closest = null;
     let closestTarget = "";
+    let prevX = e.clientX - e.target.offsetLeft * squareStore.scale;
+    let prevY = e.clientY - e.target.offsetTop * squareStore.scale;
 
-    selectToi.changeSelected(e, currDrag, currType);
-    useSetOutlineSelector(currDrag);
+    if (
+      selectToi.selectedTextEditor &&
+      selectToi.selectedTextEditor !== currDrag
+    ) {
+      useSetOutlineSelector(selectToi.selectedTextEditor);
+      selectToi.selectedTextEditor = "";
+    } else if (
+      !selectToi.selectedTextEditor ||
+      selectToi.selectedTextEditor === currDrag
+    ) {
+      selectToi.changeSelected(e, currDrag, currType);
+      useSetOutlineSelector(currDrag);
+    }
 
     //delete selected item
     document.removeEventListener("keyup", keyup);

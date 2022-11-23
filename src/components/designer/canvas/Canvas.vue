@@ -54,7 +54,11 @@
       ></div>
       <!--Selected outline n resizer-->
       <div
-        v-show="selectToi.selectedBox && !canvasFF.isDragging"
+        v-show="
+          selectToi.selectedBox &&
+          !canvasFF.isDragging &&
+          !selectToi.selectedTextEditor
+        "
         class="absolute pointer-events-none"
         :style="{
           willChange: 'left, top, height, width',
