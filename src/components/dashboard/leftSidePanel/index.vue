@@ -8,21 +8,38 @@
       <div
         class="flex flex-col items-center justify-center w-3 flex-none aspect-square opacity-80"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+        <div
+          class="aspect-square flex items-center justify-center text-center cursor-default h-8"
         >
-          <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path>
-          <line x1="16" y1="8" x2="2" y2="22"></line>
-          <line x1="17.5" y1="15" x2="9" y2="15"></line>
-        </svg>
+          <div
+            class="aspect-square flex items-center justify-center text-center cursor-default hover:bg-[#2E2E2E] h-full rounded opacity-60 hover:opacity-100 p-[6px]"
+          >
+            <svg
+              width="337"
+              height="337"
+              viewBox="0 0 337 337"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M16.9706 250.316C7.59802 240.943 7.59802 225.747 16.9706 216.375L216.375 16.9705C225.747 7.59796 240.943 7.59796 250.316 16.9705C259.688 26.3431 259.688 41.5391 250.316 50.9117L50.9117 250.316C41.5391 259.688 26.3432 259.688 16.9706 250.316Z"
+                fill="#D9D9D9"
+              />
+              <path
+                d="M86.2673 16.9706C95.6398 7.59798 110.836 7.59798 120.208 16.9706L319.612 216.375C328.985 225.747 328.985 240.943 319.612 250.316C310.24 259.688 295.044 259.688 285.671 250.316L86.2673 50.9117C76.8947 41.5391 76.8947 26.3431 86.2673 16.9706Z"
+                fill="#D9D9D9"
+              />
+              <path
+                d="M16.9708 86.267C26.3434 76.8944 41.5393 76.8944 50.9119 86.267L250.316 285.671C259.689 295.044 259.689 310.24 250.316 319.612C240.943 328.985 225.747 328.985 216.375 319.612L16.9708 120.208C7.59822 110.836 7.59822 95.6396 16.9708 86.267Z"
+                fill="#D9D9D9"
+              />
+              <path
+                d="M86.2672 319.612C76.8946 310.24 76.8946 295.044 86.2672 285.671L285.671 86.267C295.044 76.8944 310.24 76.8944 319.612 86.267C328.985 95.6396 328.985 110.836 319.612 120.208L120.208 319.612C110.836 328.985 95.6398 328.985 86.2672 319.612Z"
+                fill="#D9D9D9"
+              />
+            </svg>
+          </div>
+        </div>
       </div>
       <div>
         <p>{{ user?.user_metadata.full_name }}</p>

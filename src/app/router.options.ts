@@ -10,13 +10,15 @@ export default <RouterOptions>{
       subdomain.value = ssrContext?.event.context.subdomain;
 
     if (subdomain.value) {
-      const userRoute = _routes.filter((i) => i.path.includes("/site/:siteId"));
+      const userRoute = _routes.filter((i) =>
+        i.path.includes("/_site/:siteId")
+      );
       const userRouteMapped = userRoute.map((i) => ({
         ...i,
         path:
-          i.path === "/site/:siteId"
-            ? i.path.replace("/site/:siteId", "/")
-            : i.path.replace("/site/:siteId/", "/"),
+          i.path === "/_site/:siteId"
+            ? i.path.replace("/_site/:siteId", "/")
+            : i.path.replace("/_site/:siteId/", "/"),
       }));
 
       return userRouteMapped;

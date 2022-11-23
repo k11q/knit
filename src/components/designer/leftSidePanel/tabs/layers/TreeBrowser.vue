@@ -3,6 +3,7 @@
     <div
       :data-treeid="node.id"
       :data-depth="depth"
+      :data-state="state"
       :data-parentIsSelected="parentIsSelected"
       :style="{ 'padding-left': depth === 1 ? '16px' : depth * 20 + 'px' }"
       class="flex flex-row gap-2 py-[9px] border border-transparent box-border cursor-default items-center relative"
@@ -66,12 +67,12 @@
         v-if="node.children && node.children.length"
         @mousedown.prevent.stop="
           () => {
-            node.expandTree = !node.expandTree;
+            state === 'open' ? (state = 'close') : (state = 'open');
           }
         "
       >
         <svg
-          v-if="node.expandTree"
+          v-if="state === 'close'"
           width="13"
           height="13"
           viewBox="0 0 13 13"
@@ -81,7 +82,7 @@
           <path d="M9 6.5L3.75 9.9641L3.75 3.0359L9 6.5Z" fill="#505050" />
         </svg>
         <svg
-          v-if="!node.expandTree"
+          v-if="state === 'open'"
           width="13"
           height="13"
           viewBox="0 0 13 13"
@@ -148,12 +149,13 @@
         {{ node.type == "text" ? node.textContent : node.name }}
       </h1>
     </div>
-    <template v-if="!node.expandTree">
+    <template v-if="state === 'open'">
       <DesignerLeftSidePanelTabsLayersTreeBrowser
         :nodes="node.children.slice().reverse()"
         :parentIsSelected="
           selectToi.selectedBox === node.id ? true : parentIsSelected
         "
+        :state="state"
         :depth="depth + 1"
         :v-model="modelValue"
       />
@@ -173,6 +175,10 @@ const props = defineProps({
   modelValue: String,
   nodes: Array,
   parentIsSelected: Boolean,
+  state: {
+    type: String,
+    default: "open",
+  },
   depth: {
     type: Number,
     default: 1,

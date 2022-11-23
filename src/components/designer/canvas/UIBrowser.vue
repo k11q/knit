@@ -2,9 +2,10 @@
   <template v-for="node in nodes" :key="node.id">
     <component
       :is="node.type === 'text' || node.type === 'box' ? 'div' : node.type"
-      :data-droppable="node.type === 'text' ? false : true"
+      :data-droppable="node.type === 'text' ? null : true"
       :data-id="node.id"
       :data-component="node.type"
+      :data-tiptap-editor="target === node.id ? true : null"
       @mousedown="testDown($event, node.id, node.type)"
       @mouseout="selectToi.treeHover = false"
       @mouseover.stop="
@@ -15,37 +16,21 @@
         }
       "
       @dblclick.prevent="
-        () => {
-          if (node.type === 'text') {
-            selectToi.clearSelected();
-            makeEditable($event, node.id);
-          }
-        }
-      "
-      @input.prevent="
-        node.type === 'text'
-          ? (selectToi.selectedBoxData.textContent = $event.target?.textContent)
-          : ''
-      "
-      @blur="node.type === 'text' ? (target = '') : ''"
-      :contenteditable="
-        node.type === 'text' &&
-        node.id === target &&
-        selectToi.selectedBox === node.id
+        node.type === 'text' ? makeEditable($event, node.id) : null
       "
       :class="{
         'pointer-events-none':
           selectToi.selectedBox === node.id &&
           canvasFF.isDragging === true &&
           node.type !== 'text',
-        'text-center hover:decoration-[#0191FA] hover:underline hover:decoration-2 focus:outline-none cursor-default':
-          node.type === 'text',
-        'decoration-[#0191FA] underline decoration-1 ':
-          selectToi.selectedBox === node.id && node.type === 'text',
       }"
       v-bind="node.attr"
     >
-      {{ node.type === "text" ? node.textContent : null }}
+      <div
+        v-if="node.type === 'text' && target !== node.id"
+        v-html="node.textContent"
+      ></div>
+      <Tiptap v-if="target === node.id" v-model="node.textContent" />
       <DesignerCanvasUIBrowser
         v-if="(node.children && node.type === 'div') || node.type === 'box'"
         :key="node.id"

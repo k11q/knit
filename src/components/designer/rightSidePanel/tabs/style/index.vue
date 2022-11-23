@@ -1989,6 +1989,8 @@
         </div>
       </div>
     </div>
+    <Tiptap v-model="text" />
+    <pre>{{ text }}</pre>
   </div>
 </template>
 
@@ -1998,4 +2000,5 @@ import { useRightPanelStore } from "@/stores/rightPanelStore";
 
 const selectToi = useCounterStore();
 const rightPanelStore = useRightPanelStore();
+const text = ref("");
 </script>

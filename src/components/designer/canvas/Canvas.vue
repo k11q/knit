@@ -52,10 +52,11 @@
           }px solid #0191FA`,
         }"
       ></div>
-      <!--Hover outline-->
+      <!--text editor component-->
       <div
-        v-show="selectToi.showTextEditor"
+        v-if="selectToi.showTextEditor"
         class="absolute pointer-events-none"
+        contenteditable="true"
         :style="{
           willChange: 'left, top, height, width',
           left: selectToi.selectedBoxHTMLX + 'px',
@@ -65,6 +66,7 @@
           backgroundColor: 'red',
         }"
       ></div>
+      <Tiptap class="absolute" />
       <!--Selected outline n resizer-->
       <div
         v-show="selectToi.selectedBox && !canvasFF.isDragging"
