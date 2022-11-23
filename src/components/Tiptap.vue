@@ -74,6 +74,6 @@ export default {
 
 <style>
 .ProseMirror {
-  white-space: pre;
+  white-space: pre !important;
 }
 </style>

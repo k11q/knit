@@ -20,7 +20,7 @@
       :class="{
         'pointer-events-none':
           selectToi.selectedBox === node.id &&
-          canvasFF.isDragging === true &&
+          canvasFF.isDragging &&
           node.type !== 'text',
       }"
       v-bind="node.attr"
@@ -29,7 +29,11 @@
         v-if="node.type === 'text' && selectToi.selectedTextEditor !== node.id"
         v-html="node.textContent"
       >
-        <span v-html="node.textContent" class="cursor-default"></span>
+        <span
+          v-html="node.textContent"
+          class="cursor-default"
+          draggable="false"
+        ></span>
       </template>
       <Tiptap
         class="w-auto whitespace-pre"
@@ -128,6 +132,7 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
       window.addEventListener("mouseup", mouseup);
 
       function mousemove(e) {
+        e.preventDefault();
         isDragging = true;
 
         let targetId = useGetElementIdFromPoint(e);
@@ -155,22 +160,8 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
             showMarker.value = true;
             dropMarker.setMarker(e, currDragElement);
             currDragElement.style.opacity = 0;
-            selectToi.treeHover = true;
-            let selectedTarget = closest.getBoundingClientRect();
 
-            selectToi.treeHoverHTMLX = Math.round(
-              (selectedTarget.x - squareStore.offsetLeft) / squareStore.scale
-            );
-            selectToi.treeHoverHTMLY = Math.round(
-              (selectedTarget.y - squareStore.offsetTop) / squareStore.scale
-            );
-
-            selectToi.treeHoverHTMLWidth = Math.round(
-              selectedTarget.width / squareStore.scale
-            );
-            selectToi.treeHoverHTMLHeight = Math.round(
-              selectedTarget.height / squareStore.scale
-            );
+            useSetOutlineHover(closestTarget);
           }
           selectToi.treeHoverSize = 0.5;
         }
@@ -187,106 +178,107 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
       }
 
       function mouseup() {
-        isDragging = false;
-        canvasMarker.lines = [];
-
-        Promise.resolve()
-          .then(function () {
-            if (
-              closest &&
-              selectToi.selectedBox !== closestTarget &&
-              canvasDnd.dragzone &&
-              !canvasDnd.dropzone
-            ) {
-              //append after
-              function dndAppend(arr, dragZone) {
-                arr.every((i) => {
-                  if (i.id === closestTarget) {
-                    i.children.splice(
-                      i.children.findIndex(({ id }) => id == dragZone),
-                      0,
-                      selectToi.selectedBoxData
-                    );
-                    return false;
-                  } else {
-                    dndAppend(i.children, dragZone);
-                    return true;
-                  }
-                });
-              }
-              function dndRemove(arr, currDrag) {
-                arr.every((i) => {
-                  if (i.id === currDrag) {
-                    arr.splice(
-                      arr.findIndex(({ id }) => id == currDrag),
-                      1
-                    );
-                    return false;
-                  } else {
-                    dndRemove(i.children, currDrag);
-                    return true;
-                  }
-                });
-              }
-              delete selectToi.selectedBoxData.attr.style.left;
-              delete selectToi.selectedBoxData.attr.style.top;
-              dndRemove(selectToi.data, currDrag);
-              selectToi.selectedBoxData.attr.style.position = "static";
-              dndAppend(selectToi.data, canvasDnd.dragzone);
-              showMarker.value = false;
-              currDragElement.style.opacity = prevOpacity;
-              canvasMarker.setRuler = true;
-              canvasDnd.dragzone = "";
-            }
-            if (
-              (closest &&
+        if (isDragging) {
+          canvasMarker.lines = [];
+          Promise.resolve()
+            .then(function () {
+              if (
+                closest &&
                 selectToi.selectedBox !== closestTarget &&
-                !canvasDnd.dragzone &&
-                canvasDnd.dropzone) ||
-              !closest.children?.length
-            ) {
-              //append bottom/push
-              function dndAppendBottom(arr, dropzone) {
-                arr.every((i) => {
-                  if (i.id === closestTarget) {
-                    i.children.push(selectToi.selectedBoxData);
-                    return false;
-                  } else {
-                    dndAppendBottom(i.children, dropzone);
-                    return true;
-                  }
-                });
+                canvasDnd.dragzone &&
+                !canvasDnd.dropzone
+              ) {
+                //append after
+                function dndAppend(arr, dragZone) {
+                  arr.every((i) => {
+                    if (i.id === closestTarget) {
+                      i.children.splice(
+                        i.children.findIndex(({ id }) => id == dragZone),
+                        0,
+                        selectToi.selectedBoxData
+                      );
+                      return false;
+                    } else {
+                      dndAppend(i.children, dragZone);
+                      return true;
+                    }
+                  });
+                }
+                function dndRemove(arr, currDrag) {
+                  arr.every((i) => {
+                    if (i.id === currDrag) {
+                      arr.splice(
+                        arr.findIndex(({ id }) => id == currDrag),
+                        1
+                      );
+                      return false;
+                    } else {
+                      dndRemove(i.children, currDrag);
+                      return true;
+                    }
+                  });
+                }
+                delete selectToi.selectedBoxData.attr.style.left;
+                delete selectToi.selectedBoxData.attr.style.top;
+                dndRemove(selectToi.data, currDrag);
+                selectToi.selectedBoxData.attr.style.position = "static";
+                dndAppend(selectToi.data, canvasDnd.dragzone);
+                showMarker.value = false;
+                currDragElement.style.opacity = prevOpacity;
+                canvasMarker.setRuler = true;
+                canvasDnd.dragzone = "";
               }
-              function dndRemove(arr, currDrag) {
-                arr.every((i) => {
-                  if (i.id === currDrag) {
-                    arr.splice(
-                      arr.findIndex(({ id }) => id == currDrag),
-                      1
-                    );
-                    return false;
-                  } else {
-                    dndRemove(i.children, currDrag);
-                    return true;
-                  }
-                });
+              if (
+                (closest &&
+                  selectToi.selectedBox !== closestTarget &&
+                  !canvasDnd.dragzone &&
+                  canvasDnd.dropzone) ||
+                !closest.children?.length
+              ) {
+                //append bottom/push
+                function dndAppendBottom(arr, dropzone) {
+                  arr.every((i) => {
+                    if (i.id === closestTarget) {
+                      i.children.push(selectToi.selectedBoxData);
+                      return false;
+                    } else {
+                      dndAppendBottom(i.children, dropzone);
+                      return true;
+                    }
+                  });
+                }
+                function dndRemove(arr, currDrag) {
+                  arr.every((i) => {
+                    if (i.id === currDrag) {
+                      arr.splice(
+                        arr.findIndex(({ id }) => id == currDrag),
+                        1
+                      );
+                      return false;
+                    } else {
+                      dndRemove(i.children, currDrag);
+                      return true;
+                    }
+                  });
+                }
+                delete selectToi.selectedBoxData.attr.style.left;
+                delete selectToi.selectedBoxData.attr.style.top;
+                dndRemove(selectToi.data, currDrag);
+                selectToi.selectedBoxData.attr.style.position = "static";
+                dndAppendBottom(selectToi.data, canvasDnd.dropzone);
+                showMarker.value = false;
+                currDragElement.style.opacity = prevOpacity;
+                canvasMarker.setRuler = true;
               }
-              delete selectToi.selectedBoxData.attr.style.left;
-              delete selectToi.selectedBoxData.attr.style.top;
-              dndRemove(selectToi.data, currDrag);
-              selectToi.selectedBoxData.attr.style.position = "static";
-              dndAppendBottom(selectToi.data, canvasDnd.dropzone);
-              showMarker.value = false;
-              currDragElement.style.opacity = prevOpacity;
-              canvasMarker.setRuler = true;
-            }
-          })
+            })
 
-          .then(function () {
-            useSetOutlineSelector(currDrag);
-          });
+            .then(function () {
+              useSetOutlineSelector(currDrag);
+            });
+        }
         selectToi.treeHoverSize = 1;
         useSetOutlineSelector(currDrag);
+        isDragging = false;
         window.removeEventListener("mousemove", mousemove);
         window.removeEventListener("mouseup", mouseup);
 
