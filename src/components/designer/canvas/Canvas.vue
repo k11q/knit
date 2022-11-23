@@ -176,6 +176,22 @@
           outline: `${1.5 / addaSquare.scale}px dotted #0191FA`,
         }"
       ></div>
+      <!--Select show-->
+      <div
+        v-show="selectStore.showSelect"
+        class="absolute pointer-events-none"
+        :style="{
+          willChange: 'left, top, height, width',
+          left: selectStore.X + 'px',
+          top: selectStore.Y + 'px',
+          height: selectStore.height + 'px',
+          width: selectStore.width + 'px',
+          border: `${
+            selectToi.treeHoverSize / addaSquare.scale
+          }px solid #0191FA`,
+          backgroundColor: 'rgba(1, 145, 250, 0.1)',
+        }"
+      ></div>
     </div>
     <!--Ruler element-->
     <div
@@ -194,6 +210,7 @@ import { useCanvasFF } from "@/stores/canvasFreeForm";
 import { useResizeStore } from "@/stores/resizeStore";
 import { useCanvasMarkerStore } from "@/stores/canvasMarker";
 import { useDropMarker } from "@/stores/dropMarker";
+import { useSelectStore } from "@/stores/selectStore";
 
 const selectToi = useCounterStore();
 const addaSquare = useSquareStore();
@@ -202,6 +219,7 @@ const resizeStore = useResizeStore();
 const canvasMarker = useCanvasMarkerStore();
 const showMarker = useShowMarker();
 const dropMarker = useDropMarker();
+const selectStore = useSelectStore();
 
 function wheel(event) {
   event.preventDefault();

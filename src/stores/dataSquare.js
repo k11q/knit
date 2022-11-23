@@ -116,6 +116,7 @@ export const useSquareStore = defineStore({
       if (this.normalPointer === true) {
         counter.clearSelected();
         document.activeElement.blur();
+        useSetSelect(event);
       }
       if (this.dragPointer === true || this.draggingPointer === true) {
         window.addEventListener("mousemove", mousemove);
