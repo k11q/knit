@@ -13,6 +13,7 @@
       v-bind="node.attr"
       :style="{
         width: depth === 1 ? '100%' : node.attr.style.width,
+        overflowX: 'hidden',
         left: depth === 1 ? '' : node.attr.style.left,
         top: depth === 1 ? '' : node.attr.style.top,
       }"
@@ -30,7 +31,7 @@
   </template>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { useCounterStore } from "@/stores/counter";
 
 const selectToi = useCounterStore();

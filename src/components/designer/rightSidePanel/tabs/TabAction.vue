@@ -202,7 +202,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { useCounterStore } from "@/stores/counter";
 import { useRightPanelStore } from "@/stores/rightPanelStore";
 

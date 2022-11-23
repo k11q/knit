@@ -27,7 +27,7 @@
   </template>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { useCounterStore } from "@/stores/counter";
 import { useCanvasDndStore } from "@/stores/canvasDnd";
 import { useCanvasFF } from "@/stores/canvasFreeForm";

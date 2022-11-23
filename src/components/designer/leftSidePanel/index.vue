@@ -242,7 +242,7 @@
   </aside>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { useCounterStore } from "@/stores/counter";
 
 const selectToi = useCounterStore();

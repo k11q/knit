@@ -163,7 +163,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { useCounterStore } from "@/stores/counter";
 import { useTreeDndStore } from "@/stores/treeDnd";
 import { useSquareStore } from "@/stores/dataSquare";

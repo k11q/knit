@@ -35,7 +35,7 @@
   </template>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { useSquareStore } from "../stores/dataSquare";
 
 const squareStore = useSquareStore();

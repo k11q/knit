@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute inset-0"
+    class="absolute inset-0 overflow-hidden"
     @wheel="wheel"
     @mousedown.stop.prevent="addaSquare.addSquare($event, selectToi.data)"
     :class="{
@@ -187,7 +187,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { useCounterStore } from "@/stores/counter";
 import { useSquareStore } from "@/stores/dataSquare";
 import { useCanvasFF } from "@/stores/canvasFreeForm";

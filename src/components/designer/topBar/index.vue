@@ -128,7 +128,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { useSquareStore } from "@/stores/dataSquare";
 import { useCanvasFF } from "@/stores/canvasFreeForm";
 import { useCounterStore } from "@/stores/counter";

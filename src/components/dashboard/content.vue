@@ -186,6 +186,6 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 const { data: projects } = await useLazyFetch("/api/projects");
 </script>

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 //verify if subdomain exist
 </script>
 

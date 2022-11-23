@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 const subdomain = useSubdomain();
 const route = useRoute();
 const profile = route.fullPath;
