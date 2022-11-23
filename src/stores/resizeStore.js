@@ -14,14 +14,8 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        let prevWidth =
-          selectToi.selectedBoxData.attr.style.width.replace(/[^0-9\.]+/g, "") |
-          0;
-        let prevHeight =
-          selectToi.selectedBoxData.attr.style.height.replace(
-            /[^0-9\.]+/g,
-            ""
-          ) | 0;
+        let prevWidth = parseInt(selectToi.selectedBoxData.attr.style.width);
+        let prevHeight = parseInt(selectToi.selectedBoxData.attr.style.height);
 
         let prevX = e.clientX;
         let prevY = e.clientY;
@@ -62,19 +56,9 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        let prevWidth =
-          selectToi.selectedBoxData.attr.style.width.replace(/[^0-9\.]+/g, "") |
-          0;
-        let prevHeight =
-          selectToi.selectedBoxData.attr.style.height.replace(
-            /[^0-9\.]+/g,
-            ""
-          ) | 0;
-        let prevWidth2 =
-          selectToi.selectedBoxData.attr.style.left.replace(
-            /[^-?0-9\.]+/g,
-            ""
-          ) | 0;
+        let prevWidth = parseInt(selectToi.selectedBoxData.attr.style.width);
+        let prevHeight = parseInt(selectToi.selectedBoxData.attr.style.height);
+        let prevWidth2 = parseInt(selectToi.selectedBoxData.attr.style.left);
         let prevWidthX = selectToi.selectedBoxHTMLX;
 
         let prevX = e.clientX;
@@ -123,24 +107,12 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        let prevWidth =
-          selectToi.selectedBoxData.attr.style.left.replace(
-            /[^-?0-9\.]+/g,
-            ""
-          ) | 0;
-        let prevHeight =
-          selectToi.selectedBoxData.attr.style.top.replace(/[^-?0-9\.]+/g, "") |
-          0;
+        let prevWidth = parseInt(selectToi.selectedBoxData.attr.style.left);
+        let prevHeight = parseInt(selectToi.selectedBoxData.attr.style.top);
         let prevWidthX = selectToi.selectedBoxHTMLX;
         let prevHeightY = selectToi.selectedBoxHTMLY;
-        let prevWidth2 =
-          selectToi.selectedBoxData.attr.style.width.replace(/[^0-9\.]+/g, "") |
-          0;
-        let prevHeight2 =
-          selectToi.selectedBoxData.attr.style.height.replace(
-            /[^0-9\.]+/g,
-            ""
-          ) | 0;
+        let prevWidth2 = parseInt(selectToi.selectedBoxData.attr.style.width);
+        let prevHeight2 = parseInt(selectToi.selectedBoxData.attr.style.height);
 
         let prevX = e.clientX;
         let prevY = e.clientY;
@@ -196,17 +168,9 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        let prevWidth =
-          selectToi.selectedBoxData.attr.style.width.replace(/[^0-9\.]+/g, "") |
-          0;
-        let prevHeight =
-          selectToi.selectedBoxData.attr.style.top.replace(/[^-?0-9\.]+/g, "") |
-          0;
-        let prevHeight2 =
-          selectToi.selectedBoxData.attr.style.height.replace(
-            /[^0-9\.]+/g,
-            ""
-          ) | 0;
+        let prevWidth = parseInt(selectToi.selectedBoxData.attr.style.width);
+        let prevHeight = parseInt(selectToi.selectedBoxData.attr.style.top);
+        let prevHeight2 = parseInt(selectToi.selectedBoxData.attr.style.height);
         let prevHeightY = selectToi.selectedBoxHTMLY;
 
         let prevX = e.clientX;
@@ -257,9 +221,7 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        let prevWidth =
-          selectToi.selectedBoxData.attr.style.width.replace(/[^0-9\.]+/g, "") |
-          0;
+        let prevWidth = parseInt(selectToi.selectedBoxData.attr.style.width);
 
         let prevX = e.clientX;
 
@@ -291,14 +253,8 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        let prevWidth =
-          selectToi.selectedBoxData.attr.style.width.replace(/[^0-9\.]+/g, "") |
-          0;
-        let prevWidth2 =
-          selectToi.selectedBoxData.attr.style.left.replace(
-            /[^-?0-9\.]+/g,
-            ""
-          ) | 0;
+        let prevWidth = parseInt(selectToi.selectedBoxData.attr.style.width);
+        let prevWidth2 = parseInt(selectToi.selectedBoxData.attr.style.left);
         let prevWidthX = selectToi.selectedBoxHTMLX;
 
         let prevX = e.clientX;
@@ -338,14 +294,8 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        let prevHeight =
-          selectToi.selectedBoxData.attr.style.height.replace(
-            /[^0-9\.]+/g,
-            ""
-          ) | 0;
-        let prevHeight2 =
-          selectToi.selectedBoxData.attr.style.top.replace(/[^-?0-9\.]+/g, "") |
-          0;
+        let prevHeight = parseInt(selectToi.selectedBoxData.attr.style.height);
+        let prevHeight2 = parseInt(selectToi.selectedBoxData.attr.style.top);
         let prevHeightY = selectToi.selectedBoxHTMLY;
 
         let prevY = e.clientY;
@@ -385,11 +335,7 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        let prevHeight =
-          selectToi.selectedBoxData.attr.style.height.replace(
-            /[^0-9\.]+/g,
-            ""
-          ) | 0;
+        let prevHeight = parseInt(selectToi.selectedBoxData.attr.style.height);
 
         let prevY = e.clientY;
 

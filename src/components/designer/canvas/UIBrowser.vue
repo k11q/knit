@@ -38,9 +38,8 @@
     >
       <template
         v-if="node.type === 'text' && selectToi.selectedTextEditor !== node.id"
-        v-html="node.textContent"
       >
-        <span
+        <div
           v-html="node.textContent"
           class="cursor-default"
           :class="{
@@ -55,7 +54,7 @@
                 : `${1 / squareStore.scale}px`,
           }"
           draggable="false"
-        ></span>
+        ></div>
       </template>
       <Tiptap
         v-if="node.type === 'text' && selectToi.selectedTextEditor === node.id"
