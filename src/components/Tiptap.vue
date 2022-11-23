@@ -71,3 +71,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.ProseMirror {
+  white-space: pre;
+}
+</style>

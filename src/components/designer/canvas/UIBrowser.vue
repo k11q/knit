@@ -32,6 +32,7 @@
         <span v-html="node.textContent" class="cursor-default"></span>
       </template>
       <Tiptap
+        class="w-auto whitespace-pre"
         v-if="node.type === 'text' && selectToi.selectedTextEditor === node.id"
         v-model="node.textContent"
         spellcheck="false"
