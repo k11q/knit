@@ -9,7 +9,9 @@
         top: depth === 1 ? '' : node.attr.style.top,
       }"
     >
-      {{ node.type === "text" ? node.textContent : null }}
+      <template v-if="node.type === 'text'">
+        <span v-html="node.textContent"></span>
+      </template>
       <DesignerCanvasUIBrowser
         v-if="(node.children && node.type === 'div') || node.type === 'box'"
         :key="node.id"

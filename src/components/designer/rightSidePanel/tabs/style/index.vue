@@ -1989,8 +1989,6 @@
         </div>
       </div>
     </div>
-    <Tiptap v-model="text" />
-    <pre>{{ text }}</pre>
   </div>
 </template>
 

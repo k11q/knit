@@ -5,7 +5,6 @@
       :data-droppable="node.type === 'text' ? null : true"
       :data-id="node.id"
       :data-component="node.type"
-      :data-tiptap-editor="target === node.id ? true : null"
       @mousedown="testDown($event, node.id, node.type)"
       @mouseout="selectToi.treeHover = false"
       @mouseover.stop="
@@ -26,11 +25,17 @@
       }"
       v-bind="node.attr"
     >
-      <div
-        v-if="node.type === 'text' && target !== node.id"
+      <template
+        v-if="node.type === 'text' && selectToi.selectedTextEditor !== node.id"
         v-html="node.textContent"
-      ></div>
-      <Tiptap v-if="target === node.id" v-model="node.textContent" />
+      >
+        <span v-html="node.textContent"></span>
+      </template>
+      <Tiptap
+        v-if="node.type === 'text' && selectToi.selectedTextEditor === node.id"
+        v-model="node.textContent"
+        spellcheck="false"
+      />
       <DesignerCanvasUIBrowser
         v-if="(node.children && node.type === 'div') || node.type === 'box'"
         :key="node.id"
@@ -54,12 +59,12 @@ const canvasDnd = useCanvasDndStore();
 const canvasFF = useCanvasFF();
 const squareStore = useSquareStore();
 const canvasMarker = useCanvasMarkerStore();
-const target = ref("");
 const showMarker = useShowMarker();
 const dropMarker = useDropMarker();
 
 function makeEditable(e: Event, id: String) {
-  target.value = id;
+  selectToi.selectedTextEditor = id;
+  useSetOutlineSelector("");
 }
 
 //dnd on canvas
@@ -84,7 +89,6 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
     useSetOutlineSelector(currDrag);
 
     //delete selected item
-
     document.removeEventListener("keyup", keyup);
     document.addEventListener("keyup", keyup);
 

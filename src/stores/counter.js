@@ -11,6 +11,7 @@ export const useCounterStore = defineStore({
     selectedBoxData: "",
     selectedBoxHTMLX: NaN,
     selectedBoxHTMLY: NaN,
+    selectedTextEditor: "",
     prevX: 0,
     prevY: 0,
     selectedBoxHTMLWidth: NaN,
@@ -616,7 +617,7 @@ export const useCounterStore = defineStore({
 
     clearSelected() {
       let canvasDnd = useCanvasDndStore();
-
+      this.selectedTextEditor = "";
       this.selectedBox = "";
       canvasDnd.currDrag = "";
       canvasDnd.currDragValue = "";

@@ -52,21 +52,6 @@
           }px solid #0191FA`,
         }"
       ></div>
-      <!--text editor component-->
-      <div
-        v-if="selectToi.showTextEditor"
-        class="absolute pointer-events-none"
-        contenteditable="true"
-        :style="{
-          willChange: 'left, top, height, width',
-          left: selectToi.selectedBoxHTMLX + 'px',
-          top: selectToi.selectedBoxHTMLY + 'px',
-          height: selectToi.selectedBoxHTMLHeight + 'px',
-          width: selectToi.selectedBoxHTMLWidth + 'px',
-          backgroundColor: 'red',
-        }"
-      ></div>
-      <Tiptap class="absolute" />
       <!--Selected outline n resizer-->
       <div
         v-show="selectToi.selectedBox && !canvasFF.isDragging"
