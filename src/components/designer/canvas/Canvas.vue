@@ -165,8 +165,14 @@
           willChange: 'left, top, height, width, outline',
           left: selectToi.selectedBoxData.attr?.style.left,
           top: selectToi.selectedBoxData.attr?.style.top,
-          height: selectToi.selectedBoxData.attr?.style.height,
-          width: selectToi.selectedBoxData.attr?.style.width,
+          height:
+            useGetElementRect(selectToi.selectedBoxData.id)?.height /
+              addaSquare.scale +
+            'px',
+          width:
+            useGetElementRect(selectToi.selectedBoxData.id)?.width /
+              addaSquare.scale +
+            'px',
           outline: `${1.5 / addaSquare.scale}px dotted #0191FA`,
         }"
       ></div>

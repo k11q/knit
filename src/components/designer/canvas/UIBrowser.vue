@@ -21,7 +21,7 @@
         'pointer-events-none':
           selectToi.selectedBox === node.id &&
           canvasFF.isDragging &&
-          node.type !== 'text',
+          (node.type !== 'text' || (node.type === 'text' && textIsDragging)),
       }"
       v-bind="node.attr"
     >
@@ -66,6 +66,7 @@ const squareStore = useSquareStore();
 const canvasMarker = useCanvasMarkerStore();
 const showMarker = useShowMarker();
 const dropMarker = useDropMarker();
+const textIsDragging = ref(false);
 
 function makeEditable(e: Event, id: String) {
   selectToi.selectedTextEditor = id;
@@ -133,6 +134,9 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
 
       function mousemove(e) {
         e.preventDefault();
+        if (currType === "text") {
+          textIsDragging.value = true;
+        }
         isDragging = true;
 
         let targetId = useGetElementIdFromPoint(e);
@@ -156,6 +160,7 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
             currDragElement.style.opacity = prevOpacity;
             canvasMarker.setRuler = true;
           } else {
+            console.log(closest);
             canvasMarker.setRuler = false;
             showMarker.value = true;
             dropMarker.setMarker(e, currDragElement);
@@ -278,6 +283,9 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
         }
         selectToi.treeHoverSize = 1;
         useSetOutlineSelector(currDrag);
+        if (currType === "text") {
+          textIsDragging.value = false;
+        }
         isDragging = false;
         window.removeEventListener("mousemove", mousemove);
         window.removeEventListener("mouseup", mouseup);

@@ -62,9 +62,7 @@ export const useDropMarker = defineStore({
           let markerPositionTop;
           let markerPositionLeft;
           let gap;
-          let currDragWidth = parseInt(
-            selectToi.selectedBoxData.attr.style.width
-          );
+          let currDragWidth = parseInt(currDragRect.width);
 
           if (!getDragAfter(e.clientY).elementID) {
             let dropPositionRect =
@@ -131,7 +129,7 @@ export const useDropMarker = defineStore({
           }
         }
         this.markerHeight = 4 / squareStore.scale + "px";
-        this.markerWidth = selectToi.selectedBoxData.attr.style.width;
+        this.markerWidth = currDragRect.width / squareStore.scale + "px";
       }
       if (drop.style.flexDirection === "row") {
         this.markerLeft = paddingLeft + selectToi.treeHoverHTMLX + "px";
@@ -227,7 +225,7 @@ export const useDropMarker = defineStore({
               "px";
           }
         }
-        this.markerHeight = selectToi.selectedBoxData.attr.style.height;
+        this.markerHeight = currDragRect.height / squareStore.scale + "px";
         this.markerWidth = 4 / squareStore.scale + "px";
       }
     },
