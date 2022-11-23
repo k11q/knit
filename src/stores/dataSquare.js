@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { useCounterStore } from "./counter";
 import { useCanvasFF } from "./canvasFreeForm";
 import { useNewSquareStore } from "./newSquareStore";
+import { useNewFrameStore } from "./newFrameStore";
 import { v4 as uuidv4 } from "uuid";
 
 export const useSquareStore = defineStore({
@@ -94,6 +95,7 @@ export const useSquareStore = defineStore({
       const canvasFF = useCanvasFF();
       const squareStore = useSquareStore();
       const newSquareStore = useNewSquareStore();
+      const newFrameStore = useNewFrameStore();
       const uid = () =>
         String(Date.now().toString(32) + Math.random().toString(16)).replace(
           /\./g,
@@ -186,28 +188,7 @@ export const useSquareStore = defineStore({
         this.countBox = this.countBox + 1;
       }
       if (this.addFrameActivated === true) {
-        this.dataFrame.name = "frame" + this.countBox;
-        this.dataFrame.id = useGetRandomLetter() + uid();
-        this.dataFrame.attr.style.left =
-          Math.round((event.clientX - this.offsetLeft) / this.scale - 50) +
-          "px";
-        this.dataFrame.attr.style.top =
-          Math.round((event.clientY - this.offsetTop) / this.scale - 50) + "px";
-        this.dataFrame.children = [];
-        let clonedDataFrame = { ...this.dataFrame };
-        clonedDataFrame.attr = { ...this.dataFrame.attr };
-        clonedDataFrame.attr.style = { ...this.dataFrame.attr.style };
-
-        Promise.resolve()
-          .then(() => {
-            dataPushed.push({ ...clonedDataFrame });
-            counter.changeSelectedNewlyAdded(event, clonedDataFrame);
-          })
-          .then(() => {
-            useSetOutlineSelector(clonedDataFrame.id);
-          });
-        this.turnOnNormalPointer();
-        this.countBox = this.countBox + 1;
+        newFrameStore.setNewFrame(event, dataPushed);
       }
     },
     turnOnAddSquareActivated() {

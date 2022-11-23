@@ -1,7 +1,7 @@
 <template>
   <div
     class="absolute inset-0 overflow-hidden"
-    @wheel="wheel"
+    @wheel="usePinchZoom($event)"
     @mousedown.stop.prevent="addaSquare.addSquare($event, selectToi.data)"
     :class="{
       'cursor-crosshair':
@@ -194,15 +194,23 @@
       ></div>
       <!--new square-->
       <div
-        v-if="newSquareStore.show"
+        v-if="newSquareStore.show || newFrameStore.show"
         class="absolute pointer-events-none"
         :style="{
           willChange: 'left, top, height, width',
-          left: newSquareStore.X + 'px',
-          top: newSquareStore.Y + 'px',
-          height: newSquareStore.height + 'px',
-          width: newSquareStore.width + 'px',
-          backgroundColor: '#D9D9D9',
+          left: newSquareStore.show
+            ? newSquareStore.X + 'px'
+            : newFrameStore.X + 'px',
+          top: newSquareStore.show
+            ? newSquareStore.Y + 'px'
+            : newFrameStore.Y + 'px',
+          height: newSquareStore.show
+            ? newSquareStore.height + 'px'
+            : newFrameStore.height + 'px',
+          width: newSquareStore.show
+            ? newSquareStore.width + 'px'
+            : newFrameStore.width + 'px',
+          backgroundColor: newSquareStore.show ? '#D9D9D9' : '#FFFFFF',
         }"
       >
         <div>
@@ -286,6 +294,7 @@ import { useCanvasMarkerStore } from "@/stores/canvasMarker";
 import { useDropMarker } from "@/stores/dropMarker";
 import { useSelectStore } from "@/stores/selectStore";
 import { useNewSquareStore } from "@/stores/newSquareStore";
+import { useNewFrameStore } from "@/stores/newFrameStore";
 
 const selectToi = useCounterStore();
 const addaSquare = useSquareStore();
@@ -296,31 +305,7 @@ const showMarker = useShowMarker();
 const dropMarker = useDropMarker();
 const selectStore = useSelectStore();
 const newSquareStore = useNewSquareStore();
-
-function wheel(event) {
-  event.preventDefault();
-  const canvas = document.querySelector('[data-id="canvas"]');
-  const canvasRect = canvas.getBoundingClientRect();
-
-  if (
-    event.deltaX === 0 &&
-    event.ctrlKey &&
-    addaSquare.scale >= 0.02 &&
-    addaSquare.scale <= 25.6
-  ) {
-    let xs = (event.clientX - addaSquare.offsetLeft) / addaSquare.scale;
-    let ys = (event.clientY - addaSquare.offsetTop) / addaSquare.scale;
-    addaSquare.scale += event.deltaY * -0.009 * addaSquare.scale;
-    addaSquare.scale = Math.max(0.02, Math.min(25.6, addaSquare.scale));
-    addaSquare.offsetLeft = event.clientX - xs * addaSquare.scale;
-    addaSquare.offsetTop = event.clientY - ys * addaSquare.scale;
-  } else {
-    addaSquare.offsetLeft += -event.deltaX;
-    addaSquare.offsetTop += -event.deltaY;
-    console.log("offsetleft = " + addaSquare.offsetLeft);
-    console.log("offsettop = " + addaSquare.offsetTop);
-  }
-}
+const newFrameStore = useNewFrameStore();
 
 onMounted(() => {
   addaSquare.offsetLeft = vw(50);
