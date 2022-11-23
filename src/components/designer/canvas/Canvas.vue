@@ -192,6 +192,80 @@
           backgroundColor: 'rgba(1, 145, 250, 0.1)',
         }"
       ></div>
+      <!--new square-->
+      <div
+        v-if="newSquareStore.show"
+        class="absolute pointer-events-none"
+        :style="{
+          willChange: 'left, top, height, width',
+          left: newSquareStore.X + 'px',
+          top: newSquareStore.Y + 'px',
+          height: newSquareStore.height + 'px',
+          width: newSquareStore.width + 'px',
+          backgroundColor: '#D9D9D9',
+        }"
+      >
+        <div>
+          <p
+            class="absolute left-0 right-0 top-full flex flex-row justify-center"
+            :style="{ marginTop: `${(8 * 1) / addaSquare.scale}px` }"
+          >
+            <span
+              class="bg-[#0191FA] text-[#EDEDED] cursor-default whitespace-nowrap"
+              :style="{
+                fontSize: `${(11 * 1) / addaSquare.scale}px`,
+                lineHeight: 1.5,
+                borderRadius: `${(4 * 1) / addaSquare.scale}px`,
+                paddingTop: `${2 * (1 / addaSquare.scale)}px`,
+                paddingBottom: `${2 * (1 / addaSquare.scale)}px`,
+                paddingRight: `${(4 * 1) / addaSquare.scale}px`,
+                paddingLeft: `${(4 * 1) / addaSquare.scale}px`,
+              }"
+            >
+              {{ newSquareStore.width }}
+              x
+              {{ newSquareStore.height }}
+            </span>
+          </p>
+          <div
+            class="absolute bottom-full bg-[#0191FA] w-full hover:cursor-row-resize"
+            :style="{
+              height: `${(1 * 1) / addaSquare.scale}px`,
+            }"
+          />
+          <div
+            class="absolute top-full bg-[#0191FA] w-full hover:cursor-row-resize"
+            :style="{ height: `${(1 * 1) / addaSquare.scale}px` }"
+          />
+          <div
+            class="absolute right-full bg-[#0191FA] h-full hover:cursor-col-resize"
+            :style="{
+              width: `${(1 * 1) / addaSquare.scale}px`,
+            }"
+          />
+          <div
+            class="absolute left-full bg-[#0191FA] h-full hover:cursor-col-resize"
+            :style="{ width: `${(1 * 1) / addaSquare.scale}px` }"
+          />
+
+          <div
+            class="absolute -top-1 -left-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nwse-resize"
+            :style="{ transform: `scale( ${1 / addaSquare.scale})` }"
+          />
+          <div
+            class="absolute -top-1 -right-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nesw-resize"
+            :style="{ transform: `scale( ${1 / addaSquare.scale})` }"
+          />
+          <div
+            class="absolute -bottom-1 -right-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nwse-resize"
+            :style="{ transform: `scale( ${1 / addaSquare.scale})` }"
+          />
+          <div
+            class="absolute -bottom-1 -left-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nesw-resize"
+            :style="{ transform: `scale( ${1 / addaSquare.scale})` }"
+          />
+        </div>
+      </div>
     </div>
     <!--Ruler element-->
     <div
@@ -211,6 +285,7 @@ import { useResizeStore } from "@/stores/resizeStore";
 import { useCanvasMarkerStore } from "@/stores/canvasMarker";
 import { useDropMarker } from "@/stores/dropMarker";
 import { useSelectStore } from "@/stores/selectStore";
+import { useNewSquareStore } from "@/stores/newSquareStore";
 
 const selectToi = useCounterStore();
 const addaSquare = useSquareStore();
@@ -220,6 +295,7 @@ const canvasMarker = useCanvasMarkerStore();
 const showMarker = useShowMarker();
 const dropMarker = useDropMarker();
 const selectStore = useSelectStore();
+const newSquareStore = useNewSquareStore();
 
 function wheel(event) {
   event.preventDefault();

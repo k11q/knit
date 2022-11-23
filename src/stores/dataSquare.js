@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { useCounterStore } from "./counter";
 import { useCanvasFF } from "./canvasFreeForm";
+import { useNewSquareStore } from "./newSquareStore";
 import { v4 as uuidv4 } from "uuid";
 
 export const useSquareStore = defineStore({
@@ -92,6 +93,7 @@ export const useSquareStore = defineStore({
       const counter = useCounterStore();
       const canvasFF = useCanvasFF();
       const squareStore = useSquareStore();
+      const newSquareStore = useNewSquareStore();
       const uid = () =>
         String(Date.now().toString(32) + Math.random().toString(16)).replace(
           /\./g,
@@ -156,28 +158,7 @@ export const useSquareStore = defineStore({
       }
 
       if (this.addSquareActivated === true) {
-        this.dataSquare.name = "box" + this.countBox;
-        this.dataSquare.id = useGetRandomLetter() + uid();
-        this.dataSquare.attr.style.left =
-          Math.round((event.clientX - this.offsetLeft) / this.scale - 50) +
-          "px";
-        this.dataSquare.attr.style.top =
-          Math.round((event.clientY - this.offsetTop) / this.scale - 50) + "px";
-        this.dataSquare.children = [];
-        let clonedDataSquare = { ...this.dataSquare };
-        clonedDataSquare.attr = { ...this.dataSquare.attr };
-        clonedDataSquare.attr.style = { ...this.dataSquare.attr.style };
-
-        Promise.resolve()
-          .then(() => {
-            dataPushed.push({ ...clonedDataSquare });
-            counter.changeSelectedNewlyAdded(event, clonedDataSquare);
-          })
-          .then(() => {
-            useSetOutlineSelector(clonedDataSquare.id);
-          });
-        this.turnOnNormalPointer();
-        this.countBox = this.countBox + 1;
+        newSquareStore.setNewSquare(event, dataPushed);
       }
       if (this.addTextActivated === true) {
         this.dataText.name = "text" + this.countBox;
