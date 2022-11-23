@@ -6,11 +6,22 @@
       :data-id="node.id"
       :data-component="node.type"
       @mousedown="testDown($event, node.id, node.type)"
-      @mouseout="selectToi.treeHover = false"
+      @mouseout="
+        () => {
+          selectToi.treeHover = false;
+          textHover = false;
+        }
+      "
       @mouseover.stop="
         () => {
-          if (selectToi.selectedBox !== node.id) {
+          if (selectToi.selectedBox !== node.id && node.type !== 'text') {
             useSetOutlineHover(node.id);
+          } else if (
+            selectToi.selectedBox !== node.id &&
+            node.type === 'text' &&
+            !canvasFF.isDragging
+          ) {
+            textHover = true;
           }
         }
       "
@@ -32,11 +43,21 @@
         <span
           v-html="node.textContent"
           class="cursor-default"
+          :class="{
+            'underline decoration-[#0191FA]':
+              selectToi.selectedBox === node.id && !canvasFF.isDragging,
+            'hover:underline decoration-[#0191FA]': !canvasFF.isDragging,
+          }"
+          :style="{
+            textDecorationThickness:
+              textHover && selectToi.selectedBox !== node.id
+                ? `${2 / squareStore.scale}px`
+                : `${1 / squareStore.scale}px`,
+          }"
           draggable="false"
         ></span>
       </template>
       <Tiptap
-        class="w-auto whitespace-pre"
         v-if="node.type === 'text' && selectToi.selectedTextEditor === node.id"
         v-model="node.textContent"
         spellcheck="false"
@@ -67,6 +88,7 @@ const canvasMarker = useCanvasMarkerStore();
 const showMarker = useShowMarker();
 const dropMarker = useDropMarker();
 const textIsDragging = ref(false);
+const textHover = ref(false);
 
 function makeEditable(e: Event, id: String) {
   selectToi.selectedTextEditor = id;
@@ -142,6 +164,7 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
         let targetId = useGetElementIdFromPoint(e);
         let target = useGetElementFromPoint(e);
         closest = useGetClosestElement(e);
+
         if (closest) {
           closestTarget = useGetClosestDroppableId(e);
         }
@@ -160,7 +183,6 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
             currDragElement.style.opacity = prevOpacity;
             canvasMarker.setRuler = true;
           } else {
-            console.log(closest);
             canvasMarker.setRuler = false;
             showMarker.value = true;
             dropMarker.setMarker(e, currDragElement);

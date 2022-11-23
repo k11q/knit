@@ -36,7 +36,7 @@
     >
       <!--Hover outline-->
       <div
-        v-show="selectToi.treeHover"
+        v-show="selectToi.treeHover && !selectToi.selectedTextEditor"
         class="absolute pointer-events-none"
         :style="{
           willChange: 'left, top, height, width',

@@ -72,8 +72,19 @@ export default {
 };
 </script>
 
+<script setup>
+import { useSquareStore } from "@/stores/dataSquare";
+
+const squareStore = useSquareStore();
+</script>
+
 <style>
 .ProseMirror {
   white-space: pre !important;
+  border-radius: 0;
+}
+
+.ProseMirror-focused {
+  outline: v-bind(`${1 / squareStore.scale}px solid #0191FA`);
 }
 </style>
