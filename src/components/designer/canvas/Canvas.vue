@@ -108,10 +108,25 @@
           <div
             v-show="paddingResize.showPaddingResizer"
             @mouseover="paddingResize.setShowPaddingResizer"
-            @mouseout="paddingResize.showPaddingResizer = false"
+            @mouseout="
+              paddingResize.currentResizing
+                ? null
+                : (paddingResize.showPaddingResizer = false)
+            "
             class="absolute top-0 w-full flex flex-row items-center justify-center hover:bg-pink-500/50"
+            :class="{
+              'border-b border-red-500 bg-pink-500/50':
+                paddingResize.currentResizing === 'top',
+            }"
             :style="{
-              height: `${parseInt(selectToi.resizeObserverRect.top)}px`,
+              height: `${
+                useGetElement(selectToi.selectedBoxData.id)?.style?.paddingTop
+              }`
+                ? `${
+                    useGetElement(selectToi.selectedBoxData.id)?.style
+                      ?.paddingTop
+                  }`
+                : `${(8 * 1) / addaSquare.scale}px`,
             }"
           >
             <div
@@ -133,13 +148,26 @@
           <div
             v-show="paddingResize.showPaddingResizer"
             @mouseover="paddingResize.setShowPaddingResizer"
-            @mouseout="paddingResize.showPaddingResizer = false"
+            @mouseout="
+              paddingResize.currentResizing
+                ? null
+                : (paddingResize.showPaddingResizer = false)
+            "
             class="absolute bottom-0 w-full flex flex-row items-center justify-center hover:bg-pink-500/50"
+            :class="{
+              'border-t border-red-500 bg-pink-500/50':
+                paddingResize.currentResizing === 'bottom',
+            }"
             :style="{
               height: `${
                 useGetElement(selectToi.selectedBoxData.id)?.style
                   ?.paddingBottom
-              }`,
+              }`
+                ? `${
+                    useGetElement(selectToi.selectedBoxData.id)?.style
+                      ?.paddingBottom
+                  }`
+                : `${(8 * 1) / addaSquare.scale}px`,
             }"
           >
             <div
@@ -165,10 +193,25 @@
           <div
             v-show="paddingResize.showPaddingResizer"
             @mouseover="paddingResize.setShowPaddingResizer"
-            @mouseout="paddingResize.showPaddingResizer = false"
-            class="absolute left-0 h-full flex flex-row items-center justify-center hover:bg-pink-500/50 flex-none"
+            @mouseout="
+              paddingResize.currentResizing
+                ? null
+                : (paddingResize.showPaddingResizer = false)
+            "
+            class="absolute left-0 h-full flex flex-row items-center justify-center hover:bg-pink-500/50"
+            :class="{
+              'border-r border-red-500 bg-pink-500/50':
+                paddingResize.currentResizing === 'left',
+            }"
             :style="{
-              width: `${parseInt(selectToi.resizeObserverRect.left)}px`,
+              width: `${
+                useGetElement(selectToi.selectedBoxData.id)?.style?.paddingLeft
+              }`
+                ? `${
+                    useGetElement(selectToi.selectedBoxData.id)?.style
+                      ?.paddingLeft
+                  }`
+                : `${(8 * 1) / addaSquare.scale}px`,
             }"
           >
             <div
@@ -192,10 +235,19 @@
             @mouseover="paddingResize.setShowPaddingResizer"
             @mouseout="paddingResize.showPaddingResizer = false"
             class="absolute right-0 h-full flex flex-row items-center justify-center hover:bg-pink-500/50"
+            :class="{
+              'border-l border-red-500 bg-pink-500/50':
+                paddingResize.currentResizing === 'right',
+            }"
             :style="{
               width: `${
                 useGetElement(selectToi.selectedBoxData.id)?.style?.paddingRight
-              }`,
+              }`
+                ? `${
+                    useGetElement(selectToi.selectedBoxData.id)?.style
+                      ?.paddingRight
+                  }`
+                : `${(8 * 1) / addaSquare.scale}px`,
             }"
           >
             <div
