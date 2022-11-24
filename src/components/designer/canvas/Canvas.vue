@@ -143,9 +143,13 @@
                 paddingLeft: `${(4 * 1) / addaSquare.scale}px`,
               }"
             >
-              {{ newSquareStore.width }}
+              {{
+                newSquareStore.show ? newSquareStore.width : newFrameStore.width
+              }}
               x
-              {{ newSquareStore.height }}
+              {{
+                newSquareStore.show ? newSquareStore.width : newFrameStore.width
+              }}
             </span>
           </p>
           <div

@@ -167,9 +167,6 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
 
       function mousemove(e) {
         e.preventDefault();
-        if (!resizeStore.isResizing) {
-          useResizeObserver(currDrag);
-        }
 
         if (currType === "text") {
           textIsDragging.value = true;
@@ -212,6 +209,10 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
           Math.round((e.clientX - prevX) / squareStore.scale) + "px";
         selectToi.selectedBoxData.attr.style.top =
           Math.round((e.clientY - prevY) / squareStore.scale) + "px";
+
+        if (!resizeStore.isResizing) {
+          useResizeObserver(currDrag);
+        }
 
         //ruler function
         if (canvasMarker.setRuler) {

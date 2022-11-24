@@ -12,6 +12,7 @@ export default function (id) {
           entry.target.getBoundingClientRect();
       }
     });
+    resizeObserver.disconnect();
     resizeObserver.observe(document.querySelector(`[data-id=${id}]`));
   }
 }
