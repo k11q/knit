@@ -10,6 +10,7 @@ export const useResizeStore = defineStore({
   }),
   actions: {
     resizeBottomRight(e) {
+      const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
@@ -44,7 +45,7 @@ export const useResizeStore = defineStore({
         }
 
         function mouseup() {
-          this.isResizing = false;
+          resizeStore.isResizing = false;
           window.removeEventListener("mousemove", mousemove);
           window.removeEventListener("mouseup", mouseup);
           console.log("mouseup!");
@@ -52,6 +53,7 @@ export const useResizeStore = defineStore({
       }
     },
     resizeBottomLeft(e) {
+      const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
@@ -95,7 +97,7 @@ export const useResizeStore = defineStore({
         }
 
         function mouseup() {
-          this.isResizing = false;
+          resizeStore.isResizing = false;
           window.removeEventListener("mousemove", mousemove);
           window.removeEventListener("mouseup", mouseup);
           console.log("mouseup!");
@@ -103,6 +105,7 @@ export const useResizeStore = defineStore({
       }
     },
     resizeTopLeft(e) {
+      const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
@@ -156,7 +159,7 @@ export const useResizeStore = defineStore({
         }
 
         function mouseup() {
-          this.isResizing = false;
+          resizeStore.isResizing = false;
           window.removeEventListener("mousemove", mousemove);
           window.removeEventListener("mouseup", mouseup);
           console.log("mouseup!");
@@ -164,6 +167,7 @@ export const useResizeStore = defineStore({
       }
     },
     resizeTopRight(e) {
+      const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
@@ -209,7 +213,7 @@ export const useResizeStore = defineStore({
         }
 
         function mouseup() {
-          this.isResizing = false;
+          resizeStore.isResizing = false;
           window.removeEventListener("mousemove", mousemove);
           window.removeEventListener("mouseup", mouseup);
           console.log("mouseup!");
@@ -217,6 +221,7 @@ export const useResizeStore = defineStore({
       }
     },
     resizeRight(e) {
+      const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
@@ -241,7 +246,7 @@ export const useResizeStore = defineStore({
         }
 
         function mouseup() {
-          this.isResizing = false;
+          resizeStore.isResizing = false;
           window.removeEventListener("mousemove", mousemove);
           window.removeEventListener("mouseup", mouseup);
           console.log("mouseup!");
@@ -249,6 +254,7 @@ export const useResizeStore = defineStore({
       }
     },
     resizeLeft(e) {
+      const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
@@ -282,7 +288,7 @@ export const useResizeStore = defineStore({
         }
 
         function mouseup() {
-          this.isResizing = false;
+          resizeStore.isResizing = false;
           window.removeEventListener("mousemove", mousemove);
           window.removeEventListener("mouseup", mouseup);
           console.log("mouseup!");
@@ -290,6 +296,7 @@ export const useResizeStore = defineStore({
       }
     },
     resizeTop(e) {
+      const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
@@ -323,7 +330,7 @@ export const useResizeStore = defineStore({
         }
 
         function mouseup() {
-          this.isResizing = false;
+          resizeStore.isResizing = false;
           window.removeEventListener("mousemove", mousemove);
           window.removeEventListener("mouseup", mouseup);
           console.log("mouseup!");
@@ -331,6 +338,7 @@ export const useResizeStore = defineStore({
       }
     },
     resizeBottom(e) {
+      const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
@@ -355,7 +363,7 @@ export const useResizeStore = defineStore({
         }
 
         function mouseup() {
-          this.isResizing = false;
+          resizeStore.isResizing = false;
           window.removeEventListener("mousemove", mousemove);
           window.removeEventListener("mouseup", mouseup);
           console.log("mouseup!");

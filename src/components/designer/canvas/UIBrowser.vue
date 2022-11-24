@@ -85,6 +85,7 @@ import { useSquareStore } from "@/stores/dataSquare";
 import { useCanvasMarkerStore } from "@/stores/canvasMarker";
 import { useDropMarker } from "@/stores/dropMarker";
 import { usePaddingResizeStore } from "@/stores/paddingResizeStore";
+import { useResizeStore } from "@/stores/resizeStore";
 
 const selectToi = useCounterStore();
 const canvasDnd = useCanvasDndStore();
@@ -96,6 +97,7 @@ const dropMarker = useDropMarker();
 const textIsDragging = ref(false);
 const textHover = ref(false);
 const paddingResize = usePaddingResizeStore();
+const resizeStore = useResizeStore();
 
 function makeEditable(e: Event, id: String) {
   selectToi.selectedTextEditor = id;
@@ -141,7 +143,6 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
       selectToi.changeSelected(e, currDrag, currType);
       useSetOutlineSelector(currDrag);
     }
-    useResizeObserver(selectToi.selectedBoxData.id);
 
     //delete selected item
     document.removeEventListener("keyup", keyup);
@@ -166,6 +167,9 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
 
       function mousemove(e) {
         e.preventDefault();
+        if (!resizeStore.isResizing) {
+          useResizeObserver(currDrag);
+        }
 
         if (currType === "text") {
           textIsDragging.value = true;
@@ -214,7 +218,6 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
           useSetRuler(e, currDrag);
         }
       }
-
       function mouseup() {
         if (isDragging) {
           canvasMarker.lines = [];
@@ -317,6 +320,7 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
         }
         selectToi.treeHoverSize = 1;
         useSetOutlineSelector(currDrag);
+        useResizeObserver(currDrag);
         if (currType === "text") {
           textIsDragging.value = false;
         }

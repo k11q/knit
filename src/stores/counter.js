@@ -29,6 +29,7 @@ export const useCounterStore = defineStore({
     returnedElementData: "",
     resizeObserverRect: {},
     resizeObserverTarget: {},
+    resizeObserverTargetRect: {},
     canvas: [
       {
         id: "Page 1",
@@ -607,6 +608,9 @@ export const useCounterStore = defineStore({
             if (e.target) {
               this.getChildElement(this.data, id);
             }
+          })
+          .then(() => {
+            useResizeObserver(this.selectedBoxData.id);
           });
 
         this.prevX = e.layerX;
@@ -617,7 +621,14 @@ export const useCounterStore = defineStore({
       this.prevX = e.layerX;
       this.prevY = e.layerY;
 
-      this.selectedBox = newData.id;
+      Promise.resolve()
+        .then(() => {
+          this.selectedBox = newData.id;
+        })
+        .then(() => {
+          useResizeObserver(this.selectedBoxData.id);
+        });
+
       if (e.target) {
         this.getChildElement(this.data, newData.id);
       }

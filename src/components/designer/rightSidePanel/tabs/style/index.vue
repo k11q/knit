@@ -267,7 +267,6 @@
             :placeholder="
               Math.round(selectToi.resizeObserverTarget?.offsetLeft)
             "
-            :value="parseInt(selectToi.selectedBoxData.attr?.style.left, 10)"
             @input="
               (event) => {
                 selectToi.selectedBoxData.attr.style.left =
@@ -284,7 +283,6 @@
           <input
             type="number"
             :placeholder="Math.round(selectToi.resizeObserverTarget?.offsetTop)"
-            :value="parseInt(selectToi.selectedBoxData.attr?.style.top, 10)"
             @input="
               (event) => {
                 selectToi.selectedBoxData.attr.style.top =

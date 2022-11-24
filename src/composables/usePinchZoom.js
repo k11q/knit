@@ -1,9 +1,12 @@
 import { useSquareStore } from "@/stores/dataSquare";
+import { useCounterStore } from "@/stores/counter";
 
 export default function (event) {
   const addaSquare = useSquareStore();
+  const selectToi = useCounterStore();
 
   event.preventDefault();
+  useResizeObserver(selectToi.selectedBoxData?.id);
 
   if (
     event.deltaX === 0 &&

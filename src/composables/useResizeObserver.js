@@ -8,6 +8,8 @@ export default function (id) {
       for (const entry of entries) {
         selectToi.resizeObserverRect = entry.contentRect;
         selectToi.resizeObserverTarget = entry.target;
+        selectToi.resizeObserverTargetRect =
+          entry.target.getBoundingClientRect();
       }
     });
     resizeObserver.observe(document.querySelector(`[data-id=${id}]`));
