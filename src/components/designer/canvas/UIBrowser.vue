@@ -126,6 +126,8 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
       currDragElementRect.y +
       (squareStore.offsetTop / squareStore.scale) * squareStore.scale;
 
+    paddingResize.setResizerSize(currDrag);
+
     if (
       selectToi.selectedTextEditor &&
       selectToi.selectedTextEditor !== currDrag

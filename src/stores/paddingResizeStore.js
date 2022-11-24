@@ -18,6 +18,8 @@ export const usePaddingResizeStore = defineStore({
       this.showPaddingResizer = true;
     },
     setResizerSize(id) {
+      const selectToi = useCounterStore();
+
       this.topResizerHeight = parseInt(
         useGetElement(selectToi.selectedBoxData.id)?.style?.paddingTop
       );

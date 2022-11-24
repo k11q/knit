@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { useSquareStore } from "./dataSquare";
 import { useCanvasDndStore } from "./canvasDnd";
+import { usePaddingResizeStore } from "./paddingResizeStore";
 
 export const useCounterStore = defineStore({
   id: "counter",
@@ -587,6 +588,7 @@ export const useCounterStore = defineStore({
     },
     changeSelected(e, id, type) {
       const squareStore = useSquareStore();
+      const paddingResize = usePaddingResizeStore();
 
       if (squareStore.dragPointer || squareStore.draggingPointer) {
       } else {
@@ -595,14 +597,20 @@ export const useCounterStore = defineStore({
         }
         e.stopPropagation();
 
+        Promise.resolve()
+          .then(() => {
+            paddingResize.setResizerSize(id);
+          })
+          .then(() => {
+            this.selectedBox = id;
+
+            if (e.target) {
+              this.getChildElement(this.data, id);
+            }
+          });
+
         this.prevX = e.layerX;
         this.prevY = e.layerY;
-
-        this.selectedBox = id;
-
-        if (e.target) {
-          this.getChildElement(this.data, id);
-        }
       }
     },
     changeSelectedNewlyAdded(e, newData) {

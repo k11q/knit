@@ -113,15 +113,17 @@
                 ? null
                 : (paddingResize.showPaddingResizer = false)
             "
-            class="absolute top-0 w-full flex flex-row items-center justify-center hover:bg-pink-500/50"
+            class="absolute top-0 w-full flex flex-row items-center justify-center"
             :class="{
-              'border-red-500 bg-pink-500/50':
-                paddingResize.currentResizing === 'top',
+              'border-red-500': paddingResize.currentResizing === 'top',
+              'hover:bg-pink-500/50': !paddingResize.currentResizing,
             }"
             :style="{
-              height: paddingResize.topResizerHeight
-                ? `${paddingResize.topResizerHeight}px`
-                : `${(8 * 1) / addaSquare.scale}px`,
+              height:
+                paddingResize.topResizerHeight ||
+                paddingResize.topResizerHeight === 0
+                  ? `${paddingResize.topResizerHeight}px`
+                  : `${(8 * 1) / addaSquare.scale}px`,
               borderBottomWidth:
                 paddingResize.currentResizing === 'top'
                   ? `${1 / addaSquare.scale}px`
@@ -152,15 +154,17 @@
                 ? null
                 : (paddingResize.showPaddingResizer = false)
             "
-            class="absolute bottom-0 w-full flex flex-row items-center justify-center hover:bg-pink-500/50"
+            class="absolute bottom-0 w-full flex flex-row items-center justify-center"
             :class="{
-              'border-red-500 bg-pink-500/50':
-                paddingResize.currentResizing === 'bottom',
+              'border-red-500': paddingResize.currentResizing === 'bottom',
+              'hover:bg-pink-500/50': !paddingResize.currentResizing,
             }"
             :style="{
-              height: paddingResize.bottomResizerHeight
-                ? `${paddingResize.bottomResizerHeight}px`
-                : `${(8 * 1) / addaSquare.scale}px`,
+              height:
+                paddingResize.bottomResizerHeight ||
+                paddingResize.bottomResizerHeight === 0
+                  ? `${paddingResize.bottomResizerHeight}px`
+                  : `${(8 * 1) / addaSquare.scale}px`,
               borderTopWidth:
                 paddingResize.currentResizing === 'bottom'
                   ? `${1 / addaSquare.scale}px`
@@ -195,15 +199,17 @@
                 ? null
                 : (paddingResize.showPaddingResizer = false)
             "
-            class="absolute left-0 h-full flex flex-row items-center justify-center hover:bg-pink-500/50"
+            class="absolute left-0 h-full flex flex-row items-center justify-center"
             :class="{
-              'border-red-500 bg-pink-500/50':
-                paddingResize.currentResizing === 'left',
+              'border-red-500': paddingResize.currentResizing === 'left',
+              'hover:bg-pink-500/50': !paddingResize.currentResizing,
             }"
             :style="{
-              width: paddingResize.leftResizerWidth
-                ? `${paddingResize.leftResizerWidth}px`
-                : `${(8 * 1) / addaSquare.scale}px`,
+              width:
+                paddingResize.leftResizerWidth ||
+                paddingResize.leftResizerWidth === 0
+                  ? `${paddingResize.leftResizerWidth}px`
+                  : `${(8 * 1) / addaSquare.scale}px`,
               borderRightWidth:
                 paddingResize.currentResizing === 'left'
                   ? `${1 / addaSquare.scale}px`
@@ -229,17 +235,23 @@
           <div
             v-show="paddingResize.showPaddingResizer"
             @mouseover="paddingResize.setShowPaddingResizer"
-            @mouseout="paddingResize.showPaddingResizer = false"
-            class="absolute right-0 h-full flex flex-row items-center justify-center hover:bg-pink-500/50"
+            @mouseout="
+              paddingResize.currentResizing
+                ? null
+                : (paddingResize.showPaddingResizer = false)
+            "
+            class="absolute right-0 h-full flex flex-row items-center justify-center"
             :class="{
-              'border-red-500 bg-pink-500/50':
-                paddingResize.currentResizing === 'right',
+              'border-red-500': paddingResize.currentResizing === 'right',
+              'hover:bg-pink-500/50': !paddingResize.currentResizing,
             }"
             :style="{
-              width: paddingResize.rightResizerWidth
-                ? `${paddingResize.rightResizerWidth}px`
-                : `${(8 * 1) / addaSquare.scale}px`,
-              borderLefttWidth:
+              width:
+                paddingResize.rightResizerWidth ||
+                paddingResize.rightResizerWidth === 0
+                  ? `${paddingResize.rightResizerWidth}px`
+                  : `${(8 * 1) / addaSquare.scale}px`,
+              borderLeftWidth:
                 paddingResize.currentResizing === 'right'
                   ? `${1 / addaSquare.scale}px`
                   : null,
