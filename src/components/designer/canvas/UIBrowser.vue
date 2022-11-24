@@ -110,7 +110,6 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
     let prevOffsetLeft = e.clientX - e.target.getBoundingClientRect().x;
     let prevOffsetTop = e.clientY - e.target.getBoundingClientRect().y;
 
-    canvasFF.isDragging = true;
     canvasDnd.isDragging = true;
     canvasDnd.currDrag = currDrag;
     let isDragging = false;
@@ -142,6 +141,10 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
       useSetOutlineSelector(currDrag);
     }
 
+    useSetOutlineSelector(currDrag);
+    useResizeObserver(currDrag);
+    paddingResize.setResizerSize(currDrag);
+
     //delete selected item
     document.removeEventListener("keyup", keyup);
     document.addEventListener("keyup", keyup);
@@ -159,7 +162,7 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
     useSelectedKeyboardShortcuts(e, currDrag);
     */
 
-    if (canvasFF.isDragging == true) {
+    if (canvasDnd.isDragging == true) {
       window.addEventListener("mousemove", mousemove);
       window.addEventListener("mouseup", mouseup);
 
@@ -169,6 +172,7 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
         if (currType === "text") {
           textIsDragging.value = true;
         }
+        canvasFF.isDragging = true;
         isDragging = true;
 
         let targetId = useGetElementIdFromPoint(e);
@@ -326,6 +330,7 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
         window.removeEventListener("mouseup", mouseup);
 
         canvasFF.isDragging = false;
+        canvasDnd.isDragging = false;
       }
     }
   }

@@ -855,6 +855,19 @@
     prosemirror-transform "^1.7.0"
     prosemirror-view "^1.28.2"
 
+"@tiptap/core@^2.0.0-beta.203":
+  version "2.0.0-beta.203"
+  resolved "https://registry.yarnpkg.com/@tiptap/core/-/core-2.0.0-beta.203.tgz#db52cfb34b26d58e4977f1a9764749354a55eacc"
+  integrity sha512-iRkFv4jjRtI7b18quyO3C8rilD8T24S3KYrZ3idRRw+ifO0dTeuDsRKjlcDT815zJRYdz99s5/lGq2ES0vC2gA==
+  dependencies:
+    prosemirror-commands "^1.3.1"
+    prosemirror-keymap "^1.2.0"
+    prosemirror-model "^1.18.1"
+    prosemirror-schema-list "^1.2.2"
+    prosemirror-state "^1.4.1"
+    prosemirror-transform "^1.7.0"
+    prosemirror-view "^1.28.2"
+
 "@tiptap/extension-blockquote@^2.0.0-beta.202":
   version "2.0.0-beta.202"
   resolved "https://registry.yarnpkg.com/@tiptap/extension-blockquote/-/extension-blockquote-2.0.0-beta.202.tgz#91168b32387ed0ce4d03dd3b6c802682287ede3c"
@@ -972,6 +985,15 @@
   version "2.0.0-beta.202"
   resolved "https://registry.yarnpkg.com/@tiptap/extension-text/-/extension-text-2.0.0-beta.202.tgz#d0152f547572a14c4e0e88287acb2b0c311fef04"
   integrity sha512-6UsfU9xvKTxHfZYxVJy5DSQ0ibnhC403KLRQ4ePwpJql0TotBx93/CBfPCVLFEwF86HNhf1fFUCx+j2wuwVxmA==
+
+"@tiptap/html@^2.0.0-beta.203":
+  version "2.0.0-beta.203"
+  resolved "https://registry.yarnpkg.com/@tiptap/html/-/html-2.0.0-beta.203.tgz#20741b06ac5a5b072f033dd0c6aade320250fe15"
+  integrity sha512-OqwGQA6PhSiTubu7z4VYJp7JWv8L4bPLeE5X+HUw2FH+HBv35EwZbWwpZSqSxHv64rVp1NHdBWpmseUJiVZI8g==
+  dependencies:
+    "@tiptap/core" "^2.0.0-beta.203"
+    prosemirror-model "^1.18.1"
+    zeed-dom "^0.9.19"
 
 "@tiptap/starter-kit@^2.0.0-beta.202":
   version "2.0.0-beta.202"
@@ -2041,7 +2063,7 @@ css-tree@^1.1.2, css-tree@^1.1.3:
     mdn-data "2.0.14"
     source-map "^0.6.1"
 
-css-what@^6.0.1:
+css-what@^6.0.1, css-what@^6.1.0:
   version "6.1.0"
   resolved "https://registry.npmjs.org/css-what/-/css-what-6.1.0.tgz"
   integrity sha512-HTUrgRJ7r4dsZKU6GjmpfRK1O76h97Z8MfS1G0FozR+oF2kG6Vfe8JE6zwrkbxigziPHinCJ+gCPjA9EaBDtRw==
@@ -6550,6 +6572,13 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npmjs.org/yocto-queue/-/yocto-queue-0.1.0.tgz"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
+
+zeed-dom@^0.9.19:
+  version "0.9.26"
+  resolved "https://registry.yarnpkg.com/zeed-dom/-/zeed-dom-0.9.26.tgz#f0127d1024b34a1233a321bd6d0275b3ba998b30"
+  integrity sha512-HWjX8rA3Y/RI32zby3KIN1D+mgskce+She4K7kRyyx62OiVxJ5FnYm8vWq0YVAja3Tf2S1M0XAc6O2lRFcMgcQ==
+  dependencies:
+    css-what "^6.1.0"
 
 zip-stream@^4.1.0:
   version "4.1.0"
