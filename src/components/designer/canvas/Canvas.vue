@@ -52,7 +52,7 @@
           }px solid #0191FA`,
         }"
       ></div>
-      <!--Selected outline n resizer-->
+      <!--Selected outline n resizer n padding resizer-->
       <div
         v-show="
           selectToi.selectedBox &&
@@ -115,18 +115,17 @@
             "
             class="absolute top-0 w-full flex flex-row items-center justify-center hover:bg-pink-500/50"
             :class="{
-              'border-b border-red-500 bg-pink-500/50':
+              'border-red-500 bg-pink-500/50':
                 paddingResize.currentResizing === 'top',
             }"
             :style="{
-              height: `${
-                useGetElement(selectToi.selectedBoxData.id)?.style?.paddingTop
-              }`
-                ? `${
-                    useGetElement(selectToi.selectedBoxData.id)?.style
-                      ?.paddingTop
-                  }`
+              height: paddingResize.topResizerHeight
+                ? `${paddingResize.topResizerHeight}px`
                 : `${(8 * 1) / addaSquare.scale}px`,
+              borderBottomWidth:
+                paddingResize.currentResizing === 'top'
+                  ? `${1 / addaSquare.scale}px`
+                  : null,
             }"
           >
             <div
@@ -155,19 +154,17 @@
             "
             class="absolute bottom-0 w-full flex flex-row items-center justify-center hover:bg-pink-500/50"
             :class="{
-              'border-t border-red-500 bg-pink-500/50':
+              'border-red-500 bg-pink-500/50':
                 paddingResize.currentResizing === 'bottom',
             }"
             :style="{
-              height: `${
-                useGetElement(selectToi.selectedBoxData.id)?.style
-                  ?.paddingBottom
-              }`
-                ? `${
-                    useGetElement(selectToi.selectedBoxData.id)?.style
-                      ?.paddingBottom
-                  }`
+              height: paddingResize.bottomResizerHeight
+                ? `${paddingResize.bottomResizerHeight}px`
                 : `${(8 * 1) / addaSquare.scale}px`,
+              borderTopWidth:
+                paddingResize.currentResizing === 'bottom'
+                  ? `${1 / addaSquare.scale}px`
+                  : null,
             }"
           >
             <div
@@ -200,18 +197,17 @@
             "
             class="absolute left-0 h-full flex flex-row items-center justify-center hover:bg-pink-500/50"
             :class="{
-              'border-r border-red-500 bg-pink-500/50':
+              'border-red-500 bg-pink-500/50':
                 paddingResize.currentResizing === 'left',
             }"
             :style="{
-              width: `${
-                useGetElement(selectToi.selectedBoxData.id)?.style?.paddingLeft
-              }`
-                ? `${
-                    useGetElement(selectToi.selectedBoxData.id)?.style
-                      ?.paddingLeft
-                  }`
+              width: paddingResize.leftResizerWidth
+                ? `${paddingResize.leftResizerWidth}px`
                 : `${(8 * 1) / addaSquare.scale}px`,
+              borderRightWidth:
+                paddingResize.currentResizing === 'left'
+                  ? `${1 / addaSquare.scale}px`
+                  : null,
             }"
           >
             <div
@@ -236,18 +232,17 @@
             @mouseout="paddingResize.showPaddingResizer = false"
             class="absolute right-0 h-full flex flex-row items-center justify-center hover:bg-pink-500/50"
             :class="{
-              'border-l border-red-500 bg-pink-500/50':
+              'border-red-500 bg-pink-500/50':
                 paddingResize.currentResizing === 'right',
             }"
             :style="{
-              width: `${
-                useGetElement(selectToi.selectedBoxData.id)?.style?.paddingRight
-              }`
-                ? `${
-                    useGetElement(selectToi.selectedBoxData.id)?.style
-                      ?.paddingRight
-                  }`
+              width: paddingResize.rightResizerWidth
+                ? `${paddingResize.rightResizerWidth}px`
                 : `${(8 * 1) / addaSquare.scale}px`,
+              borderLefttWidth:
+                paddingResize.currentResizing === 'right'
+                  ? `${1 / addaSquare.scale}px`
+                  : null,
             }"
           >
             <div

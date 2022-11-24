@@ -323,7 +323,7 @@ export const useResizeStore = defineStore({
         }
 
         function mouseup() {
-          isResizing = false;
+          this.isResizing = false;
           window.removeEventListener("mousemove", mousemove);
           window.removeEventListener("mouseup", mouseup);
           console.log("mouseup!");
