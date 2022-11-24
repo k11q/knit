@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { useSquareStore } from "@/stores/dataSquare";
 import { useCounterStore } from "@/stores/counter";
+import { usePaddingResizeStore } from "./paddingResizeStore";
 
 export const useNewSquareStore = defineStore({
   id: "newSquareStore",
@@ -28,6 +29,7 @@ export const useNewSquareStore = defineStore({
   }),
   actions: {
     setNewSquare(e, dataPushed) {
+      const paddingResize = usePaddingResizeStore();
       const counter = useCounterStore();
       const newSquareStore = useNewSquareStore();
       const squareStore = useSquareStore();
@@ -125,6 +127,7 @@ export const useNewSquareStore = defineStore({
             })
             .then(() => {
               useSetOutlineSelector(clonedDataSquare.id);
+              paddingResize.setResizerSize(clonedDataSquare.id);
             });
           squareStore.turnOnNormalPointer();
           newSquareStore.countBox = newSquareStore.countBox + 1;

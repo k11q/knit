@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { useSquareStore } from "@/stores/dataSquare";
 import { useCounterStore } from "@/stores/counter";
+import { usePaddingResizeStore } from "./paddingResizeStore";
 
 export const useNewFrameStore = defineStore({
   id: "newFrameStore",
@@ -31,6 +32,7 @@ export const useNewFrameStore = defineStore({
       const counter = useCounterStore();
       const newFrameStore = useNewFrameStore();
       const squareStore = useSquareStore();
+      const paddingResize = usePaddingResizeStore();
       const uid = () =>
         String(Date.now().toString(32) + Math.random().toString(16)).replace(
           /\./g,
@@ -111,19 +113,20 @@ export const useNewFrameStore = defineStore({
           newFrameStore.dataFrame.attr.style.height =
             newFrameStore.height + "px";
           newFrameStore.dataFrame.children = [];
-          let cloneddataFrame = { ...newFrameStore.dataFrame };
-          cloneddataFrame.attr = { ...newFrameStore.dataFrame.attr };
-          cloneddataFrame.attr.style = {
+          let clonedDataFrame = { ...newFrameStore.dataFrame };
+          clonedDataFrame.attr = { ...newFrameStore.dataFrame.attr };
+          clonedDataFrame.attr.style = {
             ...newFrameStore.dataFrame.attr.style,
           };
 
           Promise.resolve()
             .then(() => {
-              dataPushed.push({ ...cloneddataFrame });
-              counter.changeSelectedNewlyAdded(event, cloneddataFrame);
+              dataPushed.push({ ...clonedDataFrame });
+              counter.changeSelectedNewlyAdded(event, clonedDataFrame);
             })
             .then(() => {
-              useSetOutlineSelector(cloneddataFrame.id);
+              useSetOutlineSelector(clonedDataFrame.id);
+              paddingResize.setResizerSize(clonedDataFrame.id);
             });
           squareStore.turnOnNormalPointer();
           newFrameStore.countBox = newFrameStore.countBox + 1;

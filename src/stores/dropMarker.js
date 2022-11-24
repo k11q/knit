@@ -28,12 +28,12 @@ export const useDropMarker = defineStore({
       if (drop.style.flexDirection === "column") {
         if (!drop.children.length) {
           this.markerLeft =
-            (paddingLeft + dropRect.x) / squareStore.scale -
-            squareStore.offsetLeft +
+            (paddingLeft + dropRect.x - squareStore.offsetLeft) /
+              squareStore.scale +
             "px";
           this.markerTop =
-            (paddingTop + dropRect.y) / squareStore.scale -
-            squareStore.offsetTop +
+            (paddingTop + dropRect.y - squareStore.offsetTop) /
+              squareStore.scale +
             "px";
         }
         if (drop.children.length) {
@@ -103,12 +103,10 @@ export const useDropMarker = defineStore({
           }
 
           if (drop.style.alignItems === "start" || !drop.style.alignItems) {
-            this.markerLeft = markerPositionLeft
-              ? (markerPositionLeft - squareStore.offsetLeft) /
-                  squareStore.scale +
-                "px"
-              : (dropRect.x - squareStore.offsetLeft) / squareStore.scale +
-                "px";
+            this.markerLeft =
+              (markerPositionLeft - squareStore.offsetLeft) /
+                squareStore.scale +
+              "px";
           }
           if (drop.style.alignItems === "center") {
             this.markerLeft =
