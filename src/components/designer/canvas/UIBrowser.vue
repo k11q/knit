@@ -210,10 +210,6 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
         selectToi.selectedBoxData.attr.style.top =
           Math.round((e.clientY - prevY) / squareStore.scale) + "px";
 
-        if (!resizeStore.isResizing) {
-          useResizeObserver(currDrag);
-        }
-
         //ruler function
         if (canvasMarker.setRuler) {
           useSetRuler(e, currDrag);
