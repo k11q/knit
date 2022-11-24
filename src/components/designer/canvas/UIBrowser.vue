@@ -128,8 +128,6 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
       currDragElementRect.y +
       (squareStore.offsetTop / squareStore.scale) * squareStore.scale;
 
-    paddingResize.setResizerSize(currDrag);
-
     if (
       selectToi.selectedTextEditor &&
       selectToi.selectedTextEditor !== currDrag
@@ -313,11 +311,13 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
             .then(function () {
               useSetOutlineSelector(currDrag);
               useResizeObserver(currDrag);
+              paddingResize.setResizerSize(currDrag);
             });
         }
         selectToi.treeHoverSize = 1;
         useSetOutlineSelector(currDrag);
         useResizeObserver(currDrag);
+        paddingResize.setResizerSize(currDrag);
         if (currType === "text") {
           textIsDragging.value = false;
         }

@@ -61,18 +61,18 @@ export const useDropMarker = defineStore({
           getDragAfter(e.clientY);
           let markerPositionTop;
           let markerPositionLeft;
+          let markerPositionRight;
           let gap;
           let currDragWidth = parseInt(currDragRect.width);
 
           if (!getDragAfter(e.clientY).elementID) {
-            let dropPositionRect =
-              dropzoneChildren[
-                dropzoneChildren.length - 1
-              ].getBoundingClientRect();
+            let dropElement = dropzoneChildren[dropzoneChildren.length - 1];
+            let dropPositionRect = dropElement.getBoundingClientRect();
             canvasDnd.dropzone = drop.dataset.id;
             canvasDnd.dragzone = "";
-            markerPositionTop = dropPositionRect.top + dropPositionRect.height;
-            markerPositionLeft = dropPositionRect.left;
+            markerPositionTop = dropPositionRect.y + dropPositionRect.height;
+            markerPositionLeft = dropPositionRect.x;
+            markerPositionRight = dropPositionRect.x + dropPositionRect.width;
             gap = parseFloat(drop.style.gap) || 0;
             this.markerTop =
               (markerPositionTop - squareStore.offsetTop + gap / 2 - 2) /
@@ -82,8 +82,8 @@ export const useDropMarker = defineStore({
           if (getDragAfter(e.clientY).elementID) {
             canvasDnd.dragzone = getDragAfter(e.clientY).elementID;
             canvasDnd.dropzone = "";
-            markerPositionTop = getDragAfter(e.clientY).rect?.top;
-            markerPositionLeft = getDragAfter(e.clientY).rect?.left;
+            markerPositionTop = getDragAfter(e.clientY).rect?.y;
+            markerPositionLeft = getDragAfter(e.clientY).rect?.x;
             console.log("index = " + getDragAfter(e.clientY).index);
             if (getDragAfter(e.clientY).index !== 0) {
               let nextElementRect =
@@ -103,11 +103,12 @@ export const useDropMarker = defineStore({
           }
 
           if (drop.style.alignItems === "start" || !drop.style.alignItems) {
-            this.markerLeft =
-              paddingLeft * squareStore.scale +
-              markerPositionLeft / squareStore.scale -
-              squareStore.offsetLeft / squareStore.scale +
-              "px";
+            this.markerLeft = markerPositionLeft
+              ? (markerPositionLeft - squareStore.offsetLeft) /
+                  squareStore.scale +
+                "px"
+              : (dropRect.x - squareStore.offsetLeft) / squareStore.scale +
+                "px";
           }
           if (drop.style.alignItems === "center") {
             this.markerLeft =
@@ -120,8 +121,7 @@ export const useDropMarker = defineStore({
           }
           if (drop.style.alignItems === "end") {
             this.markerLeft =
-              (dropRect.x +
-                dropRect.width -
+              (markerPositionRight -
                 currDragRect.width -
                 squareStore.offsetLeft) /
                 squareStore.scale +
@@ -169,8 +169,8 @@ export const useDropMarker = defineStore({
               ].getBoundingClientRect();
             canvasDnd.dropzone = drop.dataset.id;
             canvasDnd.dragzone = "";
-            markerPositionLeft = dropPositionRect.left + dropPositionRect.width;
-            markerPositionTop = dropPositionRect.top;
+            markerPositionLeft = dropPositionRect.x + dropPositionRect.width;
+            markerPositionTop = dropPositionRect.y;
             gap = parseFloat(drop.style.gap) || 0;
             this.markerLeft =
               (markerPositionLeft - squareStore.offsetLeft + gap / 2 - 2) /
@@ -180,8 +180,8 @@ export const useDropMarker = defineStore({
           if (getDragAfter(e.clientX).elementID) {
             canvasDnd.dragzone = getDragAfter(e.clientX).elementID;
             canvasDnd.dropzone = "";
-            markerPositionLeft = getDragAfter(e.clientX).rect?.left;
-            markerPositionTop = getDragAfter(e.clientX).rect?.top;
+            markerPositionLeft = getDragAfter(e.clientX).rect?.x;
+            markerPositionTop = getDragAfter(e.clientX).rect?.y;
             console.log("index = " + getDragAfter(e.clientY).index);
             if (getDragAfter(e.clientX).index !== 0) {
               let nextElementRect =
