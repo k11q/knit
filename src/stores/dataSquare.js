@@ -160,6 +160,7 @@ export const useSquareStore = defineStore({
       }
 
       if (this.addSquareActivated === true) {
+        counter.clearSelected();
         newSquareStore.setNewSquare(event, dataPushed);
       }
       if (this.addTextActivated === true) {
@@ -188,6 +189,7 @@ export const useSquareStore = defineStore({
         this.countBox = this.countBox + 1;
       }
       if (this.addFrameActivated === true) {
+        counter.clearSelected();
         newFrameStore.setNewFrame(event, dataPushed);
       }
     },
