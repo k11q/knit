@@ -26,6 +26,8 @@ export const useCounterStore = defineStore({
     dataTransfer: null,
     showTextEditor: false,
     returnedElementData: "",
+    resizeObserverRect: {},
+    resizeObserverTarget: {},
     canvas: [
       {
         id: "Page 1",

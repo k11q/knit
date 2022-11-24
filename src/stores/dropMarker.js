@@ -131,7 +131,7 @@ export const useDropMarker = defineStore({
         this.markerHeight = 4 / squareStore.scale + "px";
         this.markerWidth = currDragRect.width / squareStore.scale + "px";
       }
-      if (drop.style.flexDirection === "row") {
+      if (drop.style.flexDirection === "row" || !drop.style.flexDirection) {
         this.markerLeft = paddingLeft + selectToi.treeHoverHTMLX + "px";
         this.markerTop = paddingTop + selectToi.treeHoverHTMLY + "px";
 

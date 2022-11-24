@@ -10,6 +10,9 @@
         () => {
           selectToi.treeHover = false;
           textHover = false;
+          if (selectToi.selectedBox === node.id && node.type !== 'text') {
+            paddingResize.showPaddingResizer = false;
+          }
         }
       "
       @mouseover.stop="
@@ -22,6 +25,9 @@
             !canvasFF.isDragging
           ) {
             textHover = true;
+          }
+          if (selectToi.selectedBox === node.id && node.type !== 'text') {
+            paddingResize.setShowPaddingResizer();
           }
         }
       "
@@ -78,6 +84,7 @@ import { useCanvasFF } from "@/stores/canvasFreeForm";
 import { useSquareStore } from "@/stores/dataSquare";
 import { useCanvasMarkerStore } from "@/stores/canvasMarker";
 import { useDropMarker } from "@/stores/dropMarker";
+import { usePaddingResizeStore } from "@/stores/paddingResizeStore";
 
 const selectToi = useCounterStore();
 const canvasDnd = useCanvasDndStore();
@@ -88,6 +95,7 @@ const showMarker = useShowMarker();
 const dropMarker = useDropMarker();
 const textIsDragging = ref(false);
 const textHover = ref(false);
+const paddingResize = usePaddingResizeStore();
 
 function makeEditable(e: Event, id: String) {
   selectToi.selectedTextEditor = id;
@@ -131,6 +139,7 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
       selectToi.changeSelected(e, currDrag, currType);
       useSetOutlineSelector(currDrag);
     }
+    useResizeObserver(selectToi.selectedBoxData.id);
 
     //delete selected item
     document.removeEventListener("keyup", keyup);
@@ -155,6 +164,7 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
 
       function mousemove(e) {
         e.preventDefault();
+
         if (currType === "text") {
           textIsDragging.value = true;
         }
@@ -300,6 +310,7 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
 
             .then(function () {
               useSetOutlineSelector(currDrag);
+              useResizeObserver(currDrag);
             });
         }
         selectToi.treeHoverSize = 1;

@@ -264,7 +264,9 @@
           </div>
           <input
             type="number"
-            placeholder="Auto"
+            :placeholder="
+              Math.round(selectToi.resizeObserverTarget?.offsetLeft)
+            "
             :value="parseInt(selectToi.selectedBoxData.attr?.style.left, 10)"
             @input="
               (event) => {
@@ -281,7 +283,7 @@
           </div>
           <input
             type="number"
-            placeholder="Auto"
+            :placeholder="Math.round(selectToi.resizeObserverTarget?.offsetTop)"
             :value="parseInt(selectToi.selectedBoxData.attr?.style.top, 10)"
             @input="
               (event) => {
@@ -376,7 +378,7 @@
           </div>
           <input
             type="number"
-            placeholder="Auto"
+            :placeholder="Math.round(selectToi.resizeObserverRect?.width)"
             :value="parseInt(selectToi.selectedBoxData.attr?.style.width, 10)"
             @input="
               (event) => {
@@ -400,7 +402,7 @@
                   event.target.value + 'px';
               }
             "
-            placeholder="Auto"
+            :placeholder="Math.round(selectToi.resizeObserverRect?.height)"
             class="w-2/3 px-2 bg-transparent"
           />
         </div>

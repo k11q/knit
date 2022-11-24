@@ -106,10 +106,55 @@
             }"
           />
           <div
+            v-show="paddingResize.showPaddingResizer"
+            @mouseover="paddingResize.setShowPaddingResizer"
+            @mouseout="paddingResize.showPaddingResizer = false"
+            class="absolute top-0 w-full flex flex-row items-center justify-center hover:bg-pink-500/50"
+            :style="{
+              height: `${parseInt(selectToi.resizeObserverRect.top)}px`,
+            }"
+          >
+            <div
+              @mousedown.stop.prevent="paddingResize.resizePaddingTop($event)"
+              class="bg-red-500 hover:cursor-row-resize"
+              :style="{
+                height: `${2 / addaSquare.scale}px`,
+                width: `${16 / addaSquare.scale}px`,
+                outline: `${1 / addaSquare.scale}px solid white`,
+                borderRadius: `${0.5 / addaSquare.scale}px`,
+              }"
+            ></div>
+          </div>
+          <div
             @mousedown.stop.prevent="resizeStore.resizeBottom"
             class="absolute top-full bg-[#0191FA] w-full hover:cursor-row-resize"
             :style="{ height: `${(1 * 1) / addaSquare.scale}px` }"
           />
+          <div
+            v-show="paddingResize.showPaddingResizer"
+            @mouseover="paddingResize.setShowPaddingResizer"
+            @mouseout="paddingResize.showPaddingResizer = false"
+            class="absolute bottom-0 w-full flex flex-row items-center justify-center hover:bg-pink-500/50"
+            :style="{
+              height: `${
+                useGetElement(selectToi.selectedBoxData.id)?.style
+                  ?.paddingBottom
+              }`,
+            }"
+          >
+            <div
+              @mousedown.stop.prevent="
+                paddingResize.resizePaddingBottom($event)
+              "
+              class="bg-red-500 hover:cursor-row-resize"
+              :style="{
+                height: `${2 / addaSquare.scale}px`,
+                width: `${16 / addaSquare.scale}px`,
+                outline: `${1 / addaSquare.scale}px solid white`,
+                borderRadius: `${0.5 / addaSquare.scale}px`,
+              }"
+            ></div>
+          </div>
           <div
             @mousedown.stop.prevent="resizeStore.resizeLeft"
             class="absolute right-full bg-[#0191FA] h-full hover:cursor-col-resize"
@@ -118,10 +163,52 @@
             }"
           />
           <div
+            v-show="paddingResize.showPaddingResizer"
+            @mouseover="paddingResize.setShowPaddingResizer"
+            @mouseout="paddingResize.showPaddingResizer = false"
+            class="absolute left-0 h-full flex flex-row items-center justify-center hover:bg-pink-500/50 flex-none"
+            :style="{
+              width: `${parseInt(selectToi.resizeObserverRect.left)}px`,
+            }"
+          >
+            <div
+              @mousedown.stop.prevent="paddingResize.resizePaddingLeft($event)"
+              class="bg-red-500 hover:cursor-col-resize"
+              :style="{
+                width: `${2 / addaSquare.scale}px`,
+                height: `${16 / addaSquare.scale}px`,
+                outline: `${1 / addaSquare.scale}px solid white`,
+                borderRadius: `${0.5 / addaSquare.scale}px`,
+              }"
+            ></div>
+          </div>
+          <div
             @mousedown.stop.prevent="resizeStore.resizeRight"
             class="absolute left-full bg-[#0191FA] h-full hover:cursor-col-resize"
             :style="{ width: `${(1 * 1) / addaSquare.scale}px` }"
           />
+          <div
+            v-show="paddingResize.showPaddingResizer"
+            @mouseover="paddingResize.setShowPaddingResizer"
+            @mouseout="paddingResize.showPaddingResizer = false"
+            class="absolute right-0 h-full flex flex-row items-center justify-center hover:bg-pink-500/50"
+            :style="{
+              width: `${
+                useGetElement(selectToi.selectedBoxData.id)?.style?.paddingRight
+              }`,
+            }"
+          >
+            <div
+              @mousedown.stop.prevent="paddingResize.resizePaddingRight($event)"
+              class="bg-red-500 hover:cursor-col-resize"
+              :style="{
+                width: `${2 / addaSquare.scale}px`,
+                height: `${16 / addaSquare.scale}px`,
+                outline: `${1 / addaSquare.scale}px solid white`,
+                borderRadius: `${0.5 / addaSquare.scale}px`,
+              }"
+            ></div>
+          </div>
 
           <div
             @mousedown.stop.prevent="resizeStore.resizeTopLeft"
@@ -192,7 +279,7 @@
           backgroundColor: 'rgba(1, 145, 250, 0.1)',
         }"
       ></div>
-      <!--new square-->
+      <!--new square & new frame-->
       <div
         v-if="newSquareStore.show || newFrameStore.show"
         class="absolute pointer-events-none"
@@ -295,6 +382,7 @@ import { useDropMarker } from "@/stores/dropMarker";
 import { useSelectStore } from "@/stores/selectStore";
 import { useNewSquareStore } from "@/stores/newSquareStore";
 import { useNewFrameStore } from "@/stores/newFrameStore";
+import { usePaddingResizeStore } from "@/stores/paddingResizeStore";
 
 const selectToi = useCounterStore();
 const addaSquare = useSquareStore();
@@ -306,6 +394,7 @@ const dropMarker = useDropMarker();
 const selectStore = useSelectStore();
 const newSquareStore = useNewSquareStore();
 const newFrameStore = useNewFrameStore();
+const paddingResize = usePaddingResizeStore();
 
 onMounted(() => {
   addaSquare.offsetLeft = vw(50);
