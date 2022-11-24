@@ -58,29 +58,21 @@ export default function (e, id) {
           .width -
         lineRight;
 
-      (distanceTopToLineTop < 4 / squareStore.scale &&
-        distanceTopToLineTop > -4 / squareStore.scale) ||
-      (distanceBottomToLineTop < 4 / squareStore.scale &&
-        distanceBottomToLineTop > -4 / squareStore.scale)
+      (distanceTopToLineTop < 4 && distanceTopToLineTop > -4) ||
+      (distanceBottomToLineTop < 4 && distanceBottomToLineTop > -4)
         ? (newlineTop = i.getBoundingClientRect().y)
         : (lineTop = undefined);
-      (distanceTopToLineBottom < 4 / squareStore.scale &&
-        distanceTopToLineBottom > -4 / squareStore.scale) ||
-      (distanceBottomToLineBottom < 4 / squareStore.scale &&
-        distanceBottomToLineBottom > -4 / squareStore.scale)
+      (distanceTopToLineBottom < 4 && distanceTopToLineBottom > -4) ||
+      (distanceBottomToLineBottom < 4 && distanceBottomToLineBottom > -4)
         ? (newlineBottom =
             i.getBoundingClientRect().y + i.getBoundingClientRect().height)
         : (newlineBottom = undefined);
-      (distanceLeftToLineLeft < 4 / squareStore.scale &&
-        distanceLeftToLineLeft > -4 / squareStore.scale) ||
-      (distanceRightToLineLeft < 4 / squareStore.scale &&
-        distanceRightToLineLeft > -4 / squareStore.scale)
+      (distanceLeftToLineLeft < 4 && distanceLeftToLineLeft > -4) ||
+      (distanceRightToLineLeft < 4 && distanceRightToLineLeft > -4)
         ? (newlineLeft = i.getBoundingClientRect().x)
         : (newlineLeft = undefined);
-      (distanceLeftToLineRight < 4 / squareStore.scale &&
-        distanceLeftToLineRight > -4 / squareStore.scale) ||
-      (distanceRightToLineRight < 4 / squareStore.scale &&
-        distanceRightToLineRight > -4 / squareStore.scale)
+      (distanceLeftToLineRight < 4 && distanceLeftToLineRight > -4) ||
+      (distanceRightToLineRight < 4 && distanceRightToLineRight > -4)
         ? (newlineRight =
             i.getBoundingClientRect().x + i.getBoundingClientRect().width)
         : (newlineRight = undefined);

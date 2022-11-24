@@ -22,18 +22,18 @@ export const useDropMarker = defineStore({
 
       let dropRect = drop.getBoundingClientRect();
       let currDragRect = currDragElement.getBoundingClientRect();
-      let paddingLeft = drop.style.paddingLeft.replace(/[^0-9\.]+/g, "") | 0;
-      let paddingTop = drop.style.paddingTop.replace(/[^0-9\.]+/g, "") | 0;
+      let paddingLeft = parseInt(drop.style.paddingLeft) | 0;
+      let paddingTop = parseInt(drop.style.paddingTop) | 0;
 
       if (drop.style.flexDirection === "column") {
         if (!drop.children.length) {
           this.markerLeft =
-            paddingLeft +
-            (dropRect.x - squareStore.offsetLeft) / squareStore.scale +
+            (paddingLeft + dropRect.x) / squareStore.scale -
+            squareStore.offsetLeft +
             "px";
           this.markerTop =
-            paddingTop +
-            (dropRect.y - squareStore.offsetTop) / squareStore.scale +
+            (paddingTop + dropRect.y) / squareStore.scale -
+            squareStore.offsetTop +
             "px";
         }
         if (drop.children.length) {
@@ -104,9 +104,9 @@ export const useDropMarker = defineStore({
 
           if (drop.style.alignItems === "start" || !drop.style.alignItems) {
             this.markerLeft =
-              paddingLeft +
-              (markerPositionLeft - squareStore.offsetLeft) /
-                squareStore.scale +
+              paddingLeft * squareStore.scale +
+              markerPositionLeft / squareStore.scale -
+              squareStore.offsetLeft / squareStore.scale +
               "px";
           }
           if (drop.style.alignItems === "center") {

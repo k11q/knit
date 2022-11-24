@@ -113,7 +113,7 @@
                 ? null
                 : (paddingResize.showPaddingResizer = false)
             "
-            class="absolute top-0 w-full flex flex-row items-center justify-center"
+            class="absolute top-0 w-full flex flex-row items-center justify-center pointer-events-none"
             :class="{
               'border-red-500': paddingResize.currentResizing === 'top',
               'hover:bg-pink-500/50': !paddingResize.currentResizing,
@@ -124,7 +124,7 @@
                 paddingResize.topResizerHeight === 0
                   ? `${paddingResize.topResizerHeight}px`
                   : `${(8 * 1) / addaSquare.scale}px`,
-              borderBottomWidth:
+              borderWidth:
                 paddingResize.currentResizing === 'top'
                   ? `${1 / addaSquare.scale}px`
                   : null,
@@ -132,7 +132,7 @@
           >
             <div
               @mousedown.stop.prevent="paddingResize.resizePaddingTop($event)"
-              class="bg-red-500 hover:cursor-row-resize"
+              class="bg-red-500 hover:cursor-row-resize pointer-events-auto"
               :style="{
                 height: `${2 / addaSquare.scale}px`,
                 width: `${16 / addaSquare.scale}px`,
@@ -154,7 +154,7 @@
                 ? null
                 : (paddingResize.showPaddingResizer = false)
             "
-            class="absolute bottom-0 w-full flex flex-row items-center justify-center"
+            class="absolute bottom-0 w-full flex flex-row items-center justify-center pointer-events-none"
             :class="{
               'border-red-500': paddingResize.currentResizing === 'bottom',
               'hover:bg-pink-500/50': !paddingResize.currentResizing,
@@ -165,7 +165,7 @@
                 paddingResize.bottomResizerHeight === 0
                   ? `${paddingResize.bottomResizerHeight}px`
                   : `${(8 * 1) / addaSquare.scale}px`,
-              borderTopWidth:
+              borderWidth:
                 paddingResize.currentResizing === 'bottom'
                   ? `${1 / addaSquare.scale}px`
                   : null,
@@ -175,7 +175,7 @@
               @mousedown.stop.prevent="
                 paddingResize.resizePaddingBottom($event)
               "
-              class="bg-red-500 hover:cursor-row-resize"
+              class="bg-red-500 hover:cursor-row-resize pointer-events-auto"
               :style="{
                 height: `${2 / addaSquare.scale}px`,
                 width: `${16 / addaSquare.scale}px`,
@@ -199,7 +199,7 @@
                 ? null
                 : (paddingResize.showPaddingResizer = false)
             "
-            class="absolute left-0 h-full flex flex-row items-center justify-center"
+            class="absolute left-0 h-full flex flex-row items-center justify-center pointer-events-none"
             :class="{
               'border-red-500': paddingResize.currentResizing === 'left',
               'hover:bg-pink-500/50': !paddingResize.currentResizing,
@@ -210,7 +210,7 @@
                 paddingResize.leftResizerWidth === 0
                   ? `${paddingResize.leftResizerWidth}px`
                   : `${(8 * 1) / addaSquare.scale}px`,
-              borderRightWidth:
+              borderWidth:
                 paddingResize.currentResizing === 'left'
                   ? `${1 / addaSquare.scale}px`
                   : null,
@@ -218,7 +218,7 @@
           >
             <div
               @mousedown.stop.prevent="paddingResize.resizePaddingLeft($event)"
-              class="bg-red-500 hover:cursor-col-resize"
+              class="bg-red-500 hover:cursor-col-resize pointer-events-auto"
               :style="{
                 width: `${2 / addaSquare.scale}px`,
                 height: `${16 / addaSquare.scale}px`,
@@ -240,7 +240,7 @@
                 ? null
                 : (paddingResize.showPaddingResizer = false)
             "
-            class="absolute right-0 h-full flex flex-row items-center justify-center"
+            class="absolute right-0 h-full flex flex-row items-center justify-center pointer-events-none"
             :class="{
               'border-red-500': paddingResize.currentResizing === 'right',
               'hover:bg-pink-500/50': !paddingResize.currentResizing,
@@ -251,7 +251,7 @@
                 paddingResize.rightResizerWidth === 0
                   ? `${paddingResize.rightResizerWidth}px`
                   : `${(8 * 1) / addaSquare.scale}px`,
-              borderLeftWidth:
+              borderWidth:
                 paddingResize.currentResizing === 'right'
                   ? `${1 / addaSquare.scale}px`
                   : null,
@@ -259,7 +259,7 @@
           >
             <div
               @mousedown.stop.prevent="paddingResize.resizePaddingRight($event)"
-              class="bg-red-500 hover:cursor-col-resize"
+              class="bg-red-500 hover:cursor-col-resize pointer-events-auto"
               :style="{
                 width: `${2 / addaSquare.scale}px`,
                 height: `${16 / addaSquare.scale}px`,
