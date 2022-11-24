@@ -56,6 +56,7 @@ export default {
         }),
       ],
       content: this.modelValue,
+      autofocus: "all",
       onUpdate: () => {
         // HTML
         this.$emit("update:modelValue", this.editor.getHTML());
