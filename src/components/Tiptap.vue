@@ -1,5 +1,5 @@
 <template>
-  <editor-content :editor="editor" />
+  <editor-content :editor="editor" @keyup="$event.stopImmediatePropagation()" />
 </template>
 
 <script>

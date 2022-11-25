@@ -227,6 +227,8 @@ const newFrameStore = useNewFrameStore();
 const paddingResize = usePaddingResizeStore();
 
 onMounted(() => {
+  useAddKeyupShortcuts();
+
   addaSquare.offsetLeft = vw(50);
   addaSquare.offsetTop = vh(50);
 

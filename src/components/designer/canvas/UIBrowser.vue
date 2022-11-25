@@ -86,6 +86,7 @@ import { useCanvasMarkerStore } from "@/stores/canvasMarker";
 import { useDropMarker } from "@/stores/dropMarker";
 import { usePaddingResizeStore } from "@/stores/paddingResizeStore";
 import { useResizeStore } from "@/stores/resizeStore";
+import { useDndStore } from "@/stores/dndStore";
 
 const selectToi = useCounterStore();
 const canvasDnd = useCanvasDndStore();
@@ -98,6 +99,7 @@ const textIsDragging = ref(false);
 const textHover = ref(false);
 const paddingResize = usePaddingResizeStore();
 const resizeStore = useResizeStore();
+const dndStore = useDndStore();
 
 function makeEditable(e: Event, id: String) {
   selectToi.selectedTextEditor = id;
@@ -126,6 +128,8 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
       e.clientY -
       currDragElementRect.y +
       (squareStore.offsetTop / squareStore.scale) * squareStore.scale;
+    dndStore.prevX = prevX;
+    dndStore.prevY = prevY;
 
     if (
       selectToi.selectedTextEditor &&
@@ -140,24 +144,11 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
       selectToi.changeSelected(e, currDrag, currType);
       useSetOutlineSelector(currDrag);
     }
-
     useSetOutlineSelector(currDrag);
-    useResizeObserver(currDrag);
-    paddingResize.setResizerSize(currDrag);
+    setTimeout(() => {
+      paddingResize.setResizerSize(currDrag);
+    }, "0");
 
-    //delete selected item
-    document.removeEventListener("keyup", keyup);
-    document.addEventListener("keyup", keyup);
-
-    function keyup() {
-      if (
-        event.key == "Backspace" ||
-        (event.key == "Delete" && selectToi.selectedBox)
-      ) {
-        canvasDnd.dndRemove(selectToi.data);
-        selectToi.clearSelected();
-      }
-    }
     /*
     useSelectedKeyboardShortcuts(e, currDrag);
     */
@@ -207,10 +198,14 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
           selectToi.treeHoverSize = 0.5;
         }
 
+        dndStore.setTopPosition(e);
+        dndStore.setLeftPosition(e);
+        /*
         selectToi.selectedBoxData.attr.style.left =
           Math.round((e.clientX - prevX) / squareStore.scale) + "px";
         selectToi.selectedBoxData.attr.style.top =
           Math.round((e.clientY - prevY) / squareStore.scale) + "px";
+          */
 
         //ruler function
         if (canvasMarker.setRuler) {
@@ -317,11 +312,11 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
               useResizeObserver(currDrag);
               paddingResize.setResizerSize(currDrag);
             });
+          useSetOutlineSelector(currDrag);
+          useResizeObserver(currDrag);
+          paddingResize.setResizerSize(currDrag);
         }
         selectToi.treeHoverSize = 1;
-        useSetOutlineSelector(currDrag);
-        useResizeObserver(currDrag);
-        paddingResize.setResizerSize(currDrag);
         if (currType === "text") {
           textIsDragging.value = false;
         }

@@ -146,7 +146,7 @@
         </svg>
       </div>
       <h1 class="pointer-events-none">
-        {{ node.type == "text" ? node.textContent : node.name }}
+        {{ node.name }}
       </h1>
     </div>
     <template v-if="state === 'open'">

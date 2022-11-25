@@ -1400,6 +1400,7 @@
           ></div>
           <input
             type="text"
+            @keyup="$event.stopImmediatePropagation()"
             :value="selectToi.selectedBoxData.attr?.style.backgroundColor"
             @input="
               (event) => {
