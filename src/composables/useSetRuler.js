@@ -144,6 +144,13 @@ export default function (e, id) {
   let snapLeft = false;
   let snapRight = false;
 
+  let pointTop = NaN;
+  let pointBottom = NaN;
+  let pointLeft = NaN;
+  let pointRight = NaN;
+
+  console.log("pointtop = " + pointTop);
+
   targetChildrenData.every((i) => {
     if (i.lineTop || i.lineBottom) {
       snapTop = true;
@@ -180,13 +187,21 @@ export default function (e, id) {
     dndStore.snapPositionRight = false;
   }
 
-  if (dndStore.snapPositionTop) {
+  if (
+    dndStore.snapPositionTop &&
+    dndStore.snapPointTop &&
+    !dndStore.snapPositionBottom
+  ) {
     selectToi.selectedBoxData.attr.style.top =
       Math.round(
         (dndStore.snapPointTop - squareStore.offsetTop) / squareStore.scale
       ) + "px";
   }
-  if (dndStore.snapPositionBottom) {
+  if (
+    dndStore.snapPositionBottom &&
+    dndStore.snapPointBottom &&
+    !dndStore.snapPositionTop
+  ) {
     selectToi.selectedBoxData.attr.style.top =
       Math.round(
         (dndStore.snapPointBottom -
@@ -195,18 +210,84 @@ export default function (e, id) {
           squareStore.scale
       ) + "px";
   }
-  if (dndStore.snapPositionLeft) {
+  if (
+    dndStore.snapPositionLeft &&
+    dndStore.snapPointLeft &&
+    !dndStore.snapPositionRight
+  ) {
     selectToi.selectedBoxData.attr.style.left =
       Math.round(
         (dndStore.snapPointLeft - squareStore.offsetLeft) / squareStore.scale
       ) + "px";
   }
-  if (dndStore.snapPositionRight) {
+  if (
+    dndStore.snapPositionRight &&
+    dndStore.snapPointRight &&
+    !dndStore.snapPositionLeft
+  ) {
     selectToi.selectedBoxData.attr.style.left =
       Math.round(
         (dndStore.snapPointRight - elementRect.width - squareStore.offsetLeft) /
           squareStore.scale
       ) + "px";
+  }
+
+  if (
+    dndStore.snapPositionTop &&
+    dndStore.snapPointTop &&
+    dndStore.snapPositionBottom &&
+    dndStore.snapPointBottom
+  ) {
+    if (
+      elementRect.y + prevY - newDistanceY - dndStore.snapPositionTop >=
+      elementRect.y +
+        prevY -
+        newDistanceY +
+        elementRect.height -
+        dndStore.snapPositionBottom
+    ) {
+      selectToi.selectedBoxData.attr.style.top =
+        Math.round(
+          (dndStore.snapPointTop - squareStore.offsetTop) / squareStore.scale
+        ) + "px";
+    } else {
+      selectToi.selectedBoxData.attr.style.top =
+        Math.round(
+          (dndStore.snapPointBottom -
+            elementRect.height -
+            squareStore.offsetTop) /
+            squareStore.scale
+        ) + "px";
+    }
+  }
+
+  if (
+    dndStore.snapPositionLeft &&
+    dndStore.snapPointLeft &&
+    dndStore.snapPositionRight &&
+    dndStore.snapPointRight
+  ) {
+    if (
+      elementRect.x + prevX - newDistanceX - dndStore.snapPositionLeft >=
+      elementRect.x +
+        prevX -
+        newDistanceX +
+        elementRect.width -
+        dndStore.snapPositionRight
+    ) {
+      selectToi.selectedBoxData.attr.style.left =
+        Math.round(
+          (dndStore.snapPointLeft - squareStore.offsetLeft) / squareStore.scale
+        ) + "px";
+    } else {
+      selectToi.selectedBoxData.attr.style.left =
+        Math.round(
+          (dndStore.snapPointRight -
+            elementRect.width -
+            squareStore.offsetLeft) /
+            squareStore.scale
+        ) + "px";
+    }
   }
 
   if (!dndStore.snapPositionTop && !dndStore.snapPositionBottom) {

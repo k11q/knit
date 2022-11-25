@@ -1990,14 +1990,21 @@
         </div>
       </div>
     </div>
+    <button @click="editorStore.editor.chain().focus().toggleBold().run()">
+      Bold
+    </button>
+    {{ output }}
   </div>
 </template>
 
 <script setup>
 import { useCounterStore } from "@/stores/counter";
 import { useRightPanelStore } from "@/stores/rightPanelStore";
+import { useEditorStore } from "@/stores/editorStore";
 
 const selectToi = useCounterStore();
 const rightPanelStore = useRightPanelStore();
+const editorStore = useEditorStore();
+
 const text = ref("");
 </script>

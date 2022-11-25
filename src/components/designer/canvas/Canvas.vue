@@ -199,6 +199,21 @@
     >
       <RulerBrowser :lines="canvasMarker.lines" />
     </div>
+    <!--RulerSnap element
+    <div
+    v-show="rulerSnap.show" 
+      class="absolute inset-0 overflow-visible pointer-events-none"
+    >
+      <DesignerCanvasRulerSnap />
+    </div>
+    -->
+    <!--RulerSnap siblings point element-->
+    <div
+      v-show="rulerSnap.show"
+      class="absolute inset-0 overflow-visible pointer-events-none"
+    >
+      <DesignerCanvasRulerPoints :points="rulerSnap.siblingsPoints" />
+    </div>
   </div>
 </template>
 
@@ -213,6 +228,7 @@ import { useSelectStore } from "@/stores/selectStore";
 import { useNewSquareStore } from "@/stores/newSquareStore";
 import { useNewFrameStore } from "@/stores/newFrameStore";
 import { usePaddingResizeStore } from "@/stores/paddingResizeStore";
+import { useRulerSnapStore } from "@/stores/rulerSnap";
 
 const selectToi = useCounterStore();
 const addaSquare = useSquareStore();
@@ -225,6 +241,7 @@ const selectStore = useSelectStore();
 const newSquareStore = useNewSquareStore();
 const newFrameStore = useNewFrameStore();
 const paddingResize = usePaddingResizeStore();
+const rulerSnap = useRulerSnapStore();
 
 onMounted(() => {
   useAddKeyupShortcuts();

@@ -87,6 +87,7 @@ import { useDropMarker } from "@/stores/dropMarker";
 import { usePaddingResizeStore } from "@/stores/paddingResizeStore";
 import { useResizeStore } from "@/stores/resizeStore";
 import { useDndStore } from "@/stores/dndStore";
+import { useRulerSnapStore } from "@/stores/rulerSnap";
 
 const selectToi = useCounterStore();
 const canvasDnd = useCanvasDndStore();
@@ -100,6 +101,7 @@ const textHover = ref(false);
 const paddingResize = usePaddingResizeStore();
 const resizeStore = useResizeStore();
 const dndStore = useDndStore();
+const rulerSnap = useRulerSnapStore();
 
 function makeEditable(e: Event, id: String) {
   selectToi.selectedTextEditor = id;
@@ -145,6 +147,12 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
       useSetOutlineSelector(currDrag);
     }
     useSetOutlineSelector(currDrag);
+
+    rulerSnap.setRuler(e, currDrag);
+    rulerSnap.setSiblingsPoints(currDrag);
+    //ruler]
+    /*
+    rulerSnap.setRuler(e, currDrag);
     setTimeout(() => {
       paddingResize.setResizerSize(currDrag);
     }, "0");
@@ -324,6 +332,7 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
         window.removeEventListener("mousemove", mousemove);
         window.removeEventListener("mouseup", mouseup);
 
+        rulerSnap.show = false;
         canvasFF.isDragging = false;
         canvasDnd.isDragging = false;
       }

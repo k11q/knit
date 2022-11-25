@@ -1,9 +1,11 @@
 import { useSquareStore } from "@/stores/dataSquare";
 import { useCounterStore } from "@/stores/counter";
+import { useRulerSnapStore } from "@/stores/rulerSnap";
 
 export default function (event) {
   const addaSquare = useSquareStore();
   const selectToi = useCounterStore();
+  const rulerSnap = useRulerSnapStore();
 
   event.preventDefault();
   useResizeObserver(selectToi.selectedBoxData?.id);
