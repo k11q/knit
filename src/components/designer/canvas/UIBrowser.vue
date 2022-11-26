@@ -133,6 +133,9 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
     dndStore.prevX = prevX;
     dndStore.prevY = prevY;
 
+    rulerSnap.prevX = e.clientX - currDragElementRect.x;
+    rulerSnap.prevY = e.clientY - currDragElementRect.y;
+
     if (
       selectToi.selectedTextEditor &&
       selectToi.selectedTextEditor !== currDrag
@@ -170,6 +173,7 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
         if (currType === "text") {
           textIsDragging.value = true;
         }
+        rulerSnap.setRulerSnap(e, currDrag);
         canvasFF.isDragging = true;
         isDragging = true;
 
@@ -205,8 +209,6 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
           selectToi.treeHoverSize = 0.5;
         }
 
-        dndStore.setTopPosition(e);
-        dndStore.setLeftPosition(e);
         /*
         selectToi.selectedBoxData.attr.style.left =
           Math.round((e.clientX - prevX) / squareStore.scale) + "px";
@@ -216,7 +218,7 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
 
         //ruler function
         if (canvasMarker.setRuler) {
-          useSetRuler(e, currDrag);
+          //useSetRuler(e, currDrag);
         }
       }
       function mouseup() {

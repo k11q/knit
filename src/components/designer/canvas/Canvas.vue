@@ -214,6 +214,13 @@
     >
       <DesignerCanvasRulerPoints :points="rulerSnap.siblingsPoints" />
     </div>
+    <!--NEW Ruler element-->
+    <div
+      v-show="rulerSnap.show"
+      class="absolute inset-0 overflow-visible pointer-events-none"
+    >
+      <DesignerCanvasNewRulerSnap />
+    </div>
   </div>
 </template>
 
