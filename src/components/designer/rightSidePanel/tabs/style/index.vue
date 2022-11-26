@@ -259,7 +259,17 @@
       <p class="font-medium">Dimensions</p>
       <div class="flex flex-row">
         <div class="flex flex-row gap-0.5 justify-start items-center w-1/2">
-          <div class="h-full aspect-square items-center flex flex-none">
+          <div
+            class="h-full aspect-square items-center flex flex-none cursor-ew-resize"
+            @mousedown.stop.prevent="
+              useSlider(
+                $event,
+                1,
+                selectToi.selectedBoxData.id,
+                selectToi.selectedBoxData.type
+              ).left()
+            "
+          >
             <p class="opacity-40 text-center w-full">X</p>
           </div>
           <input
@@ -277,7 +287,17 @@
           />
         </div>
         <div class="flex flex-row gap-0.5 justify-start items-center w-1/2">
-          <div class="h-full aspect-square items-center flex flex-none">
+          <div
+            class="h-full aspect-square items-center flex flex-none cursor-ew-resize"
+            @mousedown.stop.prevent="
+              useSlider(
+                $event,
+                1,
+                selectToi.selectedBoxData.id,
+                selectToi.selectedBoxData.type
+              ).top()
+            "
+          >
             <p class="opacity-40 text-center w-full">Y</p>
           </div>
           <input
@@ -371,7 +391,17 @@
       </div>
       <div class="flex flex-row">
         <div class="flex flex-row gap-0.5 justify-start items-center">
-          <div class="h-full aspect-square items-center flex flex-none">
+          <div
+            class="h-full aspect-square items-center flex flex-none cursor-ew-resize"
+            @mousedown.stop.prevent="
+              useSlider(
+                $event,
+                1,
+                selectToi.selectedBoxData.id,
+                selectToi.selectedBoxData.type
+              ).width()
+            "
+          >
             <p class="opacity-40 text-center w-full">W</p>
           </div>
           <input
@@ -388,7 +418,17 @@
           />
         </div>
         <div class="flex flex-row gap-0.5 justify-start items-center">
-          <div class="h-full aspect-square items-center flex flex-none">
+          <div
+            class="h-full aspect-square items-center flex flex-none cursor-ew-resize"
+            @mousedown.stop.prevent="
+              useSlider(
+                $event,
+                1,
+                selectToi.selectedBoxData.id,
+                selectToi.selectedBoxData.type
+              ).height()
+            "
+          >
             <p class="opacity-40 text-center w-full">H</p>
           </div>
           <input

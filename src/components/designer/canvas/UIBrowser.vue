@@ -148,7 +148,6 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
     }
     useSetOutlineSelector(currDrag);
 
-    rulerSnap.setRuler(e, currDrag);
     rulerSnap.setSiblingsPoints(currDrag);
     //ruler]
     /*
