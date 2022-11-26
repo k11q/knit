@@ -6,7 +6,7 @@
       :data-state="state"
       :data-parentIsSelected="parentIsSelected"
       :style="{ 'padding-left': depth === 1 ? '16px' : depth * 20 + 'px' }"
-      class="flex flex-row gap-2 py-[9px] border border-transparent box-border cursor-default items-center relative"
+      class="flex flex-row gap-2 py-[9px] border border-transparent box-border cursor-default items-center relative justify-between"
       :class="{
         'bg-[#2E2E2E] border-[#232323] hover:border-[#232323]':
           selectToi.selectedBox === node.id,
@@ -15,16 +15,22 @@
         'hover:border-[#0191FA]':
           !treeDnd.isDragging && selectToi.selectedBox !== node.id,
         '!border-[#0191FA]':
-          treeDnd.currDropPosition === 'middle' &&
-          treeDnd.currDrop === node.id &&
-          selectToi.selectedBox !== node.id,
+          (treeDnd.currDropPosition === 'middle' &&
+            treeDnd.currDrop === node.id &&
+            selectToi.selectedBox !== node.id) ||
+          selectToi.treeHoverId == node.id,
         'opacity-40': treeDnd.currDrag === node.id,
         'opacity-100': treeDnd.currDrag !== node.id,
         'opacity-30': treeDnd.currDrag && parentIsSelected === true,
       }"
       @mousedown="dragAndDrop($event, node.id)"
       @mouseover="useSetOutlineHover(node.id)"
-      @mouseout="selectToi.treeHover = false"
+      @mouseout="
+        () => {
+          selectToi.treeHover = false;
+          selectToi.treeHoverId = '';
+        }
+      "
     >
       <div
         v-if="
@@ -145,9 +151,28 @@
           <line x1="12" y1="4" x2="12" y2="20"></line>
         </svg>
       </div>
-      <h1 class="pointer-events-none">
+      <h1 class="pointer-events-none flex-grow">
         {{ node.name }}
       </h1>
+      <div
+        v-show="selectToi.treeHoverId === node.id"
+        class="h-full aspect-square flex-none w-4 mr-2 opacity-40 flex items-center justify-center"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="12"
+          height="12"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+          <circle cx="12" cy="12" r="3"></circle>
+        </svg>
+      </div>
     </div>
     <template v-if="state === 'open'">
       <DesignerLeftSidePanelTabsLayersTreeBrowser
@@ -244,6 +269,7 @@ const dragAndDrop = (e, currDrag) => {
       const currDropDepth = currDrop.dataset.depth;
       const currDropIsParentSelected = currDrop.dataset.parentisselected;
       if (
+        currDropId &&
         treeDnd.isDragging === true &&
         currDropId !== treeDnd.currDrag &&
         currDropIsParentSelected !== "true"

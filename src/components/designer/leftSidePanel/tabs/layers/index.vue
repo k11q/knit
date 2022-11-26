@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col w-full h-fit">
+  <div class="flex flex-col h-fit">
     <!--pages-->
     <div
       class="flex flex-col border-b pt-[5px] gap-[1px] pb-3 border-[#282828]"

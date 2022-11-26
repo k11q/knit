@@ -18,6 +18,7 @@ export const useCounterStore = defineStore({
     selectedBoxHTMLWidth: NaN,
     selectedBoxHTMLHeight: NaN,
     treeHover: false,
+    treeHoverId: "",
     treeHoverHTMLX: NaN,
     treeHoverHTMLY: NaN,
     treeHoverHTMLWidth: NaN,

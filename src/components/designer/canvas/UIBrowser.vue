@@ -9,6 +9,7 @@
       @mouseout="
         () => {
           selectToi.treeHover = false;
+          selectToi.treeHoverId = '';
           textHover = false;
           if (selectToi.selectedBox === node.id && node.type !== 'text') {
             paddingResize.showPaddingResizer = false;
@@ -29,6 +30,7 @@
           if (selectToi.selectedBox === node.id && node.type !== 'text') {
             paddingResize.setShowPaddingResizer();
           }
+          selectToi.treeHoverId = node.id;
         }
       "
       @dblclick.prevent="

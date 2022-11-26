@@ -1,5 +1,8 @@
 <template>
-  <template v-for="point in points" class="overflow-visible">
+  <template
+    v-for="point in points"
+    class="overflow-visible flex items-center justify-center text-center"
+  >
     <div
       :style="{
         left: point.x - 2.5 + 'px',
