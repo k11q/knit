@@ -7,7 +7,7 @@
       width:
         rulerSnap.rulerPosition.right - rulerSnap.rulerPosition.left + 'px',
     }"
-    class="h-[0.7px] bg-[#E93372] fixed pointer-events-none overflow-visible"
+    class="h-[1px] bg-[#E93372] fixed pointer-events-none overflow-visible"
   ></div>
   <div
     v-show="rulerSnap.snapLines?.lineMiddleY"
@@ -17,7 +17,7 @@
       width:
         rulerSnap.rulerPosition.right - rulerSnap.rulerPosition.left + 'px',
     }"
-    class="h-[0.7px] bg-[#E93372] fixed pointer-events-none overflow-visible"
+    class="h-[1px] bg-[#E93372] fixed pointer-events-none overflow-visible"
   ></div>
   <div
     v-show="rulerSnap.snapLines?.lineBottom"
@@ -27,7 +27,7 @@
       width:
         rulerSnap.rulerPosition.right - rulerSnap.rulerPosition.left + 'px',
     }"
-    class="h-[0.7px] bg-[#E93372] fixed pointer-events-none overflow-visible"
+    class="h-[1px] bg-[#E93372] fixed pointer-events-none overflow-visible"
   ></div>
   <div
     v-show="rulerSnap.snapLines?.lineLeft"
@@ -37,7 +37,7 @@
       height:
         rulerSnap.rulerPosition.bottom - rulerSnap.rulerPosition.top + 'px',
     }"
-    class="w-[0.7px] bg-[#E93372] fixed pointer-events-none overflow-visible"
+    class="w-[1px] bg-[#E93372] fixed pointer-events-none overflow-visible"
   ></div>
   <div
     v-show="rulerSnap.snapLines?.lineMiddleX"
@@ -47,7 +47,7 @@
       height:
         rulerSnap.rulerPosition.bottom - rulerSnap.rulerPosition.top + 'px',
     }"
-    class="w-[0.7px] bg-[#E93372] fixed pointer-events-none overflow-visible"
+    class="w-[1px] bg-[#E93372] fixed pointer-events-none overflow-visible"
   ></div>
   <div
     v-show="rulerSnap.snapLines?.lineRight"
@@ -57,7 +57,7 @@
       height:
         rulerSnap.rulerPosition.bottom - rulerSnap.rulerPosition.top + 'px',
     }"
-    class="w-[0.7px] bg-[#E93372] fixed pointer-events-none overflow-visible"
+    class="w-[1px] bg-[#E93372] fixed pointer-events-none overflow-visible"
   ></div>
 </template>
 

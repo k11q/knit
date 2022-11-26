@@ -209,14 +209,14 @@
     -->
     <!--RulerSnap siblings point element-->
     <div
-      v-show="rulerSnap.show"
+      v-show="rulerSnap.show && rulerSnap.on"
       class="absolute inset-0 overflow-visible pointer-events-none"
     >
       <DesignerCanvasRulerPoints :points="rulerSnap.snapPoints" />
     </div>
     <!--NEW Ruler element-->
     <div
-      v-show="rulerSnap.show"
+      v-show="rulerSnap.show && rulerSnap.on"
       class="absolute inset-0 overflow-visible pointer-events-none"
     >
       <DesignerCanvasNewRulerSnap />

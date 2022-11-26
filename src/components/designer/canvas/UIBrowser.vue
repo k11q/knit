@@ -150,12 +150,10 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
       useSetOutlineSelector(currDrag);
     }
     useSetOutlineSelector(currDrag);
-    //ruler]
-    /*
-    rulerSnap.setRuler(e, currDrag);
+
     setTimeout(() => {
       paddingResize.setResizerSize(currDrag);
-    }, "0");
+    }, 0);
 
     /*
     useSelectedKeyboardShortcuts(e, currDrag);
@@ -171,8 +169,14 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
         if (currType === "text") {
           textIsDragging.value = true;
         }
-        rulerSnap.setRulerSnap(e, currDrag);
-        rulerSnap.setSiblingsPoints(currDrag);
+        rulerSnap.on = true;
+        Promise.resolve()
+          .then(() => {
+            rulerSnap.setRulerSnap(e, currDrag);
+          })
+          .then(() => {
+            rulerSnap.setSiblingsPoints(currDrag);
+          });
         canvasFF.isDragging = true;
         isDragging = true;
 
@@ -194,10 +198,12 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
             selectToi.selectedBox === closestTarget ||
             currDragElement.parentElement === closest
           ) {
+            rulerSnap.on = true;
             selectToi.treeHover = false;
             currDragElement.style.opacity = prevOpacity;
             canvasMarker.setRuler = true;
           } else {
+            rulerSnap.on = false;
             canvasMarker.setRuler = false;
             showMarker.value = true;
             dropMarker.setMarker(e, currDragElement);

@@ -2,7 +2,7 @@
   <template v-for="point in points" class="overflow-visible">
     <div
       :style="{
-        left: point.x - 3.5 + 'px',
+        left: point.x - 2.5 + 'px',
         top: point.y - 9 + 'px',
       }"
       class="h-1 w-1 fixed pointer-events-none overflow-visible checkx"
@@ -25,6 +25,9 @@ const props = defineProps({
 .checkx:after {
   content: "\d7"; /* use the hex value here... */
   color: #e93372;
-  line-height: "6px";
+  margin: auto;
+  font-size: 10px;
+  line-height: 10px;
+  font-weight: 200;
 }
 </style>
