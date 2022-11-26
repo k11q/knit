@@ -1,0 +1,30 @@
+<template>
+  <template v-for="point in points" class="overflow-visible">
+    <div
+      :style="{
+        left: point.x - 3.5 + 'px',
+        top: point.y - 9 + 'px',
+      }"
+      class="h-1 w-1 fixed pointer-events-none overflow-visible checkx"
+    ></div>
+  </template>
+</template>
+
+<script setup>
+import { useSquareStore } from "@/stores/dataSquare";
+import { useRulerSnapStore } from "@/stores/rulerSnap";
+
+const rulerSnap = useRulerSnapStore();
+
+const props = defineProps({
+  points: Array,
+});
+</script>
+
+<style scoped>
+.checkx:after {
+  content: "\d7"; /* use the hex value here... */
+  color: #e93372;
+  line-height: "6px";
+}
+</style>
