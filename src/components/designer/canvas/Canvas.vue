@@ -212,7 +212,7 @@
       v-show="rulerSnap.show"
       class="absolute inset-0 overflow-visible pointer-events-none"
     >
-      <DesignerCanvasRulerPoints :points="rulerSnap.siblingsPoints" />
+      <DesignerCanvasRulerPoints :points="rulerSnap.snapPoints" />
     </div>
     <!--NEW Ruler element-->
     <div

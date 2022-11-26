@@ -150,8 +150,6 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
       useSetOutlineSelector(currDrag);
     }
     useSetOutlineSelector(currDrag);
-
-    rulerSnap.setSiblingsPoints(currDrag);
     //ruler]
     /*
     rulerSnap.setRuler(e, currDrag);
@@ -174,6 +172,7 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
           textIsDragging.value = true;
         }
         rulerSnap.setRulerSnap(e, currDrag);
+        rulerSnap.setSiblingsPoints(currDrag);
         canvasFF.isDragging = true;
         isDragging = true;
 
@@ -215,11 +214,6 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
         selectToi.selectedBoxData.attr.style.top =
           Math.round((e.clientY - prevY) / squareStore.scale) + "px";
           */
-
-        //ruler function
-        if (canvasMarker.setRuler) {
-          //useSetRuler(e, currDrag);
-        }
       }
       function mouseup() {
         if (isDragging) {
