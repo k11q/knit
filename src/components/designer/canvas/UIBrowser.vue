@@ -321,11 +321,9 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
 
             .then(function () {
               useSetOutlineSelector(currDrag);
-              useResizeObserver(currDrag);
               paddingResize.setResizerSize(currDrag);
             });
           useSetOutlineSelector(currDrag);
-          useResizeObserver(currDrag);
           paddingResize.setResizerSize(currDrag);
         }
         selectToi.treeHoverSize = 1;

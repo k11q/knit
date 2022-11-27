@@ -124,5 +124,73 @@ export const useSlider = (e, change, currElement, currType) => {
       window.removeEventListener("mouseup", mouseup);
     }
   };
-  return { left, top, width, height };
+  const gap = () => {
+    const prevX = e.clientX;
+    let prevGap;
+    if (selectToi.selectedBoxData.attr.style.borderRadius) {
+      prevGap = parseInt(selectToi.selectedBoxData.attr.style.borderRadius);
+    } else if (!selectToi.selectedBoxData.attr.style.borderRadius) {
+      prevGap = 0;
+    }
+
+    window.addEventListener("mousemove", mousemove);
+    window.addEventListener("mouseup", mouseup);
+
+    function mousemove(e) {
+      canvasFF.isDragging = true;
+
+      selectToi.selectedBoxData.attr.style.gap =
+        prevGap + ((e.clientX - prevX) / squareStore.scale) * change + "px";
+    }
+
+    function mouseup() {
+      Promise.resolve()
+        .then(() => {
+          selectToi.changeSelected(e, currElement, currType);
+        })
+        .then(() => {
+          useSetOutlineSelector(currElement);
+        });
+      useSetOutlineSelector(currElement);
+
+      canvasFF.isDragging = false;
+      window.removeEventListener("mousemove", mousemove);
+      window.removeEventListener("mouseup", mouseup);
+    }
+  };
+  const borderRadius = () => {
+    const prevX = e.clientX;
+    let prevGap;
+    if (selectToi.selectedBoxData.attr.style.borderRadius) {
+      prevGap = parseInt(selectToi.selectedBoxData.attr.style.borderRadius);
+    } else if (!selectToi.selectedBoxData.attr.style.borderRadius) {
+      prevGap = 0;
+    }
+
+    window.addEventListener("mousemove", mousemove);
+    window.addEventListener("mouseup", mouseup);
+
+    function mousemove(e) {
+      canvasFF.isDragging = true;
+
+      selectToi.selectedBoxData.attr.style.borderRadius =
+        prevGap + ((e.clientX - prevX) / squareStore.scale) * change + "px";
+    }
+
+    function mouseup() {
+      Promise.resolve()
+        .then(() => {
+          selectToi.changeSelected(e, currElement, currType);
+        })
+        .then(() => {
+          useSetOutlineSelector(currElement);
+        });
+      useSetOutlineSelector(currElement);
+
+      canvasFF.isDragging = false;
+      window.removeEventListener("mousemove", mousemove);
+      window.removeEventListener("mouseup", mouseup);
+    }
+  };
+  return { left, top, width, height, gap, borderRadius };
 };

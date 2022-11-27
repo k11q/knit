@@ -10,64 +10,143 @@
       willChange: 'left, top, height, width',
       left:
         Math.round(
-          selectToi.resizeObserverTargetRect?.x - addaSquare.offsetLeft
+          useGetElementRect(selectToi.selectedBoxData.id)?.x -
+            addaSquare.offsetLeft
         ) /
           addaSquare.scale +
         'px',
       top:
         Math.round(
-          selectToi.resizeObserverTargetRect?.y - addaSquare.offsetTop
+          useGetElementRect(selectToi.selectedBoxData.id)?.y -
+            addaSquare.offsetTop
         ) /
           addaSquare.scale +
         'px',
       height:
-        Math.round(selectToi.resizeObserverTargetRect?.height) /
+        Math.round(useGetElementRect(selectToi.selectedBoxData.id)?.height) /
           addaSquare.scale +
         'px',
       width:
-        Math.round(selectToi.resizeObserverTargetRect?.width) /
+        Math.round(useGetElementRect(selectToi.selectedBoxData.id)?.width) /
           addaSquare.scale +
         'px',
     }"
   >
-    <div class="pointer-events-auto">
-      <!--Bottom dimensions label-->
-      <p
-        class="absolute left-0 right-0 top-full flex flex-row justify-center"
-        :style="{ marginTop: `${(8 * 1) / addaSquare.scale}px` }"
-      >
-        <span
-          class="bg-[#0191FA] text-[#EDEDED] cursor-default whitespace-nowrap"
-          :style="{
-            fontSize: `${(11 * 1) / addaSquare.scale}px`,
-            lineHeight: 1.5,
-            borderRadius: `${(4 * 1) / addaSquare.scale}px`,
-            paddingTop: `${2 * (1 / addaSquare.scale)}px`,
-            paddingBottom: `${2 * (1 / addaSquare.scale)}px`,
-            paddingRight: `${(4 * 1) / addaSquare.scale}px`,
-            paddingLeft: `${(4 * 1) / addaSquare.scale}px`,
-          }"
-        >
-          {{
-            selectToi.selectedBoxWidth
-              ? Math.round(selectToi.selectedBoxWidth)
-              : "Fill"
-          }}
-          x
-          {{
-            selectToi.selectedBoxHeight
-              ? Math.round(selectToi.selectedBoxHeight)
-              : "Fill"
-          }}
-        </span>
-      </p>
+    <!--radius resizer controller-->
+    <div
+      class="pointer-events-auto"
+      v-show="useGetElementRect(selectToi.selectedBoxData.id)?.width > 100"
+    >
       <div
-        @mousedown.stop.prevent="resizeStore.resizeTop"
-        class="absolute bottom-full bg-[#0191FA] w-full hover:cursor-ns-resize"
+        v-show="
+          paddingResize.showPaddingResizer ||
+          (paddingResize.currentResizing && !resizeStore.isResizing)
+        "
+        class="absolute top-0 left-0 bg-[#EDEDED] rounded-full border-[#0191FA]"
         :style="{
-          height: `${(1 * 1) / addaSquare.scale}px`,
+          marginTop: `${
+            (8 +
+              parseInt(selectToi.selectedBoxData?.attr?.style.borderRadius) *
+                addaSquare.scale *
+                0.5) /
+            addaSquare.scale
+          }px`,
+          marginLeft: `${
+            (8 +
+              parseInt(selectToi.selectedBoxData?.attr?.style.borderRadius) *
+                addaSquare.scale *
+                0.5) /
+            addaSquare.scale
+          }px`,
+          height: `${10 / addaSquare.scale}px`,
+          width: `${10 / addaSquare.scale}px`,
+          borderWidth: `${1 / addaSquare.scale}px`,
         }"
       />
+      <div
+        v-show="
+          paddingResize.showPaddingResizer ||
+          (paddingResize.currentResizing && !resizeStore.isResizing)
+        "
+        class="absolute top-0 right-0 bg-[#EDEDED] rounded-full border-[#0191FA]"
+        :style="{
+          marginTop: `${
+            (8 +
+              parseInt(selectToi.selectedBoxData?.attr?.style.borderRadius) *
+                addaSquare.scale *
+                0.5) /
+            addaSquare.scale
+          }px`,
+          marginRight: `${
+            (8 +
+              parseInt(selectToi.selectedBoxData?.attr?.style.borderRadius) *
+                addaSquare.scale *
+                0.5) /
+            addaSquare.scale
+          }px`,
+          height: `${10 / addaSquare.scale}px`,
+          width: `${10 / addaSquare.scale}px`,
+          borderWidth: `${1 / addaSquare.scale}px`,
+        }"
+      />
+      <div
+        v-show="
+          paddingResize.showPaddingResizer ||
+          (paddingResize.currentResizing && !resizeStore.isResizing)
+        "
+        class="absolute bottom-0 left-0 bg-[#EDEDED] rounded-full border-[#0191FA]"
+        :style="{
+          marginBottom: `${
+            (8 +
+              parseInt(selectToi.selectedBoxData?.attr?.style.borderRadius) *
+                addaSquare.scale *
+                0.5) /
+            addaSquare.scale
+          }px`,
+          marginLeft: `${
+            (8 +
+              parseInt(selectToi.selectedBoxData?.attr?.style.borderRadius) *
+                addaSquare.scale *
+                0.5) /
+            addaSquare.scale
+          }px`,
+          height: `${10 / addaSquare.scale}px`,
+          width: `${10 / addaSquare.scale}px`,
+          borderWidth: `${1 / addaSquare.scale}px`,
+        }"
+      />
+      <div
+        v-show="
+          paddingResize.showPaddingResizer ||
+          (paddingResize.currentResizing && !resizeStore.isResizing)
+        "
+        class="absolute bottom-0 right-0 bg-[#EDEDED] rounded-full border-[#0191FA]"
+        :style="{
+          marginBottom: `${
+            (8 +
+              parseInt(selectToi.selectedBoxData?.attr?.style.borderRadius) *
+                addaSquare.scale *
+                0.5) /
+            addaSquare.scale
+          }px`,
+          marginRight: `${
+            (8 +
+              parseInt(selectToi.selectedBoxData?.attr?.style.borderRadius) *
+                addaSquare.scale *
+                0.5) /
+            addaSquare.scale
+          }px`,
+          height: `${10 / addaSquare.scale}px`,
+          width: `${10 / addaSquare.scale}px`,
+          borderWidth: `${1 / addaSquare.scale}px`,
+        }"
+      />
+    </div>
+    <!--padding resizer-->
+    <div
+      class="pointer-events-auto"
+      v-show="useGetElementRect(selectToi.selectedBoxData.id)?.width > 100"
+    >
       <div
         v-show="
           paddingResize.showPaddingResizer ||
@@ -116,11 +195,6 @@
         </div>
       </div>
       <div
-        @mousedown.stop.prevent="resizeStore.resizeBottom"
-        class="absolute top-full bg-[#0191FA] w-full hover:cursor-ns-resize"
-        :style="{ height: `${(1 * 1) / addaSquare.scale}px` }"
-      />
-      <div
         v-show="
           paddingResize.showPaddingResizer ||
           (paddingResize.currentResizing && !resizeStore.isResizing)
@@ -166,13 +240,6 @@
           ></div>
         </div>
       </div>
-      <div
-        @mousedown.stop.prevent="resizeStore.resizeLeft"
-        class="absolute right-full bg-[#0191FA] h-full hover:cursor-ew-resize"
-        :style="{
-          width: `${(1 * 1) / addaSquare.scale}px`,
-        }"
-      />
       <div
         v-show="
           paddingResize.showPaddingResizer ||
@@ -220,11 +287,6 @@
         </div>
       </div>
       <div
-        @mousedown.stop.prevent="resizeStore.resizeRight"
-        class="absolute left-full bg-[#0191FA] h-full hover:cursor-ew-resize"
-        :style="{ width: `${(1 * 1) / addaSquare.scale}px` }"
-      />
-      <div
         v-show="
           paddingResize.showPaddingResizer ||
           (paddingResize.currentResizing && !resizeStore.isResizing)
@@ -270,7 +332,63 @@
           ></div>
         </div>
       </div>
-
+    </div>
+    <!--resizer and padding resizer-->
+    <div class="pointer-events-auto">
+      <!--Bottom dimensions label-->
+      <p
+        class="absolute left-0 right-0 top-full flex flex-row justify-center"
+        :style="{ marginTop: `${(8 * 1) / addaSquare.scale}px` }"
+      >
+        <span
+          class="bg-[#0191FA] text-[#EDEDED] cursor-default whitespace-nowrap"
+          :style="{
+            fontSize: `${(11 * 1) / addaSquare.scale}px`,
+            lineHeight: 1.5,
+            borderRadius: `${(4 * 1) / addaSquare.scale}px`,
+            paddingTop: `${2 * (1 / addaSquare.scale)}px`,
+            paddingBottom: `${2 * (1 / addaSquare.scale)}px`,
+            paddingRight: `${(4 * 1) / addaSquare.scale}px`,
+            paddingLeft: `${(4 * 1) / addaSquare.scale}px`,
+          }"
+        >
+          {{
+            selectToi.selectedBoxWidth
+              ? Math.round(selectToi.selectedBoxWidth)
+              : "Fill"
+          }}
+          x
+          {{
+            selectToi.selectedBoxHeight
+              ? Math.round(selectToi.selectedBoxHeight)
+              : "Fill"
+          }}
+        </span>
+      </p>
+      <div
+        @mousedown.stop.prevent="resizeStore.resizeTop"
+        class="absolute bottom-full bg-[#0191FA] w-full hover:cursor-ns-resize"
+        :style="{
+          height: `${(1 * 1) / addaSquare.scale}px`,
+        }"
+      />
+      <div
+        @mousedown.stop.prevent="resizeStore.resizeBottom"
+        class="absolute top-full bg-[#0191FA] w-full hover:cursor-ns-resize"
+        :style="{ height: `${(1 * 1) / addaSquare.scale}px` }"
+      />
+      <div
+        @mousedown.stop.prevent="resizeStore.resizeLeft"
+        class="absolute right-full bg-[#0191FA] h-full hover:cursor-ew-resize"
+        :style="{
+          width: `${(1 * 1) / addaSquare.scale}px`,
+        }"
+      />
+      <div
+        @mousedown.stop.prevent="resizeStore.resizeRight"
+        class="absolute left-full bg-[#0191FA] h-full hover:cursor-ew-resize"
+        :style="{ width: `${(1 * 1) / addaSquare.scale}px` }"
+      />
       <div
         @mousedown.stop.prevent="resizeStore.resizeTopLeft"
         class="absolute -top-1 -left-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nwse-resize"

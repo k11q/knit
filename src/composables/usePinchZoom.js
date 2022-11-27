@@ -8,7 +8,6 @@ export default function (event) {
   const rulerSnap = useRulerSnapStore();
 
   event.preventDefault();
-  useResizeObserver(selectToi.selectedBoxData?.id);
 
   if (
     event.deltaX === 0 &&

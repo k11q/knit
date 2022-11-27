@@ -2,33 +2,31 @@
   <aside
     class="border-l w-60 flex flex-col h-screen overflow-x-hidden pb-16 z-10 bg-[#232323] border-[#303030]"
   >
-    <div class="flex flex-row gap-5 mr-5 items-center">
-      <div class="flex items-center justify-center">
-        <div class="bg-gray-400 rounded-full aspect-square h-6"></div>
-      </div>
-      <NuxtLink
-        :to="`/p/${route.params.id}/${selectToi.selectedBoxData.name}/preview`"
-      >
-        <div
-          class="flex items-center justify-center text-center cursor-default hover:bg-[#232323] h-8 aspect-square"
+    <div
+      class="flex flex-row pt-2 pb-1 w-full pl-4 pr-2 gap-5 items-center justify-end"
+    >
+      <div>
+        <NuxtLink
+          :to="`/p/${route.params.id}/${selectToi.selectedBoxData.name}/preview`"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="17"
-            height="17"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+          <div
+            class="flex items-center justify-center text-center cursor-default hover:bg-[#232323] h-8 aspect-square"
           >
-            <polygon points="5 3 19 12 5 21 5 3"></polygon>
-          </svg>
-        </div>
-      </NuxtLink>
-      <div class="flex items-center justify-center">
-        <div>Export</div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="17"
+              height="17"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          </div>
+        </NuxtLink>
       </div>
       <div class="flex items-center justify-center">
         <NuxtLink
@@ -41,7 +39,7 @@
           </button>
         </NuxtLink>
       </div>
-      <div class="flex items-center justify-center w-10">
+      <div class="flex items-center justify-center">
         <p>{{ `${(addaSquare.scale * 100).toFixed(2)}` }}%</p>
       </div>
     </div>
