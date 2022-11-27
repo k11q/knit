@@ -5,7 +5,7 @@
       !canvasFF.isDragging &&
       !selectToi.selectedTextEditor
     "
-    class="absolute pointer-events-none"
+    class="absolute pointer-events-none border-box"
     :style="{
       willChange: 'left, top, height, width',
       left:
@@ -35,7 +35,10 @@
     <!--radius resizer controller-->
     <div
       class="pointer-events-auto"
-      v-show="useGetElementRect(selectToi.selectedBoxData.id)?.width > 100"
+      v-show="
+        useGetElementRect(selectToi.selectedBoxData.id)?.width > 20 ||
+        useGetElementRect(selectToi.selectedBoxData.id)?.height > 20
+      "
     >
       <div
         v-show="
@@ -145,7 +148,10 @@
     <!--padding resizer-->
     <div
       class="pointer-events-auto"
-      v-show="useGetElementRect(selectToi.selectedBoxData.id)?.width > 100"
+      v-show="
+        useGetElementRect(selectToi.selectedBoxData.id)?.width > 20 ||
+        useGetElementRect(selectToi.selectedBoxData.id)?.height > 20
+      "
     >
       <div
         v-show="
@@ -333,8 +339,14 @@
         </div>
       </div>
     </div>
-    <!--resizer and padding resizer-->
-    <div class="pointer-events-auto">
+    <!-- resizer-->
+    <div
+      class="pointer-events-auto"
+      v-show="
+        useGetElementRect(selectToi.selectedBoxData.id)?.width > 20 ||
+        useGetElementRect(selectToi.selectedBoxData.id)?.height > 20
+      "
+    >
       <!--Bottom dimensions label-->
       <p
         class="absolute left-0 right-0 top-full flex flex-row justify-center"
@@ -369,25 +381,25 @@
         @mousedown.stop.prevent="resizeStore.resizeTop"
         class="absolute bottom-full bg-[#0191FA] w-full hover:cursor-ns-resize"
         :style="{
-          height: `${(1 * 1) / addaSquare.scale}px`,
+          height: `${(1.5 * 1) / addaSquare.scale}px`,
         }"
       />
       <div
         @mousedown.stop.prevent="resizeStore.resizeBottom"
         class="absolute top-full bg-[#0191FA] w-full hover:cursor-ns-resize"
-        :style="{ height: `${(1 * 1) / addaSquare.scale}px` }"
+        :style="{ height: `${(1.5 * 1) / addaSquare.scale}px` }"
       />
       <div
         @mousedown.stop.prevent="resizeStore.resizeLeft"
         class="absolute right-full bg-[#0191FA] h-full hover:cursor-ew-resize"
         :style="{
-          width: `${(1 * 1) / addaSquare.scale}px`,
+          width: `${(1.5 * 1) / addaSquare.scale}px`,
         }"
       />
       <div
         @mousedown.stop.prevent="resizeStore.resizeRight"
         class="absolute left-full bg-[#0191FA] h-full hover:cursor-ew-resize"
-        :style="{ width: `${(1 * 1) / addaSquare.scale}px` }"
+        :style="{ width: `${(1.5 * 1) / addaSquare.scale}px` }"
       />
       <div
         @mousedown.stop.prevent="resizeStore.resizeTopLeft"

@@ -92,352 +92,6 @@
         </div>
       </div>
     </div>
-    <!-- Layout section! -->
-    <div
-      v-show="
-        selectToi.selectedBoxData.type !== 'text' && selectToi.selectedBox
-      "
-      class="flex flex-col pt-2 pb-3 border-[#303030] border-b"
-    >
-      <div class="h-8 pl-4 pr-2 justify-between items-center grid grid-cols-7">
-        <p class="font-medium col-span-3">Position</p>
-      </div>
-      <div class="pl-4 pr-2 grid w-full grid-cols-7 pt-1">
-        <div class="flex flex-row justify-between col-span-6">
-          <div class="flex flex-col w-1/2">
-            <div
-              class="h-16 w-16 border rounded-sm border-[#3E3E3E] bg-[#222222] aspect-square flex flex-col flex-none items-start"
-            >
-              <div class="w-full flex justify-center">
-                <div
-                  class="h-3 aspect-square flex items-center justify-center py-0.5 hover:bg-[#6EB0E0] hover:bg-opacity-30"
-                >
-                  <div class="bg-[#6EB0E0] h-full w-1"></div>
-                </div>
-              </div>
-              <div class="w-full flex flex-grow justify-center items-center">
-                <div
-                  class="h-3 aspect-square flex items-center justify-center px-0.5 hover:bg-[#6EB0E0] hover:bg-opacity-30"
-                >
-                  <div class="bg-[#6EB0E0] w-full h-1"></div>
-                </div>
-                <div
-                  class="flex-grow h-full border rounded-sm aspect-square relative"
-                >
-                  <div
-                    class="bg-[#EDEDED] h-4 w-[1px] top-1/2 -mt-2 -ml-[0.5px] left-1/2 absolute"
-                  ></div>
-                  <div
-                    class="bg-[#EDEDED] h-[1px] w-4 top-1/2 -mt-[0.5px] -ml-2 left-1/2 absolute"
-                  ></div>
-                </div>
-                <div
-                  class="h-3 aspect-square flex items-center justify-center px-0.5 hover:bg-[#6EB0E0] hover:bg-opacity-30"
-                >
-                  <div class="bg-[#EDEDED] w-full h-[1px]"></div>
-                </div>
-              </div>
-              <div class="w-full flex justify-center">
-                <div
-                  class="h-3 aspect-square flex items-center justify-center py-0.5 hover:bg-[#6EB0E0] hover:bg-opacity-30"
-                >
-                  <div class="bg-[#EDEDED] h-full w-[1px]"></div>
-                </div>
-              </div>
-            </div>
-            <div class="grid grid-cols-2 gap-2 items-center w-fit h-8 mt-2">
-              <div
-                class="aspect-square items-center flex flex-col justify-center flex-none opacity-40 h-[18px] cursor-ew-resize"
-              >
-                <span>T</span>
-              </div>
-
-              <div class="aspect-square items-center flex flex-none h-[18px]">
-                <input
-                  type="number"
-                  :value="
-                    parseInt(
-                      selectToi.selectedBoxData.attr?.style.paddingBottom,
-                      10
-                    )
-                  "
-                  @input="
-                    (event) => {
-                      (selectToi.selectedBoxData.attr.style.paddingBottom =
-                        event.target.value + 'px'),
-                        (selectToi.selectedBoxData.attr.style.paddingTop =
-                          event.target.value + 'px');
-                    }
-                  "
-                  placeholder="0"
-                  class="w-8 bg-transparent placeholder-[#707070]"
-                />
-              </div>
-            </div>
-            <div class="grid grid-cols-2 gap-2 items-center w-fit h-8">
-              <div
-                class="aspect-square items-center flex flex-col justify-center flex-none opacity-40 h-[18px] cursor-ew-resize"
-              >
-                <span>L</span>
-              </div>
-
-              <div class="aspect-square items-center flex flex-none h-[18px]">
-                <input
-                  type="number"
-                  :value="
-                    parseInt(
-                      selectToi.selectedBoxData.attr?.style.paddingBottom,
-                      10
-                    )
-                  "
-                  @input="
-                    (event) => {
-                      (selectToi.selectedBoxData.attr.style.paddingBottom =
-                        event.target.value + 'px'),
-                        (selectToi.selectedBoxData.attr.style.paddingTop =
-                          event.target.value + 'px');
-                    }
-                  "
-                  placeholder="0"
-                  class="w-8 bg-transparent placeholder-[#707070]"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="flex flex-col w-1/2 flex-none">
-            <div class="flex flex-row items-center h-8 gap-1">
-              <div
-                class="aspect-square items-center flex flex-col justify-center flex-none opacity-40 h-[18px] cursor-ew-resize"
-                @mousedown.stop.prevent="
-                  useSlider(
-                    $event,
-                    1,
-                    selectToi.selectedBoxData.id,
-                    selectToi.selectedBoxData.type
-                  ).gap()
-                "
-              >
-                <svg
-                  width="15"
-                  height="15"
-                  viewBox="0 0 15 15"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M13 13V12C13 11.4477 12.5535 11 12.0012 11C8.82491 11 4.82642 11 2.99668 11C2.44439 11 2 11.4477 2 12V13"
-                    stroke="currentColor"
-                    stroke-width="0.9375"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M13 2V3C13 3.55228 12.5523 4 12 4H3C2.44771 4 2 3.55228 2 3V2"
-                    stroke="currentColor"
-                    stroke-width="0.9375"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M11 7.5L4 7.5"
-                    stroke="currentColor"
-                    stroke-width="0.9375"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </div>
-              <select
-                :value="selectToi.selectedBoxData.attr?.style.position"
-                class="bg-transparent"
-              >
-                <option value="fixed">Fixed</option>
-                <option value="absolute">Absolute</option>
-                <option value="sticky">Sticky</option>
-                <option value="static">Static</option>
-              </select>
-            </div>
-            <div class="flex flex-row items-center h-8">
-              <div
-                class="aspect-square items-center flex flex-col justify-center flex-none opacity-40 h-[18px] cursor-ew-resize"
-                @mousedown.stop.prevent="
-                  useSlider(
-                    $event,
-                    1,
-                    selectToi.selectedBoxData.id,
-                    selectToi.selectedBoxData.type
-                  ).gap()
-                "
-              >
-                <svg
-                  width="15"
-                  height="15"
-                  viewBox="0 0 15 15"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M13 13V12C13 11.4477 12.5535 11 12.0012 11C8.82491 11 4.82642 11 2.99668 11C2.44439 11 2 11.4477 2 12V13"
-                    stroke="currentColor"
-                    stroke-width="0.9375"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M13 2V3C13 3.55228 12.5523 4 12 4H3C2.44771 4 2 3.55228 2 3V2"
-                    stroke="currentColor"
-                    stroke-width="0.9375"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M11 7.5L4 7.5"
-                    stroke="currentColor"
-                    stroke-width="0.9375"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </div>
-              <input
-                type="number"
-                :value="parseInt(selectToi.selectedBoxData.attr?.style.gap, 10)"
-                @input="
-                  (event) => {
-                    selectToi.selectedBoxData.attr.style.gap =
-                      event.target.value + 'px';
-                  }
-                "
-                placeholder="0"
-                class="w-full pl-2 bg-transparent placeholder-[#707070]"
-              />
-            </div>
-            <div class="flex flex-row items-center h-8 mt-2">
-              <div
-                class="aspect-square items-center flex flex-col justify-center flex-none opacity-40 h-[18px] cursor-ew-resize"
-              >
-                <span>R</span>
-              </div>
-              <input
-                type="number"
-                :value="
-                  parseInt(
-                    selectToi.selectedBoxData.attr?.style.paddingLeft,
-                    10
-                  )
-                "
-                @input="
-                  (event) => {
-                    (selectToi.selectedBoxData.attr.style.paddingLeft =
-                      event.target.value + 'px'),
-                      (selectToi.selectedBoxData.attr.style.paddingRight =
-                        event.target.value + 'px');
-                  }
-                "
-                placeholder="0"
-                class="w-full pl-2 bg-transparent placeholder-[#707070]"
-              />
-            </div>
-            <div class="flex flex-row items-center h-8">
-              <div
-                class="aspect-square items-center flex flex-col justify-center flex-none opacity-40 h-[18px] cursor-ew-resize"
-              >
-                <span>B</span>
-              </div>
-              <input
-                type="number"
-                :value="
-                  parseInt(
-                    selectToi.selectedBoxData.attr?.style.paddingLeft,
-                    10
-                  )
-                "
-                @input="
-                  (event) => {
-                    (selectToi.selectedBoxData.attr.style.paddingLeft =
-                      event.target.value + 'px'),
-                      (selectToi.selectedBoxData.attr.style.paddingRight =
-                        event.target.value + 'px');
-                  }
-                "
-                placeholder="0"
-                class="w-full pl-2 bg-transparent placeholder-[#707070]"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="flex flex-col items-end justify-start col-span-1">
-          <div
-            class="aspect-square h-8 flex flex-col justify-center items-center hover:bg-[#2E2E2E] rounded"
-            @click="
-              () => {
-                customCSS = !customCSS;
-              }
-            "
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <circle cx="12" cy="12" r="1"></circle>
-              <circle cx="19" cy="12" r="1"></circle>
-              <circle cx="5" cy="12" r="1"></circle>
-            </svg>
-          </div>
-          <div
-            class="aspect-square h-8 flex flex-col justify-center items-center hover:bg-[#2E2E2E] rounded"
-            @click="
-              () => {
-                customCSS = !customCSS;
-              }
-            "
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-          </div>
-          <div
-            class="aspect-square h-8 flex flex-col justify-center items-center hover:bg-[#2E2E2E] rounded mt-1"
-            @click="
-              () => {
-                customCSS = !customCSS;
-              }
-            "
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-            </svg>
-          </div>
-        </div>
-      </div>
-    </div>
     <!--Dimensions section-->
     <div
       v-show="selectToi.selectedBox"
@@ -1229,8 +883,11 @@
                       (selectToi.selectedBoxData &&
                         selectToi.selectedBoxData.attr?.style.alignItems !==
                           'start') ||
-                      selectToi.selectedBoxData.attr?.style.justifyContent !==
-                        'start',
+                      (selectToi.selectedBoxData.attr?.style.justifyContent !==
+                        'start' &&
+                        (selectToi.selectedBoxData.attr?.style.alignItems ||
+                          selectToi.selectedBoxData.attr?.style
+                            .justifyContent)),
                   }"
                   width="18"
                   height="18"
@@ -1796,10 +1453,12 @@
                   class="absolute top-0.5 left-0.5 text-[#6EB0E0]"
                   :class="{
                     'opacity-100 ':
-                      selectToi.selectedBoxData.attr?.style.alignItems ===
+                      (selectToi.selectedBoxData.attr?.style.alignItems ===
                         'start' &&
-                      selectToi.selectedBoxData.attr?.style.justifyContent ===
-                        'start',
+                        selectToi.selectedBoxData.attr?.style.justifyContent ===
+                          'start') ||
+                      (!selectToi.selectedBoxData.attr?.style.alignItems &&
+                        !selectToi.selectedBoxData.attr?.style.justifyContent),
                     'opacity-0 hover:opacity-30':
                       (selectToi.selectedBoxData &&
                         selectToi.selectedBoxData.attr?.style.alignItems !==
@@ -2592,12 +2251,24 @@
           class="flex flex-row gap-[6px] justify-between items-center w-full"
         >
           <div
-            class="h-[14px] aspect-square items-center flex flex-none"
-            :style="{
-              'background-color':
-                selectToi.selectedBoxData.attr?.style.backgroundColor,
-            }"
-          ></div>
+            class="h-[14px] aspect-square items-center flex flex-none opacity-40"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"
+              ></path>
+            </svg>
+          </div>
           <select class="bg-transparent flex-grow">
             <option>Pass through</option>
             <option>Normal</option>
@@ -2740,6 +2411,294 @@
             </svg>
           </div>
         </div>
+      </div>
+    </div>
+    <!-- Position section! -->
+    <div
+      v-show="
+        selectToi.selectedBoxData &&
+        useGetElement(selectToi.selectedBoxData.id)?.parentElement?.dataset
+          .id !== 'canvas'
+      "
+      class="flex flex-col pt-2 pb-3 border-[#303030] border-b"
+    >
+      <div class="h-8 pl-4 pr-2 flex flex-row justify-between items-center">
+        <p class="font-medium col-span-3">Position</p>
+        <div
+          class="aspect-square h-8 flex flex-col justify-center items-center hover:bg-[#2E2E2E] rounded"
+          @click="
+            () => {
+              customCSS = !customCSS;
+            }
+          "
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="1"></circle>
+            <circle cx="19" cy="12" r="1"></circle>
+            <circle cx="5" cy="12" r="1"></circle>
+          </svg>
+        </div>
+      </div>
+      <div class="pl-4 pr-2 grid w-full grid-cols-7 pt-1">
+        <div class="flex flex-row justify-between col-span-6">
+          <div class="flex flex-col w-1/2">
+            <div
+              class="h-16 w-16 border rounded-sm border-[#3E3E3E] bg-[#222222] aspect-square flex flex-col flex-none items-start"
+            >
+              <div class="w-full flex justify-center">
+                <div
+                  class="h-3 aspect-square flex items-center justify-center py-0.5 hover:bg-[#6EB0E0] hover:bg-opacity-30"
+                >
+                  <div class="bg-[#6EB0E0] h-full w-1"></div>
+                </div>
+              </div>
+              <div class="w-full flex flex-grow justify-center items-center">
+                <div
+                  class="h-3 aspect-square flex items-center justify-center px-0.5 hover:bg-[#6EB0E0] hover:bg-opacity-30"
+                >
+                  <div class="bg-[#6EB0E0] w-full h-1"></div>
+                </div>
+                <div
+                  class="flex-grow h-full border rounded-sm aspect-square relative"
+                >
+                  <div
+                    class="bg-[#EDEDED] h-4 w-[1px] top-1/2 -mt-2 -ml-[0.5px] left-1/2 absolute"
+                  ></div>
+                  <div
+                    class="bg-[#EDEDED] h-[1px] w-4 top-1/2 -mt-[0.5px] -ml-2 left-1/2 absolute"
+                  ></div>
+                </div>
+                <div
+                  class="h-3 aspect-square flex items-center justify-center px-0.5 hover:bg-[#6EB0E0] hover:bg-opacity-30"
+                >
+                  <div class="bg-[#EDEDED] w-full h-[1px]"></div>
+                </div>
+              </div>
+              <div class="w-full flex justify-center">
+                <div
+                  class="h-3 aspect-square flex items-center justify-center py-0.5 hover:bg-[#6EB0E0] hover:bg-opacity-30"
+                >
+                  <div class="bg-[#EDEDED] h-full w-[1px]"></div>
+                </div>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-2 items-center w-fit h-8 mt-2">
+              <div
+                class="aspect-square items-center flex flex-col justify-center flex-none opacity-40 h-[18px] cursor-ew-resize"
+              >
+                <span>T</span>
+              </div>
+
+              <div class="aspect-square items-center flex flex-none h-[18px]">
+                <input
+                  type="number"
+                  :value="
+                    parseInt(
+                      selectToi.selectedBoxData.attr?.style.paddingBottom,
+                      10
+                    )
+                  "
+                  @input="
+                    (event) => {
+                      (selectToi.selectedBoxData.attr.style.paddingBottom =
+                        event.target.value + 'px'),
+                        (selectToi.selectedBoxData.attr.style.paddingTop =
+                          event.target.value + 'px');
+                    }
+                  "
+                  placeholder="0"
+                  class="w-8 bg-transparent placeholder-[#707070]"
+                />
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-2 items-center w-fit h-8">
+              <div
+                class="aspect-square items-center flex flex-col justify-center flex-none opacity-40 h-[18px] cursor-ew-resize"
+              >
+                <span>L</span>
+              </div>
+
+              <div class="aspect-square items-center flex flex-none h-[18px]">
+                <input
+                  type="number"
+                  :value="
+                    parseInt(
+                      selectToi.selectedBoxData.attr?.style.paddingBottom,
+                      10
+                    )
+                  "
+                  @input="
+                    (event) => {
+                      (selectToi.selectedBoxData.attr.style.paddingBottom =
+                        event.target.value + 'px'),
+                        (selectToi.selectedBoxData.attr.style.paddingTop =
+                          event.target.value + 'px');
+                    }
+                  "
+                  placeholder="0"
+                  class="w-8 bg-transparent placeholder-[#707070]"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col w-1/2 flex-none">
+            <div class="flex flex-row items-center h-8 gap-1">
+              <div
+                class="aspect-square items-center flex flex-col justify-center flex-none opacity-40 h-[18px] cursor-ew-resize"
+                @mousedown.stop.prevent="
+                  useSlider(
+                    $event,
+                    1,
+                    selectToi.selectedBoxData.id,
+                    selectToi.selectedBoxData.type
+                  ).gap()
+                "
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M5 3a2 2 0 0 0-2 2"></path>
+                  <path d="M19 3a2 2 0 0 1 2 2"></path>
+                  <path d="M21 19a2 2 0 0 1-2 2"></path>
+                  <path d="M5 21a2 2 0 0 1-2-2"></path>
+                  <path d="M9 3h1"></path>
+                  <path d="M9 21h1"></path>
+                  <path d="M14 3h1"></path>
+                  <path d="M14 21h1"></path>
+                  <path d="M3 9v1"></path>
+                  <path d="M21 9v1"></path>
+                  <path d="M3 14v1"></path>
+                  <path d="M21 14v1"></path>
+                </svg>
+              </div>
+              <select
+                :value="selectToi.selectedBoxData.attr?.style.position"
+                @change="
+                  selectToi.selectedBoxData.attr.style.position =
+                    $event.target.value
+                "
+                class="bg-transparent"
+              >
+                <option value="fixed">Fixed</option>
+                <option value="absolute">Absolute</option>
+                <option value="sticky">Sticky</option>
+                <option value="static">Static</option>
+              </select>
+            </div>
+            <div class="flex flex-row items-center h-8">
+              <div
+                class="aspect-square items-center flex flex-col justify-center flex-none opacity-40 h-[18px] cursor-ew-resize"
+                @mousedown.stop.prevent="
+                  useSlider(
+                    $event,
+                    1,
+                    selectToi.selectedBoxData.id,
+                    selectToi.selectedBoxData.type
+                  ).gap()
+                "
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                  <polyline points="2 17 12 22 22 17"></polyline>
+                  <polyline points="2 12 12 17 22 12"></polyline>
+                </svg>
+              </div>
+              <input
+                type="number"
+                :value="parseInt(selectToi.selectedBoxData.attr?.style.gap, 10)"
+                @input="
+                  (event) => {
+                    selectToi.selectedBoxData.attr.style.gap =
+                      event.target.value + 'px';
+                  }
+                "
+                placeholder="0"
+                class="w-full pl-2 bg-transparent placeholder-[#707070]"
+              />
+            </div>
+            <div class="flex flex-row items-center h-8 mt-2">
+              <div
+                class="aspect-square items-center flex flex-col justify-center flex-none opacity-40 h-[18px] cursor-ew-resize"
+              >
+                <span>R</span>
+              </div>
+              <input
+                type="number"
+                :value="
+                  parseInt(
+                    selectToi.selectedBoxData.attr?.style.paddingLeft,
+                    10
+                  )
+                "
+                @input="
+                  (event) => {
+                    (selectToi.selectedBoxData.attr.style.paddingLeft =
+                      event.target.value + 'px'),
+                      (selectToi.selectedBoxData.attr.style.paddingRight =
+                        event.target.value + 'px');
+                  }
+                "
+                placeholder="0"
+                class="w-full pl-2 bg-transparent placeholder-[#707070]"
+              />
+            </div>
+            <div class="flex flex-row items-center h-8">
+              <div
+                class="aspect-square items-center flex flex-col justify-center flex-none opacity-40 h-[18px] cursor-ew-resize"
+              >
+                <span>B</span>
+              </div>
+              <input
+                type="number"
+                :value="
+                  parseInt(
+                    selectToi.selectedBoxData.attr?.style.paddingLeft,
+                    10
+                  )
+                "
+                @input="
+                  (event) => {
+                    (selectToi.selectedBoxData.attr.style.paddingLeft =
+                      event.target.value + 'px'),
+                      (selectToi.selectedBoxData.attr.style.paddingRight =
+                        event.target.value + 'px');
+                  }
+                "
+                placeholder="0"
+                class="w-full pl-2 bg-transparent placeholder-[#707070]"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col items-end justify-start col-span-1"></div>
       </div>
     </div>
     <!-- stroke color  section! -->

@@ -23,13 +23,17 @@ export const useDndStore = defineStore({
       const selectToi = useCounterStore();
       const squareStore = useSquareStore();
       selectToi.selectedBoxData.attr.style.left =
-        Math.round((e.clientX - this.prevX) / squareStore.scale) + "px";
+        Math.round(
+          (e.clientX - this.prevX - squareStore.offsetLeft) / squareStore.scale
+        ) + "px";
     },
     setTopPosition(e) {
       const selectToi = useCounterStore();
       const squareStore = useSquareStore();
       selectToi.selectedBoxData.attr.style.top =
-        Math.round((e.clientY - this.prevY) / squareStore.scale) + "px";
+        Math.round(
+          (e.clientY - this.prevY - squareStore.offsetTop) / squareStore.scale
+        ) + "px";
     },
   },
 });

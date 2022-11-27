@@ -125,14 +125,8 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
     let prevOpacity = currDragElement.style.opacity;
     let closest = null;
     let closestTarget = "";
-    let prevX =
-      e.clientX -
-      currDragElementRect.x +
-      (squareStore.offsetLeft / squareStore.scale) * squareStore.scale;
-    let prevY =
-      e.clientY -
-      currDragElementRect.y +
-      (squareStore.offsetTop / squareStore.scale) * squareStore.scale;
+    let prevX = e.clientX - currDragElementRect.x;
+    let prevY = e.clientY - currDragElementRect.y;
     dndStore.prevX = prevX;
     dndStore.prevY = prevY;
 
