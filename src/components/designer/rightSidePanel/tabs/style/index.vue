@@ -320,8 +320,10 @@
                   selectToi.selectedBoxData.attr.style.aspectRatio = 1;
                   delete selectToi.selectedBoxData.attr.style.width;
                 } else {
-                  selectToi.selectedBoxData.attr.style.width =
-                    useGetElementRect(selectToi.selectedBoxData.id).width;
+                  selectToi.selectedBoxData.attr.style.width = Math.round(
+                    selectToi.resizeObserverRect?.width
+                  );
+                  selectToi.selectedBoxData.attr.style.aspectRatio = 'auto';
                   delete selectToi.selectedBoxData.attr.style.aspectRatio;
                 }
               }
@@ -777,10 +779,10 @@
                 }
               "
               placeholder="0"
-              class="w-full pl-2 bg-transparent"
+              class="w-full pl-2 bg-transparent placeholder-[#707070]"
             />
           </div>
-          <div class="flex flex-row items-center h-8">
+          <div class="flex flex-row items-center h-8 pt-2">
             <div
               class="aspect-square items-center flex flex-col justify-center flex-none opacity-40 h-[18px]"
             >
@@ -814,13 +816,17 @@
                 }
               "
               placeholder="0"
-              class="w-full pl-2 bg-transparent"
+              class="w-full pl-2 bg-transparent placeholder-[#707070]"
             />
           </div>
         </div>
         <div class="flex flex-col w-1/2">
           <div
-            class="h-16 border rounded-md border-[#3E3E3E] bg-[#222222] aspect-square grid grid-cols-3 flex-none items-start"
+            v-if="
+              !selectToi.selectedBoxData.attr?.style.flexDirection ||
+              selectToi.selectedBoxData.attr?.style.flexDirection === 'column'
+            "
+            class="h-16 w-16 border rounded-sm border-[#3E3E3E] bg-[#222222] aspect-square grid grid-cols-3 flex-none items-start"
           >
             <div
               class="aspect-square flex flex-row items-center justify-center relative"
@@ -836,250 +842,303 @@
                   selectToi.selectedBoxData.attr?.style.justifyContent !==
                     'start'
                 "
-                class="h-1 aspect-square rounded-full bg-[#505050]"
+                class="h-0.5 aspect-square rounded-full bg-[#505050]"
               ></div>
               <svg
-                v-show="
-                  selectToi.selectedBoxData.attr?.style.alignItems ===
-                    'start' &&
-                  selectToi.selectedBoxData.attr?.style.justifyContent ===
-                    'start'
-                "
-                class="absolute top-0.5 left-0.5"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect x="2" y="9" width="15" height="6" rx="2.5" fill="black" />
-                <rect
-                  x="2"
-                  y="16.5"
-                  width="12"
-                  height="6"
-                  rx="2.5"
-                  fill="black"
-                />
-                <rect x="2" y="1" width="20" height="6" rx="2.5" fill="black" />
-              </svg>
-            </div>
-            <div
-              class="aspect-square flex flex-row items-center justify-center relative"
-              @click="
-                selectToi.changeAlign('center');
-                selectToi.changeJustify('start');
-              "
-            >
-              <div
-                v-show="
-                  selectToi.selectedBoxData.attr?.style.alignItems !==
-                    'center' ||
-                  selectToi.selectedBoxData.attr?.style.justifyContent !==
-                    'start'
-                "
-                class="h-1 aspect-square rounded-full bg-[#505050]"
-              ></div>
-              <svg
-                v-show="
-                  selectToi.selectedBoxData.attr?.style.alignItems ===
-                    'center' &&
-                  selectToi.selectedBoxData.attr?.style.justifyContent ===
-                    'start'
-                "
-                class="absolute flex-none top-0.5"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  x="19.5"
-                  y="15"
-                  width="15"
-                  height="6"
-                  rx="2.5"
-                  transform="rotate(180 19.5 15)"
-                  fill="black"
-                />
-                <rect
-                  x="22"
-                  y="7"
-                  width="20"
-                  height="6"
-                  rx="2.5"
-                  transform="rotate(180 22 7)"
-                  fill="black"
-                />
-                <rect
-                  x="18"
-                  y="22.5"
-                  width="12"
-                  height="6"
-                  rx="2.5"
-                  transform="rotate(180 18 22.5)"
-                  fill="black"
-                />
-              </svg>
-            </div>
-            <div
-              class="aspect-square flex flex-row items-center justify-center relative"
-              @click="
-                selectToi.changeAlign('end');
-                selectToi.changeJustify('start');
-              "
-            >
-              <div
-                v-show="
-                  selectToi.selectedBoxData.attr?.style.alignItems !== 'end' ||
-                  selectToi.selectedBoxData.attr?.style.justifyContent !==
-                    'start'
-                "
-                class="h-1 aspect-square rounded-full bg-[#505050]"
-              ></div>
-              <svg
-                v-show="
-                  selectToi.selectedBoxData.attr?.style.alignItems === 'end' &&
-                  selectToi.selectedBoxData.attr?.style.justifyContent ===
-                    'start'
-                "
-                class="absolute flex-none top-0.5 right-0.5"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  width="15"
-                  height="6"
-                  rx="2.5"
-                  transform="matrix(-1 0 0 1 22 9)"
-                  fill="black"
-                />
-                <rect
-                  width="12"
-                  height="6"
-                  rx="2.5"
-                  transform="matrix(-1 0 0 1 22 16.5)"
-                  fill="black"
-                />
-                <rect
-                  width="20"
-                  height="6"
-                  rx="2.5"
-                  transform="matrix(-1 0 0 1 22 1)"
-                  fill="black"
-                />
-              </svg>
-            </div>
-            <div
-              class="aspect-square flex flex-row items-center justify-center relative"
-              @click="
-                selectToi.changeAlign('start');
-                selectToi.changeJustify('center');
-              "
-            >
-              <div
-                v-show="
-                  selectToi.selectedBoxData.attr?.style.alignItems !==
-                    'start' ||
-                  selectToi.selectedBoxData.attr?.style.justifyContent !==
-                    'center'
-                "
-                class="h-1 aspect-square rounded-full bg-[#505050]"
-              ></div>
-              <svg
-                v-show="
-                  selectToi.selectedBoxData.attr?.style.alignItems ===
-                    'start' &&
-                  selectToi.selectedBoxData.attr?.style.justifyContent ===
-                    'center'
-                "
-                class="absolute flex-none left-0.5 text-gray-400"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  width="21"
-                  height="6"
-                  rx="2.5"
-                  transform="matrix(1 8.74228e-08 8.74228e-08 -1 1.5 15)"
-                  fill="black"
-                />
-                <rect
-                  width="12"
-                  height="6"
-                  rx="2.5"
-                  transform="matrix(1 8.74228e-08 8.74228e-08 -1 1.5 7.5)"
-                  fill="black"
-                />
-                <rect
-                  width="12"
-                  height="6"
-                  rx="2.5"
-                  transform="matrix(1 8.74228e-08 8.74228e-08 -1 1.5 22.5)"
-                  fill="black"
-                />
-              </svg>
-            </div>
-            <div
-              class="aspect-square flex flex-row items-center justify-center relative"
-              @click="
-                selectToi.changeAlign('center');
-                selectToi.changeJustify('center');
-              "
-            >
-              <div
-                v-show="
-                  selectToi.selectedBoxData.attr?.style.alignItems !==
-                    'center' ||
-                  selectToi.selectedBoxData.attr?.style.justifyContent !==
-                    'center'
-                "
-                class="h-1 aspect-square rounded-full bg-[#505050]"
-              ></div>
-              <svg
-                v-show="
-                  selectToi.selectedBoxData.attr?.style.alignItems ===
-                    'center' &&
-                  selectToi.selectedBoxData.attr?.style.justifyContent ===
-                    'center'
-                "
-                class="absolute inset-0 flex-none"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
+                class="absolute top-0.5 left-0.5 text-[#6EB0E0]"
+                :class="{
+                  'opacity-100 ':
+                    selectToi.selectedBoxData.attr?.style.alignItems ===
+                      'start' &&
+                    selectToi.selectedBoxData.attr?.style.justifyContent ===
+                      'start',
+                  'opacity-0 hover:opacity-30':
+                    (selectToi.selectedBoxData &&
+                      selectToi.selectedBoxData.attr?.style.alignItems !==
+                        'start') ||
+                    selectToi.selectedBoxData.attr?.style.justifyContent !==
+                      'start',
+                }"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <rect
                   x="1.5"
-                  y="9"
-                  width="21"
-                  height="6"
-                  rx="2.5"
-                  fill="black"
+                  y="1"
+                  width="10"
+                  height="4"
+                  rx="1"
+                  fill="currentColor"
+                />
+                <rect
+                  x="1.5"
+                  y="7"
+                  width="15"
+                  height="4"
+                  rx="1"
+                  fill="currentColor"
+                />
+                <rect
+                  x="1.5"
+                  y="13"
+                  width="6"
+                  height="4"
+                  rx="1"
+                  fill="currentColor"
+                />
+              </svg>
+            </div>
+            <div
+              class="aspect-square flex flex-row items-center justify-center relative"
+              @click="
+                selectToi.changeAlign('center');
+                selectToi.changeJustify('start');
+              "
+            >
+              <div
+                v-show="
+                  selectToi.selectedBoxData.attr?.style.alignItems !==
+                    'center' ||
+                  selectToi.selectedBoxData.attr?.style.justifyContent !==
+                    'start'
+                "
+                class="h-0.5 aspect-square rounded-full bg-[#505050]"
+              ></div>
+              <svg
+                class="absolute flex-none top-0.5 text-[#6EB0E0]"
+                :class="{
+                  'opacity-100 ':
+                    selectToi.selectedBoxData.attr?.style.alignItems ===
+                      'center' &&
+                    selectToi.selectedBoxData.attr?.style.justifyContent ===
+                      'start',
+                  'opacity-0 hover:opacity-30':
+                    (selectToi.selectedBoxData &&
+                      selectToi.selectedBoxData.attr?.style.alignItems !==
+                        'center') ||
+                    selectToi.selectedBoxData.attr?.style.justifyContent !==
+                      'start',
+                }"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="4"
+                  y="1"
+                  width="10"
+                  height="4"
+                  rx="1"
+                  fill="currentColor"
+                />
+                <rect
+                  x="1.5"
+                  y="7"
+                  width="15"
+                  height="4"
+                  rx="1"
+                  fill="currentColor"
                 />
                 <rect
                   x="6"
-                  y="16.5"
-                  width="12"
-                  height="6"
-                  rx="2.5"
-                  fill="black"
+                  y="13"
+                  width="6"
+                  height="4"
+                  rx="1"
+                  fill="currentColor"
+                />
+              </svg>
+            </div>
+            <div
+              class="aspect-square flex flex-row items-center justify-center relative"
+              @click="
+                selectToi.changeAlign('end');
+                selectToi.changeJustify('start');
+              "
+            >
+              <div
+                v-show="
+                  selectToi.selectedBoxData.attr?.style.alignItems !== 'end' ||
+                  selectToi.selectedBoxData.attr?.style.justifyContent !==
+                    'start'
+                "
+                class="h-0.5 aspect-square rounded-full bg-[#505050]"
+              ></div>
+              <svg
+                class="absolute flex-none top-0.5 right-0.5 text-[#6EB0E0]"
+                :class="{
+                  'opacity-100 ':
+                    selectToi.selectedBoxData.attr?.style.alignItems ===
+                      'end' &&
+                    selectToi.selectedBoxData.attr?.style.justifyContent ===
+                      'start',
+                  'opacity-0 hover:opacity-30':
+                    (selectToi.selectedBoxData &&
+                      selectToi.selectedBoxData.attr?.style.alignItems !==
+                        'end') ||
+                    selectToi.selectedBoxData.attr?.style.justifyContent !==
+                      'start',
+                }"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="6.5"
+                  y="1"
+                  width="10"
+                  height="4"
+                  rx="1"
+                  fill="currentColor"
+                />
+                <rect
+                  x="1.5"
+                  y="7"
+                  width="15"
+                  height="4"
+                  rx="1"
+                  fill="currentColor"
+                />
+                <rect
+                  x="10.5"
+                  y="13"
+                  width="6"
+                  height="4"
+                  rx="1"
+                  fill="currentColor"
+                />
+              </svg>
+            </div>
+            <div
+              class="aspect-square flex flex-row items-center justify-center relative"
+              @click="
+                selectToi.changeAlign('start');
+                selectToi.changeJustify('center');
+              "
+            >
+              <div
+                v-show="
+                  selectToi.selectedBoxData.attr?.style.alignItems !==
+                    'start' ||
+                  selectToi.selectedBoxData.attr?.style.justifyContent !==
+                    'center'
+                "
+                class="h-0.5 aspect-square rounded-full bg-[#505050]"
+              ></div>
+              <svg
+                class="absolute flex-none left-0.5 text-[#6EB0E0]"
+                :class="{
+                  'opacity-100 ':
+                    selectToi.selectedBoxData.attr?.style.alignItems ===
+                      'start' &&
+                    selectToi.selectedBoxData.attr?.style.justifyContent ===
+                      'center',
+                  'opacity-0 hover:opacity-30':
+                    (selectToi.selectedBoxData &&
+                      selectToi.selectedBoxData.attr?.style.alignItems !==
+                        'start') ||
+                    selectToi.selectedBoxData.attr?.style.justifyContent !==
+                      'center',
+                }"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="1.5"
+                  y="1"
+                  width="10"
+                  height="4"
+                  rx="1"
+                  fill="currentColor"
+                />
+                <rect
+                  x="1.5"
+                  y="7"
+                  width="15"
+                  height="4"
+                  rx="1"
+                  fill="currentColor"
+                />
+                <rect
+                  x="1.5"
+                  y="13"
+                  width="6"
+                  height="4"
+                  rx="1"
+                  fill="currentColor"
+                />
+              </svg>
+            </div>
+            <div
+              class="aspect-square flex flex-row items-center justify-center relative"
+              @click="
+                selectToi.changeAlign('center');
+                selectToi.changeJustify('center');
+              "
+            >
+              <div
+                v-show="
+                  selectToi.selectedBoxData.attr?.style.alignItems !==
+                    'center' ||
+                  selectToi.selectedBoxData.attr?.style.justifyContent !==
+                    'center'
+                "
+                class="h-0.5 aspect-square rounded-full bg-[#505050]"
+              ></div>
+              <svg
+                class="absolute inset-0 flex-none text-[#6EB0E0]"
+                :class="{
+                  'opacity-100 ':
+                    selectToi.selectedBoxData.attr?.style.alignItems ===
+                      'center' &&
+                    selectToi.selectedBoxData.attr?.style.justifyContent ===
+                      'center',
+                  'opacity-0 hover:opacity-30':
+                    (selectToi.selectedBoxData &&
+                      selectToi.selectedBoxData.attr?.style.alignItems !==
+                        'center') ||
+                    selectToi.selectedBoxData.attr?.style.justifyContent !==
+                      'center',
+                }"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="4"
+                  y="1"
+                  width="10"
+                  height="4"
+                  rx="1"
+                  fill="currentColor"
+                />
+                <rect
+                  x="1.5"
+                  y="7"
+                  width="15"
+                  height="4"
+                  rx="1"
+                  fill="currentColor"
                 />
                 <rect
                   x="6"
-                  y="1.5"
-                  width="12"
-                  height="6"
-                  rx="2.5"
-                  fill="black"
+                  y="13"
+                  width="6"
+                  height="4"
+                  rx="1"
+                  fill="currentColor"
                 />
               </svg>
             </div>
@@ -1096,47 +1155,52 @@
                   selectToi.selectedBoxData.attr?.style.justifyContent !==
                     'center'
                 "
-                class="h-1 aspect-square rounded-full bg-[#505050]"
+                class="h-0.5 aspect-square rounded-full bg-[#505050]"
               ></div>
               <svg
-                v-show="
-                  selectToi.selectedBoxData.attr?.style.alignItems === 'end' &&
-                  selectToi.selectedBoxData.attr?.style.justifyContent ===
-                    'center'
-                "
-                class="absolute flex-none right-0.5"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
+                class="absolute flex-none right-0.5 text-[#6EB0E0]"
+                :class="{
+                  'opacity-100 ':
+                    selectToi.selectedBoxData.attr?.style.alignItems ===
+                      'end' &&
+                    selectToi.selectedBoxData.attr?.style.justifyContent ===
+                      'center',
+                  'opacity-0 hover:opacity-30':
+                    (selectToi.selectedBoxData &&
+                      selectToi.selectedBoxData.attr?.style.alignItems !==
+                        'end') ||
+                    selectToi.selectedBoxData.attr?.style.justifyContent !==
+                      'center',
+                }"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <rect
-                  x="22.5"
-                  y="15"
-                  width="21"
-                  height="6"
-                  rx="2.5"
-                  transform="rotate(180 22.5 15)"
-                  fill="black"
+                  x="6.5"
+                  y="1"
+                  width="10"
+                  height="4"
+                  rx="1"
+                  fill="currentColor"
                 />
                 <rect
-                  x="22.5"
-                  y="7.5"
-                  width="12"
-                  height="6"
-                  rx="2.5"
-                  transform="rotate(180 22.5 7.5)"
-                  fill="black"
+                  x="1.5"
+                  y="7"
+                  width="15"
+                  height="4"
+                  rx="1"
+                  fill="currentColor"
                 />
                 <rect
-                  x="22.5"
-                  y="22.5"
-                  width="12"
-                  height="6"
-                  rx="2.5"
-                  transform="rotate(180 22.5 22.5)"
-                  fill="black"
+                  x="10.5"
+                  y="13"
+                  width="6"
+                  height="4"
+                  rx="1"
+                  fill="currentColor"
                 />
               </svg>
             </div>
@@ -1153,41 +1217,52 @@
                     'start' ||
                   selectToi.selectedBoxData.attr?.style.justifyContent !== 'end'
                 "
-                class="h-1 aspect-square rounded-full bg-[#505050]"
+                class="h-0.5 aspect-square rounded-full bg-[#505050]"
               ></div>
               <svg
-                v-show="
-                  selectToi.selectedBoxData.attr?.style.alignItems ===
-                    'start' &&
-                  selectToi.selectedBoxData.attr?.style.justifyContent === 'end'
-                "
-                class="absolute flex-none left-0.5 bottom-0.5"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
+                class="absolute flex-none left-0.5 bottom-0.5 text-[#6EB0E0]"
+                :class="{
+                  'opacity-100 ':
+                    selectToi.selectedBoxData.attr?.style.alignItems ===
+                      'start' &&
+                    selectToi.selectedBoxData.attr?.style.justifyContent ===
+                      'end',
+                  'opacity-0 hover:opacity-30':
+                    (selectToi.selectedBoxData &&
+                      selectToi.selectedBoxData.attr?.style.alignItems !==
+                        'start') ||
+                    selectToi.selectedBoxData.attr?.style.justifyContent !==
+                      'end',
+                }"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <rect
+                  x="1.5"
+                  y="1"
+                  width="10"
+                  height="4"
+                  rx="1"
+                  fill="currentColor"
+                />
+                <rect
+                  x="1.5"
+                  y="7"
                   width="15"
-                  height="6"
-                  rx="2.5"
-                  transform="matrix(1 0 0 -1 2 15)"
-                  fill="black"
+                  height="4"
+                  rx="1"
+                  fill="currentColor"
                 />
                 <rect
-                  width="12"
-                  height="6"
-                  rx="2.5"
-                  transform="matrix(1 0 0 -1 2 7.5)"
-                  fill="black"
-                />
-                <rect
-                  width="20"
-                  height="6"
-                  rx="2.5"
-                  transform="matrix(1 0 0 -1 2 23)"
-                  fill="black"
+                  x="1.5"
+                  y="13"
+                  width="6"
+                  height="4"
+                  rx="1"
+                  fill="currentColor"
                 />
               </svg>
             </div>
@@ -1204,44 +1279,52 @@
                     'center' ||
                   selectToi.selectedBoxData.attr?.style.justifyContent !== 'end'
                 "
-                class="h-1 aspect-square rounded-full bg-[#505050]"
+                class="h-0.5 aspect-square rounded-full bg-[#505050]"
               ></div>
               <svg
-                v-show="
-                  selectToi.selectedBoxData.attr?.style.alignItems ===
-                    'center' &&
-                  selectToi.selectedBoxData.attr?.style.justifyContent === 'end'
-                "
-                class="absolute flex-none bottom-0.5"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
+                class="absolute flex-none bottom-0.5 text-[#6EB0E0]"
+                :class="{
+                  'opacity-100 ':
+                    selectToi.selectedBoxData.attr?.style.alignItems ===
+                      'center' &&
+                    selectToi.selectedBoxData.attr?.style.justifyContent ===
+                      'end',
+                  'opacity-0 hover:opacity-30':
+                    (selectToi.selectedBoxData &&
+                      selectToi.selectedBoxData.attr?.style.alignItems !==
+                        'center') ||
+                    selectToi.selectedBoxData.attr?.style.justifyContent !==
+                      'end',
+                }"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <rect
-                  x="4.5"
-                  y="9"
-                  width="15"
-                  height="6"
-                  rx="2.5"
-                  fill="black"
+                  x="4"
+                  y="1"
+                  width="10"
+                  height="4"
+                  rx="1"
+                  fill="currentColor"
                 />
                 <rect
-                  x="2"
-                  y="17"
-                  width="20"
-                  height="6"
-                  rx="2.5"
-                  fill="black"
+                  x="1.5"
+                  y="7"
+                  width="15"
+                  height="4"
+                  rx="1"
+                  fill="currentColor"
                 />
                 <rect
                   x="6"
-                  y="1.5"
-                  width="12"
-                  height="6"
-                  rx="2.5"
-                  fill="black"
+                  y="13"
+                  width="6"
+                  height="4"
+                  rx="1"
+                  fill="currentColor"
                 />
               </svg>
             </div>
@@ -1257,51 +1340,653 @@
                   selectToi.selectedBoxData.attr?.style.alignItems !== 'end' ||
                   selectToi.selectedBoxData.attr?.style.justifyContent !== 'end'
                 "
-                class="h-1 aspect-square rounded-full bg-[#505050]"
+                class="h-0.5 aspect-square rounded-full bg-[#505050]"
               ></div>
               <svg
-                v-show="
-                  selectToi.selectedBoxData.attr?.style.alignItems === 'end' &&
-                  selectToi.selectedBoxData.attr?.style.justifyContent === 'end'
-                "
-                class="absolute flex-none right-0.5 bottom-0.5"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
+                class="absolute flex-none right-0.5 bottom-0.5 text-[#6EB0E0]"
+                :class="{
+                  'opacity-100 ':
+                    selectToi.selectedBoxData.attr?.style.alignItems ===
+                      'end' &&
+                    selectToi.selectedBoxData.attr?.style.justifyContent ===
+                      'end',
+                  'opacity-0 hover:opacity-30':
+                    (selectToi.selectedBoxData &&
+                      selectToi.selectedBoxData.attr?.style.alignItems !==
+                        'end') ||
+                    selectToi.selectedBoxData.attr?.style.justifyContent !==
+                      'end',
+                }"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <rect
-                  x="22"
-                  y="15"
+                  x="6.5"
+                  y="1"
+                  width="10"
+                  height="4"
+                  rx="1"
+                  fill="currentColor"
+                />
+                <rect
+                  x="1.5"
+                  y="7"
                   width="15"
-                  height="6"
-                  rx="2.5"
-                  transform="rotate(180 22 15)"
-                  fill="black"
+                  height="4"
+                  rx="1"
+                  fill="currentColor"
                 />
                 <rect
-                  x="22"
-                  y="7.5"
-                  width="12"
-                  height="6"
-                  rx="2.5"
-                  transform="rotate(180 22 7.5)"
-                  fill="black"
-                />
-                <rect
-                  x="22"
-                  y="23"
-                  width="20"
-                  height="6"
-                  rx="2.5"
-                  transform="rotate(180 22 23)"
-                  fill="black"
+                  x="10.5"
+                  y="13"
+                  width="6"
+                  height="4"
+                  rx="1"
+                  fill="currentColor"
                 />
               </svg>
             </div>
           </div>
-          <div class="grid grid-cols-2 gap-2 items-center w-fit h-8">
+          <div
+            v-if="
+              selectToi.selectedBoxData.attr?.style.flexDirection &&
+              selectToi.selectedBoxData.attr?.style.flexDirection === 'row'
+            "
+            class="h-16 w-16 border rounded-sm border-[#3E3E3E] bg-[#222222] aspect-square grid grid-cols-3 flex-none items-start"
+          >
+            <div
+              class="aspect-square flex flex-row items-center justify-center relative"
+              @click="
+                selectToi.changeAlign('start');
+                selectToi.changeJustify('start');
+              "
+            >
+              <div
+                v-show="
+                  selectToi.selectedBoxData.attr?.style.alignItems !==
+                    'start' ||
+                  selectToi.selectedBoxData.attr?.style.justifyContent !==
+                    'start'
+                "
+                class="h-0.5 aspect-square rounded-full bg-[#505050]"
+              ></div>
+              <svg
+                class="absolute top-0.5 left-0.5 text-[#6EB0E0]"
+                :class="{
+                  'opacity-100 ':
+                    selectToi.selectedBoxData.attr?.style.alignItems ===
+                      'start' &&
+                    selectToi.selectedBoxData.attr?.style.justifyContent ===
+                      'start',
+                  'opacity-0 hover:opacity-30':
+                    (selectToi.selectedBoxData &&
+                      selectToi.selectedBoxData.attr?.style.alignItems !==
+                        'start') ||
+                    selectToi.selectedBoxData.attr?.style.justifyContent !==
+                      'start',
+                }"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="17.8"
+                  y="0.75"
+                  width="6.6"
+                  height="4.4"
+                  rx="1.1"
+                  transform="rotate(90 17.8 0.75)"
+                  fill="currentColor"
+                />
+                <rect
+                  x="11.2"
+                  y="0.75"
+                  width="16.5"
+                  height="4.4"
+                  rx="1.1"
+                  transform="rotate(90 11.2 0.75)"
+                  fill="currentColor"
+                />
+                <rect
+                  x="4.59998"
+                  y="0.75"
+                  width="11"
+                  height="4.4"
+                  rx="1.1"
+                  transform="rotate(90 4.59998 0.75)"
+                  fill="currentColor"
+                />
+              </svg>
+            </div>
+            <div
+              class="aspect-square flex flex-row items-center justify-center relative"
+              @click="
+                selectToi.changeAlign('start');
+                selectToi.changeJustify('center');
+              "
+            >
+              <div
+                v-show="
+                  selectToi.selectedBoxData.attr?.style.alignItems !==
+                    'start' ||
+                  selectToi.selectedBoxData.attr?.style.justifyContent !==
+                    'center'
+                "
+                class="h-0.5 aspect-square rounded-full bg-[#505050]"
+              ></div>
+              <svg
+                class="absolute flex-none top-0.5 text-[#6EB0E0]"
+                :class="{
+                  'opacity-100 ':
+                    selectToi.selectedBoxData.attr?.style.alignItems ===
+                      'start' &&
+                    selectToi.selectedBoxData.attr?.style.justifyContent ===
+                      'center',
+                  'opacity-0 hover:opacity-30':
+                    (selectToi.selectedBoxData &&
+                      selectToi.selectedBoxData.attr?.style.alignItems !==
+                        'start') ||
+                    selectToi.selectedBoxData.attr?.style.justifyContent !==
+                      'center',
+                }"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="17.8"
+                  y="0.75"
+                  width="6.6"
+                  height="4.4"
+                  rx="1.1"
+                  transform="rotate(90 17.8 0.75)"
+                  fill="currentColor"
+                />
+                <rect
+                  x="11.2"
+                  y="0.75"
+                  width="16.5"
+                  height="4.4"
+                  rx="1.1"
+                  transform="rotate(90 11.2 0.75)"
+                  fill="currentColor"
+                />
+                <rect
+                  x="4.59998"
+                  y="0.75"
+                  width="11"
+                  height="4.4"
+                  rx="1.1"
+                  transform="rotate(90 4.59998 0.75)"
+                  fill="currentColor"
+                />
+              </svg>
+            </div>
+            <div
+              class="aspect-square flex flex-row items-center justify-center relative"
+              @click="
+                selectToi.changeAlign('start');
+                selectToi.changeJustify('end');
+              "
+            >
+              <div
+                v-show="
+                  selectToi.selectedBoxData.attr?.style.alignItems !==
+                    'start' ||
+                  selectToi.selectedBoxData.attr?.style.justifyContent !== 'end'
+                "
+                class="h-0.5 aspect-square rounded-full bg-[#505050]"
+              ></div>
+              <svg
+                class="absolute flex-none top-0.5 right-0.5 text-[#6EB0E0]"
+                :class="{
+                  'opacity-100 ':
+                    selectToi.selectedBoxData.attr?.style.alignItems ===
+                      'start' &&
+                    selectToi.selectedBoxData.attr?.style.justifyContent ===
+                      'end',
+                  'opacity-0 hover:opacity-30':
+                    (selectToi.selectedBoxData &&
+                      selectToi.selectedBoxData.attr?.style.alignItems !==
+                        'start') ||
+                    selectToi.selectedBoxData.attr?.style.justifyContent !==
+                      'end',
+                }"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="17.8"
+                  y="0.75"
+                  width="6.6"
+                  height="4.4"
+                  rx="1.1"
+                  transform="rotate(90 17.8 0.75)"
+                  fill="currentColor"
+                />
+                <rect
+                  x="11.2"
+                  y="0.75"
+                  width="16.5"
+                  height="4.4"
+                  rx="1.1"
+                  transform="rotate(90 11.2 0.75)"
+                  fill="currentColor"
+                />
+                <rect
+                  x="4.59998"
+                  y="0.75"
+                  width="11"
+                  height="4.4"
+                  rx="1.1"
+                  transform="rotate(90 4.59998 0.75)"
+                  fill="currentColor"
+                />
+              </svg>
+            </div>
+            <div
+              class="aspect-square flex flex-row items-center justify-center relative"
+              @click="
+                selectToi.changeAlign('center');
+                selectToi.changeJustify('start');
+              "
+            >
+              <div
+                v-show="
+                  selectToi.selectedBoxData.attr?.style.alignItems !==
+                    'center' ||
+                  selectToi.selectedBoxData.attr?.style.justifyContent !==
+                    'start'
+                "
+                class="h-0.5 aspect-square rounded-full bg-[#505050]"
+              ></div>
+              <svg
+                class="absolute flex-none left-0.5 text-[#6EB0E0]"
+                :class="{
+                  'opacity-100 ':
+                    selectToi.selectedBoxData.attr?.style.alignItems ===
+                      'center' &&
+                    selectToi.selectedBoxData.attr?.style.justifyContent ===
+                      'start',
+                  'opacity-0 hover:opacity-30':
+                    (selectToi.selectedBoxData &&
+                      selectToi.selectedBoxData.attr?.style.alignItems !==
+                        'center') ||
+                    selectToi.selectedBoxData.attr?.style.justifyContent !==
+                      'start',
+                }"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="17.8"
+                  y="5.69995"
+                  width="6.6"
+                  height="4.4"
+                  rx="1.1"
+                  transform="rotate(90 17.8 5.69995)"
+                  fill="currentColor"
+                />
+                <rect
+                  x="11.2"
+                  y="0.75"
+                  width="16.5"
+                  height="4.4"
+                  rx="1.1"
+                  transform="rotate(90 11.2 0.75)"
+                  fill="currentColor"
+                />
+                <rect
+                  x="4.59998"
+                  y="3.5"
+                  width="11"
+                  height="4.4"
+                  rx="1.1"
+                  transform="rotate(90 4.59998 3.5)"
+                  fill="currentColor"
+                />
+              </svg>
+            </div>
+            <div
+              class="aspect-square flex flex-row items-center justify-center relative"
+              @click="
+                selectToi.changeAlign('center');
+                selectToi.changeJustify('center');
+              "
+            >
+              <div
+                v-show="
+                  selectToi.selectedBoxData.attr?.style.alignItems !==
+                    'center' ||
+                  selectToi.selectedBoxData.attr?.style.justifyContent !==
+                    'center'
+                "
+                class="h-0.5 aspect-square rounded-full bg-[#505050]"
+              ></div>
+              <svg
+                class="absolute inset-0 flex-none text-[#6EB0E0]"
+                :class="{
+                  'opacity-100 ':
+                    selectToi.selectedBoxData.attr?.style.alignItems ===
+                      'center' &&
+                    selectToi.selectedBoxData.attr?.style.justifyContent ===
+                      'center',
+                  'opacity-0 hover:opacity-30':
+                    (selectToi.selectedBoxData &&
+                      selectToi.selectedBoxData.attr?.style.alignItems !==
+                        'center') ||
+                    selectToi.selectedBoxData.attr?.style.justifyContent !==
+                      'center',
+                }"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="17.8"
+                  y="5.69995"
+                  width="6.6"
+                  height="4.4"
+                  rx="1.1"
+                  transform="rotate(90 17.8 5.69995)"
+                  fill="currentColor"
+                />
+                <rect
+                  x="11.2"
+                  y="0.75"
+                  width="16.5"
+                  height="4.4"
+                  rx="1.1"
+                  transform="rotate(90 11.2 0.75)"
+                  fill="currentColor"
+                />
+                <rect
+                  x="4.59998"
+                  y="3.5"
+                  width="11"
+                  height="4.4"
+                  rx="1.1"
+                  transform="rotate(90 4.59998 3.5)"
+                  fill="currentColor"
+                />
+              </svg>
+            </div>
+            <div
+              class="aspect-square flex flex-row items-center justify-center relative"
+              @click="
+                selectToi.changeAlign('center');
+                selectToi.changeJustify('end');
+              "
+            >
+              <div
+                v-show="
+                  selectToi.selectedBoxData.attr?.style.alignItems !==
+                    'center' ||
+                  selectToi.selectedBoxData.attr?.style.justifyContent !== 'end'
+                "
+                class="h-0.5 aspect-square rounded-full bg-[#505050]"
+              ></div>
+              <svg
+                class="absolute flex-none right-0.5 text-[#6EB0E0]"
+                :class="{
+                  'opacity-100 ':
+                    selectToi.selectedBoxData.attr?.style.alignItems ===
+                      'center' &&
+                    selectToi.selectedBoxData.attr?.style.justifyContent ===
+                      'end',
+                  'opacity-0 hover:opacity-30':
+                    (selectToi.selectedBoxData &&
+                      selectToi.selectedBoxData.attr?.style.alignItems !==
+                        'center') ||
+                    selectToi.selectedBoxData.attr?.style.justifyContent !==
+                      'end',
+                }"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="17.8"
+                  y="5.69995"
+                  width="6.6"
+                  height="4.4"
+                  rx="1.1"
+                  transform="rotate(90 17.8 5.69995)"
+                  fill="currentColor"
+                />
+                <rect
+                  x="11.2"
+                  y="0.75"
+                  width="16.5"
+                  height="4.4"
+                  rx="1.1"
+                  transform="rotate(90 11.2 0.75)"
+                  fill="currentColor"
+                />
+                <rect
+                  x="4.59998"
+                  y="3.5"
+                  width="11"
+                  height="4.4"
+                  rx="1.1"
+                  transform="rotate(90 4.59998 3.5)"
+                  fill="currentColor"
+                />
+              </svg>
+            </div>
+            <div
+              class="aspect-square flex flex-row items-center justify-center relative"
+              @click="
+                selectToi.changeAlign('end');
+                selectToi.changeJustify('start');
+              "
+            >
+              <div
+                v-show="
+                  selectToi.selectedBoxData.attr?.style.alignItems !== 'end' ||
+                  selectToi.selectedBoxData.attr?.style.justifyContent !==
+                    'start'
+                "
+                class="h-0.5 aspect-square rounded-full bg-[#505050]"
+              ></div>
+              <svg
+                class="absolute flex-none left-0.5 bottom-0.5 text-[#6EB0E0]"
+                :class="{
+                  'opacity-100 ':
+                    selectToi.selectedBoxData.attr?.style.alignItems ===
+                      'end' &&
+                    selectToi.selectedBoxData.attr?.style.justifyContent ===
+                      'start',
+                  'opacity-0 hover:opacity-30':
+                    (selectToi.selectedBoxData &&
+                      selectToi.selectedBoxData.attr?.style.alignItems !==
+                        'end') ||
+                    selectToi.selectedBoxData.attr?.style.justifyContent !==
+                      'start',
+                }"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="17.8"
+                  y="10.65"
+                  width="6.6"
+                  height="4.4"
+                  rx="1.1"
+                  transform="rotate(90 17.8 10.65)"
+                  fill="currentColor"
+                />
+                <rect
+                  x="11.2"
+                  y="0.75"
+                  width="16.5"
+                  height="4.4"
+                  rx="1.1"
+                  transform="rotate(90 11.2 0.75)"
+                  fill="currentColor"
+                />
+                <rect
+                  x="4.59998"
+                  y="6.25"
+                  width="11"
+                  height="4.4"
+                  rx="1.1"
+                  transform="rotate(90 4.59998 6.25)"
+                  fill="currentColor"
+                />
+              </svg>
+            </div>
+            <div
+              class="aspect-square flex flex-row items-center justify-center relative"
+              @click="
+                selectToi.changeAlign('end');
+                selectToi.changeJustify('center');
+              "
+            >
+              <div
+                v-show="
+                  selectToi.selectedBoxData.attr?.style.alignItems !== 'end' ||
+                  selectToi.selectedBoxData.attr?.style.justifyContent !==
+                    'center'
+                "
+                class="h-0.5 aspect-square rounded-full bg-[#505050]"
+              ></div>
+              <svg
+                class="absolute flex-none bottom-0.5 text-[#6EB0E0]"
+                :class="{
+                  'opacity-100 ':
+                    selectToi.selectedBoxData.attr?.style.alignItems ===
+                      'end' &&
+                    selectToi.selectedBoxData.attr?.style.justifyContent ===
+                      'center',
+                  'opacity-0 hover:opacity-30':
+                    (selectToi.selectedBoxData &&
+                      selectToi.selectedBoxData.attr?.style.alignItems !==
+                        'end') ||
+                    selectToi.selectedBoxData.attr?.style.justifyContent !==
+                      'center',
+                }"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="17.8"
+                  y="10.65"
+                  width="6.6"
+                  height="4.4"
+                  rx="1.1"
+                  transform="rotate(90 17.8 10.65)"
+                  fill="currentColor"
+                />
+                <rect
+                  x="11.2"
+                  y="0.75"
+                  width="16.5"
+                  height="4.4"
+                  rx="1.1"
+                  transform="rotate(90 11.2 0.75)"
+                  fill="currentColor"
+                />
+                <rect
+                  x="4.59998"
+                  y="6.25"
+                  width="11"
+                  height="4.4"
+                  rx="1.1"
+                  transform="rotate(90 4.59998 6.25)"
+                  fill="currentColor"
+                />
+              </svg>
+            </div>
+            <div
+              class="aspect-square flex flex-row items-center justify-center relative"
+              @click="
+                selectToi.changeAlign('end');
+                selectToi.changeJustify('end');
+              "
+            >
+              <div
+                v-show="
+                  selectToi.selectedBoxData.attr?.style.alignItems !== 'end' ||
+                  selectToi.selectedBoxData.attr?.style.justifyContent !== 'end'
+                "
+                class="h-0.5 aspect-square rounded-full bg-[#505050]"
+              ></div>
+              <svg
+                class="absolute flex-none right-0.5 bottom-0.5 text-[#6EB0E0]"
+                :class="{
+                  'opacity-100 ':
+                    selectToi.selectedBoxData.attr?.style.alignItems ===
+                      'end' &&
+                    selectToi.selectedBoxData.attr?.style.justifyContent ===
+                      'end',
+                  'opacity-0 hover:opacity-30':
+                    (selectToi.selectedBoxData &&
+                      selectToi.selectedBoxData.attr?.style.alignItems !==
+                        'end') ||
+                    selectToi.selectedBoxData.attr?.style.justifyContent !==
+                      'end',
+                }"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="17.8"
+                  y="10.65"
+                  width="6.6"
+                  height="4.4"
+                  rx="1.1"
+                  transform="rotate(90 17.8 10.65)"
+                  fill="currentColor"
+                />
+                <rect
+                  x="11.2"
+                  y="0.75"
+                  width="16.5"
+                  height="4.4"
+                  rx="1.1"
+                  transform="rotate(90 11.2 0.75)"
+                  fill="currentColor"
+                />
+                <rect
+                  x="4.59998"
+                  y="6.25"
+                  width="11"
+                  height="4.4"
+                  rx="1.1"
+                  transform="rotate(90 4.59998 6.25)"
+                  fill="currentColor"
+                />
+              </svg>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2 items-center w-fit h-8 pt-2">
             <div
               class="aspect-square items-center flex flex-col justify-center flex-none opacity-40 h-[18px]"
             >
@@ -1340,7 +2025,7 @@
                   }
                 "
                 placeholder="0"
-                class="w-8 bg-transparent"
+                class="w-8 bg-transparent placeholder-[#707070]"
               />
             </div>
           </div>
