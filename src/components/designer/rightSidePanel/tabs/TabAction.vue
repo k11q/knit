@@ -5,7 +5,7 @@
       v-show="
         selectToi.selectedBoxData.type !== 'text' && selectToi.selectedBox
       "
-      class="flex flex-col gap-4 border-y py-4 px-4 border-[#282828]"
+      class="flex flex-col gap-4 border-y py-4 px-4 border-[#303030]"
     >
       <div class="flex flex-row justify-between">
         <p class="font-medium">Stroke</p>

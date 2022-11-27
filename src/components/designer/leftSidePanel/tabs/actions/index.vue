@@ -27,7 +27,7 @@
         class="flex-grow bg-transparent px-4 py-2 focus:outline-none placeholder-[#EDEDED] placeholder-opacity-40"
       />
     </div>
-    <div class="flex flex-col border-t border-[#282828] p-2">
+    <div class="flex flex-col border-t border-[#303030] p-2">
       <div class="flex flex-row gap-[10px] pl-2 items-center">
         <p class="flex-grow opacity-80">Global workflow</p>
         <div

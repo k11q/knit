@@ -1,9 +1,9 @@
 <template>
   <aside
-    class="border-r w-60 flex flex-col flex-none h-screen overflow-x-hidden pb-16 z-10 text-xs border-[#282828]"
+    class="border-r w-60 flex flex-col flex-none h-screen overflow-x-hidden pb-16 z-10 text-xs border-[#303030]"
   >
     <div
-      class="border-b px-[18px] h-[52px] flex flex-row gap-4 items-center border-[#282828]"
+      class="border-b px-[18px] h-[52px] flex flex-row gap-4 items-center border-[#303030]"
     >
       <div
         class="flex flex-col items-center justify-center w-3 flex-none aspect-square opacity-80"
@@ -48,7 +48,7 @@
     </div>
     <div class="flex flex-col w-full h-fit">
       <div
-        class="flex flex-col border-b pt-[5px] gap-[1px] pb-3 border-[#282828]"
+        class="flex flex-col border-b pt-[5px] gap-[1px] pb-3 border-[#303030]"
       >
         <div class="flex flex-col">
           <div

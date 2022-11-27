@@ -21,7 +21,9 @@
           selectToi.treeHoverId == node.id,
         'opacity-40': treeDnd.currDrag === node.id,
         'opacity-100': treeDnd.currDrag !== node.id,
-        'opacity-30': treeDnd.currDrag && parentIsSelected === true,
+        'opacity-30':
+          (treeDnd.currDrag && parentIsSelected === true) ||
+          (node.display && node.display === 'hide'),
       }"
       @mousedown="dragAndDrop($event, node.id)"
       @mouseover="useSetOutlineHover(node.id)"
@@ -155,10 +157,33 @@
         {{ node.name }}
       </h1>
       <div
-        v-show="selectToi.treeHoverId === node.id"
+        v-show="
+          selectToi.treeHoverId === node.id ||
+          (node.display && node.display === 'hide')
+        "
+        @click="
+          () => {
+            if (
+              selectToi.selectedBoxData.display &&
+              selectToi.selectedBoxData.display === 'hide'
+            ) {
+              delete selectToi.selectedBoxData.display;
+              selectToi.clearSelected();
+            } else {
+              selectToi.selectedBoxData.display = 'hide';
+              selectToi.changeSelected($event, node.id, node.type);
+              useSetOutlineSelector(node.id);
+            }
+          }
+        "
         class="h-full aspect-square flex-none w-4 mr-2 opacity-40 flex items-center justify-center"
+        :class="{
+          'opacity-40': !node.display,
+          'opacity-100': node.display && node.display === 'hide',
+        }"
       >
         <svg
+          v-show="!selectToi.selectedBoxData.display"
           xmlns="http://www.w3.org/2000/svg"
           width="12"
           height="12"
@@ -171,6 +196,30 @@
         >
           <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
           <circle cx="12" cy="12" r="3"></circle>
+        </svg>
+        <svg
+          v-show="
+            selectToi.selectedBoxData.display &&
+            selectToi.selectedBoxData.display === 'hide'
+          "
+          xmlns="http://www.w3.org/2000/svg"
+          width="12"
+          height="12"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
+          <path
+            d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"
+          ></path>
+          <path
+            d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"
+          ></path>
+          <line x1="2" y1="2" x2="22" y2="22"></line>
         </svg>
       </div>
     </div>

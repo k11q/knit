@@ -41,6 +41,7 @@
           selectToi.selectedBox === node.id &&
           canvasFF.isDragging &&
           (node.type !== 'text' || (node.type === 'text' && textIsDragging)),
+        '!hidden': node.display && node.display === 'hide',
       }"
       v-bind="node.attr"
     >

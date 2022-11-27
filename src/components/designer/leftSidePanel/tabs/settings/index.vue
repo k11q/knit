@@ -2,7 +2,7 @@
   <div class="flex flex-col w-full h-fit">
     <!--pages-->
     <div
-      class="flex flex-col border-b pt-[5px] gap-[1px] pb-3 border-[#282828]"
+      class="flex flex-col border-b pt-[5px] gap-[1px] pb-3 border-[#303030]"
     >
       <div class="flex flex-row justify-between pl-4 pr-2 items-center">
         <p class="font-medium">Settings</p>

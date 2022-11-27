@@ -2,7 +2,7 @@
   <!-- Text section! -->
   <div
     v-show="selectToi.selectedBoxData.type === 'text' && selectToi.selectedBox"
-    class="flex flex-col gap-3 border-y py-4 px-4 border-[#282828]"
+    class="flex flex-col gap-3 border-y py-4 px-4 border-[#303030]"
   >
     <p class="font-medium">Text</p>
 

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-14 border-b flex flex-row flex-none justify-between z-10 bg-[#1C1C1C] border-[#282828] p-2"
+    class="h-14 border-b flex flex-row flex-none justify-between z-10 bg-[#232323] border-[#303030] p-2 border-r"
   >
     <div class="flex flex-row gap-2">
       <NuxtLink
@@ -72,57 +72,6 @@
         }"
       >
         <UIIcon name="text" :size="17" />
-      </div>
-    </div>
-    <div class="flex flex-row">
-      <div class="aspect-square flex items-center justify-center w-14">
-        <div>icon</div>
-      </div>
-      <div class="aspect-square flex items-center justify-center w-14">
-        <div>icon</div>
-      </div>
-    </div>
-    <div class="flex flex-row gap-5 mr-5 items-center">
-      <div class="flex items-center justify-center">
-        <div class="bg-gray-400 rounded-full aspect-square h-6"></div>
-      </div>
-      <NuxtLink
-        :to="`/p/${route.params.id}/${selectToi.selectedBoxData.name}/preview`"
-      >
-        <div
-          class="flex items-center justify-center text-center cursor-default hover:bg-[#232323] h-8 aspect-square"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="17"
-            height="17"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <polygon points="5 3 19 12 5 21 5 3"></polygon>
-          </svg>
-        </div>
-      </NuxtLink>
-      <div class="flex items-center justify-center">
-        <div>Export</div>
-      </div>
-      <div class="flex items-center justify-center">
-        <NuxtLink
-          :to="`http://${route.params.id}.localhost:3000/${selectToi.selectedBoxData.name}`"
-        >
-          <button
-            class="bg-[#0191FA] px-2 py-1 text-[#EDEDED] rounded-md border-none"
-          >
-            Deploy
-          </button>
-        </NuxtLink>
-      </div>
-      <div class="flex items-center justify-center w-10">
-        <p>{{ `${(addaSquare.scale * 100).toFixed(2)}` }}%</p>
       </div>
     </div>
   </div>
