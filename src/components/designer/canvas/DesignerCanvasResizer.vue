@@ -36,8 +36,8 @@
     <div
       class="pointer-events-auto"
       v-show="
-        useGetElementRect(selectToi.selectedBoxData.id)?.width > 20 ||
-        useGetElementRect(selectToi.selectedBoxData.id)?.height > 20
+        useGetElementRect(selectToi.selectedBoxData.id)?.width > 100 ||
+        useGetElementRect(selectToi.selectedBoxData.id)?.height > 100
       "
     >
       <div
@@ -149,8 +149,8 @@
     <div
       class="pointer-events-auto"
       v-show="
-        useGetElementRect(selectToi.selectedBoxData.id)?.width > 20 ||
-        useGetElementRect(selectToi.selectedBoxData.id)?.height > 20
+        useGetElementRect(selectToi.selectedBoxData.id)?.width > 100 ||
+        useGetElementRect(selectToi.selectedBoxData.id)?.height > 100
       "
     >
       <div
@@ -350,14 +350,15 @@
       <!--Bottom dimensions label-->
       <p
         class="absolute left-0 right-0 top-full flex flex-row justify-center"
-        :style="{ marginTop: `${(8 * 1) / addaSquare.scale}px` }"
+        :style="{ marginTop: `${(10 * 1) / addaSquare.scale}px` }"
       >
         <span
-          class="bg-[#0191FA] text-[#EDEDED] cursor-default whitespace-nowrap"
+          class="bg-[#0191FA] text-[#EDEDED] cursor-default whitespace-nowrap font-medium"
           :style="{
             fontSize: `${(11 * 1) / addaSquare.scale}px`,
-            lineHeight: 1.5,
-            borderRadius: `${(4 * 1) / addaSquare.scale}px`,
+            lineHeight: 1.1,
+            letterSpacing: `${(-0.3 * 1) / addaSquare.scale}px`,
+            borderRadius: `${(2 * 1) / addaSquare.scale}px`,
             paddingTop: `${2 * (1 / addaSquare.scale)}px`,
             paddingBottom: `${2 * (1 / addaSquare.scale)}px`,
             paddingRight: `${(4 * 1) / addaSquare.scale}px`,

@@ -309,10 +309,8 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
                 dndAppendBottom(selectToi.data, canvasDnd.dropzone);
                 showMarker.value = false;
                 currDragElement.style.opacity = prevOpacity;
-                canvasMarker.setRuler = true;
               }
             })
-
             .then(function () {
               useSetOutlineSelector(currDrag);
               paddingResize.setResizerSize(currDrag);

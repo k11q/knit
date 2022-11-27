@@ -1,11 +1,11 @@
 import { useCounterStore } from "@/stores/counter";
 import { useSquareStore } from "@/stores/dataSquare";
-import { useStoreTree } from "@/stores/storeTree";
+import { storeTree } from "@/stores/storeTree";
 
 export default function (id) {
   const selectToi = useCounterStore();
   const squareStore = useSquareStore();
-  const storeTree = useStoreTree();
+  const storeTree = storeTree();
 
   selectToi.treeHover = true;
   selectToi.treeHoverId = id;
