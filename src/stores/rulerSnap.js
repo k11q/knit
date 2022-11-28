@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { useCounterStore } from "./counter";
 import { useSquareStore } from "./dataSquare";
-import { useDndStore } from "./dndStore";
+import { storeCanvas } from "./storeCanvas";
 
 export const useRulerSnapStore = defineStore({
   id: "rulerSnap",
@@ -318,7 +318,7 @@ export const useRulerSnapStore = defineStore({
       } else return false;
     },
     setRulerSnap(e, id) {
-      const dndStore = useDndStore();
+      const dndStore = storeCanvas();
       const selectToi = useCounterStore();
       const squareStore = useSquareStore();
       const rulerSnap = useRulerSnapStore();

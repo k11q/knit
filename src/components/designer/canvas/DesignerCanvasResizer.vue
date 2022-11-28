@@ -49,14 +49,18 @@
         :style="{
           marginTop: `${
             (8 +
-              parseInt(selectToi.selectedBoxData?.attr?.style.borderRadius) *
+              parseInt(
+                selectToi.selectedBoxData?.attr?.style.borderRadius | 0
+              ) *
                 addaSquare.scale *
                 0.5) /
             addaSquare.scale
           }px`,
           marginLeft: `${
             (8 +
-              parseInt(selectToi.selectedBoxData?.attr?.style.borderRadius) *
+              parseInt(
+                selectToi.selectedBoxData?.attr?.style.borderRadius | 0
+              ) *
                 addaSquare.scale *
                 0.5) /
             addaSquare.scale
@@ -75,14 +79,18 @@
         :style="{
           marginTop: `${
             (8 +
-              parseInt(selectToi.selectedBoxData?.attr?.style.borderRadius) *
+              parseInt(
+                selectToi.selectedBoxData?.attr?.style.borderRadius | 0
+              ) *
                 addaSquare.scale *
                 0.5) /
             addaSquare.scale
           }px`,
           marginRight: `${
             (8 +
-              parseInt(selectToi.selectedBoxData?.attr?.style.borderRadius) *
+              parseInt(
+                selectToi.selectedBoxData?.attr?.style.borderRadius | 0
+              ) *
                 addaSquare.scale *
                 0.5) /
             addaSquare.scale
@@ -101,14 +109,18 @@
         :style="{
           marginBottom: `${
             (8 +
-              parseInt(selectToi.selectedBoxData?.attr?.style.borderRadius) *
+              parseInt(
+                selectToi.selectedBoxData?.attr?.style.borderRadius | 0
+              ) *
                 addaSquare.scale *
                 0.5) /
             addaSquare.scale
           }px`,
           marginLeft: `${
             (8 +
-              parseInt(selectToi.selectedBoxData?.attr?.style.borderRadius) *
+              parseInt(
+                selectToi.selectedBoxData?.attr?.style.borderRadius | 0
+              ) *
                 addaSquare.scale *
                 0.5) /
             addaSquare.scale
@@ -127,14 +139,18 @@
         :style="{
           marginBottom: `${
             (8 +
-              parseInt(selectToi.selectedBoxData?.attr?.style.borderRadius) *
+              parseInt(
+                selectToi.selectedBoxData?.attr?.style.borderRadius | 0
+              ) *
                 addaSquare.scale *
                 0.5) /
             addaSquare.scale
           }px`,
           marginRight: `${
             (8 +
-              parseInt(selectToi.selectedBoxData?.attr?.style.borderRadius) *
+              parseInt(
+                selectToi.selectedBoxData?.attr?.style.borderRadius | 0
+              ) *
                 addaSquare.scale *
                 0.5) /
             addaSquare.scale
@@ -149,8 +165,9 @@
     <div
       class="pointer-events-auto"
       v-show="
-        useGetElementRect(selectToi.selectedBoxData.id)?.width > 100 ||
-        useGetElementRect(selectToi.selectedBoxData.id)?.height > 100
+        (useGetElementRect(selectToi.selectedBoxData.id)?.width > 100 ||
+          useGetElementRect(selectToi.selectedBoxData.id)?.height > 100) &&
+        useGetElement(selectToi.selectedBoxData.id)?.children?.length
       "
     >
       <div

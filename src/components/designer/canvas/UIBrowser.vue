@@ -88,8 +88,7 @@ import { useSquareStore } from "@/stores/dataSquare";
 import { useCanvasMarkerStore } from "@/stores/canvasMarker";
 import { useDropMarker } from "@/stores/dropMarker";
 import { usePaddingResizeStore } from "@/stores/paddingResizeStore";
-import { useResizeStore } from "@/stores/resizeStore";
-import { useDndStore } from "@/stores/dndStore";
+import { storeCanvas } from "@/stores/storeCanvas";
 import { useRulerSnapStore } from "@/stores/rulerSnap";
 
 const selectToi = useCounterStore();
@@ -102,8 +101,7 @@ const dropMarker = useDropMarker();
 const textIsDragging = ref(false);
 const textHover = ref(false);
 const paddingResize = usePaddingResizeStore();
-const resizeStore = useResizeStore();
-const dndStore = useDndStore();
+const dndStore = storeCanvas();
 const rulerSnap = useRulerSnapStore();
 
 function makeEditable(e: Event, id: String) {
@@ -151,10 +149,6 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
     setTimeout(() => {
       paddingResize.setResizerSize(currDrag);
     }, 0);
-
-    /*
-    useSelectedKeyboardShortcuts(e, currDrag);
-    */
 
     if (canvasDnd.isDragging == true) {
       window.addEventListener("mousemove", mousemove);
@@ -210,13 +204,6 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
           }
           selectToi.treeHoverSize = 0.5;
         }
-
-        /*
-        selectToi.selectedBoxData.attr.style.left =
-          Math.round((e.clientX - prevX) / squareStore.scale) + "px";
-        selectToi.selectedBoxData.attr.style.top =
-          Math.round((e.clientY - prevY) / squareStore.scale) + "px";
-          */
       }
       function mouseup() {
         if (isDragging) {
@@ -325,9 +312,12 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
         isDragging = false;
         window.removeEventListener("mousemove", mousemove);
         window.removeEventListener("mouseup", mouseup);
+        //reselect
+        setTimeout(() => {
+          canvasFF.isDragging = false;
+        }, 0);
 
         rulerSnap.show = false;
-        canvasFF.isDragging = false;
         canvasDnd.isDragging = false;
       }
     }

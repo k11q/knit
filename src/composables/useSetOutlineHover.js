@@ -5,11 +5,12 @@ import { storeTree } from "@/stores/storeTree";
 export default function (id) {
   const selectToi = useCounterStore();
   const squareStore = useSquareStore();
-  const storeTree = storeTree();
+
+  const treeStore = storeTree();
 
   selectToi.treeHover = true;
   selectToi.treeHoverId = id;
-  storeTree.hoverId = id;
+  treeStore.hoverId = id;
   let target = document.querySelector(`[data-id=${id}]`);
   let selectedTarget = target.getBoundingClientRect();
 
