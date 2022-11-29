@@ -5,6 +5,7 @@ export default function (id) {
   const squareStore = useSquareStore();
   const selectToi = useCounterStore();
 
+  console.log("id = " + id);
   let target = document.querySelector(`[data-id=${id}]`);
   let selectedTarget = target.getBoundingClientRect();
 

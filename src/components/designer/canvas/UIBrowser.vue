@@ -5,7 +5,7 @@
       :data-droppable="node.type === 'text' ? null : true"
       :data-id="node.id"
       :data-component="node.type"
-      @mousedown.stop.prevent="testDown($event, node.id, node.type)"
+      @mousedown.stop="testDown($event, node.id, node.type)"
       @mouseout="
         () => {
           selectToi.treeHover = false;
@@ -102,12 +102,11 @@ function makeEditable(e: Event, id: String) {
 //dnd on canvas
 const testDown = (e: Event, currDrag: String, currType: String) => {
   if (!squareStore.dragPointer && !squareStore.draggingPointer) {
-    console.log("crdrg = " + currDrag);
     if (!useCheckParent(currDrag)) {
       canvasStore.dndWithoutParent(e, currDrag, currType);
     }
     if (useCheckParent(currDrag)) {
-      canvasStore.dndWithParent(e, currDrag, currType);
+      canvasStore.dndWithParent(e, currDrag);
     }
   }
 };

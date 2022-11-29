@@ -6,6 +6,7 @@ import { useCanvasFF } from "@/stores/canvasFreeForm";
 import { useDropMarker } from "@/stores/dropMarker";
 import { usePaddingResizeStore } from "@/stores/paddingResizeStore";
 import { useRulerSnapStore } from "@/stores/rulerSnap";
+import useTransferData from "../composables/useTransferData";
 
 export const storeCanvas = defineStore({
   id: "storeCanvas",
@@ -88,6 +89,7 @@ export const storeCanvas = defineStore({
 
         function mousemove(e) {
           e.preventDefault();
+          e.stopPropagation();
 
           if (currType === "text") {
             textIsDragging.value = true;
@@ -141,40 +143,24 @@ export const storeCanvas = defineStore({
                   !canvasDnd.dropzone
                 ) {
                   //append after
-                  function dndAppend(arr, dragZone) {
-                    arr.every((i) => {
-                      if (i.id === closestTarget) {
-                        i.children.splice(
-                          i.children.findIndex(({ id }) => id == dragZone),
-                          0,
-                          selectToi.selectedBoxData
-                        );
-                        return false;
-                      } else {
-                        dndAppend(i.children, dragZone);
-                        return true;
-                      }
-                    });
-                  }
-                  function dndRemove(arr, currDrag) {
-                    arr.every((i) => {
-                      if (i.id === currDrag) {
-                        arr.splice(
-                          arr.findIndex(({ id }) => id == currDrag),
-                          1
-                        );
-                        return false;
-                      } else {
-                        dndRemove(i.children, currDrag);
-                        return true;
-                      }
-                    });
-                  }
+
                   delete selectToi.selectedBoxData.attr.style.left;
                   delete selectToi.selectedBoxData.attr.style.top;
-                  dndRemove(selectToi.data, currDrag);
+                  useTransferData(
+                    selectToi.data,
+                    canvasDnd.dropzone,
+                    selectToi.selectedBoxData,
+                    currDrag,
+                    closestTarget
+                  ).removeChild();
                   selectToi.selectedBoxData.attr.style.position = "static";
-                  dndAppend(selectToi.data, canvasDnd.dragzone);
+                  useTransferData(
+                    selectToi.data,
+                    canvasDnd.dragzone,
+                    selectToi.selectedBoxData,
+                    currDrag,
+                    closestTarget
+                  ).appendBefore();
                   showMarker.value = false;
                   currDragElement.style.opacity = prevOpacity;
                   canvasDnd.dragzone = "";
@@ -187,36 +173,23 @@ export const storeCanvas = defineStore({
                   !closest.children?.length
                 ) {
                   //append bottom/push
-                  function dndAppendBottom(arr, dropzone) {
-                    arr.every((i) => {
-                      if (i.id === closestTarget) {
-                        i.children.push(selectToi.selectedBoxData);
-                        return false;
-                      } else {
-                        dndAppendBottom(i.children, dropzone);
-                        return true;
-                      }
-                    });
-                  }
-                  function dndRemove(arr, currDrag) {
-                    arr.every((i) => {
-                      if (i.id === currDrag) {
-                        arr.splice(
-                          arr.findIndex(({ id }) => id == currDrag),
-                          1
-                        );
-                        return false;
-                      } else {
-                        dndRemove(i.children, currDrag);
-                        return true;
-                      }
-                    });
-                  }
                   delete selectToi.selectedBoxData.attr.style.left;
                   delete selectToi.selectedBoxData.attr.style.top;
-                  dndRemove(selectToi.data, currDrag);
+                  useTransferData(
+                    selectToi.data,
+                    canvasDnd.dropzone,
+                    selectToi.selectedBoxData,
+                    currDrag,
+                    closestTarget
+                  ).removeChild();
                   selectToi.selectedBoxData.attr.style.position = "static";
-                  dndAppendBottom(selectToi.data, canvasDnd.dropzone);
+                  useTransferData(
+                    selectToi.data,
+                    canvasDnd.dropzone,
+                    selectToi.selectedBoxData,
+                    currDrag,
+                    closestTarget
+                  ).appendChild();
                   showMarker.value = false;
                   currDragElement.style.opacity = prevOpacity;
                 }
@@ -270,35 +243,41 @@ export const storeCanvas = defineStore({
         canvasStore.ghostOutlineLeft = e.clientX - prevX;
         canvasStore.ghostOutlineTop = e.clientY - prevY;
 
-        //kalau closest same id chg position
-        closestElement = document
-          .elementFromPoint(e.clientX, e.clientY)
-          .closest("[data-droppable='true']");
-        let dropzoneChildren = [...closestElement.children];
+        let closest = useGetClosestElement(e);
+        let closestTarget;
+        if (closest) {
+          closestTarget = useGetClosestDroppableId(e);
 
-        function getDragAfter(y) {
-          return dropzoneChildren.reduce(
-            (closest, child, index) => {
-              const rect = child.getBoundingClientRect();
-              const offset = y - rect.y - rect.height;
-              if (offset <= 0 && offset > closest.offset) {
-                return {
-                  offset: offset,
-                  elementID: child.dataset.id,
-                  rect: rect,
-                  index: index,
-                };
-              } else {
-                return closest;
-              }
-            },
-            { offset: Number.NEGATIVE_INFINITY }
-          );
+          //kalau closest same id chg position
+          let dropzoneChildren = [...closest.children];
+
+          function getDragAfter(y) {
+            return dropzoneChildren.reduce(
+              (closest, child, index) => {
+                const rect = child.getBoundingClientRect();
+                const offset = y - rect.y - rect.height;
+                if (offset <= 0 && offset > closest.offset) {
+                  return {
+                    offset: offset,
+                    elementID: child.dataset.id,
+                    rect: rect,
+                    index: index,
+                  };
+                } else {
+                  return closest;
+                }
+              },
+              { offset: Number.NEGATIVE_INFINITY }
+            );
+          }
+
+          let dragzone = getDragAfter(e.clientY).elementID;
+
+          if (dragzone !== currDrag) {
+            console.log("drgzone = " + dragzone);
+            //useTransferData(selectToi.data, dragzone, selectToi.selectedBoxData, currDrag, closestTarget).appendBefore();
+          }
         }
-        console.log(getDragAfter(e.clientY).index);
-        console.log(
-          getDragAfter(e.clientY).elementID === currDrag ? false : true
-        );
 
         //kalau keluar and no closest append slice atas currdropzone
 
