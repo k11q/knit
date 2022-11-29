@@ -10,7 +10,7 @@
         () => {
           selectToi.treeHover = false;
           selectToi.treeHoverId = '';
-          textHover = false;
+          canvasStore.textHover = false;
           if (selectToi.selectedBox === node.id && node.type !== 'text') {
             paddingResize.showPaddingResizer = false;
           }
@@ -25,7 +25,7 @@
             node.type === 'text' &&
             !canvasFF.isDragging
           ) {
-            textHover = true;
+            canvasStore.textHover = true;
           }
           if (selectToi.selectedBox === node.id && node.type !== 'text') {
             paddingResize.setShowPaddingResizer();
@@ -58,7 +58,7 @@
           }"
           :style="{
             textDecorationThickness:
-              textHover && selectToi.selectedBox !== node.id
+              canvasStore.textHover && selectToi.selectedBox !== node.id
                 ? `${2 / squareStore.scale}px`
                 : `${1 / squareStore.scale}px`,
           }"
@@ -91,9 +91,8 @@ const selectToi = useCounterStore();
 const canvasFF = useCanvasFF();
 const squareStore = useSquareStore();
 const textIsDragging = ref(false);
-const textHover = ref(false);
 const paddingResize = usePaddingResizeStore();
-const dndStore = storeCanvas();
+const canvasStore = storeCanvas();
 
 function makeEditable(e: Event, id: String) {
   selectToi.selectedTextEditor = id;
@@ -105,10 +104,10 @@ const testDown = (e: Event, currDrag: String, currType: String) => {
   if (!squareStore.dragPointer && !squareStore.draggingPointer) {
     console.log("crdrg = " + currDrag);
     if (!useCheckParent(currDrag)) {
-      dndStore.dndWithoutParent(e, currDrag, currType);
+      canvasStore.dndWithoutParent(e, currDrag, currType);
     }
     if (useCheckParent(currDrag)) {
-      dndStore.dndWithParent(e, currDrag, currType);
+      canvasStore.dndWithParent(e, currDrag, currType);
     }
   }
 };

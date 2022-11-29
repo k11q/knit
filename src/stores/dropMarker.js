@@ -63,7 +63,6 @@ export const useDropMarker = defineStore({
           let markerPositionLeft;
           let markerPositionRight;
           let gap;
-          let currDragWidth = parseInt(currDragRect.width);
 
           if (!getDragAfter(e.clientY).elementID) {
             let dropElement = dropzoneChildren[dropzoneChildren.length - 1];

@@ -3,7 +3,6 @@ import { useSquareStore } from "./dataSquare";
 import { useCounterStore } from "./counter";
 import { useCanvasDndStore } from "@/stores/canvasDnd";
 import { useCanvasFF } from "@/stores/canvasFreeForm";
-import { useCanvasMarkerStore } from "@/stores/canvasMarker";
 import { useDropMarker } from "@/stores/dropMarker";
 import { usePaddingResizeStore } from "@/stores/paddingResizeStore";
 import { useRulerSnapStore } from "@/stores/rulerSnap";
@@ -14,6 +13,7 @@ export const storeCanvas = defineStore({
     currDrag: "",
     prevX: NaN,
     prevY: NaN,
+    textHover: false,
     showSolidOutline: false,
     showGhostOutline: false,
     ghostOutlineLeft: NaN,
@@ -40,12 +40,12 @@ export const storeCanvas = defineStore({
       const selectToi = useCounterStore();
       const canvasDnd = useCanvasDndStore();
       const canvasFF = useCanvasFF();
-      const canvasMarker = useCanvasMarkerStore();
       const showMarker = useShowMarker();
       const dropMarker = useDropMarker();
       const textIsDragging = ref(false);
       const paddingResize = usePaddingResizeStore();
       const rulerSnap = useRulerSnapStore();
+      const canvasStore = storeCanvas();
 
       canvasDnd.isDragging = true;
       canvasDnd.currDrag = currDrag;
@@ -110,7 +110,6 @@ export const storeCanvas = defineStore({
           if (!closest) {
             showMarker.value = false;
             currDragElement.style.opacity = prevOpacity;
-            canvasMarker.setRuler = true;
             selectToi.treeHoverSize = 1;
           } else if (target && closest) {
             if (
@@ -120,10 +119,8 @@ export const storeCanvas = defineStore({
               rulerSnap.on = true;
               selectToi.treeHover = false;
               currDragElement.style.opacity = prevOpacity;
-              canvasMarker.setRuler = true;
             } else {
               rulerSnap.on = false;
-              canvasMarker.setRuler = false;
               showMarker.value = true;
               dropMarker.setMarker(e, currDragElement);
               currDragElement.style.opacity = 0;
@@ -135,7 +132,6 @@ export const storeCanvas = defineStore({
         }
         function mouseup() {
           if (isDragging) {
-            canvasMarker.lines = [];
             Promise.resolve()
               .then(function () {
                 if (
@@ -181,7 +177,6 @@ export const storeCanvas = defineStore({
                   dndAppend(selectToi.data, canvasDnd.dragzone);
                   showMarker.value = false;
                   currDragElement.style.opacity = prevOpacity;
-                  canvasMarker.setRuler = true;
                   canvasDnd.dragzone = "";
                 }
                 if (
@@ -259,6 +254,7 @@ export const storeCanvas = defineStore({
       this.currDrag = currDrag;
       let currDragElement = document.querySelector(`[data-id=${currDrag}]`);
       let currDragElementRect = currDragElement.getBoundingClientRect();
+      let closestElement;
       let prevX = e.clientX - currDragElementRect.x;
       let prevY = e.clientY - currDragElementRect.y;
 
@@ -273,6 +269,40 @@ export const storeCanvas = defineStore({
         canvasStore.showGhostOutline = true;
         canvasStore.ghostOutlineLeft = e.clientX - prevX;
         canvasStore.ghostOutlineTop = e.clientY - prevY;
+
+        //kalau closest same id chg position
+        closestElement = document
+          .elementFromPoint(e.clientX, e.clientY)
+          .closest("[data-droppable='true']");
+        let dropzoneChildren = [...closestElement.children];
+
+        function getDragAfter(y) {
+          return dropzoneChildren.reduce(
+            (closest, child, index) => {
+              const rect = child.getBoundingClientRect();
+              const offset = y - rect.y - rect.height;
+              if (offset <= 0 && offset > closest.offset) {
+                return {
+                  offset: offset,
+                  elementID: child.dataset.id,
+                  rect: rect,
+                  index: index,
+                };
+              } else {
+                return closest;
+              }
+            },
+            { offset: Number.NEGATIVE_INFINITY }
+          );
+        }
+        console.log(getDragAfter(e.clientY).index);
+        console.log(
+          getDragAfter(e.clientY).elementID === currDrag ? false : true
+        );
+
+        //kalau keluar and no closest append slice atas currdropzone
+
+        //if atas dropzone lain append atas sekali dulu
       }
 
       function mouseup() {
