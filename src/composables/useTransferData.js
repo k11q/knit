@@ -37,6 +37,27 @@ export default function (arr, dropzone, data, currDragId, closestTarget) {
       }
     });
   }
+  function appendAfter() {
+    arr.every((i) => {
+      if (i.id === closestTarget) {
+        i.children.splice(
+          i.children.findIndex(({ id }) => id === dropzone) + 1,
+          0,
+          data
+        );
+        return false;
+      } else {
+        useTransferData(
+          i.children,
+          dropzone,
+          data,
+          currDragId,
+          closestTarget
+        ).appendAfter();
+        return true;
+      }
+    });
+  }
   function removeChild() {
     arr.every((i) => {
       if (i.id === currDragId) {
@@ -57,5 +78,5 @@ export default function (arr, dropzone, data, currDragId, closestTarget) {
       }
     });
   }
-  return { appendChild, appendBefore, removeChild };
+  return { appendChild, appendBefore, appendAfter, removeChild };
 }

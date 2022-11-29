@@ -11,6 +11,7 @@ import useTransferData from "../composables/useTransferData";
 export const storeCanvas = defineStore({
   id: "storeCanvas",
   state: () => ({
+    isPinchZoom: false,
     currDrag: "",
     prevX: NaN,
     prevY: NaN,
@@ -245,37 +246,78 @@ export const storeCanvas = defineStore({
 
         let closest = useGetClosestElement(e);
         let closestTarget;
-        if (closest) {
+        //kalau closest same id chg position
+        if (
+          closest &&
+          closest.dataset.id === currDragElement.parentElement?.dataset?.id
+        ) {
           closestTarget = useGetClosestDroppableId(e);
 
-          //kalau closest same id chg position
-          let dropzoneChildren = [...closest.children];
+          let prevSibling = currDragElement.previousElementSibling;
+          let prevSiblingId;
+          let nextSibling = currDragElement.nextElementSibling;
+          let nextSiblingId;
 
-          function getDragAfter(y) {
-            return dropzoneChildren.reduce(
-              (closest, child, index) => {
-                const rect = child.getBoundingClientRect();
-                const offset = y - rect.y - rect.height;
-                if (offset <= 0 && offset > closest.offset) {
-                  return {
-                    offset: offset,
-                    elementID: child.dataset.id,
-                    rect: rect,
-                    index: index,
-                  };
-                } else {
-                  return closest;
-                }
-              },
-              { offset: Number.NEGATIVE_INFINITY }
-            );
+          if (prevSibling) {
+            prevSiblingId = prevSibling.dataset.id;
+          }
+          if (nextSibling) {
+            nextSiblingId = nextSibling.dataset.id;
           }
 
-          let dragzone = getDragAfter(e.clientY).elementID;
+          function getPreviousSiblingMiddlePoint() {
+            let middlePoint =
+              prevSibling.getBoundingClientRect().y +
+              prevSibling.getBoundingClientRect().height / 2;
+            return middlePoint;
+          }
 
-          if (dragzone !== currDrag) {
-            console.log("drgzone = " + dragzone);
-            //useTransferData(selectToi.data, dragzone, selectToi.selectedBoxData, currDrag, closestTarget).appendBefore();
+          function getNextSiblingMiddlePoint() {
+            let middlePoint =
+              nextSibling.getBoundingClientRect().y +
+              nextSibling.getBoundingClientRect().height / 2;
+            return middlePoint;
+          }
+
+          if (
+            prevSibling &&
+            e.clientY - prevY < getPreviousSiblingMiddlePoint()
+          ) {
+            useTransferData(
+              selectToi.data,
+              prevSiblingId,
+              selectToi.selectedBoxData,
+              currDrag,
+              closestTarget
+            ).removeChild();
+            useTransferData(
+              selectToi.data,
+              prevSiblingId,
+              selectToi.selectedBoxData,
+              currDrag,
+              closestTarget
+            ).appendBefore();
+          }
+
+          if (
+            nextSibling &&
+            e.clientY - prevY + currDragElementRect.height >
+              getNextSiblingMiddlePoint()
+          ) {
+            useTransferData(
+              selectToi.data,
+              nextSiblingId,
+              selectToi.selectedBoxData,
+              currDrag,
+              closestTarget
+            ).removeChild();
+            useTransferData(
+              selectToi.data,
+              nextSiblingId,
+              selectToi.selectedBoxData,
+              currDrag,
+              closestTarget
+            ).appendAfter();
           }
         }
 
