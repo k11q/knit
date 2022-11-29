@@ -429,6 +429,8 @@ export const storeCanvas = defineStore({
         //kalau keluar and no closest append slice atas currdropzone
 
         if (!closest || !useGetElementIdFromPoint(e)) {
+          canvasStore.showSolidOutline = false;
+          canvasStore.showGhostOutline = false;
           let appendPosition = useGetRootId(parentId);
           currDragElement.style.opacity = prevOpacity;
           showMarker.value = false;
@@ -471,6 +473,8 @@ export const storeCanvas = defineStore({
           closest.dataset.id !== parentId &&
           closest.dataset.id !== currDrag
         ) {
+          canvasStore.showSolidOutline = false;
+          canvasStore.showGhostOutline = false;
           closestTarget = useGetClosestDroppableId(e);
           currDragElement = document.querySelector(`[data-id=${currDrag}]`);
 
