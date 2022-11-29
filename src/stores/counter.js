@@ -316,7 +316,6 @@ export const useCounterStore = defineStore({
             type: "box",
             attr: {
               style: {
-                color: "red",
                 backgroundColor: "red",
                 height: "80px",
                 width: "80px",
@@ -333,8 +332,7 @@ export const useCounterStore = defineStore({
             type: "box",
             attr: {
               style: {
-                color: "red",
-                backgroundColor: "red",
+                backgroundColor: "yellow",
                 height: "80px",
                 width: "80px",
                 position: "static",
@@ -350,8 +348,7 @@ export const useCounterStore = defineStore({
             type: "box",
             attr: {
               style: {
-                color: "red",
-                backgroundColor: "red",
+                backgroundColor: "green",
                 height: "80px",
                 width: "80px",
                 position: "static",
@@ -431,7 +428,7 @@ export const useCounterStore = defineStore({
                     type: "box",
                     attr: {
                       style: {
-                        color: "red",
+                        color: "green",
                         backgroundColor: "red",
                         position: "absolute",
                         flexDirection: "column",
@@ -446,7 +443,7 @@ export const useCounterStore = defineStore({
                     type: "box",
                     attr: {
                       style: {
-                        color: "red",
+                        color: "yellow",
                         backgroundColor: "red",
                         height: "80px",
                         width: "80px",

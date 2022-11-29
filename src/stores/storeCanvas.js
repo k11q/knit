@@ -44,7 +44,6 @@ export const storeCanvas = defineStore({
       const canvasFF = useCanvasFF();
       const showMarker = useShowMarker();
       const dropMarker = useDropMarker();
-      const textIsDragging = ref(false);
       const paddingResize = usePaddingResizeStore();
       const rulerSnap = useRulerSnapStore();
       const canvasStore = storeCanvas();
@@ -92,9 +91,6 @@ export const storeCanvas = defineStore({
           e.preventDefault();
           e.stopPropagation();
 
-          if (currType === "text") {
-            textIsDragging.value = true;
-          }
           rulerSnap.on = true;
           rulerSnap.setRulerSnap(e, currDrag);
           Promise.resolve().then(() => {
@@ -203,9 +199,6 @@ export const storeCanvas = defineStore({
             paddingResize.setResizerSize(currDrag);
           }
           selectToi.treeHoverSize = 1;
-          if (currType === "text") {
-            textIsDragging.value = false;
-          }
           isDragging = false;
           window.removeEventListener("mousemove", mousemove);
           window.removeEventListener("mouseup", mouseup);

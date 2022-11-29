@@ -40,7 +40,8 @@
         'pointer-events-none':
           selectToi.selectedBox === node.id &&
           canvasFF.isDragging &&
-          (node.type !== 'text' || (node.type === 'text' && textIsDragging)),
+          (node.type !== 'text' ||
+            (node.type === 'text' && canvasFF.isDragging)),
         '!hidden': node.display && node.display === 'hide',
       }"
       v-bind="node.attr"
