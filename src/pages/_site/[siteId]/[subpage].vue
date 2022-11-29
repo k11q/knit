@@ -32,7 +32,6 @@ import { useCounterStore } from "@/stores/counter";
 import { useCanvasDndStore } from "@/stores/canvasDnd";
 import { useCanvasFF } from "@/stores/canvasFreeForm";
 import { useSquareStore } from "@/stores/dataSquare";
-import { useCanvasMarkerStore } from "@/stores/canvasMarker";
 
 const selectToi = useCounterStore();
 const subdomain = useSubdomain();

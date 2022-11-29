@@ -242,13 +242,6 @@
         </div>
       </div>
     </div>
-    <!--Ruler element-->
-    <div
-      v-show="canvasMarker.setRuler"
-      class="absolute inset-0 overflow-visible pointer-events-none"
-    >
-      <RulerBrowser :lines="canvasMarker.lines" />
-    </div>
     <!--RulerSnap element
     <div
     v-show="rulerSnap.show" 
@@ -279,7 +272,6 @@ import { useCounterStore } from "@/stores/counter";
 import { useSquareStore } from "@/stores/dataSquare";
 import { useCanvasFF } from "@/stores/canvasFreeForm";
 import { useResizeStore } from "@/stores/resizeStore";
-import { useCanvasMarkerStore } from "@/stores/canvasMarker";
 import { useDropMarker } from "@/stores/dropMarker";
 import { useSelectStore } from "@/stores/selectStore";
 import { useNewSquareStore } from "@/stores/newSquareStore";
@@ -292,7 +284,6 @@ const selectToi = useCounterStore();
 const addaSquare = useSquareStore();
 const canvasFF = useCanvasFF();
 const resizeStore = useResizeStore();
-const canvasMarker = useCanvasMarkerStore();
 const showMarker = useShowMarker();
 const dropMarker = useDropMarker();
 const selectStore = useSelectStore();
