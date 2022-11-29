@@ -226,12 +226,17 @@ export const storeCanvas = defineStore({
       const rulerSnap = useRulerSnapStore();
       const showMarker = useShowMarker();
       const dropMarker = useDropMarker();
+      const canvasDnd = useCanvasDndStore();
+      const paddingResize = usePaddingResizeStore();
+      let isDragging = false;
 
       selectToi.changeSelected(e, currDrag);
       this.currDrag = currDrag;
       let currDragElement = document.querySelector(`[data-id=${currDrag}]`);
       let currDragElementRect = currDragElement.getBoundingClientRect();
       let closestElement;
+      let closest = null;
+      let closestTarget = "";
       let prevX = e.clientX - currDragElementRect.x;
       let prevY = e.clientY - currDragElementRect.y;
       this.prevX = prevX;
@@ -246,10 +251,10 @@ export const storeCanvas = defineStore({
       function mousemove(e) {
         e.preventDefault();
 
+        isDragging = true;
         canvasFF.isDragging = true;
 
-        let closest = useGetClosestElement(e);
-        let closestTarget;
+        closest = useGetClosestElement(e);
         //kalau closest same id chg position
         if (closest && closest.dataset.id === parentId) {
           closestTarget = useGetClosestDroppableId(e);
@@ -441,9 +446,85 @@ export const storeCanvas = defineStore({
       }
 
       function mouseup() {
+        if (
+          isDragging &&
+          closest &&
+          closest.dataset.id !== parentId &&
+          closest.dataset.id !== currDrag
+        ) {
+          Promise.resolve()
+            .then(function () {
+              if (
+                closest &&
+                selectToi.selectedBox !== closestTarget &&
+                canvasDnd.dragzone &&
+                !canvasDnd.dropzone
+              ) {
+                //append after
+
+                delete selectToi.selectedBoxData.attr.style.left;
+                delete selectToi.selectedBoxData.attr.style.top;
+                useTransferData(
+                  selectToi.data,
+                  canvasDnd.dropzone,
+                  selectToi.selectedBoxData,
+                  currDrag,
+                  closestTarget
+                ).removeChild();
+                selectToi.selectedBoxData.attr.style.position = "static";
+                useTransferData(
+                  selectToi.data,
+                  canvasDnd.dragzone,
+                  selectToi.selectedBoxData,
+                  currDrag,
+                  closestTarget
+                ).appendBefore();
+                showMarker.value = false;
+                currDragElement.style.opacity = prevOpacity;
+                canvasDnd.dragzone = "";
+              }
+              if (
+                (closest &&
+                  selectToi.selectedBox !== closestTarget &&
+                  !canvasDnd.dragzone &&
+                  canvasDnd.dropzone) ||
+                !closest.children?.length
+              ) {
+                //append bottom/push
+                delete selectToi.selectedBoxData.attr.style.left;
+                delete selectToi.selectedBoxData.attr.style.top;
+                useTransferData(
+                  selectToi.data,
+                  canvasDnd.dropzone,
+                  selectToi.selectedBoxData,
+                  currDrag,
+                  closestTarget
+                ).removeChild();
+                selectToi.selectedBoxData.attr.style.position = "static";
+                useTransferData(
+                  selectToi.data,
+                  canvasDnd.dropzone,
+                  selectToi.selectedBoxData,
+                  currDrag,
+                  closestTarget
+                ).appendChild();
+                showMarker.value = false;
+                currDragElement.style.opacity = prevOpacity;
+              }
+            })
+            .then(function () {
+              useSetOutlineSelector(currDrag);
+              paddingResize.setResizerSize(currDrag);
+            });
+          useSetOutlineSelector(currDrag);
+          paddingResize.setResizerSize(currDrag);
+        }
+        selectToi.treeHoverSize = 1;
+
+        isDragging = false;
         canvasFF.isDragging = false;
-        canvasStore.showSolidOutline = false;
         canvasStore.showGhostOutline = false;
+        canvasStore.showSolidOutline = false;
         window.removeEventListener("mousemove", mousemove);
         window.removeEventListener("mouseup", mouseup);
       }
