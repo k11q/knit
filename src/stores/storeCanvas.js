@@ -224,6 +224,8 @@ export const storeCanvas = defineStore({
       const canvasStore = storeCanvas();
       const canvasFF = useCanvasFF();
       const rulerSnap = useRulerSnapStore();
+      const showMarker = useShowMarker();
+      const dropMarker = useDropMarker();
 
       selectToi.changeSelected(e, currDrag);
       this.currDrag = currDrag;
@@ -250,6 +252,7 @@ export const storeCanvas = defineStore({
         //kalau closest same id chg position
         if (closest && closest.dataset.id === parentId) {
           closestTarget = useGetClosestDroppableId(e);
+          rulerSnap.show = false;
 
           if (
             [...parentElement.children].findIndex(
@@ -281,6 +284,7 @@ export const storeCanvas = defineStore({
               (i) => i.dataset.id === currDrag
             ) !== -1
           ) {
+            currDragElement = document.querySelector(`[data-id=${currDrag}]`);
             canvasStore.showSolidOutline = true;
             canvasStore.showGhostOutline = true;
             canvasStore.ghostOutlineLeft = e.clientX - prevX;
@@ -396,6 +400,7 @@ export const storeCanvas = defineStore({
           closest.dataset.id !== parentId &&
           closest.dataset.id !== currDrag
         ) {
+          closestTarget = useGetClosestDroppableId(e);
           useTransferData(
             selectToi.data,
             "",
@@ -410,6 +415,19 @@ export const storeCanvas = defineStore({
             currDrag,
             closestTarget
           ).appendToCanvas();
+
+          selectToi.selectedBoxData.attr.style.position = "absolute";
+          canvasStore.setLeftPosition(e);
+          canvasStore.setTopPosition(e);
+
+          rulerSnap.on = false;
+          showMarker.value = true;
+          dropMarker.setMarker(e, currDragElement);
+          currDragElement.style.opacity = 0;
+
+          useSetOutlineHover(closestTarget);
+
+          selectToi.treeHoverSize = 0.5;
         }
       }
 
