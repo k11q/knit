@@ -306,7 +306,7 @@ export const storeCanvas = defineStore({
             }
 
             if (
-              !closest.style?.flexDirection ||
+              closest.style?.flexDirection &&
               closest.style.flexDirection === "column"
             ) {
               function getPreviousSiblingMiddlePoint() {
@@ -365,7 +365,7 @@ export const storeCanvas = defineStore({
               }
             }
             if (
-              closest.style?.flexDirection &&
+              !closest.style?.flexDirection ||
               closest.style.flexDirection === "row"
             ) {
               function getPreviousSiblingMiddlePoint() {
