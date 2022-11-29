@@ -4,7 +4,6 @@ export default function (id) {
     if (
       element &&
       element.parentElement &&
-      element.parentElement.length &&
       element.parentElement.dataset?.id !== "canvas"
     ) {
       return true;

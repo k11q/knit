@@ -2416,7 +2416,7 @@
     <!-- Position section! -->
     <div
       v-show="
-        selectToi.selectedBoxData &&
+        selectToi.selectedBox &&
         useGetElement(selectToi.selectedBoxData.id)?.parentElement?.dataset
           .id !== 'canvas'
       "

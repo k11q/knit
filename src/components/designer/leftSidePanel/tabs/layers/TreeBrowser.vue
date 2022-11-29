@@ -18,7 +18,7 @@
           (treeDnd.currDropPosition === 'middle' &&
             treeDnd.currDrop === node.id &&
             selectToi.selectedBox !== node.id) ||
-          selectToi.treeHoverId == node.id,
+          (selectToi.treeHoverId == node.id && !treeDnd.isDragging),
         'opacity-40': treeDnd.currDrag === node.id,
         'opacity-100': treeDnd.currDrag !== node.id,
         'opacity-30':

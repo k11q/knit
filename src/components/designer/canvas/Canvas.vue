@@ -91,6 +91,29 @@
           outline: `${1.5 / addaSquare.scale}px dotted #0191FA`,
         }"
       ></div>
+      <!--Ghost outline-->
+      <div
+        v-show="canvasStore.showGhostOutline"
+        class="absolute pointer-events-none"
+        :style="{
+          willChange: 'left, top, height, width, outline',
+          left:
+            (canvasStore.ghostOutlineLeft - addaSquare.offsetLeft) /
+              addaSquare.scale +
+            'px',
+          top:
+            (canvasStore.ghostOutlineTop - addaSquare.offsetTop) /
+              addaSquare.scale +
+            'px',
+          height:
+            useGetElementRect(canvasStore.currDrag)?.height / addaSquare.scale +
+            'px',
+          width:
+            useGetElementRect(canvasStore.currDrag)?.width / addaSquare.scale +
+            'px',
+          outline: `${1.5 / addaSquare.scale}px dotted #0191FA`,
+        }"
+      ></div>
       <!--Select show-->
       <div
         v-show="selectStore.showSelect"
@@ -238,6 +261,7 @@ import { useNewSquareStore } from "@/stores/newSquareStore";
 import { useNewFrameStore } from "@/stores/newFrameStore";
 import { usePaddingResizeStore } from "@/stores/paddingResizeStore";
 import { useRulerSnapStore } from "@/stores/rulerSnap";
+import { storeCanvas } from "@/stores/storeCanvas";
 
 const selectToi = useCounterStore();
 const addaSquare = useSquareStore();
@@ -251,6 +275,7 @@ const newSquareStore = useNewSquareStore();
 const newFrameStore = useNewFrameStore();
 const paddingResize = usePaddingResizeStore();
 const rulerSnap = useRulerSnapStore();
+const canvasStore = storeCanvas();
 
 onMounted(() => {
   useAddKeyupShortcuts();
