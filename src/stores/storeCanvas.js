@@ -231,6 +231,8 @@ export const storeCanvas = defineStore({
       let closestElement;
       let prevX = e.clientX - currDragElementRect.x;
       let prevY = e.clientY - currDragElementRect.y;
+      this.prevX = prevX;
+      this.prevY = prevY;
       let parentElement = currDragElement.parentElement;
       let parentId = currDragElement.parentElement.dataset.id;
 
@@ -241,10 +243,6 @@ export const storeCanvas = defineStore({
         e.preventDefault();
 
         canvasFF.isDragging = true;
-        canvasStore.showSolidOutline = true;
-        canvasStore.showGhostOutline = true;
-        canvasStore.ghostOutlineLeft = e.clientX - prevX;
-        canvasStore.ghostOutlineTop = e.clientY - prevY;
 
         let closest = useGetClosestElement(e);
         let closestTarget;
@@ -271,6 +269,10 @@ export const storeCanvas = defineStore({
               currDrag,
               closestTarget
             ).appendChild();
+
+            selectToi.selectedBoxData.attr.style.position = "static";
+            delete selectToi.selectedBoxData.attr.style.top;
+            delete selectToi.selectedBoxData.attr.style.left;
           }
 
           if (
@@ -278,6 +280,10 @@ export const storeCanvas = defineStore({
               (i) => i.dataset.id === currDrag
             ) !== -1
           ) {
+            canvasStore.showSolidOutline = true;
+            canvasStore.showGhostOutline = true;
+            canvasStore.ghostOutlineLeft = e.clientX - prevX;
+            canvasStore.ghostOutlineTop = e.clientY - prevY;
             let prevSibling = currDragElement.previousElementSibling;
             let prevSiblingId;
             let nextSibling = currDragElement.nextElementSibling;
@@ -366,6 +372,13 @@ export const storeCanvas = defineStore({
             currDrag,
             closestTarget
           ).appendCanvasAbove();
+
+          canvasStore.showSolidOutline = false;
+          canvasStore.showGhostOutline = false;
+
+          selectToi.selectedBoxData.attr.style.position = "absolute";
+          canvasStore.setLeftPosition(e);
+          canvasStore.setTopPosition(e);
         }
 
         //if atas dropzone lain append atas sekali dulu
