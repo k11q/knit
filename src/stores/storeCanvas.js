@@ -593,7 +593,6 @@ export const storeCanvas = defineStore({
         setTimeout(() => {
           canvasFF.isDragging = false;
         }, 0);
-        canvasFF.isDragging = false;
       }
     },
   },
