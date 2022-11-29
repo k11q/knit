@@ -14,6 +14,7 @@ export const storeCanvas = defineStore({
     currDrag: "",
     prevX: NaN,
     prevY: NaN,
+    showSolidOutline: false,
     showGhostOutline: false,
     ghostOutlineLeft: NaN,
     ghostOutlineTop: NaN,
@@ -92,17 +93,13 @@ export const storeCanvas = defineStore({
             textIsDragging.value = true;
           }
           rulerSnap.on = true;
-          Promise.resolve()
-            .then(() => {
-              rulerSnap.setRulerSnap(e, currDrag);
-            })
-            .then(() => {
-              rulerSnap.setSiblingsPoints(currDrag);
-            });
+          rulerSnap.setRulerSnap(e, currDrag);
+          Promise.resolve().then(() => {
+            rulerSnap.setSiblingsPoints(currDrag);
+          });
           canvasFF.isDragging = true;
           isDragging = true;
 
-          let targetId = useGetElementIdFromPoint(e);
           let target = useGetElementFromPoint(e);
           closest = useGetClosestElement(e);
 
@@ -264,9 +261,6 @@ export const storeCanvas = defineStore({
       let currDragElementRect = currDragElement.getBoundingClientRect();
       let prevX = e.clientX - currDragElementRect.x;
       let prevY = e.clientY - currDragElementRect.y;
-      this.ghostOutlineLeft = e.clientX - prevX;
-      this.ghostOutlineTop = e.clientY - prevY;
-      this.showGhostOutline = true;
 
       window.addEventListener("mousemove", mousemove);
       window.addEventListener("mouseup", mouseup);
@@ -275,12 +269,15 @@ export const storeCanvas = defineStore({
         e.preventDefault();
 
         canvasFF.isDragging = true;
+        canvasStore.showSolidOutline = true;
+        canvasStore.showGhostOutline = true;
         canvasStore.ghostOutlineLeft = e.clientX - prevX;
         canvasStore.ghostOutlineTop = e.clientY - prevY;
       }
 
       function mouseup() {
         canvasFF.isDragging = false;
+        canvasStore.showSolidOutline = false;
         canvasStore.showGhostOutline = false;
         window.removeEventListener("mousemove", mousemove);
         window.removeEventListener("mouseup", mouseup);

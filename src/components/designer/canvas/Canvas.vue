@@ -114,6 +114,31 @@
           outline: `${1.5 / addaSquare.scale}px dotted #0191FA`,
         }"
       ></div>
+      <!--solid outline when dnd with parent-->
+      <div
+        v-show="canvasStore.showSolidOutline"
+        class="absolute pointer-events-none"
+        :style="{
+          willChange: 'left, top, height, width, outline',
+          left:
+            (useGetElementRect(canvasStore.currDrag)?.left -
+              addaSquare.offsetLeft) /
+              addaSquare.scale +
+            'px',
+          top:
+            (useGetElementRect(canvasStore.currDrag)?.top -
+              addaSquare.offsetTop) /
+              addaSquare.scale +
+            'px',
+          height:
+            useGetElementRect(canvasStore.currDrag)?.height / addaSquare.scale +
+            'px',
+          width:
+            useGetElementRect(canvasStore.currDrag)?.width / addaSquare.scale +
+            'px',
+          outline: `${1.5 / addaSquare.scale}px solid #0191FA`,
+        }"
+      ></div>
       <!--Select show-->
       <div
         v-show="selectStore.showSelect"
