@@ -231,6 +231,8 @@ export const storeCanvas = defineStore({
       let closestElement;
       let prevX = e.clientX - currDragElementRect.x;
       let prevY = e.clientY - currDragElementRect.y;
+      let parentElement = currDragElement.parentElement;
+      let parentId = currDragElement.parentElement.dataset.id;
 
       window.addEventListener("mousemove", mousemove);
       window.addEventListener("mouseup", mouseup);
@@ -247,83 +249,147 @@ export const storeCanvas = defineStore({
         let closest = useGetClosestElement(e);
         let closestTarget;
         //kalau closest same id chg position
-        if (
-          closest &&
-          closest.dataset.id === currDragElement.parentElement?.dataset?.id
-        ) {
+        if (closest && closest.dataset.id === parentId) {
           closestTarget = useGetClosestDroppableId(e);
 
-          let prevSibling = currDragElement.previousElementSibling;
-          let prevSiblingId;
-          let nextSibling = currDragElement.nextElementSibling;
-          let nextSiblingId;
-
-          if (prevSibling) {
-            prevSiblingId = prevSibling.dataset.id;
-          }
-          if (nextSibling) {
-            nextSiblingId = nextSibling.dataset.id;
-          }
-
-          function getPreviousSiblingMiddlePoint() {
-            let middlePoint =
-              prevSibling.getBoundingClientRect().y +
-              prevSibling.getBoundingClientRect().height / 2;
-            return middlePoint;
-          }
-
-          function getNextSiblingMiddlePoint() {
-            let middlePoint =
-              nextSibling.getBoundingClientRect().y +
-              nextSibling.getBoundingClientRect().height / 2;
-            return middlePoint;
-          }
-
           if (
-            prevSibling &&
-            e.clientY - prevY < getPreviousSiblingMiddlePoint()
+            [...parentElement.children].findIndex(
+              (i) => i.dataset.id === currDrag
+            ) === -1
           ) {
             useTransferData(
               selectToi.data,
-              prevSiblingId,
+              "",
               selectToi.selectedBoxData,
               currDrag,
               closestTarget
             ).removeChild();
             useTransferData(
               selectToi.data,
-              prevSiblingId,
+              "",
               selectToi.selectedBoxData,
               currDrag,
               closestTarget
-            ).appendBefore();
+            ).appendChild();
           }
 
           if (
-            nextSibling &&
-            e.clientY - prevY + currDragElementRect.height >
-              getNextSiblingMiddlePoint()
+            [...parentElement.children].findIndex(
+              (i) => i.dataset.id === currDrag
+            ) !== -1
           ) {
-            useTransferData(
-              selectToi.data,
-              nextSiblingId,
-              selectToi.selectedBoxData,
-              currDrag,
-              closestTarget
-            ).removeChild();
-            useTransferData(
-              selectToi.data,
-              nextSiblingId,
-              selectToi.selectedBoxData,
-              currDrag,
-              closestTarget
-            ).appendAfter();
+            let prevSibling = currDragElement.previousElementSibling;
+            let prevSiblingId;
+            let nextSibling = currDragElement.nextElementSibling;
+            let nextSiblingId;
+
+            if (prevSibling) {
+              prevSiblingId = prevSibling.dataset.id;
+            }
+            if (nextSibling) {
+              nextSiblingId = nextSibling.dataset.id;
+            }
+
+            function getPreviousSiblingMiddlePoint() {
+              let middlePoint =
+                prevSibling.getBoundingClientRect().y +
+                prevSibling.getBoundingClientRect().height / 2;
+              return middlePoint;
+            }
+
+            function getNextSiblingMiddlePoint() {
+              let middlePoint =
+                nextSibling.getBoundingClientRect().y +
+                nextSibling.getBoundingClientRect().height / 2;
+              return middlePoint;
+            }
+
+            if (
+              prevSibling &&
+              e.clientY - prevY < getPreviousSiblingMiddlePoint()
+            ) {
+              useTransferData(
+                selectToi.data,
+                prevSiblingId,
+                selectToi.selectedBoxData,
+                currDrag,
+                closestTarget
+              ).removeChild();
+              useTransferData(
+                selectToi.data,
+                prevSiblingId,
+                selectToi.selectedBoxData,
+                currDrag,
+                closestTarget
+              ).appendBefore();
+            }
+
+            if (
+              nextSibling &&
+              e.clientY - prevY + currDragElementRect.height >
+                getNextSiblingMiddlePoint()
+            ) {
+              useTransferData(
+                selectToi.data,
+                nextSiblingId,
+                selectToi.selectedBoxData,
+                currDrag,
+                closestTarget
+              ).removeChild();
+              useTransferData(
+                selectToi.data,
+                nextSiblingId,
+                selectToi.selectedBoxData,
+                currDrag,
+                closestTarget
+              ).appendAfter();
+            }
           }
         }
 
         //kalau keluar and no closest append slice atas currdropzone
 
+        if (!closest || !useGetElementIdFromPoint(e)) {
+          let appendPosition = useGetRootId(parentId);
+
+          useTransferData(
+            selectToi.data,
+            "",
+            selectToi.selectedBoxData,
+            currDrag,
+            closestTarget
+          ).removeChild();
+          useTransferData(
+            selectToi.data,
+            appendPosition,
+            selectToi.selectedBoxData,
+            currDrag,
+            closestTarget
+          ).appendCanvasAbove();
+        }
+
         //if atas dropzone lain append atas sekali dulu
+
+        if (
+          closest &&
+          closest.dataset.id !== parentId &&
+          closest.dataset.id !== currDrag
+        ) {
+          useTransferData(
+            selectToi.data,
+            "",
+            selectToi.selectedBoxData,
+            currDrag,
+            closestTarget
+          ).removeChild();
+          useTransferData(
+            selectToi.data,
+            "",
+            selectToi.selectedBoxData,
+            currDrag,
+            closestTarget
+          ).appendToCanvas();
+        }
       }
 
       function mouseup() {

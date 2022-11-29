@@ -78,5 +78,18 @@ export default function (arr, dropzone, data, currDragId, closestTarget) {
       }
     });
   }
-  return { appendChild, appendBefore, appendAfter, removeChild };
+  function appendCanvasAbove() {
+    arr.splice(arr.findIndex(({ id }) => id === dropzone) + 1, 0, data);
+  }
+  function appendToCanvas() {
+    arr.push(data);
+  }
+  return {
+    appendChild,
+    appendBefore,
+    appendAfter,
+    removeChild,
+    appendCanvasAbove,
+    appendToCanvas,
+  };
 }
