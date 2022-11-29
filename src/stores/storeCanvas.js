@@ -238,6 +238,7 @@ export const storeCanvas = defineStore({
       this.prevY = prevY;
       let parentElement = currDragElement.parentElement;
       let parentId = currDragElement.parentElement.dataset.id;
+      let prevOpacity = currDragElement.style.opacity;
 
       window.addEventListener("mousemove", mousemove);
       window.addEventListener("mouseup", mouseup);
@@ -253,6 +254,9 @@ export const storeCanvas = defineStore({
         if (closest && closest.dataset.id === parentId) {
           closestTarget = useGetClosestDroppableId(e);
           rulerSnap.show = false;
+          currDragElement.style.opacity = prevOpacity;
+          showMarker.value = false;
+          selectToi.treeHoverSize = 1;
 
           if (
             [...parentElement.children].findIndex(
@@ -362,6 +366,9 @@ export const storeCanvas = defineStore({
 
         if (!closest || !useGetElementIdFromPoint(e)) {
           let appendPosition = useGetRootId(parentId);
+          currDragElement.style.opacity = prevOpacity;
+          showMarker.value = false;
+          selectToi.treeHoverSize = 1;
 
           useTransferData(
             selectToi.data,
@@ -401,6 +408,8 @@ export const storeCanvas = defineStore({
           closest.dataset.id !== currDrag
         ) {
           closestTarget = useGetClosestDroppableId(e);
+          currDragElement = document.querySelector(`[data-id=${currDrag}]`);
+
           useTransferData(
             selectToi.data,
             "",
