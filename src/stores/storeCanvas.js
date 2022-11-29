@@ -223,6 +223,7 @@ export const storeCanvas = defineStore({
       const selectToi = useCounterStore();
       const canvasStore = storeCanvas();
       const canvasFF = useCanvasFF();
+      const rulerSnap = useRulerSnapStore();
 
       selectToi.changeSelected(e, currDrag);
       this.currDrag = currDrag;
@@ -379,6 +380,13 @@ export const storeCanvas = defineStore({
           selectToi.selectedBoxData.attr.style.position = "absolute";
           canvasStore.setLeftPosition(e);
           canvasStore.setTopPosition(e);
+          rulerSnap.prevX = prevX;
+          rulerSnap.prevY = prevY;
+          rulerSnap.on = true;
+          rulerSnap.setRulerSnap(e, currDrag);
+          Promise.resolve().then(() => {
+            rulerSnap.setSiblingsPoints(currDrag);
+          });
         }
 
         //if atas dropzone lain append atas sekali dulu
