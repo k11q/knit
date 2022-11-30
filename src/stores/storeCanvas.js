@@ -429,7 +429,7 @@ export const storeCanvas = defineStore({
 
         //kalau keluar and no closest append slice atas currdropzone
 
-        if (!closest || !useGetElementIdFromPoint(e)) {
+        if (!closest) {
           canvasStore.showSolidOutline = false;
           canvasStore.showGhostOutline = false;
           currDragElement.style.opacity = prevOpacity;
@@ -591,9 +591,6 @@ export const storeCanvas = defineStore({
         rulerSnap.show = false;
         window.removeEventListener("mousemove", mousemove);
         window.removeEventListener("mouseup", mouseup);
-
-        console.log(selectToi.selectedBox);
-        console.log(selectToi.selectedTextEditor);
 
         setTimeout(() => {
           canvasFF.isDragging = false;
