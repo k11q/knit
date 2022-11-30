@@ -5,7 +5,11 @@
       :data-droppable="node.type === 'text' ? null : true"
       :data-id="node.id"
       :data-component="node.type"
-      @mousedown.stop="testDown($event, node.id, node.type)"
+      @mousedown.stop="
+        node.type === 'text' && selectToi.selectedTextEditor === node.id
+          ? ''
+          : testDown($event, node.id, node.type)
+      "
       @mouseout="
         () => {
           selectToi.treeHover = false;
@@ -41,7 +45,9 @@
           selectToi.selectedBox === node.id &&
           canvasFF.isDragging &&
           (node.type !== 'text' ||
-            (node.type === 'text' && canvasFF.isDragging)),
+            (node.type === 'text' &&
+              canvasFF.isDragging &&
+              selectToi.selectedTextEditor !== node.id)),
         '!hidden': node.display && node.display === 'hide',
       }"
       v-bind="node.attr"

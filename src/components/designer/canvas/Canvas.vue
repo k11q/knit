@@ -144,7 +144,7 @@
         v-show="selectStore.showSelect"
         class="absolute pointer-events-none"
         :style="{
-          willChange: 'left, top, height, width',
+          willChange: 'left, top, height, width, border',
           left: selectStore.X + 'px',
           top: selectStore.Y + 'px',
           height: selectStore.height + 'px',
