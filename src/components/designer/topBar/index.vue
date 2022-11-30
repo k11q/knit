@@ -79,7 +79,7 @@
     </div>
     <div class="flex flex-row px-2 gap-5 items-center justify-end w-60">
       <div
-        class="flex items-center justify-center rounded-full aspect-square h-6 overflow-clip"
+        class="flex items-center justify-center rounded-full w-6 h-6 overflow-clip"
       >
         <img :src="user?.user_metadata.avatar_url" />
       </div>
