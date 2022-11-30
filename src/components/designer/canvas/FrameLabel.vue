@@ -2,6 +2,7 @@
   <template v-for="frame in frames">
     <div
       :style="{
+        willChange: 'left, top',
         left: frame.attr?.style?.left
           ? (parseInt(frame.attr?.style?.left) +
               squareStore.offsetLeft / squareStore.scale) *
