@@ -2,7 +2,9 @@
   <template v-for="node in nodes" :key="node.id">
     <component
       :is="node.type === 'text' || node.type === 'box' ? 'div' : node.type"
-      :data-droppable="node.type === 'text' ? null : true"
+      :data-droppable="
+        node.type === 'text' || node.type === 'box' ? null : true
+      "
       :data-id="node.id"
       :data-component="node.type"
       @mousedown.stop="
