@@ -91,7 +91,14 @@ export const storeCanvas = defineStore({
           e.preventDefault();
           e.stopPropagation();
 
-          rulerSnap.on = true;
+          console.log("movementX = " + e.movementX);
+          console.log("movementY = " + e.movementY);
+          if (Math.abs(e.movementX) < 10 && Math.abs(e.movementX) < 10) {
+            rulerSnap.on = true;
+          } else if (Math.abs(e.movementX) > 10 || Math.abs(e.movementX) > 10) {
+            rulerSnap.on = false;
+          }
+
           rulerSnap.setRulerSnap(e, currDrag);
           canvasFF.isDragging = true;
           isDragging = true;
@@ -112,11 +119,15 @@ export const storeCanvas = defineStore({
               selectToi.selectedBox === closestTarget ||
               currDragElement.parentElement === closest
             ) {
-              rulerSnap.on = true;
+              if (Math.abs(e.movementX) < 10 && Math.abs(e.movementX) < 10) {
+                rulerSnap.on = true;
+              }
               selectToi.treeHover = false;
               currDragElement.style.opacity = prevOpacity;
             } else {
-              rulerSnap.on = false;
+              if (Math.abs(e.movementX) > 10 || Math.abs(e.movementX) > 10) {
+                rulerSnap.on = false;
+              }
               showMarker.value = true;
               dropMarker.setMarker(e, currDragElement);
               currDragElement.style.opacity = 0;
@@ -454,7 +465,11 @@ export const storeCanvas = defineStore({
           selectToi.selectedBoxData.attr.style.position = "absolute";
           rulerSnap.prevX = prevX;
           rulerSnap.prevY = prevY;
-          rulerSnap.on = true;
+          if (Math.abs(e.movementX) < 10 && Math.abs(e.movementX) < 10) {
+            rulerSnap.on = true;
+          } else if (Math.abs(e.movementX) > 10 || Math.abs(e.movementX) > 10) {
+            rulerSnap.on = false;
+          }
           rulerSnap.setRulerSnap(e, currDrag);
         }
 
