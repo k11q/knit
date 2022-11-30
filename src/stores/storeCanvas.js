@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { useSquareStore } from "./dataSquare";
 import { useCounterStore } from "./counter";
 import { useCanvasDndStore } from "@/stores/canvasDnd";
-import { useCanvasFF } from "@/stores/canvasFreeForm";
+import { useCanvasFF } from "~~/src/stores/canvasFreeForm";
 import { useDropMarker } from "@/stores/dropMarker";
 import { usePaddingResizeStore } from "@/stores/paddingResizeStore";
 import { useRulerSnapStore } from "@/stores/rulerSnap";
