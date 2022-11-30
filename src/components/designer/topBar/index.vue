@@ -74,6 +74,48 @@
         <UIIcon name="text" :size="17" />
       </div>
     </div>
+    <div class="flex items-center justify-center">
+      <p>{{ route.params.id }}</p>
+    </div>
+    <div class="flex flex-row px-2 gap-5 items-center justify-end">
+      <div>
+        <NuxtLink
+          :to="`/p/${route.params.id}/${selectToi.selectedBoxData.name}/preview`"
+        >
+          <div
+            class="flex items-center justify-center text-center cursor-default hover:bg-[#232323] h-8 aspect-square"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="17"
+              height="17"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          </div>
+        </NuxtLink>
+      </div>
+      <div class="flex items-center justify-center">
+        <NuxtLink
+          :to="`http://${route.params.id}.localhost:3000/${selectToi.selectedBoxData.name}`"
+        >
+          <button
+            class="bg-[#0191FA] px-2 py-1 text-[#EDEDED] rounded-md border-none"
+          >
+            Deploy
+          </button>
+        </NuxtLink>
+      </div>
+      <div class="flex items-center justify-center w-11">
+        <p>{{ `${(addaSquare.scale * 100).toFixed(2)}` }}%</p>
+      </div>
+    </div>
   </div>
 </template>
 

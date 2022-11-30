@@ -4,6 +4,7 @@
     :style="{ backgroundColor: selectToi.canvas[0].bgColor }"
   >
     <DesignerCanvas />
+    <DesignerTopBar />
     <div class="flex flex-row justify-between">
       <DesignerLeftSidePanel />
       <DesignerRightSidePanel />
