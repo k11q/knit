@@ -2,8 +2,16 @@
   <template v-for="frame in frames">
     <div
       :style="{
-        left: useGetElementRect(frame.id)?.x + 'px',
-        top: useGetElementRect(frame.id)?.y + 'px',
+        left: frame.attr?.style?.left
+          ? (parseInt(frame.attr?.style?.left) + squareStore.offsetLeft) /
+              squareStore.scale +
+            'px'
+          : useGetElementRect(frame.id)?.x + 'px',
+        top: frame.attr?.style?.top
+          ? (parseInt(frame.attr?.style?.top) + squareStore.offsetTop) /
+              squareStore.scale +
+            'px'
+          : useGetElementRect(frame.id)?.y + 'px',
       }"
       class="h-1 w-1 fixed overflow-visible -mt-5 will-change-transform pointer-events-auto cursor-default hover:text-[#6EB0E0] hover:opacity-100"
       :class="{
@@ -36,10 +44,12 @@
 
 <script setup>
 import { useCounterStore } from "@/stores/counter";
+import { useSquareStore } from "@/stores/dataSquare";
 import { storeCanvas } from "@/stores/storeCanvas";
 import { useCanvasFF } from "@/stores/canvasFreeForm";
 
 const selectToi = useCounterStore();
+const squareStore = useSquareStore();
 const canvasStore = storeCanvas();
 const canvasFF = useCanvasFF();
 

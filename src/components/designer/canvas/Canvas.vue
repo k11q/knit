@@ -263,7 +263,7 @@
       class="absolute inset-0 overflow-visible pointer-events-none"
     >
       <DesignerCanvasFrameLabel
-        :frames="selectToi.data.filter((i) => i.type === 'div')"
+        :frames="selectToi.data?.filter((i) => i.type === 'div')"
       />
     </div>
     <!--NEW Ruler element-->
