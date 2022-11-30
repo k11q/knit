@@ -8,7 +8,6 @@ export const useCounterStore = defineStore({
   state: () => ({
     selectedBox: "",
     dragDisplay: "",
-    blueLine: "",
     selectedBoxData: [],
     selectedBoxHTMLX: NaN,
     selectedBoxHTMLY: NaN,
@@ -24,13 +23,6 @@ export const useCounterStore = defineStore({
     treeHoverHTMLWidth: NaN,
     treeHoverHTMLHeight: NaN,
     treeHoverSize: 1,
-    newSquare: false,
-    dataTransfer: null,
-    showTextEditor: false,
-    returnedElementData: "",
-    resizeObserverRect: {},
-    resizeObserverTarget: {},
-    resizeObserverTargetRect: {},
     canvas: [
       {
         id: "Page 1",
@@ -520,10 +512,8 @@ export const useCounterStore = defineStore({
         children: [],
       },
     ],
-    cssData: "",
   }),
   actions: {
-    //get data from id
     getChildElement(arr, value) {
       arr.every((i) => {
         if (i.id === value) {
@@ -533,7 +523,6 @@ export const useCounterStore = defineStore({
           this.getChildElement(i.children, value);
           return true;
         }
-        return false;
       });
     },
     changeAlign(value) {

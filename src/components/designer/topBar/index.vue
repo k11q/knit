@@ -77,7 +77,7 @@
     <div class="flex items-center justify-center">
       <p>{{ route.params.id }}</p>
     </div>
-    <div class="flex flex-row px-2 gap-5 items-center justify-end w-60">
+    <div class="flex flex-row px-2 gap-3 items-center justify-end w-60">
       <div
         class="flex items-center justify-center rounded-full w-6 h-6 overflow-clip"
       >
@@ -119,7 +119,7 @@
           </button>
         </NuxtLink>
       </div>
-      <div class="flex items-center justify-center w-11">
+      <div class="flex items-center justify-center w-12">
         <p>{{ `${(addaSquare.scale * 100).toFixed(2)}` }}%</p>
       </div>
     </div>
