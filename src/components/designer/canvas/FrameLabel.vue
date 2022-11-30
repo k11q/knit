@@ -3,12 +3,14 @@
     <div
       :style="{
         left: frame.attr?.style?.left
-          ? (parseInt(frame.attr?.style?.left) + squareStore.offsetLeft) /
+          ? (parseInt(frame.attr?.style?.left) +
+              squareStore.offsetLeft / squareStore.scale) *
               squareStore.scale +
             'px'
           : useGetElementRect(frame.id)?.x + 'px',
         top: frame.attr?.style?.top
-          ? (parseInt(frame.attr?.style?.top) + squareStore.offsetTop) /
+          ? (parseInt(frame.attr?.style?.top) +
+              squareStore.offsetTop / squareStore.scale) *
               squareStore.scale +
             'px'
           : useGetElementRect(frame.id)?.y + 'px',
