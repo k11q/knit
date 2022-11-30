@@ -182,8 +182,6 @@
 
 <script setup>
 import { useCounterStore } from "@/stores/counter";
-import { useRightPanelStore } from "@/stores/rightPanelStore";
 
 const selectToi = useCounterStore();
-const rightPanelStore = useRightPanelStore();
 </script>

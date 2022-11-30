@@ -522,14 +522,6 @@ export const useCounterStore = defineStore({
     ],
     cssData: "",
   }),
-  getters: {
-    selectedBoxHeight() {
-      return parseInt(this.selectedBoxData.attr?.style.height, 10);
-    },
-    selectedBoxWidth() {
-      return parseInt(this.selectedBoxData.attr?.style.width, 10);
-    },
-  },
   actions: {
     //get data from id
     getChildElement(arr, value) {
@@ -544,46 +536,12 @@ export const useCounterStore = defineStore({
         return false;
       });
     },
-    //remove from parent
-    dndRemove(arr, value) {
-      arr.every((i) => {
-        if (i.id === value) {
-          arr.splice(
-            arr.findIndex(({ id }) => id == value),
-            1
-          );
-          return false;
-        } else {
-          this.dndRemove(i.children, value);
-          return true;
-        }
-      });
-    },
-    //append to an element
-    dndAppend(arr, value, place) {
-      arr.every((i) => {
-        if (i.id === place) {
-          arr.splice(
-            arr.findIndex(({ id }) => id == place),
-            0,
-            value
-          );
-          return false;
-        } else {
-          this.dndAppend(i.children, value, place);
-          return true;
-        }
-      });
-    },
     changeAlign(value) {
       this.selectedBoxData.attr.style.alignItems = value;
       console.log("changed align! to " + value);
     },
     changeJustify(value) {
       this.selectedBoxData.attr.style.justifyContent = value;
-    },
-    addSquare(dataSquare) {
-      this.data.push(dataSquare);
     },
     changeSelected(e, id, type) {
       const squareStore = useSquareStore();
@@ -612,19 +570,6 @@ export const useCounterStore = defineStore({
         this.prevY = e.layerY;
       }
     },
-    changeSelectedNewlyAdded(e, newData) {
-      this.prevX = e.layerX;
-      this.prevY = e.layerY;
-
-      Promise.resolve().then(() => {
-        this.selectedBox = newData.id;
-      });
-
-      if (e.target) {
-        this.getChildElement(this.data, newData.id);
-      }
-    },
-
     clearSelected() {
       if (this.selectedTextEditor) {
         useSetOutlineSelector(this.selectedTextEditor);
@@ -634,42 +579,6 @@ export const useCounterStore = defineStore({
         this.selectedBox = "";
         canvasDnd.currDrag = "";
         canvasDnd.currDragValue = "";
-      }
-    },
-    changeColor(e) {
-      this.data.find((x) => x.id === this.selectedBox).color = e;
-    },
-    formatData(arr, value) {
-      arr.forEach((i) => {
-        if (i.id === value) {
-          i.children = [...i.children, this.dataTransfer];
-          console.log(value);
-        } else {
-          formatData(i.children, value);
-          console.log("roundtrip");
-        }
-      });
-    },
-    changeHeight(e) {
-      this.data.find((x) => x.id === this.selectedBox).height = e;
-      return selectedBoxHeight;
-    },
-    changeWidth(e) {
-      this.data.find((x) => x.id === this.selectedBox).width = e.target.value;
-      return selectedBoxWidth;
-    },
-    changePositionX(e) {
-      this.data.find((x) => x.id === this.selectedBox).width = e.target.value;
-      return selectedBoxWidth;
-    },
-    getHeight(id) {
-      return document.querySelector(`[data-id=${id}]`).clientHeight;
-    },
-    getWidth(width, unit) {
-      if (width) {
-        return width + unit;
-      } else {
-        return "auto";
       }
     },
     getLeft(id) {
@@ -695,31 +604,6 @@ export const useCounterStore = defineStore({
       let targetParentRect = targetParent.getBoundingClientRect();
       let top = (targetRect.y - targetParentRect.y) / squareStore.scale + "px";
       return top;
-    },
-    getAlign(align) {
-      if (align) {
-        return align;
-      } else {
-        return "start";
-      }
-    },
-    getJustify(justify) {
-      if (justify) {
-        return justify;
-      } else {
-        return "start";
-      }
-    },
-    findElement(arr, value) {
-      arr.every((i) => {
-        if (i.id === value) {
-          this.returnedElementData = i;
-          return false;
-        } else {
-          this.findElement(i.children, value);
-          return true;
-        }
-      });
     },
   },
 });

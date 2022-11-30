@@ -383,14 +383,18 @@
           }"
         >
           {{
-            selectToi.selectedBoxWidth
-              ? Math.round(selectToi.selectedBoxWidth)
+            selectToi.selectedBoxData.attr?.style.height
+              ? Math.round(
+                  parseInt(selectToi.selectedBoxData.attr?.style.height)
+                )
               : "Fill"
           }}
           x
           {{
-            selectToi.selectedBoxHeight
-              ? Math.round(selectToi.selectedBoxHeight)
+            selectToi.selectedBoxData.attr?.style.width
+              ? Math.round(
+                  parseInt(selectToi.selectedBoxData.attr?.style.width)
+                )
               : "Fill"
           }}
         </span>

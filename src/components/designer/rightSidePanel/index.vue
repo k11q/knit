@@ -46,12 +46,10 @@
 import { useSquareStore } from "@/stores/dataSquare";
 import { useCanvasFF } from "~~/src/stores/canvasFreeForm";
 import { useCounterStore } from "@/stores/counter";
-import { useRightPanelStore } from "@/stores/rightPanelStore";
 
 let activeTab = ref("style");
 
 const selectToi = useCounterStore();
-const rightPanelStore = useRightPanelStore();
 const route = useRoute();
 const addaSquare = useSquareStore();
 const canvasFF = useCanvasFF();
