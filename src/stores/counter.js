@@ -34,7 +34,7 @@ export const useCounterStore = defineStore({
     canvas: [
       {
         id: "Page 1",
-        bgColor: "#1C1C1C",
+        bgColor: "#0F0F11",
         children: [
           {
             id: "rectangle",
@@ -288,8 +288,8 @@ export const useCounterStore = defineStore({
           },
         ],
       },
-      { id: "Page 2", bgColor: "#232323", children: [] },
-      { id: "Page 3", bgColor: "#232323", children: [] },
+      { id: "Page 2", bgColor: "#0F0F11", children: [] },
+      { id: "Page 3", bgColor: "#0F0F11", children: [] },
     ],
     data: [
       {

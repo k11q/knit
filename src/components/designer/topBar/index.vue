@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-14 border-b flex flex-row flex-none justify-between z-10 bg-[#232323] border-[#303030] p-2 border-r"
+    class="h-14 border-b flex flex-row flex-none justify-between z-10 bg-[#18181A] border-[#040407] p-2 border-r"
   >
     <div class="flex flex-row gap-2 w-60">
       <NuxtLink
@@ -113,7 +113,7 @@
           :to="`http://${route.params.id}.localhost:3000/${selectToi.selectedBoxData.name}`"
         >
           <button
-            class="bg-[#0191FA] px-2 py-1 text-[#EDEDED] rounded-md border-none"
+            class="bg-[#0191FA] px-2 py-1 text-[#EFEEF1] rounded-md border-none"
           >
             Deploy
           </button>

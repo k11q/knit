@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col h-screen overflow-hidden max-h-screen min-h-screen text-xs text-[#EDEDED]"
+    class="flex flex-col h-screen overflow-hidden max-h-screen min-h-screen text-xs text-[#EFEEF1]"
     :style="{ backgroundColor: selectToi.canvas[0].bgColor }"
   >
     <DesignerCanvas />

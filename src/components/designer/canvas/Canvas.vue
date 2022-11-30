@@ -182,7 +182,7 @@
             :style="{ marginTop: `${(8 * 1) / addaSquare.scale}px` }"
           >
             <span
-              class="bg-[#0191FA] text-[#EDEDED] cursor-default whitespace-nowrap"
+              class="bg-[#0191FA] text-[#EFEEF1] cursor-default whitespace-nowrap"
               :style="{
                 fontSize: `${(11 * 1) / addaSquare.scale}px`,
                 lineHeight: 1.5,
@@ -224,19 +224,19 @@
           />
 
           <div
-            class="absolute -top-1 -left-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nwse-resize"
+            class="absolute -top-1 -left-1 h-2 w-2 bg-[#EFEEF1] border-[#0191FA] border hover:cursor-nwse-resize"
             :style="{ transform: `scale( ${1 / addaSquare.scale})` }"
           />
           <div
-            class="absolute -top-1 -right-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nesw-resize"
+            class="absolute -top-1 -right-1 h-2 w-2 bg-[#EFEEF1] border-[#0191FA] border hover:cursor-nesw-resize"
             :style="{ transform: `scale( ${1 / addaSquare.scale})` }"
           />
           <div
-            class="absolute -bottom-1 -right-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nwse-resize"
+            class="absolute -bottom-1 -right-1 h-2 w-2 bg-[#EFEEF1] border-[#0191FA] border hover:cursor-nwse-resize"
             :style="{ transform: `scale( ${1 / addaSquare.scale})` }"
           />
           <div
-            class="absolute -bottom-1 -left-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nesw-resize"
+            class="absolute -bottom-1 -left-1 h-2 w-2 bg-[#EFEEF1] border-[#0191FA] border hover:cursor-nesw-resize"
             :style="{ transform: `scale( ${1 / addaSquare.scale})` }"
           />
         </div>

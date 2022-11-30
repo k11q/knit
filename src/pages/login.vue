@@ -28,28 +28,28 @@ const emailLogin = async () => {
 </script>
 <template>
   <div
-    class="bg-[#181818] min-h-screen flex items-center justify-center text-xs text-[#EDEDED]"
+    class="bg-[#181818] min-h-screen flex items-center justify-center text-xs text-[#EFEEF1]"
   >
     <div
-      class="rounded-md p-8 bg-[#1F1F1F] gap-8 flex flex-col w-[500px] border-[#2A2A2A] border"
+      class="rounded-md p-8 bg-[#1F1F23] gap-8 flex flex-col w-[500px] border-[#040407] border"
     >
       <div class="flex flex-col w-full gap-3">
         <p class="text-[#E0E0E0]">Log in with</p>
         <div class="flex flex-col gap-2">
           <button
-            class="px-4 py-[10px] bg-[#2A2A2A] rounded-md font-medium text-[13px]"
+            class="px-4 py-[10px] bg-[#414045] rounded-md font-medium text-[13px]"
             @click="login('google')"
           >
             Login with Google
           </button>
           <button
-            class="px-4 py-[10px] bg-[#2A2A2A] rounded-md font-medium text-[13px]"
+            class="px-4 py-[10px] bg-[#414045] rounded-md font-medium text-[13px]"
             @click="login('facebook')"
           >
             Login with Facebook
           </button>
           <button
-            class="px-4 py-[10px] bg-[#2A2A2A] rounded-md font-medium text-[13px]"
+            class="px-4 py-[10px] bg-[#414045] rounded-md font-medium text-[13px]"
             @click="login('github')"
           >
             Login with Github
@@ -64,7 +64,7 @@ const emailLogin = async () => {
               type="email"
               required
               id="email"
-              class="bg-[#1F1F1F] border border-[#444444] pl-4 py-[10px] rounded-md w-full autofill:bg-[#1F1F1F] focus:outline-[#47CE90]"
+              class="bg-[#1F1F23] border border-[#444444] pl-4 py-[10px] rounded-md w-full autofill:bg-[#1F1F23] focus:outline-[#47CE90]"
               v-model="email"
             />
           </div>
@@ -74,7 +74,7 @@ const emailLogin = async () => {
               type="password"
               required
               id="password"
-              class="bg-[#1F1F1F] border border-[#444444] pl-4 py-[10px] rounded-md w-full autofill:bg-[#1F1F1F] focus:outline-[#47CE90]"
+              class="bg-[#1F1F23] border border-[#444444] pl-4 py-[10px] rounded-md w-full autofill:bg-[#1F1F23] focus:outline-[#47CE90]"
               v-model="password"
             />
           </div>
@@ -85,7 +85,7 @@ const emailLogin = async () => {
                 id="terms"
                 name="vehicle1"
                 value="Bike"
-                class="appearance-none rounded-md w-4 h-4 accent-[#47CE90] bg-[#1F1F1F] border border-[#444444]"
+                class="appearance-none rounded-md w-4 h-4 accent-[#47CE90] bg-[#1F1F23] border border-[#444444]"
               />
               <label for="vehicle1" class="text-[#E0E0E0]"> Remember me</label>
             </div>

@@ -1,7 +1,7 @@
 <template>
-  <aside class="flex flex-row flex-none bg-[#232323] z-10">
+  <aside class="flex flex-row flex-none bg-[#18181A] z-10">
     <div
-      class="w-14 border-r border-[#303030] p-2 gap-2 flex flex-col flex-none"
+      class="w-14 border-r border-[#040407] p-2 gap-2 flex flex-col flex-none"
     >
       <!--navigator/layers-->
       <div
@@ -227,7 +227,7 @@
       </div>
     </div>
     <div
-      class="border-r w-60 flex flex-col flex-none h-screen overflow-x-hidden pb-16 z-10 border-[#303030]"
+      class="border-r w-60 flex flex-col flex-none h-screen overflow-x-hidden pb-16 z-10 border-[#040407]"
     >
       <!--layers tab content -->
       <DesignerLeftSidePanelTabsAddElement v-if="activeTab === 'addElement'" />

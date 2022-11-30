@@ -45,7 +45,7 @@
           paddingResize.showPaddingResizer ||
           (paddingResize.currentResizing && !resizeStore.isResizing)
         "
-        class="absolute top-0 left-0 bg-[#EDEDED] rounded-full border-[#0191FA]"
+        class="absolute top-0 left-0 bg-[#EFEEF1] rounded-full border-[#0191FA]"
         :style="{
           marginTop: `${
             (8 +
@@ -75,7 +75,7 @@
           paddingResize.showPaddingResizer ||
           (paddingResize.currentResizing && !resizeStore.isResizing)
         "
-        class="absolute top-0 right-0 bg-[#EDEDED] rounded-full border-[#0191FA]"
+        class="absolute top-0 right-0 bg-[#EFEEF1] rounded-full border-[#0191FA]"
         :style="{
           marginTop: `${
             (8 +
@@ -105,7 +105,7 @@
           paddingResize.showPaddingResizer ||
           (paddingResize.currentResizing && !resizeStore.isResizing)
         "
-        class="absolute bottom-0 left-0 bg-[#EDEDED] rounded-full border-[#0191FA]"
+        class="absolute bottom-0 left-0 bg-[#EFEEF1] rounded-full border-[#0191FA]"
         :style="{
           marginBottom: `${
             (8 +
@@ -135,7 +135,7 @@
           paddingResize.showPaddingResizer ||
           (paddingResize.currentResizing && !resizeStore.isResizing)
         "
-        class="absolute bottom-0 right-0 bg-[#EDEDED] rounded-full border-[#0191FA]"
+        class="absolute bottom-0 right-0 bg-[#EFEEF1] rounded-full border-[#0191FA]"
         :style="{
           marginBottom: `${
             (8 +
@@ -370,7 +370,7 @@
         :style="{ marginTop: `${(10 * 1) / addaSquare.scale}px` }"
       >
         <span
-          class="bg-[#0191FA] text-[#EDEDED] cursor-default whitespace-nowrap font-medium"
+          class="bg-[#0191FA] text-[#EFEEF1] cursor-default whitespace-nowrap font-medium"
           :style="{
             fontSize: `${(11 * 1) / addaSquare.scale}px`,
             lineHeight: 1.1,
@@ -421,22 +421,22 @@
       />
       <div
         @mousedown.stop.prevent="resizeStore.resizeTopLeft"
-        class="absolute -top-1 -left-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nwse-resize"
+        class="absolute -top-1 -left-1 h-2 w-2 bg-[#EFEEF1] border-[#0191FA] border hover:cursor-nwse-resize"
         :style="{ transform: `scale( ${1 / addaSquare.scale})` }"
       />
       <div
         @mousedown.stop.prevent="resizeStore.resizeTopRight"
-        class="absolute -top-1 -right-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nesw-resize"
+        class="absolute -top-1 -right-1 h-2 w-2 bg-[#EFEEF1] border-[#0191FA] border hover:cursor-nesw-resize"
         :style="{ transform: `scale( ${1 / addaSquare.scale})` }"
       />
       <div
         @mousedown.stop.prevent="resizeStore.resizeBottomRight"
-        class="absolute -bottom-1 -right-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nwse-resize"
+        class="absolute -bottom-1 -right-1 h-2 w-2 bg-[#EFEEF1] border-[#0191FA] border hover:cursor-nwse-resize"
         :style="{ transform: `scale( ${1 / addaSquare.scale})` }"
       />
       <div
         @mousedown.stop.prevent="resizeStore.resizeBottomLeft"
-        class="absolute -bottom-1 -left-1 h-2 w-2 bg-[#EDEDED] border-[#0191FA] border hover:cursor-nesw-resize"
+        class="absolute -bottom-1 -left-1 h-2 w-2 bg-[#EFEEF1] border-[#0191FA] border hover:cursor-nesw-resize"
         :style="{ transform: `scale( ${1 / addaSquare.scale})` }"
       />
     </div>

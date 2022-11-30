@@ -1,11 +1,11 @@
 <template>
   <div class="flex flex-col w-full">
     <DashboardTopBar />
-    <div class="px-8 py-4 border-b border-[#303030]">Recently viewed</div>
+    <div class="px-8 py-4 border-b border-[#040407]">Recently viewed</div>
     <div class="flex flex-col px-8 py-6 gap-6 overflow-scroll">
       <div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-8">
         <div
-          class="flex flex-row gap-4 border py-3 px-4 rounded-md items-center bg-[#2A2A2A] border-[#2A2A2A] hover:border-[#505050] hover:bg-[#343434] transition-all duration-300"
+          class="flex flex-row gap-4 border py-3 px-4 rounded-md items-center bg-[#414045] border-[#040407] hover:border-[#505050] hover:bg-[#343434] transition-all duration-300"
         >
           <svg
             class="opacity-80"
@@ -30,7 +30,7 @@
           </div>
         </div>
         <div
-          class="flex flex-row gap-4 border py-3 px-4 rounded-md items-center bg-[#2A2A2A] border-[#2A2A2A] hover:border-[#505050] hover:bg-[#343434] transition-all duration-300"
+          class="flex flex-row gap-4 border py-3 px-4 rounded-md items-center bg-[#414045] border-[#040407] hover:border-[#505050] hover:bg-[#343434] transition-all duration-300"
         >
           <svg
             class="opacity-80"
@@ -55,7 +55,7 @@
           </div>
         </div>
         <div
-          class="flex flex-row gap-4 border py-3 px-4 rounded-md items-center bg-[#2A2A2A] border-[#2A2A2A] hover:border-[#505050] hover:bg-[#343434] transition-all duration-300"
+          class="flex flex-row gap-4 border py-3 px-4 rounded-md items-center bg-[#414045] border-[#040407] hover:border-[#505050] hover:bg-[#343434] transition-all duration-300"
         >
           <svg
             class="opacity-80"
@@ -107,7 +107,7 @@
           </select>
           <div class="flex flex-row gap-2 ml-4">
             <div
-              class="flex items-center justify-center h-6 aspect-square rounded-sm hover:bg-[#2A2A2A]"
+              class="flex items-center justify-center h-6 aspect-square rounded-sm hover:bg-[#414045]"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -127,7 +127,7 @@
               </svg>
             </div>
             <div
-              class="flex items-center justify-center h-6 aspect-square rounded-sm hover:bg-[#2A2A2A]"
+              class="flex items-center justify-center h-6 aspect-square rounded-sm hover:bg-[#414045]"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -152,9 +152,9 @@
         <template v-for="project in projects">
           <NuxtLink :to="`/p/${project.id}`" class="cursor-default">
             <div
-              class="border aspect-[4/3] flex flex-col rounded-md border-[#2A2A2A] bg-[#2A2A2A] overflow-clip hover:border-[#505050] hover:bg-[#343434] transition-all duration-300"
+              class="border aspect-[4/3] flex flex-col rounded-md border-[#040407] bg-[#414045] overflow-clip hover:border-[#505050] hover:bg-[#343434] transition-all duration-300"
             >
-              <div class="flex-1 bg-[#1F1F1F]"></div>
+              <div class="flex-1 bg-[#1F1F23]"></div>
               <div class="flex flex-row gap-4 py-3 px-4 items-center">
                 <svg
                   class="opacity-80"

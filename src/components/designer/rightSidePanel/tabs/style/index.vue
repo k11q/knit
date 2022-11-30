@@ -3,19 +3,19 @@
     <!-- selector section! -->
     <div
       v-show="selectToi.selectedBox"
-      class="flex flex-col border-b pb-2 border-[#303030]"
+      class="flex flex-col border-b pb-2 border-[#040407]"
     >
       <div class="flex flex-row px-4 py-1 items-center justify-start gap-2">
         <div class="flex flex-row flex-wrap rounded">
           <div
-            class="h-6 px-3 py-1 bg-[#262626] rounded-full border border-[#303030] text-[11px] flex items-center"
+            class="h-6 px-3 py-1 bg-[#262626] rounded-full border border-[#040407] text-[11px] flex items-center"
           >
             <span>{{ selectToi.selectedBoxData.name }}</span>
           </div>
         </div>
         <div class="flex flex-row flex-wrap rounded">
           <div
-            class="h-6 aspect-square bg-[#262626] rounded-full border border-[#303030] text-[11px] flex items-center justify-center"
+            class="h-6 aspect-square bg-[#262626] rounded-full border border-[#040407] text-[11px] flex items-center justify-center"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +38,7 @@
     <!-- Background color  section! -->
     <div
       v-show="!selectToi.selectedBox"
-      class="flex flex-col gap-4 border-b py-4 px-4 border-[#303030]"
+      class="flex flex-col gap-4 border-b py-4 px-4 border-[#040407]"
     >
       <p class="font-medium">Background</p>
       <div class="flex flex-row gap-3 flex-none justify-between w-full">
@@ -95,7 +95,7 @@
     <!--Dimensions section-->
     <div
       v-show="selectToi.selectedBox"
-      class="flex flex-col pt-2 pb-4 border-[#303030]"
+      class="flex flex-col pt-2 pb-4 border-[#040407]"
     >
       <div class="h-8 flex flex-row justify-between items-center pl-4 pr-2">
         <p class="font-medium">Dimensions</p>
@@ -659,7 +659,7 @@
       v-show="
         selectToi.selectedBoxData.type !== 'text' && selectToi.selectedBox
       "
-      class="flex flex-col pt-2 pb-3 border-[#303030] border-t"
+      class="flex flex-col pt-2 pb-3 border-[#040407] border-t"
     >
       <div
         class="h-8 pl-4 pr-2 mb-2 justify-between items-center grid grid-cols-7"
@@ -2148,7 +2148,7 @@
       </div>
     </div>
     <!-- Layout section2! padding n margin 
-          <div v-show="selectToi.selectedBox" class="flex flex-col gap-4 border-b pt-4 pb-4 border-[#303030]">
+          <div v-show="selectToi.selectedBox" class="flex flex-col gap-4 border-b pt-4 pb-4 border-[#040407]">
             <div class="flex flex-col flex-none justify-between mx-4 border border-gray-300 rounded-xl">
               <div class="flex flex-row w-full">
                 <div class="w-1/5 border-b border-gray-300 h-8 skew-y-[30deg] translate-y-[-10px] translate-x-[-1px]"></div>
@@ -2216,7 +2216,7 @@
       v-show="
         selectToi.selectedBoxData.type !== 'text' && selectToi.selectedBox
       "
-      class="flex flex-col border-y pt-2 pb-3 border-[#303030]"
+      class="flex flex-col border-y pt-2 pb-3 border-[#040407]"
     >
       <div class="flex flex-row justify-between items-center h-8 pl-4 pr-2">
         <p class="font-medium">Layer</p>
@@ -2310,7 +2310,7 @@
       v-show="
         selectToi.selectedBoxData.type !== 'text' && selectToi.selectedBox
       "
-      class="flex flex-col border-b pt-2 pb-3 border-[#303030]"
+      class="flex flex-col border-b pt-2 pb-3 border-[#040407]"
     >
       <div class="flex flex-row justify-between items-center h-8 pl-4 pr-2">
         <p class="font-medium">Fill</p>
@@ -2420,7 +2420,7 @@
         useGetElement(selectToi.selectedBoxData.id)?.parentElement?.dataset
           .id !== 'canvas'
       "
-      class="flex flex-col pt-2 pb-3 border-[#303030] border-b"
+      class="flex flex-col pt-2 pb-3 border-[#040407] border-b"
     >
       <div class="h-8 pl-4 pr-2 flex flex-row justify-between items-center">
         <p class="font-medium col-span-3">Position</p>
@@ -2472,23 +2472,23 @@
                   class="flex-grow h-full border rounded-sm aspect-square relative"
                 >
                   <div
-                    class="bg-[#EDEDED] h-4 w-[1px] top-1/2 -mt-2 -ml-[0.5px] left-1/2 absolute"
+                    class="bg-[#EFEEF1] h-4 w-[1px] top-1/2 -mt-2 -ml-[0.5px] left-1/2 absolute"
                   ></div>
                   <div
-                    class="bg-[#EDEDED] h-[1px] w-4 top-1/2 -mt-[0.5px] -ml-2 left-1/2 absolute"
+                    class="bg-[#EFEEF1] h-[1px] w-4 top-1/2 -mt-[0.5px] -ml-2 left-1/2 absolute"
                   ></div>
                 </div>
                 <div
                   class="h-3 aspect-square flex items-center justify-center px-0.5 hover:bg-[#6EB0E0] hover:bg-opacity-30"
                 >
-                  <div class="bg-[#EDEDED] w-full h-[1px]"></div>
+                  <div class="bg-[#EFEEF1] w-full h-[1px]"></div>
                 </div>
               </div>
               <div class="w-full flex justify-center">
                 <div
                   class="h-3 aspect-square flex items-center justify-center py-0.5 hover:bg-[#6EB0E0] hover:bg-opacity-30"
                 >
-                  <div class="bg-[#EDEDED] h-full w-[1px]"></div>
+                  <div class="bg-[#EFEEF1] h-full w-[1px]"></div>
                 </div>
               </div>
             </div>
@@ -2706,7 +2706,7 @@
       v-show="
         selectToi.selectedBoxData.type !== 'text' && selectToi.selectedBox
       "
-      class="flex flex-col border-b pt-2 pb-2 border-[#303030]"
+      class="flex flex-col border-b pt-2 pb-2 border-[#040407]"
     >
       <div class="flex flex-row justify-between items-center h-8 pl-4 pr-2">
         <p class="font-medium">Stroke</p>
@@ -2927,7 +2927,7 @@
       v-show="
         selectToi.selectedBoxData.type === 'text' && selectToi.selectedBox
       "
-      class="flex flex-col gap-4 border-b py-4 px-4 border-[#303030]"
+      class="flex flex-col gap-4 border-b py-4 px-4 border-[#040407]"
     >
       <p class="font-medium">Fill</p>
       <div class="flex flex-row gap-3 flex-none justify-between w-full">
@@ -2991,7 +2991,7 @@
       v-show="
         selectToi.selectedBoxData.type !== 'text' && selectToi.selectedBox
       "
-      class="flex flex-col gap-4 border-b py-4 px-4 border-[#303030]"
+      class="flex flex-col gap-4 border-b py-4 px-4 border-[#040407]"
     >
       <div class="flex flex-row justify-between">
         <p class="font-medium">Effects</p>
@@ -3129,7 +3129,7 @@
       v-show="
         selectToi.selectedBoxData.type !== 'text' && selectToi.selectedBox
       "
-      class="flex flex-col gap-4 border-b py-4 px-4 border-[#303030]"
+      class="flex flex-col gap-4 border-b py-4 px-4 border-[#040407]"
     >
       <div class="flex flex-row justify-between">
         <p class="font-medium">Export</p>
@@ -3266,7 +3266,7 @@
     <div
       v-show="selectToi.selectedBox"
       class="flex flex-col pt-2 pb-2"
-      :class="{ 'border-b border-[#303030]': !customCSS }"
+      :class="{ 'border-b border-[#040407]': !customCSS }"
     >
       <div class="flex flex-row justify-between h-8 items-center pl-4 pr-2">
         <p class="font-medium">Custom CSS</p>
@@ -3296,7 +3296,7 @@
       </div>
       <div class="flex flex-row px-4 py-2 items-center" v-if="customCSS">
         <textarea
-          class="w-full bg-[#262626] px-2 py-2 rounded focus:outline-none font-mono min-h-[100px] border border-[#303030]"
+          class="w-full bg-[#262626] px-2 py-2 rounded focus:outline-none font-mono min-h-[100px] border border-[#040407]"
         />
       </div>
     </div>

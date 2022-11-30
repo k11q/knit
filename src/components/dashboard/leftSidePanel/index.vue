@@ -1,9 +1,9 @@
 <template>
   <aside
-    class="border-r w-60 flex flex-col flex-none h-screen overflow-x-hidden pb-16 z-10 text-xs border-[#303030]"
+    class="border-r w-60 flex flex-col flex-none h-screen overflow-x-hidden pb-16 z-10 text-xs border-[#040407] bg-[#18181A]"
   >
     <div
-      class="border-b px-[18px] h-[52px] flex flex-row gap-4 items-center border-[#303030]"
+      class="border-b px-[18px] h-[52px] flex flex-row gap-4 items-center border-[#040407]"
     >
       <div
         class="flex flex-col items-center justify-center w-3 flex-none aspect-square opacity-80"
@@ -48,11 +48,11 @@
     </div>
     <div class="flex flex-col w-full h-fit">
       <div
-        class="flex flex-col border-b pt-[5px] gap-[1px] pb-3 border-[#303030]"
+        class="flex flex-col border-b pt-[5px] gap-[1px] pb-3 border-[#040407]"
       >
         <div class="flex flex-col">
           <div
-            class="flex flex-row gap-4 items-center hover:bg-[#232323] py-[10px] px-[18px]"
+            class="flex flex-row gap-4 items-center hover:bg-[#18181A] py-[10px] px-[18px]"
           >
             <div
               class="flex flex-col items-center justify-center w-3 flex-none aspect-square opacity-80"
@@ -75,7 +75,7 @@
             <p class="cursor-default focus:outline-none">Recent</p>
           </div>
           <div
-            class="flex flex-row gap-4 items-center hover:bg-[#232323] py-[10px] px-[18px]"
+            class="flex flex-row gap-4 items-center hover:bg-[#18181A] py-[10px] px-[18px]"
           >
             <div
               class="flex flex-col items-center justify-center w-3 flex-none aspect-square opacity-80"
@@ -100,7 +100,7 @@
             <p class="cursor-default focus:outline-none">Drafts</p>
           </div>
           <div
-            class="flex flex-row gap-4 items-center hover:bg-[#232323] py-[10px] px-[18px]"
+            class="flex flex-row gap-4 items-center hover:bg-[#18181A] py-[10px] px-[18px]"
           >
             <div
               class="flex flex-col items-center justify-center w-3 flex-none aspect-square opacity-80"

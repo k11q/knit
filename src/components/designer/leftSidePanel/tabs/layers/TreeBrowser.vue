@@ -35,7 +35,7 @@
       "
     >
       <div
-        class="-ml-[30.5px] h-[34px] top-0 w-[1px] bg-[#EDEDED] absolute opacity-10"
+        class="-ml-[30.5px] h-[34px] top-0 w-[1px] bg-[#EFEEF1] absolute opacity-10"
       ></div>
       <div
         v-if="
@@ -55,7 +55,7 @@
           treeDnd.isDragging &&
           treeDnd.currDropPosition !== 'middle'
         "
-        class="h-2 w-2 bg-[#EDEDED] border-2 border-[#0191FA] rounded-full -ml-1 absolute z-10"
+        class="h-2 w-2 bg-[#EFEEF1] border-2 border-[#0191FA] rounded-full -ml-1 absolute z-10"
         :class="{
           'top-0 -mt-[5px]': treeDnd.currDropPosition === 'top',
           'bottom-0 -mb-[5px]': treeDnd.currDropPosition === 'bottom',
@@ -67,14 +67,14 @@
           treeDnd.isDragging &&
           treeDnd.currDropPosition !== 'middle'
         "
-        class="h-2 w-2 bg-[#EDEDED] border-2 border-[#0191FA] rounded-full absolute right-1 -mr-[5px] z-10"
+        class="h-2 w-2 bg-[#EFEEF1] border-2 border-[#0191FA] rounded-full absolute right-1 -mr-[5px] z-10"
         :class="{
           'top-0 -mt-[5px]': treeDnd.currDropPosition === 'top',
           'bottom-0 -mb-[5px]': treeDnd.currDropPosition === 'bottom',
         }"
       ></div>
       <div
-        class="absolute -ml-4 hover:bg-[#232323] rounded-sm"
+        class="absolute -ml-4 hover:bg-[#18181A] rounded-sm"
         v-if="node.children && node.children.length"
         @mousedown.prevent.stop="
           () => {

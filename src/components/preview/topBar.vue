@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-row justify-between p-3 items-center bg-[#1C1C1C] text-[#EDEDED]"
+    class="flex flex-row justify-between p-3 items-center bg-[#1C1C1C] text-[#EFEEF1]"
   >
     <div>This is a preview page</div>
     <button
