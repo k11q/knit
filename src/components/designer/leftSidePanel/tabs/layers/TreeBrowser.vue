@@ -5,7 +5,7 @@
       :data-depth="depth"
       :data-state="state"
       :data-parentIsSelected="parentIsSelected"
-      :style="{ 'padding-left': depth === 1 ? '16px' : depth * 20 + 'px' }"
+      :style="{ 'padding-left': depth === 1 ? '20px' : depth * 20 + 'px' }"
       class="flex flex-row gap-2 py-2 border border-transparent box-border cursor-default items-center relative justify-between"
       :class="{
         'bg-[#2E2E2E] border-[#232323] hover:border-[#232323]':
@@ -34,6 +34,9 @@
         }
       "
     >
+      <div
+        class="-ml-[30.5px] h-[34px] top-0 w-[1px] bg-[#EDEDED] absolute opacity-10"
+      ></div>
       <div
         v-if="
           treeDnd.currDrop === node.id &&
