@@ -2,7 +2,7 @@
   <div
     class="h-14 border-b flex flex-row flex-none justify-between z-10 bg-[#232323] border-[#303030] p-2 border-r"
   >
-    <div class="flex flex-row gap-2">
+    <div class="flex flex-row gap-2 w-60">
       <NuxtLink
         to="/dashboard"
         class="aspect-square flex items-center justify-center text-center cursor-default h-full"
@@ -77,30 +77,37 @@
     <div class="flex items-center justify-center">
       <p>{{ route.params.id }}</p>
     </div>
-    <div class="flex flex-row px-2 gap-5 items-center justify-end">
-      <div>
-        <NuxtLink
-          :to="`/p/${route.params.id}/${selectToi.selectedBoxData.name}/preview`"
-        >
-          <div
-            class="flex items-center justify-center text-center cursor-default hover:bg-[#232323] h-8 aspect-square"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="17"
-              height="17"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <polygon points="5 3 19 12 5 21 5 3"></polygon>
-            </svg>
-          </div>
-        </NuxtLink>
+    <div class="flex flex-row px-2 gap-5 items-center justify-end w-60">
+      <div
+        class="flex items-center justify-center rounded-full aspect-square h-6 overflow-clip"
+      >
+        <img :src="user?.user_metadata.avatar_url" />
       </div>
+      <NuxtLink
+        class="aspect-square flex items-center justify-center text-center cursor-default h-[39px] flex-none rounded hover:opacity-100"
+        :class="{
+          'bg-[#2E2E2E] opacity-100': addaSquare.addTextActivated === true,
+          'hover:bg-[#2E2E2E] opacity-60':
+            addaSquare.addTextActivated === false,
+        }"
+        :to="`/p/${route.params.id}/${selectToi.selectedBoxData.name}/preview`"
+      >
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="17"
+            height="17"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+        </div>
+      </NuxtLink>
       <div class="flex items-center justify-center">
         <NuxtLink
           :to="`http://${route.params.id}.localhost:3000/${selectToi.selectedBoxData.name}`"
@@ -128,4 +135,5 @@ const addaSquare = useSquareStore();
 const canvasFF = useCanvasFF();
 const selectToi = useCounterStore();
 const route = useRoute();
+const user = useSupabaseUser();
 </script>
