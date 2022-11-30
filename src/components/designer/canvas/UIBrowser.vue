@@ -27,7 +27,8 @@
           if (
             selectToi.selectedBox !== node.id &&
             node.type !== 'text' &&
-            node.type !== 'box'
+            (node.type !== 'box' ||
+              (node.type === 'box' && !canvasFF.isDragging))
           ) {
             useSetOutlineHover(node.id);
           } else if (
