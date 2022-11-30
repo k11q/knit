@@ -18,8 +18,12 @@
       }"
       class="h-1 w-1 fixed overflow-visible -mt-5 will-change-transform pointer-events-auto cursor-default hover:text-[#6EB0E0] hover:opacity-100"
       :class="{
-        'text-[#6EB0E0] opacity-100': selectToi.selectedBox === frame.id,
-        'text-[#FAFAFA] opacity-40': selectToi.selectedBox !== frame.id,
+        'text-[#6EB0E0] opacity-100':
+          selectToi.selectedBox === frame.id ||
+          selectToi.treeHoverId === frame.id,
+        'text-[#FAFAFA] opacity-40':
+          selectToi.selectedBox !== frame.id &&
+          selectToi.treeHoverId !== frame.id,
       }"
       @mousedown.stop="
         canvasStore.dndWithoutParent($event, frame.id, frame.type)
