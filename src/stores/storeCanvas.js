@@ -31,12 +31,35 @@ export const storeCanvas = defineStore({
           (e.clientX - this.prevX - squareStore.offsetLeft) / squareStore.scale
         ) + "px";
     },
+    setLeftPositionWithParent(e) {
+      const selectToi = useCounterStore();
+      const squareStore = useSquareStore();
+      const element = useGetElement(selectToi.selectedBoxData.id);
+
+      selectToi.selectedBoxData.attr.style.left =
+        Math.round(
+          (e.clientX - this.prevX - squareStore.offsetLeft) /
+            squareStore.scale -
+            element.parentElement.offsetLeft
+        ) + "px";
+    },
     setTopPosition(e) {
       const selectToi = useCounterStore();
       const squareStore = useSquareStore();
       selectToi.selectedBoxData.attr.style.top =
         Math.round(
           (e.clientY - this.prevY - squareStore.offsetTop) / squareStore.scale
+        ) + "px";
+    },
+    setTopPositionWithParent(e) {
+      const selectToi = useCounterStore();
+      const squareStore = useSquareStore();
+      const element = useGetElement(selectToi.selectedBoxData.id);
+
+      selectToi.selectedBoxData.attr.style.top =
+        Math.round(
+          (e.clientY - this.prevY - squareStore.offsetTop) / squareStore.scale -
+            element.parentElement.offsetTop
         ) + "px";
     },
     dndWithoutParent(e, currDrag, currType) {
@@ -295,142 +318,148 @@ export const storeCanvas = defineStore({
               (i) => i.dataset.id === currDrag
             ) !== -1
           ) {
-            currDragElement = document.querySelector(`[data-id=${currDrag}]`);
-            canvasStore.showSolidOutline = true;
-            canvasStore.showGhostOutline = true;
-            canvasStore.ghostOutlineLeft = e.clientX - prevX;
-            canvasStore.ghostOutlineTop = e.clientY - prevY;
+            if (selectToi.selectedBoxData.attr.style.position === "static") {
+              currDragElement = document.querySelector(`[data-id=${currDrag}]`);
+              canvasStore.showSolidOutline = true;
+              canvasStore.showGhostOutline = true;
+              canvasStore.ghostOutlineLeft = e.clientX - prevX;
+              canvasStore.ghostOutlineTop = e.clientY - prevY;
 
-            //kalau prev/next sibling 'absolute' cari sampai jumpa static
-            let prevSibling = currDragElement.previousElementSibling;
-            let prevSiblingId;
-            let nextSibling = currDragElement.nextElementSibling;
-            let nextSiblingId;
+              //kalau prev/next sibling 'absolute' cari sampai jumpa static
+              let prevSibling = currDragElement.previousElementSibling;
+              let prevSiblingId;
+              let nextSibling = currDragElement.nextElementSibling;
+              let nextSiblingId;
 
-            if (prevSibling) {
-              prevSiblingId = prevSibling.dataset.id;
+              if (prevSibling) {
+                prevSiblingId = prevSibling.dataset.id;
+              }
+              if (nextSibling) {
+                nextSiblingId = nextSibling.dataset.id;
+              }
+
+              if (
+                closest.style?.flexDirection &&
+                closest.style.flexDirection === "column"
+              ) {
+                function getPreviousSiblingMiddlePoint() {
+                  let middlePoint =
+                    prevSibling.getBoundingClientRect().y +
+                    prevSibling.getBoundingClientRect().height / 2;
+                  return middlePoint;
+                }
+
+                function getNextSiblingMiddlePoint() {
+                  let middlePoint =
+                    nextSibling.getBoundingClientRect().y +
+                    nextSibling.getBoundingClientRect().height / 2;
+                  return middlePoint;
+                }
+
+                if (
+                  prevSibling &&
+                  e.clientY - prevY < getPreviousSiblingMiddlePoint()
+                ) {
+                  useTransferData(
+                    selectToi.data,
+                    prevSiblingId,
+                    selectToi.selectedBoxData,
+                    currDrag,
+                    closestTarget
+                  ).removeChild();
+                  useTransferData(
+                    selectToi.data,
+                    prevSiblingId,
+                    selectToi.selectedBoxData,
+                    currDrag,
+                    closestTarget
+                  ).appendBefore();
+                }
+
+                if (
+                  nextSibling &&
+                  e.clientY - prevY + currDragElementRect.height >
+                    getNextSiblingMiddlePoint()
+                ) {
+                  useTransferData(
+                    selectToi.data,
+                    nextSiblingId,
+                    selectToi.selectedBoxData,
+                    currDrag,
+                    closestTarget
+                  ).removeChild();
+                  useTransferData(
+                    selectToi.data,
+                    nextSiblingId,
+                    selectToi.selectedBoxData,
+                    currDrag,
+                    closestTarget
+                  ).appendAfter();
+                }
+              }
+              if (
+                !closest.style?.flexDirection ||
+                closest.style.flexDirection === "row"
+              ) {
+                function getPreviousSiblingMiddlePoint() {
+                  let middlePoint =
+                    prevSibling.getBoundingClientRect().x +
+                    prevSibling.getBoundingClientRect().width / 2;
+                  return middlePoint;
+                }
+
+                function getNextSiblingMiddlePoint() {
+                  let middlePoint =
+                    nextSibling.getBoundingClientRect().x +
+                    nextSibling.getBoundingClientRect().width / 2;
+                  return middlePoint;
+                }
+
+                if (
+                  prevSibling &&
+                  e.clientX - prevX < getPreviousSiblingMiddlePoint()
+                ) {
+                  useTransferData(
+                    selectToi.data,
+                    prevSiblingId,
+                    selectToi.selectedBoxData,
+                    currDrag,
+                    closestTarget
+                  ).removeChild();
+                  useTransferData(
+                    selectToi.data,
+                    prevSiblingId,
+                    selectToi.selectedBoxData,
+                    currDrag,
+                    closestTarget
+                  ).appendBefore();
+                }
+
+                if (
+                  nextSibling &&
+                  e.clientX - prevX + currDragElementRect.width >
+                    getNextSiblingMiddlePoint()
+                ) {
+                  useTransferData(
+                    selectToi.data,
+                    nextSiblingId,
+                    selectToi.selectedBoxData,
+                    currDrag,
+                    closestTarget
+                  ).removeChild();
+                  useTransferData(
+                    selectToi.data,
+                    nextSiblingId,
+                    selectToi.selectedBoxData,
+                    currDrag,
+                    closestTarget
+                  ).appendAfter();
+                }
+              }
             }
-            if (nextSibling) {
-              nextSiblingId = nextSibling.dataset.id;
-            }
-
-            if (
-              closest.style?.flexDirection &&
-              closest.style.flexDirection === "column"
-            ) {
-              function getPreviousSiblingMiddlePoint() {
-                let middlePoint =
-                  prevSibling.getBoundingClientRect().y +
-                  prevSibling.getBoundingClientRect().height / 2;
-                return middlePoint;
-              }
-
-              function getNextSiblingMiddlePoint() {
-                let middlePoint =
-                  nextSibling.getBoundingClientRect().y +
-                  nextSibling.getBoundingClientRect().height / 2;
-                return middlePoint;
-              }
-
-              if (
-                prevSibling &&
-                e.clientY - prevY < getPreviousSiblingMiddlePoint()
-              ) {
-                useTransferData(
-                  selectToi.data,
-                  prevSiblingId,
-                  selectToi.selectedBoxData,
-                  currDrag,
-                  closestTarget
-                ).removeChild();
-                useTransferData(
-                  selectToi.data,
-                  prevSiblingId,
-                  selectToi.selectedBoxData,
-                  currDrag,
-                  closestTarget
-                ).appendBefore();
-              }
-
-              if (
-                nextSibling &&
-                e.clientY - prevY + currDragElementRect.height >
-                  getNextSiblingMiddlePoint()
-              ) {
-                useTransferData(
-                  selectToi.data,
-                  nextSiblingId,
-                  selectToi.selectedBoxData,
-                  currDrag,
-                  closestTarget
-                ).removeChild();
-                useTransferData(
-                  selectToi.data,
-                  nextSiblingId,
-                  selectToi.selectedBoxData,
-                  currDrag,
-                  closestTarget
-                ).appendAfter();
-              }
-            }
-            if (
-              !closest.style?.flexDirection ||
-              closest.style.flexDirection === "row"
-            ) {
-              function getPreviousSiblingMiddlePoint() {
-                let middlePoint =
-                  prevSibling.getBoundingClientRect().x +
-                  prevSibling.getBoundingClientRect().width / 2;
-                return middlePoint;
-              }
-
-              function getNextSiblingMiddlePoint() {
-                let middlePoint =
-                  nextSibling.getBoundingClientRect().x +
-                  nextSibling.getBoundingClientRect().width / 2;
-                return middlePoint;
-              }
-
-              if (
-                prevSibling &&
-                e.clientX - prevX < getPreviousSiblingMiddlePoint()
-              ) {
-                useTransferData(
-                  selectToi.data,
-                  prevSiblingId,
-                  selectToi.selectedBoxData,
-                  currDrag,
-                  closestTarget
-                ).removeChild();
-                useTransferData(
-                  selectToi.data,
-                  prevSiblingId,
-                  selectToi.selectedBoxData,
-                  currDrag,
-                  closestTarget
-                ).appendBefore();
-              }
-
-              if (
-                nextSibling &&
-                e.clientX - prevX + currDragElementRect.width >
-                  getNextSiblingMiddlePoint()
-              ) {
-                useTransferData(
-                  selectToi.data,
-                  nextSiblingId,
-                  selectToi.selectedBoxData,
-                  currDrag,
-                  closestTarget
-                ).removeChild();
-                useTransferData(
-                  selectToi.data,
-                  nextSiblingId,
-                  selectToi.selectedBoxData,
-                  currDrag,
-                  closestTarget
-                ).appendAfter();
-              }
+            if (selectToi.selectedBoxData.attr.style.position === "absolute") {
+              canvasStore.setLeftPositionWithParent(e);
+              canvasStore.setTopPositionWithParent(e);
             }
           }
         }

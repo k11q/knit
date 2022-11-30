@@ -113,7 +113,7 @@
               ).left()
             "
           >
-            <p class="opacity-40 text-center w-full">X</p>
+            <p class="opacity-60 text-center w-full">X</p>
           </div>
           <input
             type="number"
@@ -143,7 +143,7 @@
               ).top()
             "
           >
-            <p class="opacity-40 text-center w-full">Y</p>
+            <p class="opacity-60 text-center w-full">Y</p>
           </div>
           <input
             type="number"
@@ -170,7 +170,7 @@
                 selectToi.selectedBoxData.attr.style.position === 'absolute',
               'opacity-100':
                 selectToi.selectedBoxData.attr.style.position === 'absolute',
-              'opacity-40':
+              'opacity-60':
                 selectToi.selectedBoxData.attr.style.position !== 'absolute',
             }"
             @click="
@@ -259,7 +259,7 @@
               ).width()
             "
           >
-            <p class="opacity-40 text-center w-full">W</p>
+            <p class="opacity-60 text-center w-full">W</p>
           </div>
           <input
             type="number"
@@ -292,7 +292,7 @@
               ).height()
             "
           >
-            <p class="opacity-40 text-center w-full">H</p>
+            <p class="opacity-60 text-center w-full">H</p>
           </div>
           <input
             type="number"
@@ -323,7 +323,7 @@
                 selectToi.selectedBoxData?.attr?.style?.aspectRatio === 1,
               'opacity-100':
                 selectToi.selectedBoxData?.attr?.style?.aspectRatio === 1,
-              'opacity-40':
+              'opacity-60':
                 selectToi.selectedBoxData?.attr?.style?.aspectRatio !== 1,
             }"
             @click="
@@ -370,7 +370,7 @@
               'opacity-100':
                 selectToi.selectedBoxData.attr?.style?.width !== '100%' &&
                 selectToi.selectedBoxData.attr?.style?.width !== 'fit-content',
-              'opacity-40':
+              'opacity-60':
                 selectToi.selectedBoxData.attr?.style?.width === '100%' ||
                 selectToi.selectedBoxData.attr?.style?.width === 'fit-content',
             }"
@@ -412,7 +412,7 @@
             :class="{
               'opacity-100':
                 selectToi.selectedBoxData.attr?.style?.width === 'fit-content',
-              'opacity-40':
+              'opacity-60':
                 selectToi.selectedBoxData.attr?.style?.width !== 'fit-content',
               'bg-[#2E2E2E]':
                 selectToi.selectedBoxData.attr?.style?.width === 'fit-content',
@@ -443,7 +443,7 @@
             :class="{
               'opacity-100':
                 selectToi.selectedBoxData.attr?.style?.width === '100%',
-              'opacity-40':
+              'opacity-60':
                 selectToi.selectedBoxData.attr?.style?.width !== '100%',
               'bg-[#2E2E2E]':
                 selectToi.selectedBoxData.attr?.style?.width === '100%',
@@ -472,7 +472,7 @@
               'opacity-100':
                 selectToi.selectedBoxData.attr?.style?.height !== '100%' &&
                 selectToi.selectedBoxData.attr?.style?.height !== 'fit-content',
-              'opacity-40':
+              'opacity-60':
                 selectToi.selectedBoxData.attr?.style?.height === '100%' ||
                 selectToi.selectedBoxData.attr?.style?.height === 'fit-content',
             }"
@@ -518,7 +518,7 @@
                 selectToi.selectedBoxData.attr?.style?.height === 'fit-content',
               'bg-[#2E2E2E]':
                 selectToi.selectedBoxData.attr?.style?.height === 'fit-content',
-              'opacity-40':
+              'opacity-60':
                 selectToi.selectedBoxData.attr?.style?.height !== 'fit-content',
             }"
           >
@@ -549,7 +549,7 @@
                 selectToi.selectedBoxData.attr?.style?.height === '100%',
               'bg-[#2E2E2E]':
                 selectToi.selectedBoxData.attr?.style?.height === '100%',
-              'opacity-40':
+              'opacity-60':
                 selectToi.selectedBoxData.attr?.style?.height !== '100%',
             }"
           >
@@ -575,7 +575,7 @@
       <div class="flex flex-row h-8 gap-2 pl-4 pr-2">
         <div class="flex flex-row gap-0.5 justify-start items-center">
           <div
-            class="h-[18px] aspect-square items-center flex flex-none justify-center opacity-40 cursor-ew-resize"
+            class="h-[18px] aspect-square items-center flex flex-none justify-center opacity-60 cursor-ew-resize"
           >
             <svg
               width="15"
@@ -609,7 +609,7 @@
         </div>
         <div class="flex flex-row gap-0.5 justify-start items-center">
           <div
-            class="h-[18px] aspect-square items-center flex flex-none justify-center opacity-40 cursor-ew-resize"
+            class="h-[18px] aspect-square items-center flex flex-none justify-center opacity-60 cursor-ew-resize"
             @mousedown.stop.prevent="
               useSlider(
                 $event,
@@ -693,7 +693,7 @@
                   'opacity-100':
                     selectToi.selectedBoxData.attr?.style?.flexDirection ===
                     'column',
-                  'opacity-40':
+                  'opacity-60':
                     selectToi.selectedBoxData.attr?.style?.flexDirection !==
                     'column',
                   'bg-[#2E2E2E]':
@@ -725,7 +725,7 @@
                   'opacity-100':
                     selectToi.selectedBoxData.attr?.style?.flexDirection ===
                     'row',
-                  'opacity-40':
+                  'opacity-60':
                     selectToi.selectedBoxData.attr?.style?.flexDirection !==
                     'row',
                   'bg-[#2E2E2E]':
@@ -751,7 +751,7 @@
             </div>
             <div class="flex flex-row items-center h-8">
               <div
-                class="aspect-square items-center flex flex-col justify-center flex-none opacity-40 h-[18px] cursor-ew-resize"
+                class="aspect-square items-center flex flex-col justify-center flex-none opacity-60 h-[18px] cursor-ew-resize"
                 @mousedown.stop.prevent="
                   useSlider(
                     $event,
@@ -806,7 +806,7 @@
             </div>
             <div class="flex flex-row items-center h-8 pt-2">
               <div
-                class="aspect-square items-center flex flex-col justify-center flex-none opacity-40 h-[18px] cursor-ew-resize"
+                class="aspect-square items-center flex flex-col justify-center flex-none opacity-60 h-[18px] cursor-ew-resize"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -2032,7 +2032,7 @@
             </div>
             <div class="grid grid-cols-2 gap-2 items-center w-fit h-8 pt-2">
               <div
-                class="aspect-square items-center flex flex-col justify-center flex-none opacity-40 h-[18px] cursor-ew-resize"
+                class="aspect-square items-center flex flex-col justify-center flex-none opacity-60 h-[18px] cursor-ew-resize"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -2178,7 +2178,7 @@
                       <div class="w-12 flex flex-none border-gray-300  flex-row justify-center items-center">
                         <input type="number" placeholder="0" v-model="selectToi.selectedBoxData.paddingLeft" class="inline-block text-center w-10 py-1 px-2">
                       </div>
-                      <div class=" w-10 border border-gray-300 flex rounded flex-row justify-center items-center opacity-40">
+                      <div class=" w-10 border border-gray-300 flex rounded flex-row justify-center items-center opacity-60">
                         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                       </div>
                       <div class="w-12 flex flex-none border-gray-300  flex-row justify-center items-center">
@@ -2251,7 +2251,7 @@
           class="flex flex-row gap-[6px] justify-between items-center w-full"
         >
           <div
-            class="h-[14px] aspect-square items-center flex flex-none opacity-40"
+            class="h-[14px] aspect-square items-center flex flex-none opacity-60"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -2494,7 +2494,7 @@
             </div>
             <div class="grid grid-cols-2 gap-2 items-center w-fit h-8 mt-2">
               <div
-                class="aspect-square items-center flex flex-col justify-center flex-none opacity-40 h-[18px] cursor-ew-resize"
+                class="aspect-square items-center flex flex-col justify-center flex-none opacity-60 h-[18px] cursor-ew-resize"
               >
                 <span>T</span>
               </div>
@@ -2523,7 +2523,7 @@
             </div>
             <div class="grid grid-cols-2 gap-2 items-center w-fit h-8">
               <div
-                class="aspect-square items-center flex flex-col justify-center flex-none opacity-40 h-[18px] cursor-ew-resize"
+                class="aspect-square items-center flex flex-col justify-center flex-none opacity-60 h-[18px] cursor-ew-resize"
               >
                 <span>L</span>
               </div>
@@ -2554,7 +2554,7 @@
           <div class="flex flex-col w-1/2 flex-none">
             <div class="flex flex-row items-center h-8 gap-1">
               <div
-                class="aspect-square items-center flex flex-col justify-center flex-none opacity-40 h-[18px] cursor-ew-resize"
+                class="aspect-square items-center flex flex-col justify-center flex-none opacity-60 h-[18px] cursor-ew-resize"
                 @mousedown.stop.prevent="
                   useSlider(
                     $event,
@@ -2605,7 +2605,7 @@
             </div>
             <div class="flex flex-row items-center h-8">
               <div
-                class="aspect-square items-center flex flex-col justify-center flex-none opacity-40 h-[18px] cursor-ew-resize"
+                class="aspect-square items-center flex flex-col justify-center flex-none opacity-60 h-[18px] cursor-ew-resize"
                 @mousedown.stop.prevent="
                   useSlider(
                     $event,
@@ -2646,7 +2646,7 @@
             </div>
             <div class="flex flex-row items-center h-8 mt-2">
               <div
-                class="aspect-square items-center flex flex-col justify-center flex-none opacity-40 h-[18px] cursor-ew-resize"
+                class="aspect-square items-center flex flex-col justify-center flex-none opacity-60 h-[18px] cursor-ew-resize"
               >
                 <span>R</span>
               </div>
@@ -2672,7 +2672,7 @@
             </div>
             <div class="flex flex-row items-center h-8">
               <div
-                class="aspect-square items-center flex flex-col justify-center flex-none opacity-40 h-[18px] cursor-ew-resize"
+                class="aspect-square items-center flex flex-col justify-center flex-none opacity-60 h-[18px] cursor-ew-resize"
               >
                 <span>B</span>
               </div>
@@ -2825,7 +2825,7 @@
           </select>
           <div class="flex flex-row w-1/2 flex-none px-2">
             <div
-              class="h-full aspect-square items-center flex flex-none opacity-40"
+              class="h-full aspect-square items-center flex flex-none opacity-60"
             >
               <svg
                 width="14"

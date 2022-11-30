@@ -97,7 +97,6 @@ import { storeCanvas } from "@/stores/storeCanvas";
 const selectToi = useCounterStore();
 const canvasFF = useCanvasFF();
 const squareStore = useSquareStore();
-const textIsDragging = ref(false);
 const paddingResize = usePaddingResizeStore();
 const canvasStore = storeCanvas();
 

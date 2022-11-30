@@ -82,7 +82,7 @@
       </div>
       <div class="flex flex-row justify-between">
         <div class="flex flex-row gap-[3px] items-center">
-          <p class="text-[11px] opacity-40">Filter:</p>
+          <p class="text-[11px] opacity-60">Filter:</p>
           <select
             name=""
             id=""
@@ -95,7 +95,7 @@
           </select>
         </div>
         <div class="flex flex-row gap-[3px] items-center">
-          <p class="text-[11px] opacity-40">Sort:</p>
+          <p class="text-[11px] opacity-60">Sort:</p>
           <select
             name=""
             id=""

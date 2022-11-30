@@ -19,7 +19,7 @@
             treeDnd.currDrop === node.id &&
             selectToi.selectedBox !== node.id) ||
           (selectToi.treeHoverId == node.id && !treeDnd.isDragging),
-        'opacity-40': treeDnd.currDrag === node.id,
+        'opacity-60': treeDnd.currDrag === node.id,
         'opacity-100': treeDnd.currDrag !== node.id,
         'opacity-30':
           (treeDnd.currDrag && parentIsSelected === true) ||
@@ -179,9 +179,9 @@
             }
           }
         "
-        class="h-full aspect-square flex-none w-4 mr-2 opacity-40 flex items-center justify-center"
+        class="h-full aspect-square flex-none w-4 mr-2 opacity-60 flex items-center justify-center"
         :class="{
-          'opacity-40': !node.display,
+          'opacity-60': !node.display,
           'opacity-100': node.display && node.display === 'hide',
         }"
       >

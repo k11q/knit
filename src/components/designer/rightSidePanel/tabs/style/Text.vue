@@ -41,7 +41,7 @@
     <div class="flex flex-row justify-between flex-grow">
       <div class="flex flex-row flex-grow -ml-1">
         <div
-          class="h-6 justify-center aspect-square items-center flex flex-none opacity-40"
+          class="h-6 justify-center aspect-square items-center flex flex-none opacity-60"
         >
           <UIIcon name="line-height" :size="15" />
         </div>
@@ -60,7 +60,7 @@
       </div>
       <div class="flex flex-row flex-grow -ml-1">
         <div
-          class="h-6 justify-center aspect-square items-center flex flex-none opacity-40"
+          class="h-6 justify-center aspect-square items-center flex flex-none opacity-60"
         >
           <UIIcon name="letter-spacing" :size="15" />
         </div>
@@ -71,7 +71,7 @@
     <div class="flex flex-row justify-between flex-grow">
       <div class="flex flex-row flex-grow w-full -ml-1">
         <div
-          class="h-6 justify-center rounded aspect-square items-center flex flex-none opacity-40"
+          class="h-6 justify-center rounded aspect-square items-center flex flex-none opacity-60"
         >
           <UIIcon name="paragraph-spacing" :size="15" />
         </div>
@@ -84,12 +84,12 @@
           <UIIcon name="auto-width" :size="15" />
         </div>
         <div
-          class="h-6 opacity-40 justify-center rounded aspect-square items-center flex flex-none"
+          class="h-6 opacity-60 justify-center rounded aspect-square items-center flex flex-none"
         >
           <UIIcon name="auto-height" :size="15" />
         </div>
         <div
-          class="h-6 justify-center rounded aspect-square items-center flex flex-none opacity-40"
+          class="h-6 justify-center rounded aspect-square items-center flex flex-none opacity-60"
         >
           <UIIcon name="square" :size="15" />
         </div>
@@ -117,7 +117,7 @@
             </p>
           </template>
           <div
-            class="h-6 justify-center rounded aspect-square items-center flex flex-none opacity-40"
+            class="h-6 justify-center rounded aspect-square items-center flex flex-none opacity-60"
           >
             <UIIcon name="text-align-center" :size="15" />
           </div>
@@ -129,7 +129,7 @@
             </p>
           </template>
           <div
-            class="h-6 justify-center rounded aspect-square items-center flex flex-none opacity-40"
+            class="h-6 justify-center rounded aspect-square items-center flex flex-none opacity-60"
           >
             <UIIcon name="text-align-right" :size="15" />
           </div>
@@ -155,7 +155,7 @@
             </p>
           </template>
           <div
-            class="h-6 justify-center rounded opacity-40 aspect-square items-center flex flex-none"
+            class="h-6 justify-center rounded opacity-60 aspect-square items-center flex flex-none"
           >
             <UIIcon name="text-align-middle" :size="15" />
           </div>
@@ -167,7 +167,7 @@
             </p>
           </template>
           <div
-            class="h-6 justify-center rounded opacity-40 aspect-square items-center flex flex-none"
+            class="h-6 justify-center rounded opacity-60 aspect-square items-center flex flex-none"
           >
             <UIIcon name="text-align-bottom" :size="15" />
           </div>

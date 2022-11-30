@@ -24,7 +24,7 @@
     <div class="flex flex-row items-center pb-2">
       <input
         placeholder="Search library"
-        class="flex-grow bg-transparent px-4 py-2 focus:outline-none placeholder-[#EFEEF1] placeholder-opacity-40"
+        class="flex-grow bg-transparent px-4 py-2 focus:outline-none placeholder-[#EFEEF1] placeholder-opacity-60"
       />
     </div>
     <div class="flex flex-col border-t border-[#040407] p-2">

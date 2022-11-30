@@ -43,7 +43,7 @@
       </div>
       <div>
         <p>{{ user?.user_metadata.full_name }}</p>
-        <p class="opacity-40 text-xs">{{ user?.user_metadata.email }}</p>
+        <p class="opacity-60 text-xs">{{ user?.user_metadata.email }}</p>
       </div>
     </div>
     <div class="flex flex-col w-full h-fit">

@@ -9,7 +9,7 @@
         class="px-2 h-full items-center flex flex-row cursor-default"
         :class="{
           'font-medium': activeTab === 'style',
-          'opacity-40': activeTab !== 'style',
+          'opacity-60': activeTab !== 'style',
         }"
         @click="activeTab = 'style'"
       >
@@ -19,7 +19,7 @@
         class="px-2 h-full items-center flex flex-row cursor-default"
         :class="{
           'font-medium': activeTab === 'action',
-          'opacity-40': activeTab !== 'action',
+          'opacity-60': activeTab !== 'action',
         }"
         @click="activeTab = 'action'"
       >
@@ -29,7 +29,7 @@
         class="px-2 h-full items-center flex flex-row cursor-default"
         :class="{
           'font-medium': activeTab === 'props',
-          'opacity-40': activeTab !== 'props',
+          'opacity-60': activeTab !== 'props',
         }"
         @click="activeTab = 'props'"
       >
