@@ -25,6 +25,7 @@ export const storeCanvas = defineStore({
     setLeftPosition(e) {
       const selectToi = useCounterStore();
       const squareStore = useSquareStore();
+
       selectToi.selectedBoxData.attr.style.left =
         Math.round(
           (e.clientX - this.prevX - squareStore.offsetLeft) / squareStore.scale
@@ -91,6 +92,7 @@ export const storeCanvas = defineStore({
           e.preventDefault();
           e.stopPropagation();
 
+          useGetElement(currDrag).style.willChange = "left, top";
           console.log("movementX = " + e.movementX);
           console.log("movementY = " + e.movementY);
           if (Math.abs(e.movementX) < 10 && Math.abs(e.movementX) < 10) {
@@ -208,6 +210,7 @@ export const storeCanvas = defineStore({
           }
           selectToi.treeHoverSize = 1;
           isDragging = false;
+          useGetElement(currDrag).style.willChange = null;
           window.removeEventListener("mousemove", mousemove);
           window.removeEventListener("mouseup", mouseup);
           //reselect
@@ -253,6 +256,7 @@ export const storeCanvas = defineStore({
       function mousemove(e) {
         e.preventDefault();
 
+        useGetElement(currDrag).style.willChange = "left, top";
         isDragging = true;
         canvasFF.isDragging = true;
 
@@ -596,6 +600,7 @@ export const storeCanvas = defineStore({
         canvasStore.showGhostOutline = false;
         canvasStore.showSolidOutline = false;
         rulerSnap.show = false;
+        useGetElement(currDrag).style.willChange = null;
         window.removeEventListener("mousemove", mousemove);
         window.removeEventListener("mouseup", mouseup);
 
