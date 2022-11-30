@@ -257,6 +257,15 @@
     >
       <DesignerCanvasRulerPoints :points="rulerSnap.snapPoints" />
     </div>
+    <!--frames label-->
+    <div
+      v-if="selectToi.data"
+      class="absolute inset-0 overflow-visible pointer-events-none"
+    >
+      <DesignerCanvasFrameLabel
+        :frames="selectToi.data.filter((i) => i.type === 'div')"
+      />
+    </div>
     <!--NEW Ruler element-->
     <div
       v-show="rulerSnap.show && rulerSnap.on"

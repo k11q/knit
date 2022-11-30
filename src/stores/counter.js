@@ -578,6 +578,7 @@ export const useCounterStore = defineStore({
       } else {
         let canvasDnd = useCanvasDndStore();
         this.selectedBox = "";
+        this.selectedBoxData = [];
         canvasDnd.currDrag = "";
         canvasDnd.currDragValue = "";
       }
