@@ -24,7 +24,11 @@
       "
       @mouseover.stop="
         () => {
-          if (selectToi.selectedBox !== node.id && node.type !== 'text') {
+          if (
+            selectToi.selectedBox !== node.id &&
+            node.type !== 'text' &&
+            node.type !== 'box'
+          ) {
             useSetOutlineHover(node.id);
           } else if (
             selectToi.selectedBox !== node.id &&
