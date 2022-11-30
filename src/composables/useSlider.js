@@ -1,6 +1,6 @@
 import { useCounterStore } from "@/stores/counter";
 import { useSquareStore } from "@/stores/dataSquare";
-import { useCanvasFF } from "@/stores/canvasFreeForm";
+import { useCanvasFF } from "~~/src/stores/canvasFreeForm";
 
 export const useSlider = (e, change, currElement, currType) => {
   const selectToi = useCounterStore();

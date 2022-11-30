@@ -446,7 +446,7 @@
 <script setup>
 import { useCounterStore } from "@/stores/counter";
 import { useSquareStore } from "@/stores/dataSquare";
-import { useCanvasFF } from "@/stores/canvasFreeForm";
+import { useCanvasFF } from "~~/src/stores/canvasFreeForm";
 import { useResizeStore } from "@/stores/resizeStore";
 import { usePaddingResizeStore } from "@/stores/paddingResizeStore";
 

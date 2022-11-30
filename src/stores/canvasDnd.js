@@ -31,19 +31,5 @@ export const useCanvasDndStore = defineStore({
         }
       });
     },
-    appendToCanvas() {
-      let counter = useCounterStore();
-      //append to canvas after appended
-
-      console.log("currdrag = " + this.currDrag);
-      this.setCurrDragValue(counter.data, this.currDrag);
-      this.dndRemove(counter.data);
-
-      this.currDragValue.position = "absolute";
-      counter.data.push(this.currDragValue);
-      console.log("currdragvalue = " + this.currDragValue.position);
-      console.log("currdragvalueleft = " + this.currDragValue.left);
-      console.log("currdragvaluetop = " + this.currDragValue.top);
-    },
   },
 });

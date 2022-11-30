@@ -3306,7 +3306,7 @@
 <script setup>
 import { useCounterStore } from "@/stores/counter";
 import { useRightPanelStore } from "@/stores/rightPanelStore";
-import { useEditorStore } from "@/stores/editorStore";
+import { useEditorStore } from "~~/src/stores/editorStore";
 
 const selectToi = useCounterStore();
 const rightPanelStore = useRightPanelStore();

@@ -270,12 +270,12 @@
 <script setup>
 import { useCounterStore } from "@/stores/counter";
 import { useSquareStore } from "@/stores/dataSquare";
-import { useCanvasFF } from "@/stores/canvasFreeForm";
+import { useCanvasFF } from "~~/src/stores/canvasFreeForm";
 import { useResizeStore } from "@/stores/resizeStore";
 import { useDropMarker } from "@/stores/dropMarker";
 import { useSelectStore } from "@/stores/selectStore";
-import { useNewSquareStore } from "@/stores/newSquareStore";
-import { useNewFrameStore } from "@/stores/newFrameStore";
+import { useNewSquareStore } from "~~/src/stores/newSquareStore";
+import { useNewFrameStore } from "~~/src/stores/newFrameStore";
 import { usePaddingResizeStore } from "@/stores/paddingResizeStore";
 import { useRulerSnapStore } from "@/stores/rulerSnap";
 import { storeCanvas } from "@/stores/storeCanvas";

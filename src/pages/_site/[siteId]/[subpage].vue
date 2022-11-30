@@ -30,7 +30,7 @@
 <script setup>
 import { useCounterStore } from "@/stores/counter";
 import { useCanvasDndStore } from "@/stores/canvasDnd";
-import { useCanvasFF } from "@/stores/canvasFreeForm";
+import { useCanvasFF } from "~~/src/stores/canvasFreeForm";
 import { useSquareStore } from "@/stores/dataSquare";
 
 const selectToi = useCounterStore();

@@ -1,4 +1,4 @@
-export default function (id: String) {
+export default function (id: string) {
   if (id) {
     let element = document.querySelector(`[data-id=${id}]`);
     if (

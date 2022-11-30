@@ -89,7 +89,7 @@
 
 <script setup lang="ts">
 import { useCounterStore } from "@/stores/counter";
-import { useCanvasFF } from "@/stores/canvasFreeForm";
+import { useCanvasFF } from "~~/src/stores/canvasFreeForm";
 import { useSquareStore } from "@/stores/dataSquare";
 import { usePaddingResizeStore } from "@/stores/paddingResizeStore";
 import { storeCanvas } from "@/stores/storeCanvas";
@@ -101,7 +101,7 @@ const paddingResize = usePaddingResizeStore();
 const canvasStore = storeCanvas();
 
 function makeEditable(e: Event, id: String) {
-  selectToi.selectedTextEditor = id;
+  selectToi.selectedTextEditor = id!;
   useSetOutlineSelector("");
 }
 

@@ -1,4 +1,4 @@
-export default function (e: Event, id: String) {
+export default function (e: Event, id: string) {
   useBringToBack(e, id);
   useBringToFront(e, id);
 }

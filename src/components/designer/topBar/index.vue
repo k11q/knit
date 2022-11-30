@@ -128,7 +128,7 @@
 
 <script setup>
 import { useSquareStore } from "@/stores/dataSquare";
-import { useCanvasFF } from "@/stores/canvasFreeForm";
+import { useCanvasFF } from "~~/src/stores/canvasFreeForm";
 import { useCounterStore } from "@/stores/counter";
 
 const addaSquare = useSquareStore();
