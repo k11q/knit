@@ -237,6 +237,7 @@ export const storeCanvas = defineStore({
       let parentElement = currDragElement.parentElement;
       let parentId = currDragElement.parentElement.dataset.id;
       let prevOpacity = currDragElement.style.opacity;
+      let appendPosition = useGetRootId(parentId);
 
       window.addEventListener("mousemove", mousemove);
       window.addEventListener("mouseup", mouseup);
@@ -431,7 +432,6 @@ export const storeCanvas = defineStore({
         if (!closest || !useGetElementIdFromPoint(e)) {
           canvasStore.showSolidOutline = false;
           canvasStore.showGhostOutline = false;
-          let appendPosition = useGetRootId(parentId);
           currDragElement.style.opacity = prevOpacity;
           showMarker.value = false;
           selectToi.treeHoverSize = 1;
@@ -588,6 +588,7 @@ export const storeCanvas = defineStore({
 
         canvasStore.showGhostOutline = false;
         canvasStore.showSolidOutline = false;
+        rulerSnap.show = false;
         window.removeEventListener("mousemove", mousemove);
         window.removeEventListener("mouseup", mouseup);
 
