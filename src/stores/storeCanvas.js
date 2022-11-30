@@ -127,9 +127,7 @@ export const storeCanvas = defineStore({
               selectToi.treeHover = false;
               currDragElement.style.opacity = prevOpacity;
             } else {
-              if (Math.abs(e.movementX) > 10 || Math.abs(e.movementX) > 10) {
-                rulerSnap.on = false;
-              }
+              rulerSnap.on = false;
               showMarker.value = true;
               dropMarker.setMarker(e, currDragElement);
               currDragElement.style.opacity = 0;
