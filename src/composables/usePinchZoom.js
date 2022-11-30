@@ -30,7 +30,7 @@ export default function (event) {
   function endPinchZoom() {
     setTimeout(() => {
       canvasStore.isPinchZoom = false;
-    }, "100");
+    }, "0");
   }
   endPinchZoom();
 }
