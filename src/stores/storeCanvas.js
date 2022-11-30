@@ -172,21 +172,14 @@ export const storeCanvas = defineStore({
 
                   delete selectToi.selectedBoxData.attr.style.left;
                   delete selectToi.selectedBoxData.attr.style.top;
-                  useTransferData(
-                    selectToi.data,
-                    canvasDnd.dropzone,
-                    selectToi.selectedBoxData,
-                    currDrag,
-                    closestTarget
-                  ).removeChild();
+                  useTransferData().removeChild(selectToi.data, currDrag);
                   selectToi.selectedBoxData.attr.style.position = "static";
-                  useTransferData(
+                  useTransferData().appendBefore(
                     selectToi.data,
                     canvasDnd.dragzone,
                     selectToi.selectedBoxData,
-                    currDrag,
                     closestTarget
-                  ).appendBefore();
+                  );
                   showMarker.value = false;
                   currDragElement.style.opacity = prevOpacity;
                   canvasDnd.dragzone = "";
@@ -201,21 +194,13 @@ export const storeCanvas = defineStore({
                   //append bottom/push
                   delete selectToi.selectedBoxData.attr.style.left;
                   delete selectToi.selectedBoxData.attr.style.top;
-                  useTransferData(
-                    selectToi.data,
-                    canvasDnd.dropzone,
-                    selectToi.selectedBoxData,
-                    currDrag,
-                    closestTarget
-                  ).removeChild();
+                  useTransferData().removeChild(selectToi.data, currDrag);
                   selectToi.selectedBoxData.attr.style.position = "static";
-                  useTransferData(
+                  useTransferData().appendChild(
                     selectToi.data,
-                    canvasDnd.dropzone,
                     selectToi.selectedBoxData,
-                    currDrag,
                     closestTarget
-                  ).appendChild();
+                  );
                   showMarker.value = false;
                   currDragElement.style.opacity = prevOpacity;
                 }
@@ -293,20 +278,12 @@ export const storeCanvas = defineStore({
               (i) => i.dataset.id === currDrag
             ) === -1
           ) {
-            useTransferData(
+            useTransferData().removeChild(selectToi.data, currDrag);
+            useTransferData().appendChild(
               selectToi.data,
-              "",
               selectToi.selectedBoxData,
-              currDrag,
               closestTarget
-            ).removeChild();
-            useTransferData(
-              selectToi.data,
-              "",
-              selectToi.selectedBoxData,
-              currDrag,
-              closestTarget
-            ).appendChild();
+            );
 
             selectToi.selectedBoxData.attr.style.position = "static";
             delete selectToi.selectedBoxData.attr.style.top;
@@ -360,20 +337,13 @@ export const storeCanvas = defineStore({
                   prevSibling &&
                   e.clientY - prevY < getPreviousSiblingMiddlePoint()
                 ) {
-                  useTransferData(
+                  useTransferData().removeChild(selectToi.data, currDrag);
+                  useTransferData().appendBefore(
                     selectToi.data,
                     prevSiblingId,
                     selectToi.selectedBoxData,
-                    currDrag,
                     closestTarget
-                  ).removeChild();
-                  useTransferData(
-                    selectToi.data,
-                    prevSiblingId,
-                    selectToi.selectedBoxData,
-                    currDrag,
-                    closestTarget
-                  ).appendBefore();
+                  );
                 }
 
                 if (
@@ -381,20 +351,13 @@ export const storeCanvas = defineStore({
                   e.clientY - prevY + currDragElementRect.height >
                     getNextSiblingMiddlePoint()
                 ) {
-                  useTransferData(
+                  useTransferData().removeChild(selectToi.data, currDrag);
+                  useTransferData().appendAfter(
                     selectToi.data,
                     nextSiblingId,
                     selectToi.selectedBoxData,
-                    currDrag,
                     closestTarget
-                  ).removeChild();
-                  useTransferData(
-                    selectToi.data,
-                    nextSiblingId,
-                    selectToi.selectedBoxData,
-                    currDrag,
-                    closestTarget
-                  ).appendAfter();
+                  );
                 }
               }
               if (
@@ -419,20 +382,13 @@ export const storeCanvas = defineStore({
                   prevSibling &&
                   e.clientX - prevX < getPreviousSiblingMiddlePoint()
                 ) {
-                  useTransferData(
+                  useTransferData().removeChild(selectToi.data, currDrag);
+                  useTransferData().appendBefore(
                     selectToi.data,
                     prevSiblingId,
                     selectToi.selectedBoxData,
-                    currDrag,
                     closestTarget
-                  ).removeChild();
-                  useTransferData(
-                    selectToi.data,
-                    prevSiblingId,
-                    selectToi.selectedBoxData,
-                    currDrag,
-                    closestTarget
-                  ).appendBefore();
+                  );
                 }
 
                 if (
@@ -440,20 +396,13 @@ export const storeCanvas = defineStore({
                   e.clientX - prevX + currDragElementRect.width >
                     getNextSiblingMiddlePoint()
                 ) {
-                  useTransferData(
+                  useTransferData().removeChild(selectToi.data, currDrag);
+                  useTransferData().appendAfter(
                     selectToi.data,
                     nextSiblingId,
                     selectToi.selectedBoxData,
-                    currDrag,
                     closestTarget
-                  ).removeChild();
-                  useTransferData(
-                    selectToi.data,
-                    nextSiblingId,
-                    selectToi.selectedBoxData,
-                    currDrag,
-                    closestTarget
-                  ).appendAfter();
+                  );
                 }
               }
             }
@@ -473,20 +422,12 @@ export const storeCanvas = defineStore({
           showMarker.value = false;
           selectToi.treeHoverSize = 1;
 
-          useTransferData(
-            selectToi.data,
-            "",
-            selectToi.selectedBoxData,
-            currDrag,
-            closestTarget
-          ).removeChild();
-          useTransferData(
+          useTransferData().removeChild(selectToi.data, currDrag);
+          useTransferData().appendCanvasAbove(
             selectToi.data,
             appendPosition,
-            selectToi.selectedBoxData,
-            currDrag,
-            closestTarget
-          ).appendCanvasAbove();
+            selectToi.selectedBoxData
+          );
 
           canvasStore.showSolidOutline = false;
           canvasStore.showGhostOutline = false;
@@ -514,20 +455,11 @@ export const storeCanvas = defineStore({
           closestTarget = useGetClosestDroppableId(e);
           currDragElement = document.querySelector(`[data-id=${currDrag}]`);
 
-          useTransferData(
+          useTransferData().removeChild(selectToi.data, currDrag);
+          useTransferData().appendToCanvas(
             selectToi.data,
-            "",
-            selectToi.selectedBoxData,
-            currDrag,
-            closestTarget
-          ).removeChild();
-          useTransferData(
-            selectToi.data,
-            "",
-            selectToi.selectedBoxData,
-            currDrag,
-            closestTarget
-          ).appendToCanvas();
+            selectToi.selectedBoxData
+          );
 
           selectToi.selectedBoxData.attr.style.position = "absolute";
           canvasStore.setLeftPosition(e);
@@ -563,21 +495,14 @@ export const storeCanvas = defineStore({
 
                 delete selectToi.selectedBoxData.attr.style.left;
                 delete selectToi.selectedBoxData.attr.style.top;
-                useTransferData(
-                  selectToi.data,
-                  canvasDnd.dropzone,
-                  selectToi.selectedBoxData,
-                  currDrag,
-                  closestTarget
-                ).removeChild();
+                useTransferData().removeChild(selectToi.data, currDrag);
                 selectToi.selectedBoxData.attr.style.position = "static";
-                useTransferData(
+                useTransferData().appendBefore(
                   selectToi.data,
                   canvasDnd.dragzone,
                   selectToi.selectedBoxData,
-                  currDrag,
                   closestTarget
-                ).appendBefore();
+                );
                 showMarker.value = false;
                 currDragElement.style.opacity = prevOpacity;
                 canvasDnd.dragzone = "";
@@ -592,21 +517,14 @@ export const storeCanvas = defineStore({
                 //append bottom/push
                 delete selectToi.selectedBoxData.attr.style.left;
                 delete selectToi.selectedBoxData.attr.style.top;
-                useTransferData(
-                  selectToi.data,
-                  canvasDnd.dropzone,
-                  selectToi.selectedBoxData,
-                  currDrag,
-                  closestTarget
-                ).removeChild();
+                useTransferData().removeChild(selectToi.data, currDrag);
+
                 selectToi.selectedBoxData.attr.style.position = "static";
-                useTransferData(
+                useTransferData().appendChild(
                   selectToi.data,
-                  canvasDnd.dropzone,
                   selectToi.selectedBoxData,
-                  currDrag,
                   closestTarget
-                ).appendChild();
+                );
                 showMarker.value = false;
                 currDragElement.style.opacity = prevOpacity;
               }

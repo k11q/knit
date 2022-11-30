@@ -559,6 +559,18 @@ export const useCounterStore = defineStore({
         this.prevY = e.layerY;
       }
     },
+    changeSelectedNewlyAdded(e, newData) {
+      this.prevX = e.layerX;
+      this.prevY = e.layerY;
+
+      Promise.resolve().then(() => {
+        this.selectedBox = newData.id;
+      });
+
+      if (e.target) {
+        this.getChildElement(this.data, newData.id);
+      }
+    },
     clearSelected() {
       if (this.selectedTextEditor) {
         useSetOutlineSelector(this.selectedTextEditor);

@@ -32,7 +32,7 @@ export const useNewFrameStore = defineStore({
   }),
   actions: {
     setNewFrame(e: MouseEvent, dataPushed: any) {
-      const counter = useCounterStore();
+      const selectToi = useCounterStore();
       const newFrameStore = useNewFrameStore();
       const squareStore = useSquareStore();
       const paddingResize = usePaddingResizeStore();
@@ -125,7 +125,7 @@ export const useNewFrameStore = defineStore({
           Promise.resolve()
             .then(() => {
               dataPushed.push({ ...clonedDataFrame });
-              counter.changeSelectedNewlyAdded(event, clonedDataFrame);
+              selectToi.changeSelectedNewlyAdded(event, clonedDataFrame);
             })
             .then(() => {
               useSetOutlineSelector(clonedDataFrame.id);

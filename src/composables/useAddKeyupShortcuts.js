@@ -8,13 +8,10 @@ export default function () {
 
   function keyup(e) {
     if (e.key == "Backspace" || (e.key == "Delete" && selectToi.selectedBox)) {
-      useTransferData(
+      useTransferData().removeChild(
         selectToi.data,
-        "",
-        selectToi.selectedBoxData,
-        selectToi.selectedBoxData.id,
-        ""
-      ).removeChild();
+        selectToi.selectedBoxData.id
+      );
       selectToi.clearSelected();
     }
   }

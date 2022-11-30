@@ -33,7 +33,7 @@ export const useNewSquareStore = defineStore({
   actions: {
     setNewSquare(e: MouseEvent, dataPushed: any) {
       const paddingResize = usePaddingResizeStore();
-      const counter = useCounterStore();
+      const selectToi = useCounterStore();
       const newSquareStore = useNewSquareStore();
       const squareStore = useSquareStore();
       const uid = () =>
@@ -126,7 +126,7 @@ export const useNewSquareStore = defineStore({
           Promise.resolve()
             .then(() => {
               dataPushed.push({ ...clonedDataSquare });
-              counter.changeSelectedNewlyAdded(event, clonedDataSquare);
+              selectToi.changeSelectedNewlyAdded(event, clonedDataSquare);
             })
             .then(() => {
               useSetOutlineSelector(clonedDataSquare.id);

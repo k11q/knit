@@ -1,4 +1,4 @@
-export default function (e: Event, id: string) {
+export default function (id: string) {
   if (id) {
     document.addEventListener("keyup", (e) => {
       if (e.key === "]") {

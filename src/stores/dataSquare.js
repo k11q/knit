@@ -91,7 +91,7 @@ export const useSquareStore = defineStore({
   },
   actions: {
     addSquare(event, dataPushed) {
-      const counter = useCounterStore();
+      const selectToi = useCounterStore();
       const canvasFF = useCanvasFF();
       const squareStore = useSquareStore();
       const newSquareStore = useNewSquareStore();
@@ -118,7 +118,7 @@ export const useSquareStore = defineStore({
         return (percent * w) / 100;
       }
       if (this.normalPointer === true) {
-        counter.clearSelected();
+        selectToi.clearSelected();
         document.activeElement.blur();
         useSetSelect(event);
       }
@@ -160,7 +160,7 @@ export const useSquareStore = defineStore({
       }
 
       if (this.addSquareActivated === true) {
-        counter.clearSelected();
+        selectToi.clearSelected();
         newSquareStore.setNewSquare(event, dataPushed);
       }
       if (this.addTextActivated === true) {
@@ -180,7 +180,7 @@ export const useSquareStore = defineStore({
         Promise.resolve()
           .then(() => {
             dataPushed.push({ ...clonedDataText });
-            counter.changeSelectedNewlyAdded(event, clonedDataText);
+            selectToi.changeSelectedNewlyAdded(event, clonedDataText);
           })
           .then(() => {
             useSetOutlineSelector(clonedDataText.id);
@@ -189,7 +189,7 @@ export const useSquareStore = defineStore({
         this.countBox = this.countBox + 1;
       }
       if (this.addFrameActivated === true) {
-        counter.clearSelected();
+        selectToi.clearSelected();
         newFrameStore.setNewFrame(event, dataPushed);
       }
     },

@@ -1,43 +1,50 @@
-export default function (arr, dropzone, data, currDragId, closestTarget) {
-  function appendChild() {
+export default function () {
+  function appendChild(arr, data, closestTarget) {
     arr.every((i) => {
       if (i.id === closestTarget) {
         i.children.push(data);
         return false;
       } else {
-        useTransferData(
-          i.children,
-          dropzone,
-          data,
-          currDragId,
-          closestTarget
-        ).appendChild();
+        useTransferData().appendChild(i.children, data, closestTarget);
         return true;
       }
     });
   }
-  function appendBefore() {
+  function removeChild(arr, currDragId) {
+    arr.every((i) => {
+      if (i.id === currDragId) {
+        arr.splice(
+          arr.findIndex(({ id }) => id === currDragId),
+          1
+        );
+        return false;
+      } else {
+        useTransferData().removeChild(i.children, currDragId);
+        return true;
+      }
+    });
+  }
+  function appendBefore(arr, dragzone, data, closestTarget) {
     arr.every((i) => {
       if (i.id === closestTarget) {
         i.children.splice(
-          i.children.findIndex(({ id }) => id === dropzone),
+          i.children.findIndex(({ id }) => id === dragzone),
           0,
           data
         );
         return false;
       } else {
-        useTransferData(
+        useTransferData().appendBefore(
           i.children,
-          dropzone,
+          dragzone,
           data,
-          currDragId,
           closestTarget
-        ).appendBefore();
+        );
         return true;
       }
     });
   }
-  function appendAfter() {
+  function appendAfter(arr, dropzone, data, closestTarget) {
     arr.every((i) => {
       if (i.id === closestTarget) {
         i.children.splice(
@@ -47,48 +54,27 @@ export default function (arr, dropzone, data, currDragId, closestTarget) {
         );
         return false;
       } else {
-        useTransferData(
+        useTransferData().appendAfter(
           i.children,
           dropzone,
           data,
-          currDragId,
           closestTarget
-        ).appendAfter();
-        return true;
-      }
-    });
-  }
-  function removeChild() {
-    arr.every((i) => {
-      if (i.id === currDragId) {
-        arr.splice(
-          arr.findIndex(({ id }) => id === currDragId),
-          1
         );
-        return false;
-      } else {
-        useTransferData(
-          i.children,
-          dropzone,
-          data,
-          currDragId,
-          closestTarget
-        ).removeChild();
         return true;
       }
     });
   }
-  function appendCanvasAbove() {
+  function appendCanvasAbove(arr, dropzone, data) {
     arr.splice(arr.findIndex(({ id }) => id === dropzone) + 1, 0, data);
   }
-  function appendToCanvas() {
+  function appendToCanvas(arr, data) {
     arr.push(data);
   }
   return {
     appendChild,
+    removeChild,
     appendBefore,
     appendAfter,
-    removeChild,
     appendCanvasAbove,
     appendToCanvas,
   };
