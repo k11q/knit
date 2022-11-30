@@ -15,8 +15,11 @@
               squareStore.scale +
             'px'
           : useGetElementRect(frame.id)?.y + 'px',
+        width: useGetElementRect(frame.id)?.width + 'px',
+        maxWidth: useGetElementRect(frame.id)?.width + 'px',
+        overflow: 'hidden',
       }"
-      class="h-1 w-1 fixed overflow-visible -mt-5 will-change-transform pointer-events-auto cursor-default hover:text-[#6EB0E0] hover:opacity-100"
+      class="fixed overflow-visible -mt-5 will-change-transform pointer-events-auto cursor-default hover:text-[#6EB0E0] hover:opacity-100 overflow-ellipsis"
       :class="{
         'text-[#6EB0E0] opacity-100':
           selectToi.selectedBox === frame.id ||
@@ -44,7 +47,9 @@
       "
       @click="selectToi.changeSelected($event, frame.id, frame.type)"
     >
-      {{ frame.name }}
+      <span>
+        {{ frame.name }}
+      </span>
     </div>
   </template>
 </template>
