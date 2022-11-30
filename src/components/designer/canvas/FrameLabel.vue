@@ -10,11 +10,15 @@
         'text-[#6EB0E0] opacity-100': selectToi.selectedBox === frame.id,
         'text-[#FAFAFA] opacity-40': selectToi.selectedBox !== frame.id,
       }"
-      @mousedown="canvasStore.dndWithoutParent($event, frame.id, frame.type)"
-      @mouseover="
+      @mousedown.stop="
+        canvasStore.dndWithoutParent($event, frame.id, frame.type)
+      "
+      @mouseover.stop="
         () => {
-          useSetOutlineHover(frame.id);
-          selectToi.treeHoverId = node.id;
+          if (!canvasFF.isDragging) {
+            useSetOutlineHover(frame.id);
+          }
+          selectToi.treeHoverId = frame.id;
         }
       "
       @mouseout="
@@ -31,13 +35,13 @@
 </template>
 
 <script setup>
-import { useSquareStore } from "@/stores/dataSquare";
 import { useCounterStore } from "@/stores/counter";
 import { storeCanvas } from "@/stores/storeCanvas";
+import { useCanvasFF } from "@/stores/canvasFreeForm";
 
-const squareStore = useSquareStore();
 const selectToi = useCounterStore();
 const canvasStore = storeCanvas();
+const canvasFF = useCanvasFF();
 
 const props = defineProps({
   frames: Array,
