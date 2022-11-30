@@ -1,3 +1,4 @@
 export default function (e: MouseEvent) {
-  return document.elementFromPoint(e.clientX, e.clientY);
+  let element = document.elementFromPoint(e.clientX, e.clientY);
+  return element;
 }
