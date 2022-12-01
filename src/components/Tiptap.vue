@@ -3,6 +3,7 @@
     <editor-content
       :editor="editor"
       @keyup="$event.stopImmediatePropagation()"
+      spellcheck="false"
     />
   </ClientOnly>
 </template>
