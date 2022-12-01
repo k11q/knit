@@ -59,9 +59,7 @@
       }"
       v-bind="node.attr"
     >
-      <template
-        v-if="node.type === 'text' && selectToi.selectedTextEditor !== node.id"
-      >
+      <template v-if="node.type === 'text'">
         <div
           v-html="node.textContent"
           class="cursor-default"
@@ -69,6 +67,7 @@
             'underline decoration-[#0191FA]':
               selectToi.selectedBox === node.id && !canvasFF.isDragging,
             'hover:underline decoration-[#0191FA]': !canvasFF.isDragging,
+            'opacity-0': selectToi.selectedTextEditor === node.id,
           }"
           :style="{
             textDecorationThickness:
@@ -79,11 +78,6 @@
           draggable="false"
         ></div>
       </template>
-      <Tiptap
-        v-if="node.type === 'text' && selectToi.selectedTextEditor === node.id"
-        v-model="node.textContent"
-        spellcheck="false"
-      />
       <DesignerCanvasUIBrowser
         v-if="(node.children && node.type === 'div') || node.type === 'box'"
         :key="node.id"
@@ -108,7 +102,7 @@ const paddingResize = usePaddingResizeStore();
 const canvasStore = storeCanvas();
 
 function makeEditable(e: Event, id: string) {
-  selectToi.selectedTextEditor = id!;
+  selectToi.selectedTextEditor = id;
   useSetOutlineSelector("");
 }
 
