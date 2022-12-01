@@ -567,5 +567,6 @@ export const storeCanvas = defineStore({
         }, 0);
       }
     },
+    selectElementWithDragSelector(e) {},
   },
 });

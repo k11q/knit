@@ -1,9 +1,11 @@
 import { useSelectStore } from "@/stores/selectStore";
 import { useSquareStore } from "@/stores/dataSquare";
+import { useCounterStore } from "@/stores/counter";
 
-export default function (e: MouseEvent) {
+export default function (e) {
   const selectStore = useSelectStore();
   const squareStore = useSquareStore();
+  const selectToi = useCounterStore();
 
   const prevX = (e.clientX - squareStore.offsetLeft) / squareStore.scale;
   const prevY = (e.clientY - squareStore.offsetTop) / squareStore.scale;
@@ -14,7 +16,7 @@ export default function (e: MouseEvent) {
   window.addEventListener("mousemove", mousemove);
   window.addEventListener("mouseup", mouseup);
 
-  function mousemove(e: MouseEvent) {
+  function mousemove(e) {
     selectStore.showSelect = true;
 
     let positionX = (e.clientX - squareStore.offsetLeft) / squareStore.scale;
@@ -60,8 +62,54 @@ export default function (e: MouseEvent) {
       selectStore.X = positionX;
       selectStore.Y = positionY;
     }
+
+    let surfaceElements = [
+      ...document.querySelector(`[data-id="canvas"]`).children,
+    ];
+
+    surfaceElements.forEach((i) => {
+      let id = i.dataset.id;
+      let rect = i.getBoundingClientRect();
+      let topLeft = {
+        x: (rect.x - squareStore.offsetLeft) / squareStore.scale,
+        y: (rect.y - squareStore.offsetTop) / squareStore.scale,
+      };
+      let topRight = {
+        x: (rect.x + rect.width - squareStore.offsetLeft) / squareStore.scale,
+        y: (rect.y - squareStore.offsetTop) / squareStore.scale,
+      };
+      let bottomLeft = {
+        x: (rect.x - squareStore.offsetLeft) / squareStore.scale,
+        y: (rect.y + rect.height - squareStore.offsetTop) / squareStore.scale,
+      };
+      let bottomRight = {
+        x: (rect.x + rect.width - squareStore.offsetLeft) / squareStore.scale,
+        y: (rect.y + rect.height - squareStore.offsetTop) / squareStore.scale,
+      };
+
+      if (
+        (topLeft.x > selectStore.X &&
+          topLeft.x < selectStore.X + selectStore.width &&
+          topLeft.y > selectStore.Y &&
+          topLeft.y < selectStore.Y + selectStore.height) ||
+        (topRight.x > selectStore.X &&
+          topRight.x < selectStore.X + selectStore.width &&
+          topRight.y > selectStore.Y &&
+          topRight.y < selectStore.Y + selectStore.height) ||
+        (bottomLeft.x > selectStore.X &&
+          bottomLeft.x < selectStore.X + selectStore.width &&
+          bottomLeft.y > selectStore.Y &&
+          bottomLeft.y < selectStore.Y + selectStore.height) ||
+        (bottomRight.x > selectStore.X &&
+          bottomRight.x < selectStore.X + selectStore.width &&
+          bottomRight.y > selectStore.Y &&
+          bottomRight.y < selectStore.Y + selectStore.height)
+      ) {
+        selectToi.changeSelected(e, id);
+      }
+    });
   }
-  function mouseup(e: MouseEvent) {
+  function mouseup(e) {
     selectStore.X = NaN;
     selectStore.Y = NaN;
     selectStore.width = 0;
