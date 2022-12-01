@@ -62,7 +62,7 @@ export const storeCanvas = defineStore({
             element.parentElement.offsetTop
         ) + "px";
     },
-    dndWithoutParent(e, currDrag, currType) {
+    dndWithoutParent(e, currDrag) {
       const selectToi = useCounterStore();
       const canvasDnd = useCanvasDndStore();
       const canvasFF = useCanvasFF();
@@ -98,7 +98,7 @@ export const storeCanvas = defineStore({
         !selectToi.selectedTextEditor ||
         selectToi.selectedTextEditor === currDrag
       ) {
-        selectToi.changeSelected(e, currDrag, currType);
+        selectToi.changeSelected(e, currDrag);
         useSetOutlineSelector(currDrag);
       }
       useSetOutlineSelector(currDrag);

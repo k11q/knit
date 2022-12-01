@@ -247,14 +247,6 @@
         </div>
       </div>
     </div>
-    <!--RulerSnap element
-    <div
-    v-show="rulerSnap.show" 
-      class="absolute inset-0 overflow-visible pointer-events-none"
-    >
-      <DesignerCanvasRulerSnap />
-    </div>
-    -->
     <!--RulerSnap siblings point element-->
     <div
       v-show="rulerSnap.show && rulerSnap.on && !canvasStore.isPinchZoom"

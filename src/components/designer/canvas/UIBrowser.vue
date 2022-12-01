@@ -107,16 +107,16 @@ const squareStore = useSquareStore();
 const paddingResize = usePaddingResizeStore();
 const canvasStore = storeCanvas();
 
-function makeEditable(e: Event, id: String) {
+function makeEditable(e: Event, id: string) {
   selectToi.selectedTextEditor = id!;
   useSetOutlineSelector("");
 }
 
 //dnd on canvas
-const testDown = (e: Event, currDrag: String, currType: String) => {
+const testDown = (e: Event, currDrag: string) => {
   if (!squareStore.dragPointer && !squareStore.draggingPointer) {
     if (!useCheckParent(currDrag)) {
-      canvasStore.dndWithoutParent(e, currDrag, currType);
+      canvasStore.dndWithoutParent(e, currDrag);
     }
     if (useCheckParent(currDrag)) {
       canvasStore.dndWithParent(e, currDrag);

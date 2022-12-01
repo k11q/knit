@@ -61,10 +61,8 @@
   ></div>
 </template>
 
-<script setup>
-import { useSquareStore } from "@/stores/dataSquare";
+<script setup lang="ts">
 import { useRulerSnapStore } from "@/stores/rulerSnap";
 
-const squareStore = useSquareStore();
 const rulerSnap = useRulerSnapStore();
 </script>

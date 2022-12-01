@@ -532,15 +532,12 @@ export const useCounterStore = defineStore({
     changeJustify(value) {
       this.selectedBoxData.attr.style.justifyContent = value;
     },
-    changeSelected(e, id, type) {
+    changeSelected(e, id) {
       const squareStore = useSquareStore();
       const paddingResize = usePaddingResizeStore();
 
       if (squareStore.dragPointer || squareStore.draggingPointer) {
       } else {
-        if (type !== "text") {
-          e.preventDefault();
-        }
         e.stopPropagation();
 
         Promise.resolve()

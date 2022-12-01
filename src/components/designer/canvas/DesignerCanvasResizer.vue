@@ -30,6 +30,7 @@
             'px',
       height:
         selectToi.selectedBoxData.attr?.style?.height &&
+        selectToi.selectedBoxData.attr?.style?.height !== 'fit-content' &&
         !useCheckParent(selectToi.selectedBoxData.id)
           ? selectToi.selectedBoxData.attr.style.height
           : Math.round(
@@ -39,6 +40,7 @@
             'px',
       width:
         selectToi.selectedBoxData.attr?.style?.width &&
+        selectToi.selectedBoxData.attr?.style?.width !== 'fit-content' &&
         !useCheckParent(selectToi.selectedBoxData.id)
           ? selectToi.selectedBoxData.attr.style.width
           : Math.round(useGetElementRect(selectToi.selectedBoxData.id)?.width) /
@@ -399,18 +401,26 @@
           }"
         >
           {{
-            selectToi.selectedBoxData.attr?.style.height
+            selectToi.selectedBoxData.attr?.style.height &&
+            selectToi.selectedBoxData.attr?.style.height !== "fit-content"
               ? Math.round(
                   parseInt(selectToi.selectedBoxData.attr?.style.height)
                 )
+              : selectToi.selectedBoxData.attr?.style.height &&
+                selectToi.selectedBoxData.attr?.style.height === "fit-content"
+              ? "Hug"
               : "Fill"
           }}
           x
           {{
-            selectToi.selectedBoxData.attr?.style.width
+            selectToi.selectedBoxData.attr?.style.width &&
+            selectToi.selectedBoxData.attr?.style.width !== "fit-content"
               ? Math.round(
                   parseInt(selectToi.selectedBoxData.attr?.style.width)
                 )
+              : selectToi.selectedBoxData.attr?.style.width &&
+                selectToi.selectedBoxData.attr?.style.width === "fit-content"
+              ? "Hug"
               : "Fill"
           }}
         </span>
