@@ -8,6 +8,8 @@ export const useRulerSnapStore = defineStore({
   state: () => ({
     show: false,
     on: false,
+    snapTop: false,
+    snapLeft: false,
     currDragPoints: {},
     displayedPoints: {},
     lines: {},
@@ -722,8 +724,8 @@ export const useRulerSnapStore = defineStore({
               snapLinesCopy.lineRight
             ) {
               this.show = true;
-              this.sna;
               if (snapLinesCopy.lineTop) {
+                this.snapTop = true;
                 selectToi.selectedBoxData.attr.style.top =
                   Math.round(
                     (snapLinesCopy.lineTop - squareStore.offsetTop) /
@@ -734,10 +736,11 @@ export const useRulerSnapStore = defineStore({
                   !snapLinesCopy.lineMiddleX &&
                   !snapLinesCopy.lineRight
                 ) {
-                  dndStore.setLeftPosition(e);
+                  this.snapLeft = false;
                 }
               }
               if (snapLinesCopy.lineMiddleY) {
+                this.snapTop = true;
                 selectToi.selectedBoxData.attr.style.top =
                   Math.round(
                     (snapLinesCopy.lineMiddleY -
@@ -750,10 +753,11 @@ export const useRulerSnapStore = defineStore({
                   !snapLinesCopy.lineMiddleX &&
                   !snapLinesCopy.lineRight
                 ) {
-                  dndStore.setLeftPosition(e);
+                  this.snapLeft = false;
                 }
               }
               if (snapLinesCopy.lineBottom) {
+                this.snapTop = true;
                 selectToi.selectedBoxData.attr.style.top =
                   Math.round(
                     (snapLinesCopy.lineBottom -
@@ -766,10 +770,11 @@ export const useRulerSnapStore = defineStore({
                   !snapLinesCopy.lineMiddleX &&
                   !snapLinesCopy.lineRight
                 ) {
-                  dndStore.setLeftPosition(e);
+                  this.snapLeft = false;
                 }
               }
               if (snapLinesCopy.lineLeft) {
+                this.snapLeft = true;
                 selectToi.selectedBoxData.attr.style.left =
                   Math.round(
                     (snapLinesCopy.lineLeft - squareStore.offsetLeft) /
@@ -780,10 +785,11 @@ export const useRulerSnapStore = defineStore({
                   !snapLinesCopy.lineMiddleY &&
                   !snapLinesCopy.lineBottom
                 ) {
-                  dndStore.setTopPosition(e);
+                  this.snapTop = false;
                 }
               }
               if (snapLinesCopy.lineMiddleX) {
+                this.snapLeft = true;
                 selectToi.selectedBoxData.attr.style.left =
                   Math.round(
                     (snapLinesCopy.lineMiddleX -
@@ -796,10 +802,11 @@ export const useRulerSnapStore = defineStore({
                   !snapLinesCopy.lineMiddleY &&
                   !snapLinesCopy.lineBottom
                 ) {
-                  dndStore.setTopPosition(e);
+                  this.snapTop = false;
                 }
               }
               if (snapLinesCopy.lineRight) {
+                this.snapLeft = true;
                 selectToi.selectedBoxData.attr.style.left =
                   Math.round(
                     (snapLinesCopy.lineRight -
@@ -812,7 +819,7 @@ export const useRulerSnapStore = defineStore({
                   !snapLinesCopy.lineMiddleY &&
                   !snapLinesCopy.lineBottom
                 ) {
-                  dndStore.setTopPosition(e);
+                  this.snapTop = false;
                 }
               }
             }
@@ -826,8 +833,8 @@ export const useRulerSnapStore = defineStore({
               !snapLinesCopy.lineRight
             ) {
               this.show = false;
-              dndStore.setTopPosition(e);
-              dndStore.setLeftPosition(e);
+              this.snapTop = false;
+              this.snapLeft = false;
             }
             this.snapLines = { ...snapLinesCopy };
           })
@@ -835,8 +842,8 @@ export const useRulerSnapStore = defineStore({
             this.setSiblingsPoints(id);
           });
       } else if (!this.on) {
-        dndStore.setTopPosition(e);
-        dndStore.setLeftPosition(e);
+        this.snapTop = false;
+        this.snapLeft = false;
       }
     },
   },

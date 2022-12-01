@@ -101,6 +101,7 @@ export const useResizeStore = defineStore({
       const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
       const rulerSnap = useRulerSnapStore();
+      const selectToi = useCounterStore();
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
@@ -116,8 +117,20 @@ export const useResizeStore = defineStore({
         window.addEventListener("mouseup", mouseup);
 
         function mousemove(e) {
-          resizeStore.resizeWidthForward(e);
-          resizeStore.resizeHeightForward(e);
+          if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
+            rulerSnap.on = true;
+            if (!rulerSnap.snapLeft) {
+              resizeStore.resizeWidthForward(e);
+            }
+            if (!rulerSnap.snapTop) {
+              resizeStore.resizeHeightForward(e);
+            }
+          } else if (Math.abs(e.movementX) > 5 || Math.abs(e.movementX) > 5) {
+            rulerSnap.on = false;
+            resizeStore.resizeWidthForward(e);
+            resizeStore.resizeHeightForward(e);
+          }
+          rulerSnap.setRulerSnap(e, selectToi.selectedBoxData?.id);
         }
 
         function mouseup() {

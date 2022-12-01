@@ -118,8 +118,16 @@ export const storeCanvas = defineStore({
           useGetElement(currDrag).style.willChange = "left, top";
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
             rulerSnap.on = true;
+            if (!rulerSnap.snapLeft) {
+              canvasStore.setLeftPosition(e);
+            }
+            if (!rulerSnap.snapTop) {
+              canvasStore.setTopPosition(e);
+            }
           } else if (Math.abs(e.movementX) > 5 || Math.abs(e.movementX) > 5) {
             rulerSnap.on = false;
+            canvasStore.setLeftPosition(e);
+            canvasStore.setTopPosition(e);
           }
 
           rulerSnap.setRulerSnap(e, currDrag);
@@ -437,9 +445,18 @@ export const storeCanvas = defineStore({
           rulerSnap.prevY = prevY;
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
             rulerSnap.on = true;
+            if (!rulerSnap.snapLeft) {
+              canvasStore.setLeftPosition(e);
+            }
+            if (!rulerSnap.snapTop) {
+              canvasStore.setTopPosition(e);
+            }
           } else if (Math.abs(e.movementX) > 5 || Math.abs(e.movementX) > 5) {
             rulerSnap.on = false;
+            canvasStore.setLeftPosition(e);
+            canvasStore.setTopPosition(e);
           }
+
           rulerSnap.setRulerSnap(e, currDrag);
         }
 
