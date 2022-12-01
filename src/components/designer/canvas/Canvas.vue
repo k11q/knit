@@ -246,6 +246,38 @@
           />
         </div>
       </div>
+      <!--Tiptap text editor-->
+      <div class="absolute inset-0 overflow-visible pointer-events-none">
+        <div
+          :style="{
+            willChange: 'left, top',
+            left:
+              (useGetElementRect(selectToi.selectedBoxData.id)?.left -
+                addaSquare.offsetLeft) /
+                addaSquare.scale +
+              'px',
+            top:
+              (useGetElementRect(selectToi.selectedBoxData.id)?.top -
+                addaSquare.offsetTop) /
+                addaSquare.scale +
+              'px',
+
+            fontSize: selectToi.selectedBoxData?.attr?.style?.fontSize,
+            color: selectToi.selectedBoxData?.attr?.style?.color,
+          }"
+          class="absolute pointer-events-none"
+        >
+          <div
+            @mousedown.stop="$event.stopPropagation()"
+            class="pointer-events-auto"
+          >
+            <Tiptap
+              v-if="selectToi.selectedTextEditor"
+              v-model="selectToi.selectedBoxData.textContent"
+            />
+          </div>
+        </div>
+      </div>
     </div>
     <!--RulerSnap siblings point element-->
     <div
@@ -271,31 +303,6 @@
       class="absolute inset-0 overflow-visible pointer-events-none"
     >
       <DesignerCanvasNewRulerSnap />
-    </div>
-    <!--Tiptap text editor-->
-    <div class="absolute inset-0 overflow-visible pointer-events-none">
-      <div
-        :style="{
-          willChange: 'left, top',
-          left: useGetElementRect(selectToi.selectedBoxData.id)?.x + 'px',
-          top: useGetElementRect(selectToi.selectedBoxData.id)?.y + 'px',
-          transform: `scale(${addaSquare.scale})`,
-
-          fontSize: selectToi.selectedBoxData?.attr?.style?.fontSize,
-          color: selectToi.selectedBoxData?.attr?.style?.color,
-        }"
-        class="absolute pointer-events-none"
-      >
-        <div
-          @mousedown.stop="$event.stopPropagation()"
-          class="pointer-events-auto"
-        >
-          <Tiptap
-            v-if="selectToi.selectedTextEditor"
-            v-model="selectToi.selectedBoxData.textContent"
-          />
-        </div>
-      </div>
     </div>
   </div>
 </template>
