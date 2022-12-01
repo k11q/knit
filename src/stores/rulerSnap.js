@@ -1234,6 +1234,12 @@ export const useRulerSnapStore = defineStore({
           this.snapWidth = false;
         }
       }
+      if (useCheckParent(id)) {
+        this.snapTop = false;
+        this.snapLeft = false;
+        this.snapHeight = false;
+        this.snapWidth = false;
+      }
     },
   },
 });
