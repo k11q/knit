@@ -19,35 +19,37 @@
         maxWidth: useGetElementRect(frame.id)?.width + 'px',
         overflow: 'hidden',
       }"
-      class="fixed overflow-visible -mt-5 will-change-transform pointer-events-auto cursor-default hover:text-[#6EB0E0] hover:opacity-100 overflow-ellipsis"
-      :class="{
-        'text-[#6EB0E0] opacity-100':
-          selectToi.selectedBox === frame.id ||
-          selectToi.treeHoverId === frame.id,
-        'text-[#FAFAFA] opacity-40':
-          selectToi.selectedBox !== frame.id &&
-          selectToi.treeHoverId !== frame.id,
-      }"
-      @mousedown.stop="
-        canvasStore.dndWithoutParent($event, frame.id, frame.type)
-      "
-      @mouseover.stop="
-        () => {
-          if (!canvasFF.isDragging) {
-            useSetOutlineHover(frame.id);
-          }
-          selectToi.treeHoverId = frame.id;
-        }
-      "
-      @mouseout="
-        () => {
-          selectToi.treeHover = false;
-          selectToi.treeHoverId = '';
-        }
-      "
-      @click="selectToi.changeSelected($event, frame.id, frame.type)"
+      class="fixed overflow-visible -mt-5 will-change-transform pointer-events-auto cursor-default overflow-ellipsis"
     >
-      <span>
+      <span
+        @mousedown.stop="
+          canvasStore.dndWithoutParent($event, frame.id, frame.type)
+        "
+        @mouseover.stop="
+          () => {
+            if (!canvasFF.isDragging) {
+              useSetOutlineHover(frame.id);
+            }
+            selectToi.treeHoverId = frame.id;
+          }
+        "
+        @mouseout="
+          () => {
+            selectToi.treeHover = false;
+            selectToi.treeHoverId = '';
+          }
+        "
+        @click="selectToi.changeSelected($event, frame.id, frame.type)"
+        class="fixed overflow-visible will-change-transform pointer-events-auto cursor-default hover:text-[#6EB0E0] hover:opacity-100 overflow-ellipsis"
+        :class="{
+          'text-[#6EB0E0] opacity-100':
+            selectToi.selectedBox === frame.id ||
+            selectToi.treeHoverId === frame.id,
+          'text-[#FAFAFA] opacity-40':
+            selectToi.selectedBox !== frame.id &&
+            selectToi.treeHoverId !== frame.id,
+        }"
+      >
         {{ frame.name }}
       </span>
     </div>
