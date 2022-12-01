@@ -1,5 +1,10 @@
 <template>
-  <editor-content :editor="editor" @keyup="$event.stopImmediatePropagation()" />
+  <ClientOnly>
+    <editor-content
+      :editor="editor"
+      @keyup="$event.stopImmediatePropagation()"
+    />
+  </ClientOnly>
 </template>
 
 <script lang="ts" setup>
