@@ -30,6 +30,7 @@
 
     <!--Other elements parent container-->
     <div
+      v-show="!canvasStore.isPinchZoom"
       class="fixed top-0 left-0 w-0 h-0 overflow-visible"
       :style="{
         willChange: 'transform',
@@ -256,7 +257,7 @@
     -->
     <!--RulerSnap siblings point element-->
     <div
-      v-show="rulerSnap.show && rulerSnap.on"
+      v-show="rulerSnap.show && rulerSnap.on && !canvasStore.isPinchZoom"
       class="absolute inset-0 overflow-visible pointer-events-none"
     >
       <DesignerCanvasRulerPoints :points="rulerSnap.snapPoints" />
@@ -274,7 +275,7 @@
     </div>
     <!--NEW Ruler element-->
     <div
-      v-show="rulerSnap.show && rulerSnap.on"
+      v-show="rulerSnap.show && rulerSnap.on && !canvasStore.isPinchZoom"
       class="absolute inset-0 overflow-visible pointer-events-none"
     >
       <DesignerCanvasNewRulerSnap />

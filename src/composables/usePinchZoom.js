@@ -7,6 +7,7 @@ export default function (event) {
 
   event.preventDefault();
   canvasStore.isPinchZoom = true;
+  console.log("ispinch");
 
   if (
     event.deltaX === 0 &&
@@ -30,7 +31,7 @@ export default function (event) {
   function endPinchZoom() {
     setTimeout(() => {
       canvasStore.isPinchZoom = false;
-    }, "200");
+    }, "400");
   }
   endPinchZoom();
 }
