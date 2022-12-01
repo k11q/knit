@@ -264,7 +264,7 @@
     </div>
     <!--frames label-->
     <div
-      v-if="selectToi.data"
+      v-if="selectToi.data && !canvasStore.isPinchZoom"
       class="absolute inset-0 overflow-visible pointer-events-none"
     >
       <ClientOnly>
