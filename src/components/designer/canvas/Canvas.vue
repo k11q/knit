@@ -21,9 +21,11 @@
         transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
       }"
     >
-      <KeepAlive>
-        <DesignerCanvasUIBrowser :nodes="selectToi.data" />
-      </KeepAlive>
+      <ClientOnly>
+        <KeepAlive>
+          <DesignerCanvasUIBrowser :nodes="selectToi.data" />
+        </KeepAlive>
+      </ClientOnly>
     </div>
 
     <!--Other elements parent container-->
