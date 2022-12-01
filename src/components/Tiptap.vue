@@ -4,6 +4,9 @@
       :editor="editor"
       @keyup="$event.stopImmediatePropagation()"
       spellcheck="false"
+      :style="{
+        outline: `${1 / squareStore.scale}px solid #0191FA`,
+      }"
     />
   </ClientOnly>
 </template>
@@ -67,6 +70,6 @@ editorStore.editor = editor;
 }
 
 .ProseMirror-focused {
-  outline: v-bind(`${1 / squareStore.scale}px solid #0191FA`);
+  outline: none;
 }
 </style>
