@@ -143,8 +143,8 @@ export const useResizeStore = defineStore({
         }
 
         function mouseup() {
-          resizeStore.isResizingBottomRight = false;
           resizeStore.isResizing = false;
+          resizeStore.isResizingBottomRight = false;
           rulerSnap.show = false;
           window.removeEventListener("mousemove", mousemove);
           window.removeEventListener("mouseup", mouseup);
@@ -154,6 +154,7 @@ export const useResizeStore = defineStore({
     resizeBottomLeft(e) {
       const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
+      const rulerSnap = useRulerSnapStore();
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
@@ -170,13 +171,29 @@ export const useResizeStore = defineStore({
         window.addEventListener("mouseup", mouseup);
 
         function mousemove(e) {
-          resizeStore.resizeWidthReverse(e);
-          resizeStore.resizeHeightForward(e);
-          resizeStore.resizeLeftForward(e);
+          resizeStore.isResizingBottomLeft = true;
+          if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
+            rulerSnap.on = true;
+            if (!rulerSnap.snapWidth && !rulerSnap.snapLeft) {
+              resizeStore.resizeWidthReverse(e);
+              resizeStore.resizeLeftForward(e);
+            }
+            if (!rulerSnap.snapHeight) {
+              resizeStore.resizeHeightForward(e);
+            }
+          } else if (Math.abs(e.movementX) > 5 || Math.abs(e.movementX) > 5) {
+            rulerSnap.on = false;
+            resizeStore.resizeWidthReverse(e);
+            resizeStore.resizeHeightForward(e);
+            resizeStore.resizeLeftForward(e);
+          }
+          rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
         }
 
         function mouseup() {
           resizeStore.isResizing = false;
+          resizeStore.isResizingBottomLeft = false;
+          rulerSnap.show = false;
           window.removeEventListener("mousemove", mousemove);
           window.removeEventListener("mouseup", mouseup);
         }
@@ -185,7 +202,7 @@ export const useResizeStore = defineStore({
     resizeTopLeft(e) {
       const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
-
+      const rulerSnap = useRulerSnapStore();
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
@@ -203,14 +220,31 @@ export const useResizeStore = defineStore({
         window.addEventListener("mouseup", mouseup);
 
         function mousemove(e) {
-          resizeStore.resizeLeftForward(e);
-          resizeStore.resizeTopForward(e);
-          resizeStore.resizeWidthReverse(e);
-          resizeStore.resizeHeightReverse(e);
+          resizeStore.isResizingTopLeft = true;
+          if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
+            rulerSnap.on = true;
+            if (!rulerSnap.snapWidth && !rulerSnap.snapLeft) {
+              resizeStore.resizeLeftForward(e);
+              resizeStore.resizeWidthReverse(e);
+            }
+            if (!rulerSnap.snapTop && !rulerSnap.snapHeight) {
+              resizeStore.resizeTopForward(e);
+              resizeStore.resizeHeightReverse(e);
+            }
+          } else if (Math.abs(e.movementX) > 5 || Math.abs(e.movementX) > 5) {
+            rulerSnap.on = false;
+            resizeStore.resizeLeftForward(e);
+            resizeStore.resizeTopForward(e);
+            resizeStore.resizeWidthReverse(e);
+            resizeStore.resizeHeightReverse(e);
+          }
+          rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
         }
 
         function mouseup() {
           resizeStore.isResizing = false;
+          resizeStore.isResizingTopLeft = false;
+          rulerSnap.show = false;
           window.removeEventListener("mousemove", mousemove);
           window.removeEventListener("mouseup", mouseup);
         }
@@ -219,6 +253,7 @@ export const useResizeStore = defineStore({
     resizeTopRight(e) {
       const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
+      const rulerSnap = useRulerSnapStore();
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
@@ -235,13 +270,29 @@ export const useResizeStore = defineStore({
         window.addEventListener("mouseup", mouseup);
 
         function mousemove(e) {
-          resizeStore.resizeWidthForward(e);
-          resizeStore.resizeTopForward(e);
-          resizeStore.resizeHeightReverse(e);
+          resizeStore.isResizingTopRight = true;
+          if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
+            rulerSnap.on = true;
+            if (!rulerSnap.snapTop && !rulerSnap.snapHeight) {
+              resizeStore.resizeTopForward(e);
+              resizeStore.resizeHeightReverse(e);
+            }
+            if (!rulerSnap.snapWidth) {
+              resizeStore.resizeWidthForward(e);
+            }
+          } else if (Math.abs(e.movementX) > 5 || Math.abs(e.movementX) > 5) {
+            rulerSnap.on = false;
+            resizeStore.resizeWidthForward(e);
+            resizeStore.resizeTopForward(e);
+            resizeStore.resizeHeightReverse(e);
+          }
+          rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
         }
 
         function mouseup() {
           resizeStore.isResizing = false;
+          resizeStore.isResizingTopRight = false;
+          rulerSnap.show = false;
           window.removeEventListener("mousemove", mousemove);
           window.removeEventListener("mouseup", mouseup);
         }
@@ -250,6 +301,7 @@ export const useResizeStore = defineStore({
     resizeRight(e) {
       const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
+      const rulerSnap = useRulerSnapStore();
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
@@ -263,11 +315,23 @@ export const useResizeStore = defineStore({
         window.addEventListener("mouseup", mouseup);
 
         function mousemove(e) {
-          resizeStore.resizeWidthForward(e);
+          resizeStore.isResizingRight = true;
+          if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
+            rulerSnap.on = true;
+            if (!rulerSnap.snapWidth) {
+              resizeStore.resizeWidthForward(e);
+            }
+          } else if (Math.abs(e.movementX) > 5 || Math.abs(e.movementX) > 5) {
+            rulerSnap.on = false;
+            resizeStore.resizeWidthForward(e);
+          }
+          rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
         }
 
         function mouseup() {
           resizeStore.isResizing = false;
+          resizeStore.isResizingRight = false;
+          rulerSnap.show = false;
           window.removeEventListener("mousemove", mousemove);
           window.removeEventListener("mouseup", mouseup);
         }
@@ -276,6 +340,7 @@ export const useResizeStore = defineStore({
     resizeLeft(e) {
       const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
+      const rulerSnap = useRulerSnapStore();
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
@@ -290,12 +355,25 @@ export const useResizeStore = defineStore({
         window.addEventListener("mouseup", mouseup);
 
         function mousemove(e) {
-          resizeStore.resizeWidthReverse(e);
-          resizeStore.resizeLeftForward(e);
+          resizeStore.isResizingLeft = true;
+          if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
+            rulerSnap.on = true;
+            if (!rulerSnap.snapLeft && !rulerSnap.snapWidth) {
+              resizeStore.resizeWidthReverse(e);
+              resizeStore.resizeLeftForward(e);
+            }
+          } else if (Math.abs(e.movementX) > 5 || Math.abs(e.movementX) > 5) {
+            rulerSnap.on = false;
+            resizeStore.resizeWidthReverse(e);
+            resizeStore.resizeLeftForward(e);
+          }
+          rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
         }
 
         function mouseup() {
           resizeStore.isResizing = false;
+          resizeStore.isResizingLeft = false;
+          rulerSnap.show = false;
           window.removeEventListener("mousemove", mousemove);
           window.removeEventListener("mouseup", mouseup);
         }
@@ -335,8 +413,8 @@ export const useResizeStore = defineStore({
         }
 
         function mouseup() {
-          resizeStore.isResizingTop = false;
           resizeStore.isResizing = false;
+          resizeStore.isResizingTop = false;
           rulerSnap.show = false;
           window.removeEventListener("mousemove", mousemove);
           window.removeEventListener("mouseup", mouseup);
@@ -346,6 +424,7 @@ export const useResizeStore = defineStore({
     resizeBottom(e) {
       const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
+      const rulerSnap = useRulerSnapStore();
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
@@ -359,11 +438,23 @@ export const useResizeStore = defineStore({
         window.addEventListener("mouseup", mouseup);
 
         function mousemove(e) {
-          resizeStore.resizeHeightForward(e);
+          resizeStore.isResizingBottom = true;
+          if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
+            rulerSnap.on = true;
+            if (!rulerSnap.snapHeight) {
+              resizeStore.resizeHeightForward(e);
+            }
+          } else if (Math.abs(e.movementX) > 5 || Math.abs(e.movementX) > 5) {
+            rulerSnap.on = false;
+            resizeStore.resizeHeightForward(e);
+          }
+          rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
         }
 
         function mouseup() {
           resizeStore.isResizing = false;
+          resizeStore.isResizingBottom = false;
+          rulerSnap.show = false;
           window.removeEventListener("mousemove", mousemove);
           window.removeEventListener("mouseup", mouseup);
         }

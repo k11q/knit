@@ -36,8 +36,9 @@
     <div
       class="pointer-events-auto"
       v-show="
-        useGetElementRect(selectToi.selectedBoxData.id)?.width > 100 ||
-        useGetElementRect(selectToi.selectedBoxData.id)?.height > 100
+        (useGetElementRect(selectToi.selectedBoxData.id)?.width > 100 ||
+          useGetElementRect(selectToi.selectedBoxData.id)?.height > 100) &&
+        !resizeStore.isResizing
       "
     >
       <div
@@ -167,7 +168,8 @@
       v-show="
         (useGetElementRect(selectToi.selectedBoxData.id)?.width > 100 ||
           useGetElementRect(selectToi.selectedBoxData.id)?.height > 100) &&
-        useGetElement(selectToi.selectedBoxData.id)?.children?.length
+        useGetElement(selectToi.selectedBoxData.id)?.children?.length &&
+        !resizeStore.isResizing
       "
     >
       <div

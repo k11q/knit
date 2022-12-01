@@ -979,6 +979,8 @@ export const useRulerSnapStore = defineStore({
               }
               //resize bottom right
               if (resizeStore.isResizingBottomRight) {
+                this.snapLeft = false;
+                this.snapTop = false;
                 if (snapLinesCopy.lineX) {
                   this.snapWidth = true;
                   selectToi.selectedBoxData.attr.style.width =
