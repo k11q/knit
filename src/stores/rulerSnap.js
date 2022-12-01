@@ -977,17 +977,173 @@ export const useRulerSnapStore = defineStore({
                 };
                 this.snapLines = { ...snapLinesCopy2 };
               }
-              //resize bottom right
-              if (resizeStore.isResizingBottomRight) {
-                this.snapLeft = false;
+              //resize bottom
+              if (resizeStore.isResizingBottom) {
                 this.snapTop = false;
+                this.snapHeight = true;
+                this.snapWidth = false;
+                this.snapLeft = false;
+
+                selectToi.selectedBoxData.attr.style.height =
+                  Math.round(
+                    (snapLinesCopy.lineY - squareStore.offsetTop) /
+                      squareStore.scale -
+                      resizeStore.prevTop
+                  ) + "px";
+                let snapLinesCopy2 = {
+                  lineBottom: snapLinesCopy.lineY,
+                };
+                this.snapLines = { ...snapLinesCopy2 };
+              }
+              //resize left
+              if (resizeStore.isResizingLeft) {
+                this.snapTop = false;
+                this.snapHeight = false;
+                this.snapWidth = true;
+                this.snapLeft = true;
+
+                selectToi.selectedBoxData.attr.style.left =
+                  Math.round(
+                    (snapLinesCopy.lineX - squareStore.offsetLeft) /
+                      squareStore.scale
+                  ) + "px";
+                selectToi.selectedBoxData.attr.style.width =
+                  Math.round(
+                    resizeStore.prevLeft +
+                      resizeStore.prevWidth -
+                      (snapLinesCopy.lineX - squareStore.offsetLeft) /
+                        squareStore.scale
+                  ) + "px";
+                let snapLinesCopy2 = {
+                  lineLeft: snapLinesCopy.lineX,
+                };
+                this.snapLines = { ...snapLinesCopy2 };
+              }
+              //resize right
+              if (resizeStore.isResizingRight) {
+                this.snapTop = false;
+                this.snapHeight = false;
+                this.snapWidth = true;
+                this.snapLeft = false;
+
+                selectToi.selectedBoxData.attr.style.width =
+                  Math.round(
+                    (snapLinesCopy.lineX - squareStore.offsetLeft) /
+                      squareStore.scale -
+                      resizeStore.prevLeft
+                  ) + "px";
+                let snapLinesCopy2 = {
+                  lineRight: snapLinesCopy.lineX,
+                };
+                this.snapLines = { ...snapLinesCopy2 };
+              }
+              //resize top left
+              if (resizeStore.isResizingTopLeft) {
+                if (snapLinesCopy.lineX) {
+                  this.snapWidth = true;
+                  this.snapLeft = true;
+                  selectToi.selectedBoxData.attr.style.left =
+                    Math.round(
+                      (snapLinesCopy.lineX - squareStore.offsetLeft) /
+                        squareStore.scale
+                    ) + "px";
+                  selectToi.selectedBoxData.attr.style.width =
+                    Math.round(
+                      resizeStore.prevLeft +
+                        resizeStore.prevWidth -
+                        (snapLinesCopy.lineX - squareStore.offsetLeft) /
+                          squareStore.scale
+                    ) + "px";
+                  if (!snapLinesCopy.lineY) {
+                    this.snapHeight = false;
+                    this.snapTop = false;
+                  }
+                }
+                if (snapLinesCopy.lineY) {
+                  this.snapHeight = true;
+                  this.snapTop = true;
+                  selectToi.selectedBoxData.attr.style.top =
+                    Math.round(
+                      (snapLinesCopy.lineY - squareStore.offsetTop) /
+                        squareStore.scale
+                    ) + "px";
+                  selectToi.selectedBoxData.attr.style.height =
+                    Math.round(
+                      resizeStore.prevTop +
+                        resizeStore.prevHeight -
+                        (snapLinesCopy.lineY - squareStore.offsetTop) /
+                          squareStore.scale
+                    ) + "px";
+
+                  if (!snapLinesCopy.lineX) {
+                    this.snapWidth = false;
+                    this.snapLeft = false;
+                  }
+                }
+                let snapLinesCopy2 = {
+                  lineTop: snapLinesCopy.lineY,
+                  lineLeft: snapLinesCopy.lineX,
+                };
+                this.snapLines = { ...snapLinesCopy2 };
+              }
+              //resize top right
+              if (resizeStore.isResizingTopRight) {
+                this.snapLeft = false;
                 if (snapLinesCopy.lineX) {
                   this.snapWidth = true;
                   selectToi.selectedBoxData.attr.style.width =
                     Math.round(
                       (snapLinesCopy.lineX - squareStore.offsetLeft) /
                         squareStore.scale -
-                        parseInt(selectToi.selectedBoxData.attr.style.left)
+                        resizeStore.prevLeft
+                    ) + "px";
+                  if (!snapLinesCopy.lineY) {
+                    this.snapHeight = false;
+                    this.snapTop = false;
+                  }
+                }
+                if (snapLinesCopy.lineY) {
+                  this.snapHeight = true;
+                  this.snapTop = true;
+                  selectToi.selectedBoxData.attr.style.top =
+                    Math.round(
+                      (snapLinesCopy.lineY - squareStore.offsetTop) /
+                        squareStore.scale
+                    ) + "px";
+                  selectToi.selectedBoxData.attr.style.height =
+                    Math.round(
+                      resizeStore.prevTop +
+                        resizeStore.prevHeight -
+                        (snapLinesCopy.lineY - squareStore.offsetTop) /
+                          squareStore.scale
+                    ) + "px";
+                  if (!snapLinesCopy.lineX) {
+                    this.snapWidth = false;
+                  }
+                }
+                let snapLinesCopy2 = {
+                  lineTop: snapLinesCopy.lineY,
+                  lineRight: snapLinesCopy.lineX,
+                };
+                this.snapLines = { ...snapLinesCopy2 };
+              }
+              //resize bottom left
+              if (resizeStore.isResizingBottomLeft) {
+                this.snapTop = false;
+                if (snapLinesCopy.lineX) {
+                  this.snapWidth = true;
+                  this.snapLeft = true;
+                  selectToi.selectedBoxData.attr.style.left =
+                    Math.round(
+                      (snapLinesCopy.lineX - squareStore.offsetLeft) /
+                        squareStore.scale
+                    ) + "px";
+                  selectToi.selectedBoxData.attr.style.width =
+                    Math.round(
+                      resizeStore.prevLeft +
+                        resizeStore.prevWidth -
+                        (snapLinesCopy.lineX - squareStore.offsetLeft) /
+                          squareStore.scale
                     ) + "px";
                   if (!snapLinesCopy.lineY) {
                     this.snapHeight = false;
@@ -999,11 +1155,46 @@ export const useRulerSnapStore = defineStore({
                     Math.round(
                       (snapLinesCopy.lineY - squareStore.offsetTop) /
                         squareStore.scale -
-                        parseInt(selectToi.selectedBoxData.attr.style.top)
+                        prevTop
                     ) + "px";
+                  if (!snapLinesCopy.lineX) {
+                    this.snapWidth = false;
+                    this.snapLeft = false;
+                  }
                 }
-                if (!snapLinesCopy.lineX) {
-                  this.snapWidth = false;
+                let snapLinesCopy2 = {
+                  lineBottom: snapLinesCopy.lineY,
+                  lineLeft: snapLinesCopy.lineX,
+                };
+                this.snapLines = { ...snapLinesCopy2 };
+              }
+              //resize bottom right
+              if (resizeStore.isResizingBottomRight) {
+                this.snapLeft = false;
+                this.snapTop = false;
+                if (snapLinesCopy.lineX) {
+                  this.snapWidth = true;
+                  selectToi.selectedBoxData.attr.style.width =
+                    Math.round(
+                      (snapLinesCopy.lineX - squareStore.offsetLeft) /
+                        squareStore.scale -
+                        resizeStore.prevLeft
+                    ) + "px";
+                  if (!snapLinesCopy.lineY) {
+                    this.snapHeight = false;
+                  }
+                }
+                if (snapLinesCopy.lineY) {
+                  this.snapHeight = true;
+                  selectToi.selectedBoxData.attr.style.height =
+                    Math.round(
+                      (snapLinesCopy.lineY - squareStore.offsetTop) /
+                        squareStore.scale -
+                        resizeStore.prevTop
+                    ) + "px";
+                  if (!snapLinesCopy.lineX) {
+                    this.snapWidth = false;
+                  }
                 }
                 let snapLinesCopy2 = {
                   lineBottom: snapLinesCopy.lineY,

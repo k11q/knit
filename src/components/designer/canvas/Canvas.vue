@@ -262,9 +262,11 @@
       v-if="selectToi.data"
       class="absolute inset-0 overflow-visible pointer-events-none"
     >
-      <DesignerCanvasFrameLabel
-        :frames="selectToi.data?.filter((i) => i.type === 'div')"
-      />
+      <ClientOnly>
+        <DesignerCanvasFrameLabel
+          :frames="selectToi.data?.filter((i) => i.type === 'div')"
+        />
+      </ClientOnly>
     </div>
     <!--NEW Ruler element-->
     <div

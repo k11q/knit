@@ -112,6 +112,8 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
+        this.prevLeft = parseInt(selectToi.selectedBoxData.attr.style.left);
+        this.prevTop = parseInt(selectToi.selectedBoxData.attr.style.top);
         this.prevWidth = parseInt(selectToi.selectedBoxData.attr.style.width);
         this.prevHeight = parseInt(selectToi.selectedBoxData.attr.style.height);
 
@@ -158,6 +160,7 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
+        this.prevTop = parseInt(selectToi.selectedBoxData.attr.style.top);
         this.prevWidth = parseInt(selectToi.selectedBoxData.attr.style.width);
         this.prevHeight = parseInt(selectToi.selectedBoxData.attr.style.height);
         this.prevLeft = parseInt(selectToi.selectedBoxData.attr.style.left);
@@ -257,6 +260,7 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
+        this.prevLeft = parseInt(selectToi.selectedBoxData.attr.style.left);
         this.prevWidth = parseInt(selectToi.selectedBoxData.attr.style.width);
         this.prevTop = parseInt(selectToi.selectedBoxData.attr.style.top);
         this.prevHeight = parseInt(selectToi.selectedBoxData.attr.style.height);
@@ -305,6 +309,7 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
+        this.prevLeft = parseInt(selectToi.selectedBoxData.attr.style.left);
         this.prevWidth = parseInt(selectToi.selectedBoxData.attr.style.width);
 
         this.prevX = e.clientX;
@@ -428,6 +433,7 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
+        this.prevTop = parseInt(selectToi.selectedBoxData.attr.style.top);
         this.prevHeight = parseInt(selectToi.selectedBoxData.attr.style.height);
 
         this.prevY = e.clientY;
