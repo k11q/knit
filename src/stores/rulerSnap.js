@@ -859,367 +859,380 @@ export const useRulerSnapStore = defineStore({
         lineY: NaN,
       };
 
-      if (this.on) {
-        this.siblings = [
-          ...document.querySelector(`[data-id=${id}]`).parentElement.children,
-        ].filter((el) => el.dataset.id !== id);
+      if (!useCheckParent(id)) {
+        if (this.on) {
+          this.siblings = [
+            ...document.querySelector(`[data-id=${id}]`).parentElement.children,
+          ].filter((el) => el.dataset.id !== id);
 
-        Promise.resolve()
-          .then(() => {
-            this.siblings.forEach((i) => {
-              let siblingRect = i.getBoundingClientRect();
-              let siblingTop = siblingRect.y;
-              let siblingMiddleY = siblingRect.y + siblingRect.height / 2;
-              let siblingBottom = siblingRect.y + siblingRect.height;
-              let siblingLeft = siblingRect.x;
-              let siblingMiddleX = siblingRect.x + siblingRect.width / 2;
-              let siblingRight = siblingRect.x + siblingRect.width;
+          Promise.resolve()
+            .then(() => {
+              this.siblings.forEach((i) => {
+                let siblingRect = i.getBoundingClientRect();
+                let siblingTop = siblingRect.y;
+                let siblingMiddleY = siblingRect.y + siblingRect.height / 2;
+                let siblingBottom = siblingRect.y + siblingRect.height;
+                let siblingLeft = siblingRect.x;
+                let siblingMiddleX = siblingRect.x + siblingRect.width / 2;
+                let siblingRight = siblingRect.x + siblingRect.width;
 
-              if (!resizeStore.isResizingLeft || !resizeStore.isResizingRight) {
-                //clientY to top
-                if (clientY < siblingTop + 4 && clientY > siblingTop - 4) {
+                if (
+                  !resizeStore.isResizingLeft ||
+                  !resizeStore.isResizingRight
+                ) {
+                  //clientY to top
+                  if (clientY < siblingTop + 4 && clientY > siblingTop - 4) {
+                    if (
+                      !snapLinesCopy.lineY ||
+                      (snapLinesCopy.lineY &&
+                        clientY - snapLinesCopy.lineY > clientY - siblingTop)
+                    ) {
+                      snapLinesCopy.lineY = siblingTop;
+                    }
+                  }
+                  //clientY to middleY
                   if (
-                    !snapLinesCopy.lineY ||
-                    (snapLinesCopy.lineY &&
-                      clientY - snapLinesCopy.lineY > clientY - siblingTop)
+                    clientY < siblingMiddleY + 4 &&
+                    clientY > siblingMiddleY - 4
                   ) {
-                    snapLinesCopy.lineY = siblingTop;
+                    if (
+                      !snapLinesCopy.lineY ||
+                      (snapLinesCopy.lineY &&
+                        clientY - snapLinesCopy.lineY >
+                          clientY - siblingMiddleY)
+                    ) {
+                      snapLinesCopy.lineY = siblingMiddleY;
+                    }
+                  }
+                  //clientY to bottom
+                  if (
+                    clientY < siblingBottom + 4 &&
+                    clientY > siblingBottom - 4
+                  ) {
+                    if (
+                      !snapLinesCopy.lineY ||
+                      (snapLinesCopy.lineY &&
+                        clientY - snapLinesCopy.lineY > clientY - siblingBottom)
+                    ) {
+                      snapLinesCopy.lineY = siblingBottom;
+                    }
                   }
                 }
-                //clientY to middleY
+
                 if (
-                  clientY < siblingMiddleY + 4 &&
-                  clientY > siblingMiddleY - 4
+                  !resizeStore.isResizingTop ||
+                  !resizeStore.isResizingBottom
                 ) {
+                  //clientX to left
+                  if (clientX < siblingLeft + 4 && clientX > siblingLeft - 4) {
+                    if (
+                      !snapLinesCopy.lineX ||
+                      (snapLinesCopy.lineX &&
+                        clientX - snapLinesCopy.lineX > clientX - siblingLeft)
+                    ) {
+                      snapLinesCopy.lineX = siblingLeft;
+                    }
+                  }
+                  //clientX to middleX
                   if (
-                    !snapLinesCopy.lineY ||
-                    (snapLinesCopy.lineY &&
-                      clientY - snapLinesCopy.lineY > clientY - siblingMiddleY)
+                    clientX < siblingMiddleX + 4 &&
+                    clientX > siblingMiddleX - 4
                   ) {
-                    snapLinesCopy.lineY = siblingMiddleY;
+                    if (
+                      !snapLinesCopy.lineX ||
+                      (snapLinesCopy.lineX &&
+                        clientX - snapLinesCopy.lineX >
+                          clientX - siblingMiddleX)
+                    ) {
+                      snapLinesCopy.lineX = siblingMiddleX;
+                    }
+                  }
+                  //clientX to right
+                  if (
+                    clientX < siblingRight + 4 &&
+                    clientX > siblingRight - 4
+                  ) {
+                    if (
+                      !snapLinesCopy.lineX ||
+                      (snapLinesCopy.lineX &&
+                        clientX - snapLinesCopy.lineX > clientX - siblingRight)
+                    ) {
+                      snapLinesCopy.lineX = siblingRight;
+                    }
                   }
                 }
-                //clientY to bottom
-                if (
-                  clientY < siblingBottom + 4 &&
-                  clientY > siblingBottom - 4
-                ) {
-                  if (
-                    !snapLinesCopy.lineY ||
-                    (snapLinesCopy.lineY &&
-                      clientY - snapLinesCopy.lineY > clientY - siblingBottom)
-                  ) {
-                    snapLinesCopy.lineY = siblingBottom;
+              });
+
+              if (snapLinesCopy.lineX || snapLinesCopy.lineY) {
+                this.show = true;
+                //resize top
+                if (resizeStore.isResizingTop) {
+                  this.snapTop = true;
+                  this.snapHeight = true;
+                  this.snapWidth = false;
+                  this.snapLeft = false;
+
+                  selectToi.selectedBoxData.attr.style.top =
+                    Math.round(
+                      (snapLinesCopy.lineY - squareStore.offsetTop) /
+                        squareStore.scale
+                    ) + "px";
+                  selectToi.selectedBoxData.attr.style.height =
+                    Math.round(
+                      resizeStore.prevTop +
+                        resizeStore.prevHeight -
+                        (snapLinesCopy.lineY - squareStore.offsetTop) /
+                          squareStore.scale
+                    ) + "px";
+                  let snapLinesCopy2 = {
+                    lineTop: snapLinesCopy.lineY,
+                  };
+                  this.snapLines = { ...snapLinesCopy2 };
+                }
+                //resize bottom
+                if (resizeStore.isResizingBottom) {
+                  this.snapTop = false;
+                  this.snapHeight = true;
+                  this.snapWidth = false;
+                  this.snapLeft = false;
+
+                  selectToi.selectedBoxData.attr.style.height =
+                    Math.round(
+                      (snapLinesCopy.lineY - squareStore.offsetTop) /
+                        squareStore.scale -
+                        resizeStore.prevTop
+                    ) + "px";
+                  let snapLinesCopy2 = {
+                    lineBottom: snapLinesCopy.lineY,
+                  };
+                  this.snapLines = { ...snapLinesCopy2 };
+                }
+                //resize left
+                if (resizeStore.isResizingLeft) {
+                  this.snapTop = false;
+                  this.snapHeight = false;
+                  this.snapWidth = true;
+                  this.snapLeft = true;
+
+                  selectToi.selectedBoxData.attr.style.left =
+                    Math.round(
+                      (snapLinesCopy.lineX - squareStore.offsetLeft) /
+                        squareStore.scale
+                    ) + "px";
+                  selectToi.selectedBoxData.attr.style.width =
+                    Math.round(
+                      resizeStore.prevLeft +
+                        resizeStore.prevWidth -
+                        (snapLinesCopy.lineX - squareStore.offsetLeft) /
+                          squareStore.scale
+                    ) + "px";
+                  let snapLinesCopy2 = {
+                    lineLeft: snapLinesCopy.lineX,
+                  };
+                  this.snapLines = { ...snapLinesCopy2 };
+                }
+                //resize right
+                if (resizeStore.isResizingRight) {
+                  this.snapTop = false;
+                  this.snapHeight = false;
+                  this.snapWidth = true;
+                  this.snapLeft = false;
+
+                  selectToi.selectedBoxData.attr.style.width =
+                    Math.round(
+                      (snapLinesCopy.lineX - squareStore.offsetLeft) /
+                        squareStore.scale -
+                        resizeStore.prevLeft
+                    ) + "px";
+                  let snapLinesCopy2 = {
+                    lineRight: snapLinesCopy.lineX,
+                  };
+                  this.snapLines = { ...snapLinesCopy2 };
+                }
+                //resize top left
+                if (resizeStore.isResizingTopLeft) {
+                  if (snapLinesCopy.lineX) {
+                    this.snapWidth = true;
+                    this.snapLeft = true;
+                    selectToi.selectedBoxData.attr.style.left =
+                      Math.round(
+                        (snapLinesCopy.lineX - squareStore.offsetLeft) /
+                          squareStore.scale
+                      ) + "px";
+                    selectToi.selectedBoxData.attr.style.width =
+                      Math.round(
+                        resizeStore.prevLeft +
+                          resizeStore.prevWidth -
+                          (snapLinesCopy.lineX - squareStore.offsetLeft) /
+                            squareStore.scale
+                      ) + "px";
+                    if (!snapLinesCopy.lineY) {
+                      this.snapHeight = false;
+                      this.snapTop = false;
+                    }
                   }
+                  if (snapLinesCopy.lineY) {
+                    this.snapHeight = true;
+                    this.snapTop = true;
+                    selectToi.selectedBoxData.attr.style.top =
+                      Math.round(
+                        (snapLinesCopy.lineY - squareStore.offsetTop) /
+                          squareStore.scale
+                      ) + "px";
+                    selectToi.selectedBoxData.attr.style.height =
+                      Math.round(
+                        resizeStore.prevTop +
+                          resizeStore.prevHeight -
+                          (snapLinesCopy.lineY - squareStore.offsetTop) /
+                            squareStore.scale
+                      ) + "px";
+
+                    if (!snapLinesCopy.lineX) {
+                      this.snapWidth = false;
+                      this.snapLeft = false;
+                    }
+                  }
+                  let snapLinesCopy2 = {
+                    lineTop: snapLinesCopy.lineY,
+                    lineLeft: snapLinesCopy.lineX,
+                  };
+                  this.snapLines = { ...snapLinesCopy2 };
+                }
+                //resize top right
+                if (resizeStore.isResizingTopRight) {
+                  this.snapLeft = false;
+                  if (snapLinesCopy.lineX) {
+                    this.snapWidth = true;
+                    selectToi.selectedBoxData.attr.style.width =
+                      Math.round(
+                        (snapLinesCopy.lineX - squareStore.offsetLeft) /
+                          squareStore.scale -
+                          resizeStore.prevLeft
+                      ) + "px";
+                    if (!snapLinesCopy.lineY) {
+                      this.snapHeight = false;
+                      this.snapTop = false;
+                    }
+                  }
+                  if (snapLinesCopy.lineY) {
+                    this.snapHeight = true;
+                    this.snapTop = true;
+                    selectToi.selectedBoxData.attr.style.top =
+                      Math.round(
+                        (snapLinesCopy.lineY - squareStore.offsetTop) /
+                          squareStore.scale
+                      ) + "px";
+                    selectToi.selectedBoxData.attr.style.height =
+                      Math.round(
+                        resizeStore.prevTop +
+                          resizeStore.prevHeight -
+                          (snapLinesCopy.lineY - squareStore.offsetTop) /
+                            squareStore.scale
+                      ) + "px";
+                    if (!snapLinesCopy.lineX) {
+                      this.snapWidth = false;
+                    }
+                  }
+                  let snapLinesCopy2 = {
+                    lineTop: snapLinesCopy.lineY,
+                    lineRight: snapLinesCopy.lineX,
+                  };
+                  this.snapLines = { ...snapLinesCopy2 };
+                }
+                //resize bottom left
+                if (resizeStore.isResizingBottomLeft) {
+                  this.snapTop = false;
+                  if (snapLinesCopy.lineX) {
+                    this.snapWidth = true;
+                    this.snapLeft = true;
+                    selectToi.selectedBoxData.attr.style.left =
+                      Math.round(
+                        (snapLinesCopy.lineX - squareStore.offsetLeft) /
+                          squareStore.scale
+                      ) + "px";
+                    selectToi.selectedBoxData.attr.style.width =
+                      Math.round(
+                        resizeStore.prevLeft +
+                          resizeStore.prevWidth -
+                          (snapLinesCopy.lineX - squareStore.offsetLeft) /
+                            squareStore.scale
+                      ) + "px";
+                    if (!snapLinesCopy.lineY) {
+                      this.snapHeight = false;
+                    }
+                  }
+                  if (snapLinesCopy.lineY) {
+                    this.snapHeight = true;
+                    selectToi.selectedBoxData.attr.style.height =
+                      Math.round(
+                        (snapLinesCopy.lineY - squareStore.offsetTop) /
+                          squareStore.scale -
+                          resizeStore.prevTop
+                      ) + "px";
+                    if (!snapLinesCopy.lineX) {
+                      this.snapWidth = false;
+                      this.snapLeft = false;
+                    }
+                  }
+                  let snapLinesCopy2 = {
+                    lineBottom: snapLinesCopy.lineY,
+                    lineLeft: snapLinesCopy.lineX,
+                  };
+                  this.snapLines = { ...snapLinesCopy2 };
+                }
+                //resize bottom right
+                if (resizeStore.isResizingBottomRight) {
+                  this.snapLeft = false;
+                  this.snapTop = false;
+                  if (snapLinesCopy.lineX) {
+                    this.snapWidth = true;
+                    selectToi.selectedBoxData.attr.style.width =
+                      Math.round(
+                        (snapLinesCopy.lineX - squareStore.offsetLeft) /
+                          squareStore.scale -
+                          resizeStore.prevLeft
+                      ) + "px";
+                    if (!snapLinesCopy.lineY) {
+                      this.snapHeight = false;
+                    }
+                  }
+                  if (snapLinesCopy.lineY) {
+                    this.snapHeight = true;
+                    selectToi.selectedBoxData.attr.style.height =
+                      Math.round(
+                        (snapLinesCopy.lineY - squareStore.offsetTop) /
+                          squareStore.scale -
+                          resizeStore.prevTop
+                      ) + "px";
+                    if (!snapLinesCopy.lineX) {
+                      this.snapWidth = false;
+                    }
+                  }
+                  let snapLinesCopy2 = {
+                    lineBottom: snapLinesCopy.lineY,
+                    lineRight: snapLinesCopy.lineX,
+                  };
+                  this.snapLines = { ...snapLinesCopy2 };
                 }
               }
-
-              if (!resizeStore.isResizingTop || !resizeStore.isResizingBottom) {
-                //clientX to left
-                if (clientX < siblingLeft + 4 && clientX > siblingLeft - 4) {
-                  if (
-                    !snapLinesCopy.lineX ||
-                    (snapLinesCopy.lineX &&
-                      clientX - snapLinesCopy.lineX > clientX - siblingLeft)
-                  ) {
-                    snapLinesCopy.lineX = siblingLeft;
-                  }
-                }
-                //clientX to middleX
-                if (
-                  clientX < siblingMiddleX + 4 &&
-                  clientX > siblingMiddleX - 4
-                ) {
-                  if (
-                    !snapLinesCopy.lineX ||
-                    (snapLinesCopy.lineX &&
-                      clientX - snapLinesCopy.lineX > clientX - siblingMiddleX)
-                  ) {
-                    snapLinesCopy.lineX = siblingMiddleX;
-                  }
-                }
-                //clientX to right
-                if (clientX < siblingRight + 4 && clientX > siblingRight - 4) {
-                  if (
-                    !snapLinesCopy.lineX ||
-                    (snapLinesCopy.lineX &&
-                      clientX - snapLinesCopy.lineX > clientX - siblingRight)
-                  ) {
-                    snapLinesCopy.lineX = siblingRight;
-                  }
-                }
+              if (!snapLinesCopy.lineX && !snapLinesCopy.lineY) {
+                this.show = false;
+                this.snapHeight = false;
+                this.snapWidth = false;
+                this.snapTop = false;
+                this.snapLeft = false;
               }
+            })
+            .then(() => {
+              this.setSiblingsPoints(id);
             });
-
-            if (snapLinesCopy.lineX || snapLinesCopy.lineY) {
-              this.show = true;
-              //resize top
-              if (resizeStore.isResizingTop) {
-                this.snapTop = true;
-                this.snapHeight = true;
-                this.snapWidth = false;
-                this.snapLeft = false;
-
-                selectToi.selectedBoxData.attr.style.top =
-                  Math.round(
-                    (snapLinesCopy.lineY - squareStore.offsetTop) /
-                      squareStore.scale
-                  ) + "px";
-                selectToi.selectedBoxData.attr.style.height =
-                  Math.round(
-                    resizeStore.prevTop +
-                      resizeStore.prevHeight -
-                      (snapLinesCopy.lineY - squareStore.offsetTop) /
-                        squareStore.scale
-                  ) + "px";
-                let snapLinesCopy2 = {
-                  lineTop: snapLinesCopy.lineY,
-                };
-                this.snapLines = { ...snapLinesCopy2 };
-              }
-              //resize bottom
-              if (resizeStore.isResizingBottom) {
-                this.snapTop = false;
-                this.snapHeight = true;
-                this.snapWidth = false;
-                this.snapLeft = false;
-
-                selectToi.selectedBoxData.attr.style.height =
-                  Math.round(
-                    (snapLinesCopy.lineY - squareStore.offsetTop) /
-                      squareStore.scale -
-                      resizeStore.prevTop
-                  ) + "px";
-                let snapLinesCopy2 = {
-                  lineBottom: snapLinesCopy.lineY,
-                };
-                this.snapLines = { ...snapLinesCopy2 };
-              }
-              //resize left
-              if (resizeStore.isResizingLeft) {
-                this.snapTop = false;
-                this.snapHeight = false;
-                this.snapWidth = true;
-                this.snapLeft = true;
-
-                selectToi.selectedBoxData.attr.style.left =
-                  Math.round(
-                    (snapLinesCopy.lineX - squareStore.offsetLeft) /
-                      squareStore.scale
-                  ) + "px";
-                selectToi.selectedBoxData.attr.style.width =
-                  Math.round(
-                    resizeStore.prevLeft +
-                      resizeStore.prevWidth -
-                      (snapLinesCopy.lineX - squareStore.offsetLeft) /
-                        squareStore.scale
-                  ) + "px";
-                let snapLinesCopy2 = {
-                  lineLeft: snapLinesCopy.lineX,
-                };
-                this.snapLines = { ...snapLinesCopy2 };
-              }
-              //resize right
-              if (resizeStore.isResizingRight) {
-                this.snapTop = false;
-                this.snapHeight = false;
-                this.snapWidth = true;
-                this.snapLeft = false;
-
-                selectToi.selectedBoxData.attr.style.width =
-                  Math.round(
-                    (snapLinesCopy.lineX - squareStore.offsetLeft) /
-                      squareStore.scale -
-                      resizeStore.prevLeft
-                  ) + "px";
-                let snapLinesCopy2 = {
-                  lineRight: snapLinesCopy.lineX,
-                };
-                this.snapLines = { ...snapLinesCopy2 };
-              }
-              //resize top left
-              if (resizeStore.isResizingTopLeft) {
-                if (snapLinesCopy.lineX) {
-                  this.snapWidth = true;
-                  this.snapLeft = true;
-                  selectToi.selectedBoxData.attr.style.left =
-                    Math.round(
-                      (snapLinesCopy.lineX - squareStore.offsetLeft) /
-                        squareStore.scale
-                    ) + "px";
-                  selectToi.selectedBoxData.attr.style.width =
-                    Math.round(
-                      resizeStore.prevLeft +
-                        resizeStore.prevWidth -
-                        (snapLinesCopy.lineX - squareStore.offsetLeft) /
-                          squareStore.scale
-                    ) + "px";
-                  if (!snapLinesCopy.lineY) {
-                    this.snapHeight = false;
-                    this.snapTop = false;
-                  }
-                }
-                if (snapLinesCopy.lineY) {
-                  this.snapHeight = true;
-                  this.snapTop = true;
-                  selectToi.selectedBoxData.attr.style.top =
-                    Math.round(
-                      (snapLinesCopy.lineY - squareStore.offsetTop) /
-                        squareStore.scale
-                    ) + "px";
-                  selectToi.selectedBoxData.attr.style.height =
-                    Math.round(
-                      resizeStore.prevTop +
-                        resizeStore.prevHeight -
-                        (snapLinesCopy.lineY - squareStore.offsetTop) /
-                          squareStore.scale
-                    ) + "px";
-
-                  if (!snapLinesCopy.lineX) {
-                    this.snapWidth = false;
-                    this.snapLeft = false;
-                  }
-                }
-                let snapLinesCopy2 = {
-                  lineTop: snapLinesCopy.lineY,
-                  lineLeft: snapLinesCopy.lineX,
-                };
-                this.snapLines = { ...snapLinesCopy2 };
-              }
-              //resize top right
-              if (resizeStore.isResizingTopRight) {
-                this.snapLeft = false;
-                if (snapLinesCopy.lineX) {
-                  this.snapWidth = true;
-                  selectToi.selectedBoxData.attr.style.width =
-                    Math.round(
-                      (snapLinesCopy.lineX - squareStore.offsetLeft) /
-                        squareStore.scale -
-                        resizeStore.prevLeft
-                    ) + "px";
-                  if (!snapLinesCopy.lineY) {
-                    this.snapHeight = false;
-                    this.snapTop = false;
-                  }
-                }
-                if (snapLinesCopy.lineY) {
-                  this.snapHeight = true;
-                  this.snapTop = true;
-                  selectToi.selectedBoxData.attr.style.top =
-                    Math.round(
-                      (snapLinesCopy.lineY - squareStore.offsetTop) /
-                        squareStore.scale
-                    ) + "px";
-                  selectToi.selectedBoxData.attr.style.height =
-                    Math.round(
-                      resizeStore.prevTop +
-                        resizeStore.prevHeight -
-                        (snapLinesCopy.lineY - squareStore.offsetTop) /
-                          squareStore.scale
-                    ) + "px";
-                  if (!snapLinesCopy.lineX) {
-                    this.snapWidth = false;
-                  }
-                }
-                let snapLinesCopy2 = {
-                  lineTop: snapLinesCopy.lineY,
-                  lineRight: snapLinesCopy.lineX,
-                };
-                this.snapLines = { ...snapLinesCopy2 };
-              }
-              //resize bottom left
-              if (resizeStore.isResizingBottomLeft) {
-                this.snapTop = false;
-                if (snapLinesCopy.lineX) {
-                  this.snapWidth = true;
-                  this.snapLeft = true;
-                  selectToi.selectedBoxData.attr.style.left =
-                    Math.round(
-                      (snapLinesCopy.lineX - squareStore.offsetLeft) /
-                        squareStore.scale
-                    ) + "px";
-                  selectToi.selectedBoxData.attr.style.width =
-                    Math.round(
-                      resizeStore.prevLeft +
-                        resizeStore.prevWidth -
-                        (snapLinesCopy.lineX - squareStore.offsetLeft) /
-                          squareStore.scale
-                    ) + "px";
-                  if (!snapLinesCopy.lineY) {
-                    this.snapHeight = false;
-                  }
-                }
-                if (snapLinesCopy.lineY) {
-                  this.snapHeight = true;
-                  selectToi.selectedBoxData.attr.style.height =
-                    Math.round(
-                      (snapLinesCopy.lineY - squareStore.offsetTop) /
-                        squareStore.scale -
-                        resizeStore.prevTop
-                    ) + "px";
-                  if (!snapLinesCopy.lineX) {
-                    this.snapWidth = false;
-                    this.snapLeft = false;
-                  }
-                }
-                let snapLinesCopy2 = {
-                  lineBottom: snapLinesCopy.lineY,
-                  lineLeft: snapLinesCopy.lineX,
-                };
-                this.snapLines = { ...snapLinesCopy2 };
-              }
-              //resize bottom right
-              if (resizeStore.isResizingBottomRight) {
-                this.snapLeft = false;
-                this.snapTop = false;
-                if (snapLinesCopy.lineX) {
-                  this.snapWidth = true;
-                  selectToi.selectedBoxData.attr.style.width =
-                    Math.round(
-                      (snapLinesCopy.lineX - squareStore.offsetLeft) /
-                        squareStore.scale -
-                        resizeStore.prevLeft
-                    ) + "px";
-                  if (!snapLinesCopy.lineY) {
-                    this.snapHeight = false;
-                  }
-                }
-                if (snapLinesCopy.lineY) {
-                  this.snapHeight = true;
-                  selectToi.selectedBoxData.attr.style.height =
-                    Math.round(
-                      (snapLinesCopy.lineY - squareStore.offsetTop) /
-                        squareStore.scale -
-                        resizeStore.prevTop
-                    ) + "px";
-                  if (!snapLinesCopy.lineX) {
-                    this.snapWidth = false;
-                  }
-                }
-                let snapLinesCopy2 = {
-                  lineBottom: snapLinesCopy.lineY,
-                  lineRight: snapLinesCopy.lineX,
-                };
-                this.snapLines = { ...snapLinesCopy2 };
-              }
-            }
-            if (!snapLinesCopy.lineX && !snapLinesCopy.lineY) {
-              this.show = false;
-              this.snapHeight = false;
-              this.snapWidth = false;
-              this.snapTop = false;
-              this.snapLeft = false;
-            }
-          })
-          .then(() => {
-            this.setSiblingsPoints(id);
-          });
-      }
-      if (!this.on) {
-        this.snapTop = false;
-        this.snapLeft = false;
-        this.snapHeight = false;
-        this.snapWidth = false;
+        }
+        if (!this.on) {
+          this.snapTop = false;
+          this.snapLeft = false;
+          this.snapHeight = false;
+          this.snapWidth = false;
+        }
       }
     },
   },
