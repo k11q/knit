@@ -479,7 +479,7 @@
       </div>
       <div
         @mousedown.stop.prevent="resizeStore.resizeTopRight"
-        class="absolute -top-2 -right-2 h-4 w-4 hover:cursor-nwse-resize flex items-center justify-center"
+        class="absolute -top-2 -right-2 h-4 w-4 hover:cursor-nesw-resize flex items-center justify-center"
         :style="{
           transform: `scale( ${1 / addaSquare.scale})`,
           willChange: 'transform',
@@ -489,7 +489,7 @@
       </div>
       <div
         @mousedown.stop.prevent="resizeStore.resizeBottomRight"
-        class="absolute -bottom-2 -left-2 h-4 w-4 hover:cursor-nwse-resize flex items-center justify-center"
+        class="absolute -bottom-2 -right-2 h-4 w-4 hover:cursor-nwse-resize flex items-center justify-center"
         :style="{
           transform: `scale( ${1 / addaSquare.scale})`,
           willChange: 'transform',
@@ -499,7 +499,7 @@
       </div>
       <div
         @mousedown.stop.prevent="resizeStore.resizeBottomLeft"
-        class="absolute -bottom-2 -right-2 h-4 w-4 hover:cursor-nwse-resize flex items-center justify-center"
+        class="absolute -bottom-2 -left-2 h-4 w-4 hover:cursor-nesw-resize flex items-center justify-center"
         :style="{
           transform: `scale( ${1 / addaSquare.scale})`,
           willChange: 'transform',
