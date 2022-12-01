@@ -61,7 +61,9 @@
         }"
       ></div>
       <!--Selected outline n resizer n padding resizer-->
-      <DesignerCanvasResizer />
+      <ClientOnly>
+        <DesignerCanvasResizer />
+      </ClientOnly>
       <!--Drop marker-->
       <div
         v-show="showMarker"
