@@ -130,7 +130,6 @@ export const useResizeStore = defineStore({
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
             rulerSnap.on = true;
             rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
-            console.log("try");
             if (!rulerSnap.snapWidth) {
               resizeStore.resizeWidthForward(e);
             }

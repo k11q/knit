@@ -8,28 +8,32 @@
     class="absolute pointer-events-none border-box"
     :style="{
       willChange: 'left, top, height, width',
-      left:
-        Math.round(
-          useGetElementRect(selectToi.selectedBoxData.id)?.x -
-            addaSquare.offsetLeft
-        ) /
-          addaSquare.scale +
-        'px',
-      top:
-        Math.round(
-          useGetElementRect(selectToi.selectedBoxData.id)?.y -
-            addaSquare.offsetTop
-        ) /
-          addaSquare.scale +
-        'px',
-      height:
-        Math.round(useGetElementRect(selectToi.selectedBoxData.id)?.height) /
-          addaSquare.scale +
-        'px',
-      width:
-        Math.round(useGetElementRect(selectToi.selectedBoxData.id)?.width) /
-          addaSquare.scale +
-        'px',
+      left: selectToi.selectedBoxData.attr?.style?.left
+        ? selectToi.selectedBoxData.attr.style.left
+        : Math.round(
+            useGetElementRect(selectToi.selectedBoxData.id)?.x -
+              addaSquare.offsetLeft
+          ) /
+            addaSquare.scale +
+          'px',
+      top: selectToi.selectedBoxData.attr?.style?.top
+        ? selectToi.selectedBoxData.attr.style.top
+        : Math.round(
+            useGetElementRect(selectToi.selectedBoxData.id)?.y -
+              addaSquare.offsetTop
+          ) /
+            addaSquare.scale +
+          'px',
+      height: selectToi.selectedBoxData.attr?.style?.height
+        ? selectToi.selectedBoxData.attr.style.height
+        : Math.round(useGetElementRect(selectToi.selectedBoxData.id)?.height) /
+            addaSquare.scale +
+          'px',
+      width: selectToi.selectedBoxData.attr?.style?.width
+        ? selectToi.selectedBoxData.attr.style.width
+        : Math.round(useGetElementRect(selectToi.selectedBoxData.id)?.width) /
+            addaSquare.scale +
+          'px',
     }"
   >
     <!--radius resizer controller-->
