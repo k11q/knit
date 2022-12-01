@@ -48,7 +48,7 @@
             'px',
     }"
   >
-    <!--radius resizer controller-->
+    <!--(ON HOLD)radius resizer controller
     <div
       class="pointer-events-auto"
       v-show="
@@ -178,6 +178,7 @@
         }"
       />
     </div>
+  -->
     <!--padding resizer-->
     <div
       class="pointer-events-auto"
