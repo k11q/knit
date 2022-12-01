@@ -1155,7 +1155,7 @@ export const useRulerSnapStore = defineStore({
                     Math.round(
                       (snapLinesCopy.lineY - squareStore.offsetTop) /
                         squareStore.scale -
-                        prevTop
+                        resizeStore.prevTop
                     ) + "px";
                   if (!snapLinesCopy.lineX) {
                     this.snapWidth = false;
