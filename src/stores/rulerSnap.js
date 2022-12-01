@@ -10,6 +10,8 @@ export const useRulerSnapStore = defineStore({
     on: false,
     snapTop: false,
     snapLeft: false,
+    snapHeight: false,
+    snapWidth: false,
     currDragPoints: {},
     displayedPoints: {},
     lines: {},

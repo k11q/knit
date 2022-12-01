@@ -14,6 +14,7 @@ export const useResizeStore = defineStore({
     prevHeight: NaN,
     prevLeft: NaN,
     prevTop: NaN,
+    isResizingBottomRight: false,
   }),
   actions: {
     resizeWidthForward(e) {
@@ -117,20 +118,8 @@ export const useResizeStore = defineStore({
         window.addEventListener("mouseup", mouseup);
 
         function mousemove(e) {
-          if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
-            rulerSnap.on = true;
-            if (!rulerSnap.snapLeft) {
-              resizeStore.resizeWidthForward(e);
-            }
-            if (!rulerSnap.snapTop) {
-              resizeStore.resizeHeightForward(e);
-            }
-          } else if (Math.abs(e.movementX) > 5 || Math.abs(e.movementX) > 5) {
-            rulerSnap.on = false;
-            resizeStore.resizeWidthForward(e);
-            resizeStore.resizeHeightForward(e);
-          }
-          rulerSnap.setRulerSnap(e, selectToi.selectedBoxData?.id);
+          resizeStore.resizeWidthForward(e);
+          resizeStore.resizeHeightForward(e);
         }
 
         function mouseup() {
