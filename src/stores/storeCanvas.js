@@ -118,6 +118,7 @@ export const storeCanvas = defineStore({
           useGetElement(currDrag).style.willChange = "left, top";
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
             rulerSnap.on = true;
+            rulerSnap.setRulerSnap(e, currDrag);
             if (!rulerSnap.snapLeft) {
               canvasStore.setLeftPosition(e);
             }
@@ -129,8 +130,6 @@ export const storeCanvas = defineStore({
             canvasStore.setLeftPosition(e);
             canvasStore.setTopPosition(e);
           }
-
-          rulerSnap.setRulerSnap(e, currDrag);
           canvasFF.isDragging = true;
           isDragging = true;
 
@@ -445,6 +444,7 @@ export const storeCanvas = defineStore({
           rulerSnap.prevY = prevY;
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
             rulerSnap.on = true;
+            rulerSnap.setRulerSnap(e, currDrag);
             if (!rulerSnap.snapLeft) {
               canvasStore.setLeftPosition(e);
             }
@@ -456,8 +456,6 @@ export const storeCanvas = defineStore({
             canvasStore.setLeftPosition(e);
             canvasStore.setTopPosition(e);
           }
-
-          rulerSnap.setRulerSnap(e, currDrag);
         }
 
         //if atas dropzone lain append atas sekali dulu

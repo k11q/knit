@@ -129,6 +129,7 @@ export const useResizeStore = defineStore({
           resizeStore.isResizingBottomRight = true;
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
             rulerSnap.on = true;
+            rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
             console.log("try");
             if (!rulerSnap.snapWidth) {
               resizeStore.resizeWidthForward(e);
@@ -141,7 +142,6 @@ export const useResizeStore = defineStore({
             resizeStore.resizeWidthForward(e);
             resizeStore.resizeHeightForward(e);
           }
-          rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
         }
 
         function mouseup() {
@@ -177,6 +177,7 @@ export const useResizeStore = defineStore({
           resizeStore.isResizingBottomLeft = true;
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
             rulerSnap.on = true;
+            rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
             if (!rulerSnap.snapWidth && !rulerSnap.snapLeft) {
               resizeStore.resizeWidthReverse(e);
               resizeStore.resizeLeftForward(e);
@@ -190,7 +191,6 @@ export const useResizeStore = defineStore({
             resizeStore.resizeHeightForward(e);
             resizeStore.resizeLeftForward(e);
           }
-          rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
         }
 
         function mouseup() {
@@ -226,6 +226,7 @@ export const useResizeStore = defineStore({
           resizeStore.isResizingTopLeft = true;
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
             rulerSnap.on = true;
+            rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
             if (!rulerSnap.snapWidth && !rulerSnap.snapLeft) {
               resizeStore.resizeLeftForward(e);
               resizeStore.resizeWidthReverse(e);
@@ -241,7 +242,6 @@ export const useResizeStore = defineStore({
             resizeStore.resizeWidthReverse(e);
             resizeStore.resizeHeightReverse(e);
           }
-          rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
         }
 
         function mouseup() {
@@ -277,6 +277,7 @@ export const useResizeStore = defineStore({
           resizeStore.isResizingTopRight = true;
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
             rulerSnap.on = true;
+            rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
             if (!rulerSnap.snapTop && !rulerSnap.snapHeight) {
               resizeStore.resizeTopForward(e);
               resizeStore.resizeHeightReverse(e);
@@ -290,7 +291,6 @@ export const useResizeStore = defineStore({
             resizeStore.resizeTopForward(e);
             resizeStore.resizeHeightReverse(e);
           }
-          rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
         }
 
         function mouseup() {
@@ -323,6 +323,7 @@ export const useResizeStore = defineStore({
           resizeStore.isResizingRight = true;
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
             rulerSnap.on = true;
+            rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
             if (!rulerSnap.snapWidth) {
               resizeStore.resizeWidthForward(e);
             }
@@ -330,7 +331,6 @@ export const useResizeStore = defineStore({
             rulerSnap.on = false;
             resizeStore.resizeWidthForward(e);
           }
-          rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
         }
 
         function mouseup() {
@@ -363,6 +363,7 @@ export const useResizeStore = defineStore({
           resizeStore.isResizingLeft = true;
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
             rulerSnap.on = true;
+            rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
             if (!rulerSnap.snapLeft && !rulerSnap.snapWidth) {
               resizeStore.resizeWidthReverse(e);
               resizeStore.resizeLeftForward(e);
@@ -372,7 +373,6 @@ export const useResizeStore = defineStore({
             resizeStore.resizeWidthReverse(e);
             resizeStore.resizeLeftForward(e);
           }
-          rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
         }
 
         function mouseup() {
@@ -405,6 +405,7 @@ export const useResizeStore = defineStore({
           resizeStore.isResizingTop = true;
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
             rulerSnap.on = true;
+            rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
             if (!rulerSnap.snapTop && !rulerSnap.snapHeight) {
               resizeStore.resizeHeightReverse(e);
               resizeStore.resizeTopForward(e);
@@ -414,7 +415,6 @@ export const useResizeStore = defineStore({
             resizeStore.resizeHeightReverse(e);
             resizeStore.resizeTopForward(e);
           }
-          rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
         }
 
         function mouseup() {
@@ -447,6 +447,7 @@ export const useResizeStore = defineStore({
           resizeStore.isResizingBottom = true;
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
             rulerSnap.on = true;
+            rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
             if (!rulerSnap.snapHeight) {
               resizeStore.resizeHeightForward(e);
             }
@@ -454,7 +455,6 @@ export const useResizeStore = defineStore({
             rulerSnap.on = false;
             resizeStore.resizeHeightForward(e);
           }
-          rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
         }
 
         function mouseup() {
