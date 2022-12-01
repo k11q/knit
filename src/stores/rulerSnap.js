@@ -875,111 +875,124 @@ export const useRulerSnapStore = defineStore({
               let siblingMiddleX = siblingRect.x + siblingRect.width / 2;
               let siblingRight = siblingRect.x + siblingRect.width;
 
-              //clientY to top
-              if (clientY < siblingTop + 4 && clientY > siblingTop - 4) {
-                if (
-                  !snapLinesCopy.lineY ||
-                  (snapLinesCopy.lineY &&
-                    clientY - snapLinesCopy.lineY > clientY - siblingTop)
-                ) {
-                  snapLinesCopy.lineY = siblingTop;
+              if (!resizeStore.isResizingLeft || !resizeStore.isResizingRight) {
+                //clientY to top
+                if (clientY < siblingTop + 4 && clientY > siblingTop - 4) {
+                  if (
+                    !snapLinesCopy.lineY ||
+                    (snapLinesCopy.lineY &&
+                      clientY - snapLinesCopy.lineY > clientY - siblingTop)
+                  ) {
+                    snapLinesCopy.lineY = siblingTop;
+                  }
                 }
-              }
-              //clientY to middleY
-              if (
-                clientY < siblingMiddleY + 4 &&
-                clientY > siblingMiddleY - 4
-              ) {
+                //clientY to middleY
                 if (
-                  !snapLinesCopy.lineY ||
-                  (snapLinesCopy.lineY &&
-                    clientY - snapLinesCopy.lineY > clientY - siblingMiddleY)
+                  clientY < siblingMiddleY + 4 &&
+                  clientY > siblingMiddleY - 4
                 ) {
-                  snapLinesCopy.lineY = siblingMiddleY;
+                  if (
+                    !snapLinesCopy.lineY ||
+                    (snapLinesCopy.lineY &&
+                      clientY - snapLinesCopy.lineY > clientY - siblingMiddleY)
+                  ) {
+                    snapLinesCopy.lineY = siblingMiddleY;
+                  }
                 }
-              }
-              //clientY to bottom
-              if (clientY < siblingBottom + 4 && clientY > siblingBottom - 4) {
+                //clientY to bottom
                 if (
-                  !snapLinesCopy.lineY ||
-                  (snapLinesCopy.lineY &&
-                    clientY - snapLinesCopy.lineY > clientY - siblingBottom)
+                  clientY < siblingBottom + 4 &&
+                  clientY > siblingBottom - 4
                 ) {
-                  snapLinesCopy.lineY = siblingBottom;
+                  if (
+                    !snapLinesCopy.lineY ||
+                    (snapLinesCopy.lineY &&
+                      clientY - snapLinesCopy.lineY > clientY - siblingBottom)
+                  ) {
+                    snapLinesCopy.lineY = siblingBottom;
+                  }
                 }
               }
 
-              //clientX to left
-              if (clientX < siblingLeft + 4 && clientX > siblingLeft - 4) {
-                if (
-                  !snapLinesCopy.lineX ||
-                  (snapLinesCopy.lineX &&
-                    clientX - snapLinesCopy.lineX > clientX - siblingLeft)
-                ) {
-                  snapLinesCopy.lineX = siblingLeft;
+              if (!resizeStore.isResizingTop || !resizeStore.isResizingBottom) {
+                //clientX to left
+                if (clientX < siblingLeft + 4 && clientX > siblingLeft - 4) {
+                  if (
+                    !snapLinesCopy.lineX ||
+                    (snapLinesCopy.lineX &&
+                      clientX - snapLinesCopy.lineX > clientX - siblingLeft)
+                  ) {
+                    snapLinesCopy.lineX = siblingLeft;
+                  }
                 }
-              }
-              //clientX to middleX
-              if (
-                clientX < siblingMiddleX + 4 &&
-                clientX > siblingMiddleX - 4
-              ) {
+                //clientX to middleX
                 if (
-                  !snapLinesCopy.lineX ||
-                  (snapLinesCopy.lineX &&
-                    clientX - snapLinesCopy.lineX > clientX - siblingMiddleX)
+                  clientX < siblingMiddleX + 4 &&
+                  clientX > siblingMiddleX - 4
                 ) {
-                  snapLinesCopy.lineX = siblingMiddleX;
+                  if (
+                    !snapLinesCopy.lineX ||
+                    (snapLinesCopy.lineX &&
+                      clientX - snapLinesCopy.lineX > clientX - siblingMiddleX)
+                  ) {
+                    snapLinesCopy.lineX = siblingMiddleX;
+                  }
                 }
-              }
-              //clientX to right
-              if (clientX < siblingRight + 4 && clientX > siblingRight - 4) {
-                if (
-                  !snapLinesCopy.lineX ||
-                  (snapLinesCopy.lineX &&
-                    clientX - snapLinesCopy.lineX > clientX - siblingRight)
-                ) {
-                  snapLinesCopy.lineX = siblingRight;
+                //clientX to right
+                if (clientX < siblingRight + 4 && clientX > siblingRight - 4) {
+                  if (
+                    !snapLinesCopy.lineX ||
+                    (snapLinesCopy.lineX &&
+                      clientX - snapLinesCopy.lineX > clientX - siblingRight)
+                  ) {
+                    snapLinesCopy.lineX = siblingRight;
+                  }
                 }
               }
             });
-            if (resizeStore.isResizingBottomRight) {
-              let snapLinesCopy2 = {
-                lineBottom: snapLinesCopy.lineY,
-                lineRight: snapLinesCopy.lineX,
-                lineTop: NaN,
-                lineMiddleY: NaN,
-                lineLeft: NaN,
-                lineMiddleX: NaN,
-                lineMiddle: NaN,
-              };
-              this.snapLines = { ...snapLinesCopy2 };
-            }
+
             if (snapLinesCopy.lineX || snapLinesCopy.lineY) {
               this.show = true;
-              if (snapLinesCopy.lineX) {
-                this.show = true;
-                if (resizeStore.isResizingBottomRight) {
+              //resize top
+              if (resizeStore.isResizingTop) {
+                this.snapTop = true;
+                this.snapHeight = true;
+                this.snapWidth = false;
+                this.snapLeft = false;
+
+                selectToi.selectedBoxData.attr.style.top =
+                  Math.round(
+                    (snapLinesCopy.lineY - squareStore.offsetTop) /
+                      squareStore.scale
+                  ) + "px";
+                selectToi.selectedBoxData.attr.style.height =
+                  Math.round(
+                    resizeStore.prevTop +
+                      resizeStore.prevHeight -
+                      (snapLinesCopy.lineY - squareStore.offsetTop) /
+                        squareStore.scale
+                  ) + "px";
+                let snapLinesCopy2 = {
+                  lineTop: snapLinesCopy.lineY,
+                };
+                this.snapLines = { ...snapLinesCopy2 };
+              }
+              //resize bottom right
+              if (resizeStore.isResizingBottomRight) {
+                if (snapLinesCopy.lineX) {
                   this.snapWidth = true;
-                  console.log("snapwidth");
                   selectToi.selectedBoxData.attr.style.width =
                     Math.round(
                       (snapLinesCopy.lineX - squareStore.offsetLeft) /
                         squareStore.scale -
                         parseInt(selectToi.selectedBoxData.attr.style.left)
                     ) + "px";
-                }
-                if (!snapLinesCopy.lineY) {
-                  if (resizeStore.isResizingBottomRight) {
+                  if (!snapLinesCopy.lineY) {
                     this.snapHeight = false;
                   }
                 }
-              }
-              if (snapLinesCopy.lineY) {
-                this.show = true;
-                if (resizeStore.isResizingBottomRight) {
+                if (snapLinesCopy.lineY) {
                   this.snapHeight = true;
-                  console.log("snapheight");
                   selectToi.selectedBoxData.attr.style.height =
                     Math.round(
                       (snapLinesCopy.lineY - squareStore.offsetTop) /
@@ -988,16 +1001,21 @@ export const useRulerSnapStore = defineStore({
                     ) + "px";
                 }
                 if (!snapLinesCopy.lineX) {
-                  if (resizeStore.isResizingBottomRight) {
-                    this.snapWidth = false;
-                  }
+                  this.snapWidth = false;
                 }
+                let snapLinesCopy2 = {
+                  lineBottom: snapLinesCopy.lineY,
+                  lineRight: snapLinesCopy.lineX,
+                };
+                this.snapLines = { ...snapLinesCopy2 };
               }
             }
             if (!snapLinesCopy.lineX && !snapLinesCopy.lineY) {
               this.show = false;
               this.snapHeight = false;
               this.snapWidth = false;
+              this.snapTop = false;
+              this.snapLeft = false;
             }
           })
           .then(() => {
@@ -1005,6 +1023,8 @@ export const useRulerSnapStore = defineStore({
           });
       }
       if (!this.on) {
+        this.snapTop = false;
+        this.snapLeft = false;
         this.snapHeight = false;
         this.snapWidth = false;
       }
