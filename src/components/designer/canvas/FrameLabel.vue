@@ -2,7 +2,6 @@
   <template v-for="frame in frames">
     <div
       :style="{
-        willChange: 'left, top',
         left: frame.attr?.style?.left
           ? (parseInt(frame.attr?.style?.left) +
               squareStore.offsetLeft / squareStore.scale) *
@@ -15,13 +14,10 @@
               squareStore.scale +
             'px'
           : useGetElementRect(frame.id)?.y + 'px',
-        width: useGetElementRect(frame.id)?.width + 'px',
-        maxWidth: useGetElementRect(frame.id)?.width + 'px',
-        overflow: 'hidden',
       }"
-      class="fixed overflow-visible -mt-5 will-change-transform pointer-events-auto cursor-default overflow-ellipsis"
+      class="absolute overflow-x-hidden -mt-5 pointer-events-auto cursor-default overflow-ellipsis"
     >
-      <span
+      <p
         @mousedown.stop="
           canvasStore.dndWithoutParent($event, frame.id, frame.type)
         "
@@ -40,7 +36,7 @@
           }
         "
         @click="selectToi.changeSelected($event, frame.id, frame.type)"
-        class="fixed overflow-visible will-change-transform pointer-events-auto cursor-default hover:text-[#6EB0E0] hover:opacity-100 overflow-ellipsis"
+        class="fixed pointer-events-auto cursor-default hover:text-[#6EB0E0] hover:opacity-100 overflow-hidden overflow-ellipsis"
         :class="{
           'text-[#6EB0E0] opacity-100':
             selectToi.selectedBox === frame.id ||
@@ -49,9 +45,13 @@
             selectToi.selectedBox !== frame.id &&
             selectToi.treeHoverId !== frame.id,
         }"
+        :style="{
+          width: useGetElementRect(frame.id)?.width + 'px',
+          maxWidth: useGetElementRect(frame.id)?.width + 'px',
+        }"
       >
         {{ frame.name }}
-      </span>
+      </p>
     </div>
   </template>
 </template>
