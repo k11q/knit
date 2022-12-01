@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { useCounterStore } from "./counter";
 import { useSquareStore } from "./dataSquare";
+import { useResizeStore } from "./resizeStore";
 import { storeCanvas } from "./storeCanvas";
 
 export const useRulerSnapStore = defineStore({
@@ -37,6 +38,7 @@ export const useRulerSnapStore = defineStore({
     prevY: NaN,
   }),
   actions: {
+    /*
     setRuler(e, id) {
       const rulerSnap = useRulerSnapStore();
 
@@ -123,6 +125,7 @@ export const useRulerSnapStore = defineStore({
         window.removeEventListener("mouseup", mouseup);
       }
     },
+    */
     setSiblingsPoints(id) {
       let siblingPointsCopy = [];
       const element = document.querySelector(`[data-id=${id}]`);
@@ -300,6 +303,7 @@ export const useRulerSnapStore = defineStore({
       });
       this.rulerPosition = { ...rulerPositionCopy };
     },
+    /*
     setShowPointer(x, y) {
       if (
         (this.snapLines?.lineLeft < x + 4 &&
@@ -317,8 +321,8 @@ export const useRulerSnapStore = defineStore({
         return true;
       } else return false;
     },
+    */
     setRulerSnap(e, id) {
-      const dndStore = storeCanvas();
       const selectToi = useCounterStore();
       const squareStore = useSquareStore();
       const rulerSnap = useRulerSnapStore();
@@ -336,10 +340,6 @@ export const useRulerSnapStore = defineStore({
       const currDragLeft = e.clientX - prevX;
       const currDragMiddleX = e.clientX - prevX + elementRect.width / 2;
       const currDragRight = e.clientX - prevX + elementRect.width;
-      const currDragMiddle = {
-        x: e.clientX - prevX + elementRect.width / 2,
-        y: e.clientY - prevY + elementRect.height / 2,
-      };
 
       let siblingPointsCopy = [];
       let snapLinesCopy = {
@@ -367,11 +367,8 @@ export const useRulerSnapStore = defineStore({
               let siblingLeft = siblingRect.x;
               let siblingMiddleX = siblingRect.x + siblingRect.width / 2;
               let siblingRight = siblingRect.x + siblingRect.width;
-              let siblingMiddle = {
-                x: siblingRect.x + siblingRect.width / 2,
-                y: siblingRect.y + siblingRect.height / 2,
-              };
 
+              //find distance between moving element and all other elements
               //top to top
               if (
                 currDragTop < siblingTop + 4 &&
@@ -631,6 +628,7 @@ export const useRulerSnapStore = defineStore({
                 e;
               }
             });
+            //calculate the distance if theres 2 lines for each position
             if (snapLinesCopy.lineTop && snapLinesCopy.lineBottom) {
               if (
                 Math.abs(snapLinesCopy.lineTop - currDragTop) >
@@ -717,6 +715,7 @@ export const useRulerSnapStore = defineStore({
               }
             }
             this.snapLines = { ...snapLinesCopy };
+            //snap /notsnap where there is/isnt line
             if (
               snapLinesCopy.lineTop ||
               snapLinesCopy.lineMiddleY ||
@@ -846,6 +845,168 @@ export const useRulerSnapStore = defineStore({
       } else if (!this.on) {
         this.snapTop = false;
         this.snapLeft = false;
+      }
+    },
+    setResizeSnap(e, id) {
+      const squareStore = useSquareStore();
+      const resizeStore = useResizeStore();
+      const selectToi = useCounterStore();
+      const clientX = e.clientX;
+      const clientY = e.clientY;
+
+      let snapLinesCopy = {
+        lineX: NaN,
+        lineY: NaN,
+      };
+
+      if (this.on) {
+        this.siblings = [
+          ...document.querySelector(`[data-id=${id}]`).parentElement.children,
+        ].filter((el) => el.dataset.id !== id);
+
+        Promise.resolve()
+          .then(() => {
+            this.siblings.forEach((i) => {
+              let siblingRect = i.getBoundingClientRect();
+              let siblingTop = siblingRect.y;
+              let siblingMiddleY = siblingRect.y + siblingRect.height / 2;
+              let siblingBottom = siblingRect.y + siblingRect.height;
+              let siblingLeft = siblingRect.x;
+              let siblingMiddleX = siblingRect.x + siblingRect.width / 2;
+              let siblingRight = siblingRect.x + siblingRect.width;
+
+              //clientY to top
+              if (clientY < siblingTop + 4 && clientY > siblingTop - 4) {
+                if (
+                  !snapLinesCopy.lineY ||
+                  (snapLinesCopy.lineY &&
+                    clientY - snapLinesCopy.lineY > clientY - siblingTop)
+                ) {
+                  snapLinesCopy.lineY = siblingTop;
+                }
+              }
+              //clientY to middleY
+              if (
+                clientY < siblingMiddleY + 4 &&
+                clientY > siblingMiddleY - 4
+              ) {
+                if (
+                  !snapLinesCopy.lineY ||
+                  (snapLinesCopy.lineY &&
+                    clientY - snapLinesCopy.lineY > clientY - siblingMiddleY)
+                ) {
+                  snapLinesCopy.lineY = siblingMiddleY;
+                }
+              }
+              //clientY to bottom
+              if (clientY < siblingBottom + 4 && clientY > siblingBottom - 4) {
+                if (
+                  !snapLinesCopy.lineY ||
+                  (snapLinesCopy.lineY &&
+                    clientY - snapLinesCopy.lineY > clientY - siblingBottom)
+                ) {
+                  snapLinesCopy.lineY = siblingBottom;
+                }
+              }
+
+              //clientX to left
+              if (clientX < siblingLeft + 4 && clientX > siblingLeft - 4) {
+                if (
+                  !snapLinesCopy.lineX ||
+                  (snapLinesCopy.lineX &&
+                    clientX - snapLinesCopy.lineX > clientX - siblingLeft)
+                ) {
+                  snapLinesCopy.lineX = siblingLeft;
+                }
+              }
+              //clientX to middleX
+              if (
+                clientX < siblingMiddleX + 4 &&
+                clientX > siblingMiddleX - 4
+              ) {
+                if (
+                  !snapLinesCopy.lineX ||
+                  (snapLinesCopy.lineX &&
+                    clientX - snapLinesCopy.lineX > clientX - siblingMiddleX)
+                ) {
+                  snapLinesCopy.lineX = siblingMiddleX;
+                }
+              }
+              //clientX to right
+              if (clientX < siblingRight + 4 && clientX > siblingRight - 4) {
+                if (
+                  !snapLinesCopy.lineX ||
+                  (snapLinesCopy.lineX &&
+                    clientX - snapLinesCopy.lineX > clientX - siblingRight)
+                ) {
+                  snapLinesCopy.lineX = siblingRight;
+                }
+              }
+            });
+            if (resizeStore.isResizingBottomRight) {
+              let snapLinesCopy2 = {
+                lineBottom: snapLinesCopy.lineY,
+                lineRight: snapLinesCopy.lineX,
+                lineTop: NaN,
+                lineMiddleY: NaN,
+                lineLeft: NaN,
+                lineMiddleX: NaN,
+                lineMiddle: NaN,
+              };
+              this.snapLines = { ...snapLinesCopy2 };
+            }
+            if (snapLinesCopy.lineX || snapLinesCopy.lineY) {
+              this.show = true;
+              if (snapLinesCopy.lineX) {
+                this.show = true;
+                if (resizeStore.isResizingBottomRight) {
+                  this.snapWidth = true;
+                  console.log("snapwidth");
+                  selectToi.selectedBoxData.attr.style.width =
+                    Math.round(
+                      (snapLinesCopy.lineX - squareStore.offsetLeft) /
+                        squareStore.scale -
+                        parseInt(selectToi.selectedBoxData.attr.style.left)
+                    ) + "px";
+                }
+                if (!snapLinesCopy.lineY) {
+                  if (resizeStore.isResizingBottomRight) {
+                    this.snapHeight = false;
+                  }
+                }
+              }
+              if (snapLinesCopy.lineY) {
+                this.show = true;
+                if (resizeStore.isResizingBottomRight) {
+                  this.snapHeight = true;
+                  console.log("snapheight");
+                  selectToi.selectedBoxData.attr.style.height =
+                    Math.round(
+                      (snapLinesCopy.lineY - squareStore.offsetTop) /
+                        squareStore.scale -
+                        parseInt(selectToi.selectedBoxData.attr.style.top)
+                    ) + "px";
+                }
+                if (!snapLinesCopy.lineX) {
+                  if (resizeStore.isResizingBottomRight) {
+                    this.snapWidth = false;
+                  }
+                }
+              }
+            }
+            if (!snapLinesCopy.lineX && !snapLinesCopy.lineY) {
+              this.show = false;
+              this.snapHeight = false;
+              this.snapWidth = false;
+            }
+          })
+          .then(() => {
+            this.setSiblingsPoints(id);
+          });
+      }
+      if (!this.on) {
+        this.snapHeight = false;
+        this.snapWidth = false;
       }
     },
   },

@@ -118,12 +118,28 @@ export const useResizeStore = defineStore({
         window.addEventListener("mouseup", mouseup);
 
         function mousemove(e) {
-          resizeStore.resizeWidthForward(e);
-          resizeStore.resizeHeightForward(e);
+          resizeStore.isResizingBottomRight = true;
+          if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
+            rulerSnap.on = true;
+            console.log("try");
+            if (!rulerSnap.snapWidth) {
+              resizeStore.resizeWidthForward(e);
+            }
+            if (!rulerSnap.snapHeight) {
+              resizeStore.resizeHeightForward(e);
+            }
+          } else if (Math.abs(e.movementX) > 5 || Math.abs(e.movementX) > 5) {
+            rulerSnap.on = false;
+            resizeStore.resizeWidthForward(e);
+            resizeStore.resizeHeightForward(e);
+          }
+          rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
         }
 
         function mouseup() {
+          resizeStore.isResizingBottomRight = false;
           resizeStore.isResizing = false;
+          rulerSnap.show = false;
           window.removeEventListener("mousemove", mousemove);
           window.removeEventListener("mouseup", mouseup);
         }
