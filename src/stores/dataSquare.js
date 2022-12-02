@@ -145,8 +145,7 @@ export const useSquareStore = defineStore({
       }
 
       if (this.addSquareActivated === true) {
-        selectToi.clearSelected();
-        newSquareStore.setNewSquare(event, dataPushed);
+        createRectangle(event);
       }
       if (this.addTextActivated === true) {
         this.dataText.name = "text" + this.countBox;
