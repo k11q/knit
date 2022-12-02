@@ -130,6 +130,12 @@ export default function (e) {
 
         if (index !== -1) {
           canvasStore.multiSelectedElements.splice(index, 1);
+          canvasStore.multiSelectResizerRect = {
+            left: "",
+            top: "",
+            height: "",
+            width: "",
+          };
         }
       }
       canvasStore.multiSelectedElements.forEach((i) => {
