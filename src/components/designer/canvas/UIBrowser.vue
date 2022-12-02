@@ -28,7 +28,10 @@
             selectToi.selectedBox !== node.id &&
             node.type !== 'text' &&
             (node.type !== 'box' ||
-              (node.type === 'box' && !canvasFF.isDragging))
+              (node.type === 'box' && !canvasFF.isDragging)) &&
+            canvasStore.multiSelectedElements.findIndex(
+              (i) => i.id === node.id
+            ) === -1
           ) {
             useSetOutlineHover(node.id);
           } else if (

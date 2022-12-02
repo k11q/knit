@@ -53,11 +53,6 @@ export const storeCanvas = defineStore({
         prevPositions.push({ id: i.id, prevX: prevX, prevY: prevY });
       });
 
-      let resizerPrevX =
-        e.clientX - parseInt(canvasStore.multiSelectResizerRect.left);
-      let resizerPrevY =
-        e.clientY - parseInt(canvasStore.multiSelectResizerRect.top);
-
       window.addEventListener("mousemove", mousemove);
       window.addEventListener("mouseup", mouseup);
 
@@ -81,14 +76,16 @@ export const storeCanvas = defineStore({
                 squareStore.scale
             ) + "px";
         });
-
-        canvasStore.multiSelectResizerRect.left =
-          e.clientX - resizerPrevX + "px";
-        canvasStore.multiSelectResizerRect.top =
-          e.clientY - resizerPrevY + "px";
       }
 
       function mouseup(e) {
+        canvasStore.multiSelectResizerRect = {
+          left: "",
+          top: "",
+          height: "",
+          width: "",
+        };
+        useSetMultiElementsResizer();
         canvasStore.isDragging = false;
 
         window.removeEventListener("mousemove", mousemove);
