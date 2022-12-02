@@ -44,7 +44,9 @@
           if (selectToi.selectedBox === node.id && node.type !== 'text') {
             paddingResize.setShowPaddingResizer();
           }
-          selectToi.treeHoverId = node.id;
+          if (!canvasStore.isDragging) {
+            selectToi.treeHoverId = node.id;
+          }
         }
       "
       @dblclick.prevent="
