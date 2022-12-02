@@ -299,12 +299,14 @@
         :style="{
           willChange: 'left, top',
           left:
-            useGetElementRect(selectToi.selectedBoxData.id)?.left -
-            addaSquare.offsetLeft / addaSquare.scale +
+            (useGetElementRect(selectToi.selectedBoxData.id)?.left -
+              addaSquare.offsetLeft) /
+              addaSquare.scale +
             'px',
           top:
-            useGetElementRect(selectToi.selectedBoxData.id)?.top -
-            addaSquare.offsetTop / addaSquare.scale +
+            (useGetElementRect(selectToi.selectedBoxData.id)?.top -
+              addaSquare.offsetTop) /
+              addaSquare.scale +
             'px',
 
           fontSize: selectToi.selectedBoxData?.attr?.style?.fontSize,
