@@ -47,7 +47,6 @@
         }"
         :style="{
           width: useGetElementRect(frame.id)?.width + 'px',
-          maxWidth: useGetElementRect(frame.id)?.width + 'px',
         }"
       >
         {{ frame.name }}

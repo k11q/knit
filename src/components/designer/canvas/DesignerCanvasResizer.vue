@@ -402,18 +402,6 @@
           }"
         >
           {{
-            selectToi.selectedBoxData.attr?.style.height &&
-            selectToi.selectedBoxData.attr?.style.height !== "fit-content"
-              ? Math.round(
-                  parseInt(selectToi.selectedBoxData.attr?.style.height)
-                )
-              : selectToi.selectedBoxData.attr?.style.height &&
-                selectToi.selectedBoxData.attr?.style.height === "fit-content"
-              ? "Hug"
-              : "Fill"
-          }}
-          x
-          {{
             selectToi.selectedBoxData.attr?.style.width &&
             selectToi.selectedBoxData.attr?.style.width !== "fit-content"
               ? Math.round(
@@ -421,6 +409,18 @@
                 )
               : selectToi.selectedBoxData.attr?.style.width &&
                 selectToi.selectedBoxData.attr?.style.width === "fit-content"
+              ? "Hug"
+              : "Fill"
+          }}
+          x
+          {{
+            selectToi.selectedBoxData.attr?.style.height &&
+            selectToi.selectedBoxData.attr?.style.height !== "fit-content"
+              ? Math.round(
+                  parseInt(selectToi.selectedBoxData.attr?.style.height)
+                )
+              : selectToi.selectedBoxData.attr?.style.height &&
+                selectToi.selectedBoxData.attr?.style.height === "fit-content"
               ? "Hug"
               : "Fill"
           }}
