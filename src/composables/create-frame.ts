@@ -3,6 +3,7 @@ import { useNewFrameStore } from "../stores/newFrameStore";
 import { useSquareStore } from "../stores/dataSquare";
 import { usePaddingResizeStore } from "../stores/paddingResizeStore";
 import { useResizeStore } from "../stores/resizeStore";
+import { useRulerSnapStore } from "../stores/rulerSnap";
 
 export function createFrame(e: MouseEvent) {
   const selectToi = useCounterStore();
@@ -10,6 +11,7 @@ export function createFrame(e: MouseEvent) {
   const squareStore = useSquareStore();
   const paddingResize = usePaddingResizeStore();
   const resizeStore = useResizeStore();
+  const rulerSnap = useRulerSnapStore();
   const uid = () =>
     String(Date.now().toString(32) + Math.random().toString(16)).replace(
       /\./g,
@@ -35,15 +37,14 @@ export function createFrame(e: MouseEvent) {
         top: "",
         display: "flex",
         backgroundColor: "white",
-        height: "1px",
-        width: "1px",
+        height: "10px",
+        width: "10px",
         position: "absolute",
       },
     },
     children: [],
   };
 
-  let countbox = 1;
   frameNode.id = useGetRandomLetter() + uid();
   frameNode.attr.style.left = prevX + "px";
   frameNode.attr.style.top = prevY + "px";
@@ -58,30 +59,30 @@ export function createFrame(e: MouseEvent) {
     let positionY = Math.round(
       (e.clientY - squareStore.offsetTop) / squareStore.scale
     );
-    frameNode.attr.style.width = positionX - prevX + "px";
-    frameNode.attr.style.height = positionY - prevY + "px";
 
     if (rootData.findIndex((i) => i.id === frameNode.id) === -1) {
-      Promise.resolve()
-        .then(() => {
-          frameNode.name = "frame" + newFrameStore.countBox;
-          rootData.push(frameNode);
-        })
-        .then(() => {
-          squareStore.turnOnNormalPointer();
-        })
-        .then(() => {
-          selectToi.changeSelected(e, frameNode.id);
-        })
-        .then(() => {
-          useSetOutlineSelector(frameNode.id);
-          paddingResize.setResizerSize(frameNode.id);
-        });
-      newFrameStore.countBox = newFrameStore.countBox + 1;
-    }
-
-    if (selectToi.selectedBoxData.id) {
-      resizeStore.resizeBottomRight(e);
+      frameNode.name = "frame" + newFrameStore.countBox;
+      rootData.push(frameNode);
+      squareStore.turnOnNormalPointer();
+      selectToi.changeSelected(e, frameNode.id);
+    } else {
+      useSetOutlineSelector(frameNode.id);
+      paddingResize.setResizerSize(frameNode.id);
+      if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
+        rulerSnap.on = true;
+        rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
+        if (!rulerSnap.snapWidth) {
+          selectToi.selectedBoxData.attr.style.width = positionX - prevX + "px";
+        }
+        if (!rulerSnap.snapHeight) {
+          selectToi.selectedBoxData.attr.style.height =
+            positionY - prevY + "px";
+        }
+      } else if (Math.abs(e.movementX) > 5 || Math.abs(e.movementX) > 5) {
+        rulerSnap.on = false;
+        selectToi.selectedBoxData.attr.style.width = positionX - prevX + "px";
+        selectToi.selectedBoxData.attr.style.height = positionY - prevY + "px";
+      }
     }
     /*
           let positionX = Math.round(
@@ -134,6 +135,7 @@ export function createFrame(e: MouseEvent) {
           */
   }
   function mouseup(e: MouseEvent) {
+    newFrameStore.countBox = newFrameStore.countBox + 1;
     window.removeEventListener("mousemove", mousemove);
     window.removeEventListener("mouseup", mouseup);
   }
