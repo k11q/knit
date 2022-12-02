@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { useSquareStore } from "./dataSquare";
 import { useCanvasDndStore } from "./canvasDnd";
 import { usePaddingResizeStore } from "./paddingResizeStore";
+import { storeCanvas } from "./storeCanvas";
 
 export const useCounterStore = defineStore({
   id: "counter",
@@ -569,6 +570,7 @@ export const useCounterStore = defineStore({
       }
     },
     clearSelected() {
+      const canvasStore = storeCanvas();
       if (this.selectedTextEditor) {
         useSetOutlineSelector(this.selectedTextEditor);
         this.selectedTextEditor = "";
@@ -576,6 +578,7 @@ export const useCounterStore = defineStore({
         let canvasDnd = useCanvasDndStore();
         this.selectedBox = "";
         this.selectedBoxData = [];
+        canvasStore.multiSelectedElements = [];
         canvasDnd.currDrag = "";
         canvasDnd.currDragValue = "";
       }

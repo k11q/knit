@@ -10,6 +10,5 @@ export default function (arr, id) {
       return true;
     }
   });
-  console.log("data = " + data);
   return data;
 }

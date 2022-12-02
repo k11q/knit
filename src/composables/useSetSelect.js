@@ -1,11 +1,13 @@
 import { useSelectStore } from "@/stores/selectStore";
 import { useSquareStore } from "@/stores/dataSquare";
 import { useCounterStore } from "@/stores/counter";
+import { storeCanvas } from "@/stores/storeCanvas";
 
 export default function (e) {
   const selectStore = useSelectStore();
   const squareStore = useSquareStore();
   const selectToi = useCounterStore();
+  const canvasStore = storeCanvas();
 
   const prevX = (e.clientX - squareStore.offsetLeft) / squareStore.scale;
   const prevY = (e.clientY - squareStore.offsetTop) / squareStore.scale;
@@ -113,6 +115,20 @@ export default function (e) {
           bottomRight.y > selectStore.Y &&
           bottomRight.y < selectStore.Y + selectStore.height)
       ) {
+        console.log(useGetElementData(selectToi.data, id));
+        let data = useGetElementData(selectToi.data, id);
+
+        let index = canvasStore.multiSelectedElements.findIndex(
+          (i) => i.id === id
+        );
+        if (index === -1) {
+          canvasStore.multiSelectedElements.push(data);
+          console.log("notfound");
+        }
+        if (index !== -1) {
+          console.log("dahmasuk");
+          console.log(canvasStore.multiSelectedElements);
+        }
         selectToi.changeSelected(e, id);
       }
     });

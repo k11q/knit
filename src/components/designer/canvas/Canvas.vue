@@ -15,7 +15,7 @@
     <!--canvas and UI elements-->
     <div
       data-id="canvas"
-      class="w-0 h-0 overflow-visible"
+      class="w-0 h-0 overflow-visible absolute"
       :style="{
         willChange: canvasStore.isPinchZoom ? 'transform' : null,
         transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
@@ -247,6 +247,21 @@
         </div>
       </div>
     </div>
+    <!--Multiselect elements outline-->
+    <div
+      v-show="
+        canvasStore.multiSelectedElements.length && !canvasStore.isPinchZoom
+      "
+      class="fixed top-0 left-0 overflow-visible pointer-events-none"
+      :style="{
+        willChange: 'transform',
+        transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
+      }"
+    >
+      <DesignerCanvasMultiSelectOutline
+        :elements="canvasStore.multiSelectedElements"
+      />
+    </div>
     <!--RulerSnap siblings point element-->
     <div
       v-show="rulerSnap.show && rulerSnap.on && !canvasStore.isPinchZoom"
@@ -274,7 +289,7 @@
     </div>
     <!--Tiptap text editor-->
     <div
-      class="fixed top-0 left-0 bottom-0 right-0 overflow-visible pointer-events-none"
+      class="fixed top-0 left-0 overflow-visible pointer-events-none"
       :style="{
         willChange: 'transform',
         transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
