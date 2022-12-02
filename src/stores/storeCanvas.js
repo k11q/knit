@@ -12,6 +12,7 @@ export const storeCanvas = defineStore({
   id: "storeCanvas",
   state: () => ({
     isPinchZoom: false,
+    isDragging: false,
     currDrag: "",
     prevX: NaN,
     prevY: NaN,
@@ -38,6 +39,61 @@ export const storeCanvas = defineStore({
         Math.round(
           (e.clientX - this.prevX - squareStore.offsetLeft) / squareStore.scale
         ) + "px";
+    },
+    setPositionMultiElement(e) {
+      const selectToi = useCounterStore();
+      const squareStore = useSquareStore();
+      const canvasStore = storeCanvas();
+      let prevPositions = [];
+
+      canvasStore.multiSelectedElements.forEach((i) => {
+        let prevX = e.clientX - useGetElementRect(i.id).x;
+        let prevY = e.clientY - useGetElementRect(i.id).y;
+
+        prevPositions.push({ id: i.id, prevX: prevX, prevY: prevY });
+      });
+
+      let resizerPrevX =
+        e.clientX - parseInt(canvasStore.multiSelectResizerRect.left);
+      let resizerPrevY =
+        e.clientY - parseInt(canvasStore.multiSelectResizerRect.top);
+
+      window.addEventListener("mousemove", mousemove);
+      window.addEventListener("mouseup", mouseup);
+
+      function mousemove(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        canvasStore.isDragging = true;
+
+        canvasStore.multiSelectedElements.forEach((i, index) => {
+          i.attr.style.left =
+            Math.round(
+              (e.clientX -
+                prevPositions[index].prevX -
+                squareStore.offsetLeft) /
+                squareStore.scale
+            ) + "px";
+
+          i.attr.style.top =
+            Math.round(
+              (e.clientY - prevPositions[index].prevY - squareStore.offsetTop) /
+                squareStore.scale
+            ) + "px";
+        });
+
+        canvasStore.multiSelectResizerRect.left =
+          e.clientX - resizerPrevX + "px";
+        canvasStore.multiSelectResizerRect.top =
+          e.clientY - resizerPrevY + "px";
+      }
+
+      function mouseup(e) {
+        canvasStore.isDragging = false;
+
+        window.removeEventListener("mousemove", mousemove);
+        window.removeEventListener("mouseup", mouseup);
+      }
     },
     setLeftPositionWithParent(e) {
       const selectToi = useCounterStore();

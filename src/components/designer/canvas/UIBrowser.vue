@@ -109,11 +109,17 @@ function makeEditable(e: Event, id: string) {
 //dnd on canvas
 const testDown = (e: Event, currDrag: string) => {
   if (!squareStore.dragPointer && !squareStore.draggingPointer) {
-    if (!useCheckParent(currDrag)) {
+    if (
+      !useCheckParent(currDrag) &&
+      !canvasStore.multiSelectedElements.length
+    ) {
       canvasStore.dndWithoutParent(e, currDrag);
     }
-    if (useCheckParent(currDrag)) {
+    if (useCheckParent(currDrag) && !canvasStore.multiSelectedElements.length) {
       canvasStore.dndWithParent(e, currDrag);
+    }
+    if (canvasStore.multiSelectedElements.length) {
+      canvasStore.setPositionMultiElement(e);
     }
   }
 };

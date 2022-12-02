@@ -30,7 +30,7 @@
 
     <!--Other elements parent container-->
     <div
-      v-show="!canvasStore.isPinchZoom"
+      v-show="!canvasStore.isPinchZoom && !canvasStore.isDragging"
       class="fixed top-0 left-0 w-0 h-0 overflow-visible"
       :style="{
         willChange: 'transform',
@@ -250,7 +250,9 @@
     <!--Multiselect elements outline-->
     <div
       v-show="
-        canvasStore.multiSelectedElements.length && !canvasStore.isPinchZoom
+        canvasStore.multiSelectedElements.length &&
+        !canvasStore.isPinchZoom &&
+        !canvasStore.isDragging
       "
       class="fixed top-0 left-0 overflow-visible pointer-events-none"
       :style="{
@@ -265,7 +267,9 @@
     <!--Multiselect elements resizer-->
     <div
       v-show="
-        canvasStore.multiSelectedElements.length && !canvasStore.isPinchZoom
+        canvasStore.multiSelectedElements.length &&
+        !canvasStore.isPinchZoom &&
+        !canvasStore.isDragging
       "
       class="fixed top-0 left-0 overflow-visible pointer-events-none"
       :style="{
