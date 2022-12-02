@@ -79,12 +79,8 @@ export const storeCanvas = defineStore({
       }
 
       function mouseup(e) {
-        canvasStore.multiSelectResizerRect = {
-          left: "",
-          top: "",
-          height: "",
-          width: "",
-        };
+        canvasStore.multiSelectResizerRect.left = "";
+        canvasStore.multiSelectResizerRect.top = "";
         useSetMultiElementsResizer();
         canvasStore.isDragging = false;
 
