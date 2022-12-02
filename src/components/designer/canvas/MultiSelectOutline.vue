@@ -1,7 +1,7 @@
 <template>
   <template v-for="element in elements">
     <div
-      class="absolute"
+      class="absolute border-box"
       :style="{
         willChange: 'left, top',
         left: element.attr?.style?.left,

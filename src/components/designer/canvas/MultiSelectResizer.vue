@@ -1,51 +1,12 @@
 <template>
   <div
-    v-show="
-      selectToi.selectedBox &&
-      !canvasFF.isDragging &&
-      !selectToi.selectedTextEditor
-    "
-    class="absolute pointer-events-none border-box"
+    class="absolute border-box"
     :style="{
-      willChange: 'left, top, height, width',
-      left:
-        selectToi.selectedBoxData.attr?.style?.left &&
-        !useCheckParent(selectToi.selectedBoxData.id)
-          ? selectToi.selectedBoxData.attr.style.left
-          : Math.round(
-              useGetElementRect(selectToi.selectedBoxData.id)?.x -
-                addaSquare.offsetLeft
-            ) /
-              addaSquare.scale +
-            'px',
-      top:
-        selectToi.selectedBoxData.attr?.style?.top &&
-        !useCheckParent(selectToi.selectedBoxData.id)
-          ? selectToi.selectedBoxData.attr.style.top
-          : Math.round(
-              useGetElementRect(selectToi.selectedBoxData.id)?.y -
-                addaSquare.offsetTop
-            ) /
-              addaSquare.scale +
-            'px',
-      height:
-        selectToi.selectedBoxData.attr?.style?.height &&
-        selectToi.selectedBoxData.attr?.style?.height !== 'fit-content' &&
-        !useCheckParent(selectToi.selectedBoxData.id)
-          ? selectToi.selectedBoxData.attr.style.height
-          : Math.round(
-              useGetElementRect(selectToi.selectedBoxData.id)?.height
-            ) /
-              addaSquare.scale +
-            'px',
-      width:
-        selectToi.selectedBoxData.attr?.style?.width &&
-        selectToi.selectedBoxData.attr?.style?.width !== 'fit-content' &&
-        !useCheckParent(selectToi.selectedBoxData.id)
-          ? selectToi.selectedBoxData.attr.style.width
-          : Math.round(useGetElementRect(selectToi.selectedBoxData.id)?.width) /
-              addaSquare.scale +
-            'px',
+      willChange: 'left, top, width, height',
+      left: canvasStore.multiSelectResizerRect.left,
+      top: canvasStore.multiSelectResizerRect.top,
+      width: canvasStore.multiSelectResizerRect.width,
+      height: canvasStore.multiSelectResizerRect.height,
     }"
   >
     <!--(ON HOLD)radius resizer controller
@@ -179,7 +140,7 @@
       />
     </div>
   -->
-    <!--padding resizer-->
+    <!--padding resizer
     <div
       class="pointer-events-auto"
       v-show="
@@ -375,14 +336,9 @@
         </div>
       </div>
     </div>
+  -->
     <!-- resizer-->
-    <div
-      class="pointer-events-auto"
-      v-show="
-        useGetElementRect(selectToi.selectedBoxData.id)?.width > 20 ||
-        useGetElementRect(selectToi.selectedBoxData.id)?.height > 20
-      "
-    >
+    <div class="pointer-events-auto">
       <!--Bottom dimensions label-->
       <p
         class="absolute left-0 right-0 top-full flex flex-row justify-center pointer-events-none"
@@ -401,29 +357,9 @@
             paddingLeft: `${(4 * 1) / addaSquare.scale}px`,
           }"
         >
-          {{
-            selectToi.selectedBoxData.attr?.style.height &&
-            selectToi.selectedBoxData.attr?.style.height !== "fit-content"
-              ? Math.round(
-                  parseInt(selectToi.selectedBoxData.attr?.style.height)
-                )
-              : selectToi.selectedBoxData.attr?.style.height &&
-                selectToi.selectedBoxData.attr?.style.height === "fit-content"
-              ? "Hug"
-              : "Fill"
-          }}
+          {{ parseInt(canvasStore.multiSelectResizerRect.width) }}
           x
-          {{
-            selectToi.selectedBoxData.attr?.style.width &&
-            selectToi.selectedBoxData.attr?.style.width !== "fit-content"
-              ? Math.round(
-                  parseInt(selectToi.selectedBoxData.attr?.style.width)
-                )
-              : selectToi.selectedBoxData.attr?.style.width &&
-                selectToi.selectedBoxData.attr?.style.width === "fit-content"
-              ? "Hug"
-              : "Fill"
-          }}
+          {{ parseInt(canvasStore.multiSelectResizerRect.height) }}
         </span>
       </p>
       <div
@@ -528,10 +464,12 @@ import { useSquareStore } from "@/stores/dataSquare";
 import { useCanvasFF } from "~~/src/stores/canvasFreeForm";
 import { useResizeStore } from "@/stores/resizeStore";
 import { usePaddingResizeStore } from "@/stores/paddingResizeStore";
+import { storeCanvas } from "@/stores/storeCanvas";
 
 const selectToi = useCounterStore();
 const addaSquare = useSquareStore();
 const canvasFF = useCanvasFF();
 const resizeStore = useResizeStore();
 const paddingResize = usePaddingResizeStore();
+const canvasStore = storeCanvas();
 </script>

@@ -579,6 +579,12 @@ export const useCounterStore = defineStore({
         this.selectedBox = "";
         this.selectedBoxData = [];
         canvasStore.multiSelectedElements = [];
+        canvasStore.multiSelectResizerRect = {
+          left: "",
+          top: "",
+          height: "",
+          width: "",
+        };
         canvasDnd.currDrag = "";
         canvasDnd.currDragValue = "";
       }

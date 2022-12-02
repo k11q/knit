@@ -262,6 +262,19 @@
         :elements="canvasStore.multiSelectedElements"
       />
     </div>
+    <!--Multiselect elements resizer-->
+    <div
+      v-show="
+        canvasStore.multiSelectedElements.length && !canvasStore.isPinchZoom
+      "
+      class="fixed top-0 left-0 overflow-visible pointer-events-none"
+      :style="{
+        willChange: 'transform',
+        transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
+      }"
+    >
+      <DesignerCanvasMultiSelectResizer />
+    </div>
     <!--RulerSnap siblings point element-->
     <div
       v-show="rulerSnap.show && rulerSnap.on && !canvasStore.isPinchZoom"

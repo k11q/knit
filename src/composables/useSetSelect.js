@@ -115,7 +115,6 @@ export default function (e) {
           bottomRight.y > selectStore.Y &&
           bottomRight.y < selectStore.Y + selectStore.height)
       ) {
-        console.log(useGetElementData(selectToi.data, id));
         let data = useGetElementData(selectToi.data, id);
 
         let index = canvasStore.multiSelectedElements.findIndex(
@@ -123,14 +122,59 @@ export default function (e) {
         );
         if (index === -1) {
           canvasStore.multiSelectedElements.push(data);
-          console.log("notfound");
         }
+      } else {
+        let index = canvasStore.multiSelectedElements.findIndex(
+          (i) => i.id === id
+        );
+
         if (index !== -1) {
-          console.log("dahmasuk");
-          console.log(canvasStore.multiSelectedElements);
+          canvasStore.multiSelectedElements.splice(index, 1);
         }
-        selectToi.changeSelected(e, id);
       }
+      canvasStore.multiSelectedElements.forEach((i) => {
+        let left = parseInt(i.attr?.style?.left);
+        let top = parseInt(i.attr?.style?.top);
+        let width = parseInt(i.attr?.style?.width);
+        let height = parseInt(i.attr?.style?.height);
+
+        if (
+          !parseInt(canvasStore.multiSelectResizerRect.left) ||
+          left < parseInt(canvasStore.multiSelectResizerRect.left)
+        ) {
+          canvasStore.multiSelectResizerRect.left = i.attr?.style?.left;
+        }
+        if (
+          !parseInt(canvasStore.multiSelectResizerRect.top) ||
+          top < parseInt(canvasStore.multiSelectResizerRect.top)
+        ) {
+          canvasStore.multiSelectResizerRect.top = i.attr?.style?.top;
+        }
+        if (
+          !parseInt(canvasStore.multiSelectResizerRect.width) ||
+          left + width >
+            parseInt(canvasStore.multiSelectResizerRect.left) +
+              parseInt(canvasStore.multiSelectResizerRect.width)
+        ) {
+          canvasStore.multiSelectResizerRect.width =
+            left +
+            width -
+            parseInt(canvasStore.multiSelectResizerRect.left) +
+            "px";
+        }
+        if (
+          !parseInt(canvasStore.multiSelectResizerRect.height) ||
+          top + height >
+            parseInt(canvasStore.multiSelectResizerRect.top) +
+              parseInt(canvasStore.multiSelectResizerRect.height)
+        ) {
+          canvasStore.multiSelectResizerRect.height =
+            top +
+            height -
+            parseInt(canvasStore.multiSelectResizerRect.top) +
+            "px";
+        }
+      });
     });
   }
   function mouseup(e) {
