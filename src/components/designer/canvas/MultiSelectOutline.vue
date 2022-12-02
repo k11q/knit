@@ -6,8 +6,16 @@
         willChange: 'left, top',
         left: element.attr?.style?.left,
         top: element.attr?.style?.top,
-        width: element.attr?.style?.width,
-        height: element.attr?.style?.height,
+        width:
+          element.attr?.style?.width &&
+          element.attr?.style?.width !== 'fit-content'
+            ? element.attr?.style?.width
+            : useGetElementRect(element.id)?.width / squareStore.scale + 'px',
+        height:
+          element.attr?.style?.height &&
+          element.attr?.style?.height !== 'fit-content'
+            ? element.attr?.style?.height
+            : useGetElementRect(element.id)?.height / squareStore.scale + 'px',
         border: `${1 / squareStore.scale}px solid #0191FA`,
       }"
     ></div>
