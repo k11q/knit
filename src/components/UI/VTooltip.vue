@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { randomString } from "../../utils.js";
+import { randomString } from "@/utils/tooltip.js";
 export default {
   name: "VTooltip",
   props: {

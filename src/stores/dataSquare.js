@@ -190,7 +190,7 @@ export const useSquareStore = defineStore({
       }
       if (this.addFrameActivated === true) {
         selectToi.clearSelected();
-        newFrameStore.setNewFrame(event, dataPushed);
+        createFrame(event);
       }
     },
     turnOnAddSquareActivated() {
