@@ -70,13 +70,13 @@ export function createFrame(e: MouseEvent) {
         })
         .then(() => {
           squareStore.turnOnNormalPointer();
+        })
+        .then(() => {
           selectToi.changeSelected(e, frameNode.id);
+          selectToi.treeHoverId = frameNode.id;
         });
-    } else {
-      Promise.resolve().then(() => {
-        useSetOutlineSelector(frameNode.id);
-        paddingResize.setResizerSize(frameNode.id);
-      });
+    }
+    if (rootData.findIndex((i) => i.id === frameNode.id) !== -1) {
       resizeStore.isResizingBottomRight = true;
       if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
         rulerSnap.on = true;

@@ -127,9 +127,9 @@ export const useSlider = (e, change, currElement, currType) => {
   const gap = () => {
     const prevX = e.clientX;
     let prevGap;
-    if (selectToi.selectedBoxData.attr.style.borderRadius) {
-      prevGap = parseInt(selectToi.selectedBoxData.attr.style.borderRadius);
-    } else if (!selectToi.selectedBoxData.attr.style.borderRadius) {
+    if (selectToi.selectedBoxData.attr.style.gap) {
+      prevGap = parseInt(selectToi.selectedBoxData.attr.style.gap);
+    } else if (!selectToi.selectedBoxData.attr.style.gap) {
       prevGap = 0;
     }
 

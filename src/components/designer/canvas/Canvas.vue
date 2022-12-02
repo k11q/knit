@@ -40,11 +40,10 @@
       <!--Hover outline-->
       <div
         v-show="
-          (selectToi.treeHover &&
-            !selectToi.selectedTextEditor &&
-            !resizeStore.isResizing) ||
-          (useGetElementRect(selectToi.selectedBoxData.id)?.width <= 20 &&
-            useGetElementRect(selectToi.selectedBoxData.id)?.height <= 20)
+          ((selectToi.treeHover && !selectToi.selectedTextEditor) ||
+            (useGetElementRect(selectToi.selectedBoxData.id)?.width <= 20 &&
+              useGetElementRect(selectToi.selectedBoxData.id)?.height <= 20)) &&
+          !resizeStore.isResizing
         "
         class="absolute pointer-events-none"
         :style="{
