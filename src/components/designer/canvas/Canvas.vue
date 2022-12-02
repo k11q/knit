@@ -281,14 +281,21 @@
     </div>
     <!--RulerSnap siblings point element-->
     <div
-      v-show="rulerSnap.show && rulerSnap.on && !canvasStore.isPinchZoom"
+      v-show="
+        rulerSnap.show &&
+        rulerSnap.on &&
+        !canvasStore.isPinchZoom &&
+        !canvasStore.isDragging
+      "
       class="absolute inset-0 overflow-visible pointer-events-none"
     >
       <DesignerCanvasRulerPoints :points="rulerSnap.snapPoints" />
     </div>
     <!--frames label-->
     <div
-      v-if="selectToi.data && !canvasStore.isPinchZoom"
+      v-if="
+        selectToi.data && !canvasStore.isPinchZoom && !canvasStore.isDragging
+      "
       class="absolute inset-0 overflow-visible pointer-events-none"
     >
       <ClientOnly>
@@ -299,7 +306,12 @@
     </div>
     <!--NEW Ruler element-->
     <div
-      v-show="rulerSnap.show && rulerSnap.on && !canvasStore.isPinchZoom"
+      v-show="
+        rulerSnap.show &&
+        rulerSnap.on &&
+        !canvasStore.isPinchZoom &&
+        !canvasStore.isDragging
+      "
       class="absolute inset-0 overflow-visible pointer-events-none"
     >
       <DesignerCanvasNewRulerSnap />
