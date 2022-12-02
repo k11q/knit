@@ -2,8 +2,8 @@ import { useCounterStore } from "../stores/counter";
 import { useNewFrameStore } from "../stores/newFrameStore";
 import { useSquareStore } from "../stores/dataSquare";
 import { usePaddingResizeStore } from "../stores/paddingResizeStore";
-import { useResizeStore } from "../stores/resizeStore";
 import { useRulerSnapStore } from "../stores/rulerSnap";
+import { useResizeStore } from "../stores/resizeStore";
 
 export function createFrame(e: MouseEvent) {
   const selectToi = useCounterStore();
@@ -11,21 +11,12 @@ export function createFrame(e: MouseEvent) {
   const squareStore = useSquareStore();
   const paddingResize = usePaddingResizeStore();
   const rulerSnap = useRulerSnapStore();
+  const resizeStore = useResizeStore();
   const uid = () =>
     String(Date.now().toString(32) + Math.random().toString(16)).replace(
       /\./g,
       ""
     );
-
-  const rootData = selectToi.data;
-
-  const prevX = Math.round(
-    (e.clientX - squareStore.offsetLeft) / squareStore.scale
-  );
-  const prevY = Math.round(
-    (e.clientY - squareStore.offsetTop) / squareStore.scale
-  );
-
   let frameNode = {
     id: "",
     name: "",
@@ -44,9 +35,21 @@ export function createFrame(e: MouseEvent) {
     children: [],
   };
 
+  let rootData = selectToi.data;
+
+  const prevX = Math.round(
+    (e.clientX - squareStore.offsetLeft) / squareStore.scale
+  );
+  const prevY = Math.round(
+    (e.clientY - squareStore.offsetTop) / squareStore.scale
+  );
+
   frameNode.id = useGetRandomLetter() + uid();
   frameNode.attr.style.left = prevX + "px";
   frameNode.attr.style.top = prevY + "px";
+
+  resizeStore.prevLeft = prevX;
+  resizeStore.prevTop = prevY;
 
   window.addEventListener("mousemove", mousemove);
   window.addEventListener("mouseup", mouseup);
@@ -67,6 +70,7 @@ export function createFrame(e: MouseEvent) {
     } else {
       useSetOutlineSelector(frameNode.id);
       paddingResize.setResizerSize(frameNode.id);
+      resizeStore.isResizingBottomRight = true;
       if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
         rulerSnap.on = true;
         rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
@@ -135,6 +139,7 @@ export function createFrame(e: MouseEvent) {
   }
   function mouseup(e: MouseEvent) {
     newFrameStore.countBox = newFrameStore.countBox + 1;
+
     window.removeEventListener("mousemove", mousemove);
     window.removeEventListener("mouseup", mouseup);
   }
