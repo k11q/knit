@@ -64,12 +64,19 @@ export function createFrame(e: MouseEvent) {
 
     if (rootData.findIndex((i) => i.id === frameNode.id) === -1) {
       frameNode.name = "frame" + newFrameStore.countBox;
-      rootData.push(frameNode);
-      squareStore.turnOnNormalPointer();
-      selectToi.changeSelected(e, frameNode.id);
+      Promise.resolve()
+        .then(() => {
+          rootData.push(frameNode);
+        })
+        .then(() => {
+          squareStore.turnOnNormalPointer();
+          selectToi.changeSelected(e, frameNode.id);
+        });
     } else {
-      useSetOutlineSelector(frameNode.id);
-      paddingResize.setResizerSize(frameNode.id);
+      Promise.resolve().then(() => {
+        useSetOutlineSelector(frameNode.id);
+        paddingResize.setResizerSize(frameNode.id);
+      });
       resizeStore.isResizingBottomRight = true;
       if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
         rulerSnap.on = true;
@@ -139,6 +146,8 @@ export function createFrame(e: MouseEvent) {
   }
   function mouseup(e: MouseEvent) {
     newFrameStore.countBox = newFrameStore.countBox + 1;
+    resizeStore.isResizing = false;
+    resizeStore.isResizingBottomRight = false;
     rulerSnap.show = false;
 
     window.removeEventListener("mousemove", mousemove);

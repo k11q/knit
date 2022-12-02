@@ -1,6 +1,6 @@
 import { useSquareStore } from "@/stores/dataSquare";
 
-export default function () {
+export function useGetAllSurfaceElements() {
   const squareStore = useSquareStore();
 
   let surfaceElements = [
