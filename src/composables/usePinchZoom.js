@@ -24,8 +24,8 @@ export default function (event) {
     addaSquare.offsetTop = event.clientY - ys * addaSquare.scale;
   } else {
     clearTimeout(endPinchZoom);
-    addaSquare.offsetLeft += -event.deltaX * 0.4;
-    addaSquare.offsetTop += -event.deltaY * 0.4;
+    addaSquare.offsetLeft += -event.deltaX * 0.7;
+    addaSquare.offsetTop += -event.deltaY * 0.7;
   }
 
   function endPinchZoom() {
