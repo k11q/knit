@@ -20,6 +20,14 @@ export const storeCanvas = defineStore({
     showGhostOutline: false,
     ghostOutlineLeft: NaN,
     ghostOutlineTop: NaN,
+    multiSelect: false,
+    multiSelectResizerRect: {
+      left: "NaNpx",
+      top: "NaNpx",
+      height: "NaNpx",
+      width: "NaNpx",
+    },
+    multiSelectedElements: [],
   }),
   actions: {
     setLeftPosition(e) {
@@ -567,6 +575,5 @@ export const storeCanvas = defineStore({
         }, 0);
       }
     },
-    selectElementWithDragSelector(e) {},
   },
 });

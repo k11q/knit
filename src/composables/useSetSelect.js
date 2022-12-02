@@ -88,20 +88,28 @@ export default function (e) {
       };
 
       if (
+        //lineleft
         (topLeft.x > selectStore.X &&
           topLeft.x < selectStore.X + selectStore.width &&
-          topLeft.y > selectStore.Y &&
-          topLeft.y < selectStore.Y + selectStore.height) ||
-        (topRight.x > selectStore.X &&
-          topRight.x < selectStore.X + selectStore.width &&
+          (topLeft.y > selectStore.Y || bottomLeft.y > selectStore.Y) &&
+          (topLeft.y < selectStore.Y + selectStore.height ||
+            bottomLeft.y < selectStore.Y + selectStore.height)) ||
+        //linetop
+        ((topRight.x > selectStore.X || topLeft.x > selectStore.X) &&
+          (topRight.x < selectStore.X + selectStore.width ||
+            topLeft.x < selectStore.X + selectStore.width) &&
           topRight.y > selectStore.Y &&
           topRight.y < selectStore.Y + selectStore.height) ||
-        (bottomLeft.x > selectStore.X &&
-          bottomLeft.x < selectStore.X + selectStore.width &&
-          bottomLeft.y > selectStore.Y &&
-          bottomLeft.y < selectStore.Y + selectStore.height) ||
-        (bottomRight.x > selectStore.X &&
-          bottomRight.x < selectStore.X + selectStore.width &&
+        //lineright
+        (topRight.x > selectStore.X &&
+          topRight.x < selectStore.X + selectStore.width &&
+          (topRight.y > selectStore.Y || bottomRight.y > selectStore.Y) &&
+          (topRight.y < selectStore.Y + selectStore.height ||
+            bottomRight.y < selectStore.Y + selectStore.height)) ||
+        //linebottom
+        ((bottomRight.x > selectStore.X || bottomLeft.x > selectStore.X) &&
+          (bottomRight.x < selectStore.X + selectStore.width ||
+            bottomLeft.x < selectStore.X + selectStore.width) &&
           bottomRight.y > selectStore.Y &&
           bottomRight.y < selectStore.Y + selectStore.height)
       ) {
