@@ -139,6 +139,7 @@ export function createFrame(e: MouseEvent) {
   }
   function mouseup(e: MouseEvent) {
     newFrameStore.countBox = newFrameStore.countBox + 1;
+    rulerSnap.show = false;
 
     window.removeEventListener("mousemove", mousemove);
     window.removeEventListener("mouseup", mouseup);
