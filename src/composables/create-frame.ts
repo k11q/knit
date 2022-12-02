@@ -10,7 +10,6 @@ export function createFrame(e: MouseEvent) {
   const newFrameStore = useNewFrameStore();
   const squareStore = useSquareStore();
   const paddingResize = usePaddingResizeStore();
-  const resizeStore = useResizeStore();
   const rulerSnap = useRulerSnapStore();
   const uid = () =>
     String(Date.now().toString(32) + Math.random().toString(16)).replace(
