@@ -35,9 +35,19 @@ export const useCanvasStore = defineStore({
       const selectToi = useCounterStore();
       const squareStore = useSquareStore();
 
-      selectToi.selectedBoxData.cssRules[0].style.left.value = Math.round(
-        (e.clientX - this.prevX - squareStore.offsetLeft) / squareStore.scale
-      );
+      if (selectToi.selectedBoxData.cssRules[0].style.left) {
+        selectToi.selectedBoxData.cssRules[0].style.left.value = Math.round(
+          (e.clientX - this.prevX - squareStore.offsetLeft) / squareStore.scale
+        );
+      }
+
+      if (!selectToi.selectedBoxData.cssRules[0].style.left) {
+        selectToi.selectedBoxData.cssRules[0].style.left = {
+          type: "unit",
+          value: 0,
+          unit: "px",
+        };
+      }
     },
     setPositionMultiElement(e) {
       const selectToi = useCounterStore();
@@ -88,27 +98,59 @@ export const useCanvasStore = defineStore({
       const squareStore = useSquareStore();
       const element = useGetElement(selectToi.selectedBoxData.id);
 
-      selectToi.selectedBoxData.cssRules[0].style.left.value = Math.round(
-        (e.clientX - this.prevX - squareStore.offsetLeft) / squareStore.scale -
-          element.parentElement.offsetLeft
-      );
+      if (selectToi.selectedBoxData.cssRules[0].style.left) {
+        selectToi.selectedBoxData.cssRules[0].style.left.value = Math.round(
+          (e.clientX - this.prevX - squareStore.offsetLeft) /
+            squareStore.scale -
+            element.parentElement.offsetLeft
+        );
+      }
+
+      if (!selectToi.selectedBoxData.cssRules[0].style.left) {
+        selectToi.selectedBoxData.cssRules[0].style.left = {
+          type: "unit",
+          value: 0,
+          unit: "px",
+        };
+      }
     },
     setTopPosition(e) {
       const selectToi = useCounterStore();
       const squareStore = useSquareStore();
-      selectToi.selectedBoxData.cssRules[0].style.top.value = Math.round(
-        (e.clientY - this.prevY - squareStore.offsetTop) / squareStore.scale
-      );
+
+      if (selectToi.selectedBoxData.cssRules[0].style.top) {
+        selectToi.selectedBoxData.cssRules[0].style.top.value = Math.round(
+          (e.clientY - this.prevY - squareStore.offsetTop) / squareStore.scale
+        );
+      }
+
+      if (!selectToi.selectedBoxData.cssRules[0].style.top) {
+        selectToi.selectedBoxData.cssRules[0].style.top = {
+          type: "unit",
+          value: 0,
+          unit: "px",
+        };
+      }
     },
     setTopPositionWithParent(e) {
       const selectToi = useCounterStore();
       const squareStore = useSquareStore();
       const element = useGetElement(selectToi.selectedBoxData.id);
 
-      selectToi.selectedBoxData.cssRules[0].style.top.value = Math.round(
-        (e.clientY - this.prevY - squareStore.offsetTop) / squareStore.scale -
-          element.parentElement.offsetTop
-      );
+      if (selectToi.selectedBoxData.cssRules[0].style.top) {
+        selectToi.selectedBoxData.cssRules[0].style.top.value = Math.round(
+          (e.clientY - this.prevY - squareStore.offsetTop) / squareStore.scale -
+            element.parentElement.offsetTop
+        );
+      }
+
+      if (!selectToi.selectedBoxData.cssRules[0].style.top) {
+        selectToi.selectedBoxData.cssRules[0].style.top = {
+          type: "unit",
+          value: 0,
+          unit: "px",
+        };
+      }
     },
     dndWithoutParent(e, currDrag) {
       const selectToi = useCounterStore();
