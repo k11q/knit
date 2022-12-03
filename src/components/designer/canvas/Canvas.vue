@@ -159,97 +159,11 @@
           backgroundColor: 'rgba(1, 145, 250, 0.1)',
         }"
       ></div>
-      <!--new square & new frame-->
-      <div
-        v-if="newSquareStore.show || newFrameStore.show"
-        class="absolute pointer-events-none"
-        :style="{
-          willChange: 'left, top, height, width',
-          left: newSquareStore.show
-            ? newSquareStore.X + 'px'
-            : newFrameStore.X + 'px',
-          top: newSquareStore.show
-            ? newSquareStore.Y + 'px'
-            : newFrameStore.Y + 'px',
-          height: newSquareStore.show
-            ? newSquareStore.height + 'px'
-            : newFrameStore.height + 'px',
-          width: newSquareStore.show
-            ? newSquareStore.width + 'px'
-            : newFrameStore.width + 'px',
-          backgroundColor: newSquareStore.show ? '#D9D9D9' : '#FFFFFF',
-        }"
-      >
-        <div>
-          <p
-            class="absolute left-0 right-0 top-full flex flex-row justify-center"
-            :style="{ marginTop: `${(8 * 1) / addaSquare.scale}px` }"
-          >
-            <span
-              class="bg-[#0191FA] text-[#EFEEF1] cursor-default whitespace-nowrap"
-              :style="{
-                fontSize: `${(11 * 1) / addaSquare.scale}px`,
-                lineHeight: 1.5,
-                borderRadius: `${(4 * 1) / addaSquare.scale}px`,
-                paddingTop: `${2 * (1 / addaSquare.scale)}px`,
-                paddingBottom: `${2 * (1 / addaSquare.scale)}px`,
-                paddingRight: `${(4 * 1) / addaSquare.scale}px`,
-                paddingLeft: `${(4 * 1) / addaSquare.scale}px`,
-              }"
-            >
-              {{
-                newSquareStore.show ? newSquareStore.width : newFrameStore.width
-              }}
-              x
-              {{
-                newSquareStore.show ? newSquareStore.width : newFrameStore.width
-              }}
-            </span>
-          </p>
-          <div
-            class="absolute bottom-full bg-[#0191FA] w-full hover:cursor-row-resize"
-            :style="{
-              height: `${(1 * 1) / addaSquare.scale}px`,
-            }"
-          />
-          <div
-            class="absolute top-full bg-[#0191FA] w-full hover:cursor-row-resize"
-            :style="{ height: `${(1 * 1) / addaSquare.scale}px` }"
-          />
-          <div
-            class="absolute right-full bg-[#0191FA] h-full hover:cursor-col-resize"
-            :style="{
-              width: `${(1 * 1) / addaSquare.scale}px`,
-            }"
-          />
-          <div
-            class="absolute left-full bg-[#0191FA] h-full hover:cursor-col-resize"
-            :style="{ width: `${(1 * 1) / addaSquare.scale}px` }"
-          />
-
-          <div
-            class="absolute -top-1 -left-1 h-2 w-2 bg-[#EFEEF1] border-[#0191FA] border hover:cursor-nwse-resize"
-            :style="{ transform: `scale( ${1 / addaSquare.scale})` }"
-          />
-          <div
-            class="absolute -top-1 -right-1 h-2 w-2 bg-[#EFEEF1] border-[#0191FA] border hover:cursor-nesw-resize"
-            :style="{ transform: `scale( ${1 / addaSquare.scale})` }"
-          />
-          <div
-            class="absolute -bottom-1 -right-1 h-2 w-2 bg-[#EFEEF1] border-[#0191FA] border hover:cursor-nwse-resize"
-            :style="{ transform: `scale( ${1 / addaSquare.scale})` }"
-          />
-          <div
-            class="absolute -bottom-1 -left-1 h-2 w-2 bg-[#EFEEF1] border-[#0191FA] border hover:cursor-nesw-resize"
-            :style="{ transform: `scale( ${1 / addaSquare.scale})` }"
-          />
-        </div>
-      </div>
     </div>
     <!--Multiselect elements outline-->
     <div
       v-show="
-        canvasStore.multiSelectedElements.length &&
+        canvasStore.selection.length &&
         !canvasStore.isPinchZoom &&
         !canvasStore.isDragging
       "
@@ -259,14 +173,12 @@
         transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
       }"
     >
-      <DesignerCanvasMultiSelectOutline
-        :elements="canvasStore.multiSelectedElements"
-      />
+      <DesignerCanvasMultiSelectOutline :elements="canvasStore.selection" />
     </div>
     <!--Multiselect elements resizer-->
     <div
       v-show="
-        canvasStore.multiSelectedElements.length &&
+        canvasStore.selection.length &&
         !canvasStore.isPinchZoom &&
         !canvasStore.isDragging
       "
@@ -280,12 +192,7 @@
     </div>
     <!--RulerSnap siblings point element-->
     <div
-      v-show="
-        rulerSnap.show &&
-        rulerSnap.on &&
-        !canvasStore.isPinchZoom &&
-        !canvasStore.isDragging
-      "
+      v-show="rulerSnap.show && rulerSnap.on && !canvasStore.isPinchZoom"
       class="absolute inset-0 overflow-visible pointer-events-none"
     >
       <DesignerCanvasRulerPoints :points="rulerSnap.snapPoints" />
@@ -303,12 +210,7 @@
     </div>
     <!--NEW Ruler element-->
     <div
-      v-show="
-        rulerSnap.show &&
-        rulerSnap.on &&
-        !canvasStore.isPinchZoom &&
-        !canvasStore.isDragging
-      "
+      v-show="rulerSnap.show && rulerSnap.on && !canvasStore.isPinchZoom"
       class="absolute inset-0 overflow-visible pointer-events-none"
     >
       <DesignerCanvasNewRulerSnap />
@@ -357,28 +259,22 @@
 <script setup>
 import { useCounterStore } from "@/stores/counter";
 import { useSquareStore } from "@/stores/dataSquare";
-import { useCanvasFF } from "~~/src/stores/canvasFreeForm";
 import { useResizeStore } from "@/stores/resizeStore";
 import { useDropMarker } from "@/stores/dropMarker";
 import { useSelectStore } from "@/stores/selectStore";
-import { useNewSquareStore } from "~~/src/stores/newSquareStore";
-import { useNewFrameStore } from "~~/src/stores/newFrameStore";
 import { usePaddingResizeStore } from "@/stores/paddingResizeStore";
 import { useRulerSnapStore } from "@/stores/rulerSnap";
-import { storeCanvas } from "@/stores/storeCanvas";
+import { useCanvasStore } from "~~/src/stores/canvas";
 
 const selectToi = useCounterStore();
 const addaSquare = useSquareStore();
-const canvasFF = useCanvasFF();
 const resizeStore = useResizeStore();
 const showMarker = useShowMarker();
 const dropMarker = useDropMarker();
 const selectStore = useSelectStore();
-const newSquareStore = useNewSquareStore();
-const newFrameStore = useNewFrameStore();
 const paddingResize = usePaddingResizeStore();
 const rulerSnap = useRulerSnapStore();
-const canvasStore = storeCanvas();
+const canvasStore = useCanvasStore();
 
 onMounted(() => {
   useAddKeyupShortcuts();

@@ -1,17 +1,15 @@
 import { useCounterStore } from "../stores/counter";
-import { useNewFrameStore } from "../stores/newFrameStore";
 import { useSquareStore } from "../stores/dataSquare";
-import { usePaddingResizeStore } from "../stores/paddingResizeStore";
 import { useRulerSnapStore } from "../stores/rulerSnap";
 import { useResizeStore } from "../stores/resizeStore";
+import { useDocumentStore } from "../stores/document";
 
 export function createFrame(e: MouseEvent) {
   const selectToi = useCounterStore();
-  const newFrameStore = useNewFrameStore();
   const squareStore = useSquareStore();
-  const paddingResize = usePaddingResizeStore();
   const rulerSnap = useRulerSnapStore();
   const resizeStore = useResizeStore();
+  const documentStore = useDocumentStore();
   const uid = () =>
     String(Date.now().toString(32) + Math.random().toString(16)).replace(
       /\./g,
@@ -21,14 +19,29 @@ export function createFrame(e: MouseEvent) {
     id: "",
     name: "",
     type: "div",
+    hidden: false,
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+    blendMode: "passthrough",
+    opacity: 1,
+    effect: [],
+    fill: [],
+    stroke: [],
+    strokeWidth: 1,
+    strokeAlign: "Inside",
+    rotation: 0,
+    cornerRadius: 0,
+    overflow: "scroll",
     attr: {
       style: {
         left: "",
         top: "",
         display: "flex",
         backgroundColor: "white",
-        height: "10px",
-        width: "10px",
+        height: "1px",
+        width: "1px",
         position: "absolute",
       },
     },
@@ -45,6 +58,8 @@ export function createFrame(e: MouseEvent) {
   );
 
   frameNode.id = useGetRandomLetter() + uid();
+  frameNode.x = prevX;
+  frameNode.y = prevY;
   frameNode.attr.style.left = prevX + "px";
   frameNode.attr.style.top = prevY + "px";
 
@@ -63,7 +78,7 @@ export function createFrame(e: MouseEvent) {
     );
 
     if (rootData.findIndex((i) => i.id === frameNode.id) === -1) {
-      frameNode.name = "frame" + newFrameStore.countBox;
+      frameNode.name = "frame" + documentStore.frameCount;
       Promise.resolve()
         .then(() => {
           rootData.push(frameNode);
@@ -73,23 +88,27 @@ export function createFrame(e: MouseEvent) {
         })
         .then(() => {
           selectToi.changeSelected(e, frameNode.id);
-          selectToi.treeHoverId = frameNode.id;
         });
     }
     if (rootData.findIndex((i) => i.id === frameNode.id) !== -1) {
+      resizeStore.isResizing = true;
       resizeStore.isResizingBottomRight = true;
       if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
         rulerSnap.on = true;
         rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
         if (!rulerSnap.snapWidth) {
           selectToi.selectedBoxData.attr.style.width = positionX - prevX + "px";
+          selectToi.selectedBoxData.width = positionX - prevX;
         }
         if (!rulerSnap.snapHeight) {
           selectToi.selectedBoxData.attr.style.height =
             positionY - prevY + "px";
+          selectToi.selectedBoxData.height = positionY - prevY;
         }
       } else if (Math.abs(e.movementX) > 5 || Math.abs(e.movementX) > 5) {
         rulerSnap.on = false;
+        selectToi.selectedBoxData.width = positionX - prevX;
+        selectToi.selectedBoxData.height = positionY - prevY;
         selectToi.selectedBoxData.attr.style.width = positionX - prevX + "px";
         selectToi.selectedBoxData.attr.style.height = positionY - prevY + "px";
       }
@@ -145,7 +164,7 @@ export function createFrame(e: MouseEvent) {
           */
   }
   function mouseup(e: MouseEvent) {
-    newFrameStore.countBox = newFrameStore.countBox + 1;
+    documentStore.frameCount += 1;
     resizeStore.isResizing = false;
     resizeStore.isResizingBottomRight = false;
     rulerSnap.show = false;

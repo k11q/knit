@@ -1,11 +1,11 @@
 import { useCounterStore } from "@/stores/counter";
 import { useSquareStore } from "@/stores/dataSquare";
-import { useCanvasFF } from "~~/src/stores/canvasFreeForm";
+import { useCanvasStore } from "@/stores/canvas";
 
 export const useSlider = (e, change, currElement, currType) => {
   const selectToi = useCounterStore();
   const squareStore = useSquareStore();
-  const canvasFF = useCanvasFF();
+  const canvasStore = useCanvasStore();
 
   const left = () => {
     const prevX = e.clientX;
@@ -15,7 +15,7 @@ export const useSlider = (e, change, currElement, currType) => {
     window.addEventListener("mouseup", mouseup);
 
     function mousemove(e) {
-      canvasFF.isDragging = true;
+      canvasStore.isDragging = true;
 
       selectToi.selectedBoxData.attr.style.left =
         prevLeft + ((e.clientX - prevX) / squareStore.scale) * change + "px";
@@ -31,7 +31,7 @@ export const useSlider = (e, change, currElement, currType) => {
         });
       useSetOutlineSelector(currElement);
 
-      canvasFF.isDragging = false;
+      canvasStore.isDragging = false;
       window.removeEventListener("mousemove", mousemove);
       window.removeEventListener("mouseup", mouseup);
     }
@@ -45,7 +45,7 @@ export const useSlider = (e, change, currElement, currType) => {
     window.addEventListener("mouseup", mouseup);
 
     function mousemove(e) {
-      canvasFF.isDragging = true;
+      canvasStore.isDragging = true;
 
       selectToi.selectedBoxData.attr.style.top =
         prevTop + ((e.clientX - prevX) / squareStore.scale) * change + "px";
@@ -61,7 +61,7 @@ export const useSlider = (e, change, currElement, currType) => {
         });
       useSetOutlineSelector(currElement);
 
-      canvasFF.isDragging = false;
+      canvasStore.isDragging = false;
       window.removeEventListener("mousemove", mousemove);
       window.removeEventListener("mouseup", mouseup);
     }
@@ -74,7 +74,7 @@ export const useSlider = (e, change, currElement, currType) => {
     window.addEventListener("mouseup", mouseup);
 
     function mousemove(e) {
-      canvasFF.isDragging = true;
+      canvasStore.isDragging = true;
 
       selectToi.selectedBoxData.attr.style.width =
         prevWidth + ((e.clientX - prevX) / squareStore.scale) * change + "px";
@@ -90,7 +90,7 @@ export const useSlider = (e, change, currElement, currType) => {
         });
       useSetOutlineSelector(currElement);
 
-      canvasFF.isDragging = false;
+      canvasStore.isDragging = false;
       window.removeEventListener("mousemove", mousemove);
       window.removeEventListener("mouseup", mouseup);
     }
@@ -103,7 +103,7 @@ export const useSlider = (e, change, currElement, currType) => {
     window.addEventListener("mouseup", mouseup);
 
     function mousemove(e) {
-      canvasFF.isDragging = true;
+      canvasStore.isDragging = true;
 
       selectToi.selectedBoxData.attr.style.height =
         prevHeight + ((e.clientX - prevX) / squareStore.scale) * change + "px";
@@ -119,7 +119,7 @@ export const useSlider = (e, change, currElement, currType) => {
         });
       useSetOutlineSelector(currElement);
 
-      canvasFF.isDragging = false;
+      canvasStore.isDragging = false;
       window.removeEventListener("mousemove", mousemove);
       window.removeEventListener("mouseup", mouseup);
     }
@@ -137,7 +137,7 @@ export const useSlider = (e, change, currElement, currType) => {
     window.addEventListener("mouseup", mouseup);
 
     function mousemove(e) {
-      canvasFF.isDragging = true;
+      canvasStore.isDragging = true;
 
       selectToi.selectedBoxData.attr.style.gap =
         prevGap + ((e.clientX - prevX) / squareStore.scale) * change + "px";
@@ -153,7 +153,7 @@ export const useSlider = (e, change, currElement, currType) => {
         });
       useSetOutlineSelector(currElement);
 
-      canvasFF.isDragging = false;
+      canvasStore.isDragging = false;
       window.removeEventListener("mousemove", mousemove);
       window.removeEventListener("mouseup", mouseup);
     }
@@ -171,7 +171,7 @@ export const useSlider = (e, change, currElement, currType) => {
     window.addEventListener("mouseup", mouseup);
 
     function mousemove(e) {
-      canvasFF.isDragging = true;
+      canvasStore.isDragging = true;
 
       selectToi.selectedBoxData.attr.style.borderRadius =
         prevGap + ((e.clientX - prevX) / squareStore.scale) * change + "px";
@@ -187,7 +187,7 @@ export const useSlider = (e, change, currElement, currType) => {
         });
       useSetOutlineSelector(currElement);
 
-      canvasFF.isDragging = false;
+      canvasStore.isDragging = false;
       window.removeEventListener("mousemove", mousemove);
       window.removeEventListener("mouseup", mouseup);
     }

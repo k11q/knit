@@ -23,7 +23,7 @@
         "
         @mouseover.stop="
           () => {
-            if (!canvasFF.isDragging) {
+            if (!canvasStore.isDragging) {
               useSetOutlineHover(frame.id);
             }
             selectToi.treeHoverId = frame.id;
@@ -58,13 +58,11 @@
 <script setup>
 import { useCounterStore } from "@/stores/counter";
 import { useSquareStore } from "@/stores/dataSquare";
-import { storeCanvas } from "@/stores/storeCanvas";
-import { useCanvasFF } from "@/stores/canvasFreeForm";
+import { useCanvasStore } from "~~/src/stores/canvas";
 
 const selectToi = useCounterStore();
 const squareStore = useSquareStore();
-const canvasStore = storeCanvas();
-const canvasFF = useCanvasFF();
+const canvasStore = useCanvasStore();
 
 const props = defineProps({
   frames: Array,

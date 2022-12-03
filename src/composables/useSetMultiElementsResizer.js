@@ -1,11 +1,11 @@
-import { storeCanvas } from "@/stores/storeCanvas";
+import { useCanvasStore } from "@/stores/canvas";
 import { useSquareStore } from "@/stores/dataSquare";
 
 export default function () {
-  const canvasStore = storeCanvas();
+  const canvasStore = useCanvasStore();
   const squareStore = useSquareStore();
 
-  canvasStore.multiSelectedElements.forEach((i) => {
+  canvasStore.selection.forEach((i) => {
     let left = parseInt(i.attr?.style?.left);
     let top = parseInt(i.attr?.style?.top);
     let width = parseInt(i.attr?.style?.width)

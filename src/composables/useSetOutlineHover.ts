@@ -1,16 +1,12 @@
 import { useCounterStore } from "@/stores/counter";
 import { useSquareStore } from "@/stores/dataSquare";
-import { storeTree } from "~~/src/stores/storeTree";
 
 export default function (id: string) {
   const selectToi = useCounterStore();
   const squareStore = useSquareStore();
 
-  const treeStore = storeTree();
-
   selectToi.treeHover = true;
   selectToi.treeHoverId = id;
-  treeStore.hoverId = id;
   let target: HTMLElement = document.querySelector(`[data-id=${id}]`)!;
   let selectedTarget = target.getBoundingClientRect();
 

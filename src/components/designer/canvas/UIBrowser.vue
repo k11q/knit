@@ -28,16 +28,14 @@
             selectToi.selectedBox !== node.id &&
             node.type !== 'text' &&
             (node.type !== 'box' ||
-              (node.type === 'box' && !canvasFF.isDragging)) &&
-            canvasStore.multiSelectedElements.findIndex(
-              (i) => i.id === node.id
-            ) === -1
+              (node.type === 'box' && !canvasStore.isDragging)) &&
+            canvasStore.selection.findIndex((i) => i.id === node.id) === -1
           ) {
             useSetOutlineHover(node.id);
           } else if (
             selectToi.selectedBox !== node.id &&
             node.type === 'text' &&
-            !canvasFF.isDragging
+            !canvasStore.isDragging
           ) {
             canvasStore.textHover = true;
           }
@@ -55,10 +53,10 @@
       :class="{
         'pointer-events-none':
           selectToi.selectedBox === node.id &&
-          canvasFF.isDragging &&
+          canvasStore.isDragging &&
           (node.type !== 'text' ||
             (node.type === 'text' &&
-              canvasFF.isDragging &&
+              canvasStore.isDragging &&
               selectToi.selectedTextEditor !== node.id)),
         '!hidden': node.display && node.display === 'hide',
       }"
@@ -70,8 +68,8 @@
           class="cursor-default"
           :class="{
             'underline decoration-[#0191FA]':
-              selectToi.selectedBox === node.id && !canvasFF.isDragging,
-            'hover:underline decoration-[#0191FA]': !canvasFF.isDragging,
+              selectToi.selectedBox === node.id && !canvasStore.isDragging,
+            'hover:underline decoration-[#0191FA]': !canvasStore.isDragging,
             'opacity-0': selectToi.selectedTextEditor === node.id,
           }"
           :style="{
@@ -95,16 +93,14 @@
 
 <script setup lang="ts">
 import { useCounterStore } from "@/stores/counter";
-import { useCanvasFF } from "~~/src/stores/canvasFreeForm";
 import { useSquareStore } from "@/stores/dataSquare";
 import { usePaddingResizeStore } from "@/stores/paddingResizeStore";
-import { storeCanvas } from "@/stores/storeCanvas";
+import { useCanvasStore } from "~~/src/stores/canvas";
 
 const selectToi = useCounterStore();
-const canvasFF = useCanvasFF();
 const squareStore = useSquareStore();
 const paddingResize = usePaddingResizeStore();
-const canvasStore = storeCanvas();
+const canvasStore = useCanvasStore();
 
 function makeEditable(e: Event, id: string) {
   selectToi.selectedTextEditor = id;
@@ -114,16 +110,13 @@ function makeEditable(e: Event, id: string) {
 //dnd on canvas
 const testDown = (e: Event, currDrag: string) => {
   if (!squareStore.dragPointer && !squareStore.draggingPointer) {
-    if (
-      !useCheckParent(currDrag) &&
-      !canvasStore.multiSelectedElements.length
-    ) {
+    if (!useCheckParent(currDrag) && !canvasStore.selection.length) {
       canvasStore.dndWithoutParent(e, currDrag);
     }
-    if (useCheckParent(currDrag) && !canvasStore.multiSelectedElements.length) {
+    if (useCheckParent(currDrag) && !canvasStore.selection.length) {
       canvasStore.dndWithParent(e, currDrag);
     }
-    if (canvasStore.multiSelectedElements.length) {
+    if (canvasStore.selection.length) {
       canvasStore.setPositionMultiElement(e);
     }
   }

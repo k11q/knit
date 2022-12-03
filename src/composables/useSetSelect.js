@@ -1,13 +1,13 @@
 import { useSelectStore } from "@/stores/selectStore";
 import { useSquareStore } from "@/stores/dataSquare";
 import { useCounterStore } from "@/stores/counter";
-import { storeCanvas } from "@/stores/storeCanvas";
+import { useCanvasStore } from "@/stores/canvas";
 
 export default function (e) {
   const selectStore = useSelectStore();
   const squareStore = useSquareStore();
   const selectToi = useCounterStore();
-  const canvasStore = storeCanvas();
+  const canvasStore = useCanvasStore();
 
   const prevX = (e.clientX - squareStore.offsetLeft) / squareStore.scale;
   const prevY = (e.clientY - squareStore.offsetTop) / squareStore.scale;
@@ -117,19 +117,15 @@ export default function (e) {
       ) {
         let data = useGetElementData(selectToi.data, id);
 
-        let index = canvasStore.multiSelectedElements.findIndex(
-          (i) => i.id === id
-        );
+        let index = canvasStore.selection.findIndex((i) => i.id === id);
         if (index === -1) {
-          canvasStore.multiSelectedElements.push(data);
+          canvasStore.selection.push(data);
         }
       } else {
-        let index = canvasStore.multiSelectedElements.findIndex(
-          (i) => i.id === id
-        );
+        let index = canvasStore.selection.findIndex((i) => i.id === id);
 
         if (index !== -1) {
-          canvasStore.multiSelectedElements.splice(index, 1);
+          canvasStore.selection.splice(index, 1);
           canvasStore.multiSelectResizerRect = {
             left: "",
             top: "",

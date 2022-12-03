@@ -1,17 +1,15 @@
 import { useCounterStore } from "../stores/counter";
-import { useNewSquareStore } from "../stores/newSquareStore";
 import { useSquareStore } from "../stores/dataSquare";
-import { usePaddingResizeStore } from "../stores/paddingResizeStore";
 import { useRulerSnapStore } from "../stores/rulerSnap";
 import { useResizeStore } from "../stores/resizeStore";
+import { useDocumentStore } from "../stores/document";
 
 export function createRectangle(e: MouseEvent) {
   const selectToi = useCounterStore();
-  const newSquareStore = useNewSquareStore();
   const squareStore = useSquareStore();
-  const paddingResize = usePaddingResizeStore();
   const rulerSnap = useRulerSnapStore();
   const resizeStore = useResizeStore();
+  const documentStore = useDocumentStore();
   const uid = () =>
     String(Date.now().toString(32) + Math.random().toString(16)).replace(
       /\./g,
@@ -27,8 +25,8 @@ export function createRectangle(e: MouseEvent) {
         top: "",
         display: "flex",
         backgroundColor: "#D9D9D9",
-        height: "10px",
-        width: "10px",
+        height: "1px",
+        width: "1px",
         position: "absolute",
       },
     },
@@ -63,7 +61,7 @@ export function createRectangle(e: MouseEvent) {
     );
 
     if (rootData.findIndex((i) => i.id === rectangleNode.id) === -1) {
-      rectangleNode.name = "rectangle" + newSquareStore.countBox;
+      rectangleNode.name = "rectangle" + documentStore.rectangleCount;
       Promise.resolve()
         .then(() => {
           rootData.push(rectangleNode);
@@ -145,7 +143,7 @@ export function createRectangle(e: MouseEvent) {
           */
   }
   function mouseup(e: MouseEvent) {
-    newSquareStore.countBox = newSquareStore.countBox + 1;
+    documentStore.rectangleCount += 1;
     resizeStore.isResizing = false;
     resizeStore.isResizingBottomRight = false;
     rulerSnap.show = false;

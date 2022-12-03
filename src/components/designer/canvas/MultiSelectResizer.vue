@@ -461,15 +461,13 @@
 <script setup>
 import { useCounterStore } from "@/stores/counter";
 import { useSquareStore } from "@/stores/dataSquare";
-import { useCanvasFF } from "~~/src/stores/canvasFreeForm";
 import { useResizeStore } from "@/stores/resizeStore";
 import { usePaddingResizeStore } from "@/stores/paddingResizeStore";
-import { storeCanvas } from "@/stores/storeCanvas";
+import { useCanvasStore } from "~~/src/stores/canvas";
 
 const selectToi = useCounterStore();
 const addaSquare = useSquareStore();
-const canvasFF = useCanvasFF();
 const resizeStore = useResizeStore();
 const paddingResize = usePaddingResizeStore();
-const canvasStore = storeCanvas();
+const canvasStore = useCanvasStore();
 </script>

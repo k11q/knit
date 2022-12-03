@@ -15,9 +15,6 @@
       </NuxtLink>
       <div
         class="aspect-square flex items-center justify-center text-center cursor-default h-full flex-none rounded hover:opacity-100"
-        @mousedown="canvasFF.dragCanvasStart"
-        @mousemove="canvasFF.dragCanvasMove"
-        @mouseup="canvasFF.dragCanvasUp"
         :class="{
           'bg-[#2E2E2E] opacity-100': addaSquare.normalPointer === true,
           'hover:bg-[#2E2E2E] opacity-60': addaSquare.normalPointer === false,
@@ -128,11 +125,9 @@
 
 <script setup>
 import { useSquareStore } from "@/stores/dataSquare";
-import { useCanvasFF } from "~~/src/stores/canvasFreeForm";
 import { useCounterStore } from "@/stores/counter";
 
 const addaSquare = useSquareStore();
-const canvasFF = useCanvasFF();
 const selectToi = useCounterStore();
 const route = useRoute();
 const user = useSupabaseUser();

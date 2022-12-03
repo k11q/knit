@@ -44,7 +44,6 @@
 
 <script setup>
 import { useSquareStore } from "@/stores/dataSquare";
-import { useCanvasFF } from "~~/src/stores/canvasFreeForm";
 import { useCounterStore } from "@/stores/counter";
 
 let activeTab = ref("style");
@@ -52,5 +51,4 @@ let activeTab = ref("style");
 const selectToi = useCounterStore();
 const route = useRoute();
 const addaSquare = useSquareStore();
-const canvasFF = useCanvasFF();
 </script>

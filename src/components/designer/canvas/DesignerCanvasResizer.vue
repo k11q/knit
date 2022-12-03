@@ -2,7 +2,7 @@
   <div
     v-show="
       selectToi.selectedBox &&
-      !canvasFF.isDragging &&
+      !canvasStore.isDragging &&
       !selectToi.selectedTextEditor
     "
     class="absolute pointer-events-none border-box"
@@ -525,13 +525,13 @@
 <script setup>
 import { useCounterStore } from "@/stores/counter";
 import { useSquareStore } from "@/stores/dataSquare";
-import { useCanvasFF } from "~~/src/stores/canvasFreeForm";
+import { useCanvasStore } from "@/stores/canvas";
 import { useResizeStore } from "@/stores/resizeStore";
 import { usePaddingResizeStore } from "@/stores/paddingResizeStore";
 
 const selectToi = useCounterStore();
 const addaSquare = useSquareStore();
-const canvasFF = useCanvasFF();
+const canvasStore = useCanvasStore();
 const resizeStore = useResizeStore();
 const paddingResize = usePaddingResizeStore();
 </script>

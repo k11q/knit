@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { useCounterStore } from "./counter";
 import { useSquareStore } from "./dataSquare";
 import { useResizeStore } from "./resizeStore";
-import { storeCanvas } from "./storeCanvas";
+import { useCanvasStore } from "./canvas";
 
 export const useRulerSnapStore = defineStore({
   id: "rulerSnap",

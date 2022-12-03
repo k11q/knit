@@ -1,8 +1,5 @@
 import { defineStore } from "pinia";
 import { useCounterStore } from "./counter";
-import { useCanvasFF } from "./canvasFreeForm";
-import { useNewSquareStore } from "./newSquareStore";
-import { useNewFrameStore } from "./newFrameStore";
 import { v4 as uuidv4 } from "uuid";
 
 export const useSquareStore = defineStore({
@@ -92,10 +89,7 @@ export const useSquareStore = defineStore({
   actions: {
     addSquare(event, dataPushed) {
       const selectToi = useCounterStore();
-      const canvasFF = useCanvasFF();
       const squareStore = useSquareStore();
-      const newSquareStore = useNewSquareStore();
-      const newFrameStore = useNewFrameStore();
       const uid = () =>
         String(Date.now().toString(32) + Math.random().toString(16)).replace(
           /\./g,
