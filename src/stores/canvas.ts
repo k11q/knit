@@ -5,6 +5,7 @@ import { useCanvasDndStore } from "@/stores/canvasDnd";
 import { useDropMarker } from "@/stores/dropMarker";
 import { usePaddingResizeStore } from "@/stores/paddingResizeStore";
 import { useRulerSnapStore } from "@/stores/rulerSnap";
+import { changeLeft, changeTop } from "../composables/node";
 
 export const useCanvasStore = defineStore({
   id: "canvasStore",
@@ -32,11 +33,15 @@ export const useCanvasStore = defineStore({
   }),
   actions: {
     setLeftPosition(e) {
-      const selectToi = useCounterStore();
       const squareStore = useSquareStore();
 
-      selectToi.selectedBoxData.cssRules[0].style.left.value = Math.round(
-        (e.clientX - this.prevX - squareStore.offsetLeft) / squareStore.scale
+      let unit = "px";
+
+      changeLeft(
+        Math.round(
+          (e.clientX - this.prevX - squareStore.offsetLeft) / squareStore.scale
+        ),
+        unit
       );
     },
     setPositionMultiElement(e) {
@@ -97,8 +102,13 @@ export const useCanvasStore = defineStore({
       const selectToi = useCounterStore();
       const squareStore = useSquareStore();
 
-      selectToi.selectedBoxData.cssRules[0].style.top.value = Math.round(
-        (e.clientY - this.prevY - squareStore.offsetTop) / squareStore.scale
+      let unit = "px";
+
+      changeTop(
+        Math.round(
+          (e.clientY - this.prevY - squareStore.offsetTop) / squareStore.scale
+        ),
+        unit
       );
     },
     setTopPositionWithParent(e) {

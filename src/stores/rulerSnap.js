@@ -854,6 +854,8 @@ export const useRulerSnapStore = defineStore({
       const clientX = e.clientX;
       const clientY = e.clientY;
 
+      let unit = "px";
+
       let snapLinesCopy = {
         lineX: NaN,
         lineY: NaN,
@@ -972,18 +974,23 @@ export const useRulerSnapStore = defineStore({
                   this.snapWidth = false;
                   this.snapLeft = false;
 
-                  selectToi.selectedBoxData.cssRules[0].style.top.value =
+                  changeTop(
                     Math.round(
                       (snapLinesCopy.lineY - squareStore.offsetTop) /
                         squareStore.scale
-                    );
-                  selectToi.selectedBoxData.cssRules[0].style.height.value =
+                    ),
+                    unit
+                  );
+
+                  changeHeight(
                     Math.round(
                       resizeStore.prevTop +
                         resizeStore.prevHeight -
                         (snapLinesCopy.lineY - squareStore.offsetTop) /
                           squareStore.scale
-                    );
+                    ),
+                    unit
+                  );
                   let snapLinesCopy2 = {
                     lineTop: snapLinesCopy.lineY,
                   };
@@ -1014,18 +1021,24 @@ export const useRulerSnapStore = defineStore({
                   this.snapWidth = true;
                   this.snapLeft = true;
 
-                  selectToi.selectedBoxData.cssRules[0].style.left.value =
+                  changeLeft(
                     Math.round(
                       (snapLinesCopy.lineX - squareStore.offsetLeft) /
                         squareStore.scale
-                    );
-                  selectToi.selectedBoxData.cssRules[0].style.left.width =
+                    ),
+                    unit
+                  );
+
+                  changeWidth(
                     Math.round(
                       resizeStore.prevLeft +
                         resizeStore.prevWidth -
                         (snapLinesCopy.lineX - squareStore.offsetLeft) /
                           squareStore.scale
-                    );
+                    ),
+                    unit
+                  );
+
                   let snapLinesCopy2 = {
                     lineLeft: snapLinesCopy.lineX,
                   };
