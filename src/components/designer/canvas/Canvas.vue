@@ -30,7 +30,7 @@
 
     <!--Other elements parent container-->
     <div
-      v-show="!canvasStore.isPinchZoom && !canvasStore.isDragging"
+      v-show="!canvasStore.isPinchZoom"
       class="fixed top-0 left-0 w-0 h-0 overflow-visible"
       :style="{
         willChange: 'transform',
@@ -66,7 +66,7 @@
       </ClientOnly>
       <!--Drop marker-->
       <div
-        v-show="showMarker"
+        v-show="canvasStore.showMarker"
         class="absolute pointer-events-none"
         :style="{
           left: dropMarker.markerLeft,
@@ -78,7 +78,7 @@
       ></div>
       <!--Selected outline when droppable-->
       <div
-        v-show="showMarker"
+        v-show="canvasStore.showMarker"
         class="absolute pointer-events-none"
         :style="{
           willChange: 'left, top, height, width, outline',
@@ -262,17 +262,14 @@ import { useSquareStore } from "@/stores/dataSquare";
 import { useResizeStore } from "@/stores/resizeStore";
 import { useDropMarker } from "@/stores/dropMarker";
 import { useSelectStore } from "@/stores/selectStore";
-import { usePaddingResizeStore } from "@/stores/paddingResizeStore";
 import { useRulerSnapStore } from "@/stores/rulerSnap";
 import { useCanvasStore } from "~~/src/stores/canvas";
 
 const selectToi = useCounterStore();
 const addaSquare = useSquareStore();
 const resizeStore = useResizeStore();
-const showMarker = useShowMarker();
 const dropMarker = useDropMarker();
 const selectStore = useSelectStore();
-const paddingResize = usePaddingResizeStore();
 const rulerSnap = useRulerSnapStore();
 const canvasStore = useCanvasStore();
 

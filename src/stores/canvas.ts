@@ -19,6 +19,7 @@ export const useCanvasStore = defineStore({
     textHover: false,
     showSolidOutline: false,
     showGhostOutline: false,
+    showMarker: false,
     ghostOutlineLeft: NaN,
     ghostOutlineTop: NaN,
     multiSelect: false,
@@ -121,7 +122,6 @@ export const useCanvasStore = defineStore({
     dndWithoutParent(e, currDrag) {
       const selectToi = useCounterStore();
       const canvasDnd = useCanvasDndStore();
-      const showMarker = useShowMarker();
       const dropMarker = useDropMarker();
       const paddingResize = usePaddingResizeStore();
       const rulerSnap = useRulerSnapStore();
@@ -196,7 +196,7 @@ export const useCanvasStore = defineStore({
           }
 
           if (!closest) {
-            showMarker.value = false;
+            canvasStore.showMarker = false;
             currDragElement.style.opacity = prevOpacity;
             selectToi.treeHoverSize = 1;
           } else if (target && closest) {
@@ -211,7 +211,7 @@ export const useCanvasStore = defineStore({
               currDragElement.style.opacity = prevOpacity;
             } else {
               rulerSnap.on = false;
-              showMarker.value = true;
+              canvasStore.showMarker = true;
               dropMarker.setMarker(e, currDragElement);
               currDragElement.style.opacity = 0;
 
@@ -242,7 +242,7 @@ export const useCanvasStore = defineStore({
                     selectToi.selectedBoxData,
                     closestTarget
                   );
-                  showMarker.value = false;
+                  canvasStore.showMarker = false;
                   currDragElement.style.opacity = prevOpacity;
                   canvasDnd.dragzone = "";
                 }
@@ -263,7 +263,7 @@ export const useCanvasStore = defineStore({
                     selectToi.selectedBoxData,
                     closestTarget
                   );
-                  showMarker.value = false;
+                  canvasStore.showMarker = false;
                   currDragElement.style.opacity = prevOpacity;
                 }
               })
@@ -293,7 +293,6 @@ export const useCanvasStore = defineStore({
       const selectToi = useCounterStore();
       const canvasStore = useCanvasStore();
       const rulerSnap = useRulerSnapStore();
-      const showMarker = useShowMarker();
       const dropMarker = useDropMarker();
       const canvasDnd = useCanvasDndStore();
       const paddingResize = usePaddingResizeStore();
@@ -331,7 +330,7 @@ export const useCanvasStore = defineStore({
           closestTarget = useGetClosestDroppableId(e);
           rulerSnap.show = false;
           currDragElement.style.opacity = prevOpacity;
-          showMarker.value = false;
+          canvasStore.showMarker = false;
           selectToi.treeHoverSize = 1;
 
           if (
@@ -480,7 +479,7 @@ export const useCanvasStore = defineStore({
           canvasStore.showSolidOutline = false;
           canvasStore.showGhostOutline = false;
           currDragElement.style.opacity = prevOpacity;
-          showMarker.value = false;
+          canvasStore.showMarker = false;
           selectToi.treeHoverSize = 1;
 
           useTransferData().removeChild(selectToi.data, currDrag);
@@ -535,7 +534,7 @@ export const useCanvasStore = defineStore({
           canvasStore.setTopPosition(e);
 
           rulerSnap.on = false;
-          showMarker.value = true;
+          canvasStore.showMarker = true;
           dropMarker.setMarker(e, currDragElement);
           currDragElement.style.opacity = 0;
 
@@ -572,7 +571,7 @@ export const useCanvasStore = defineStore({
                   selectToi.selectedBoxData,
                   closestTarget
                 );
-                showMarker.value = false;
+                canvasStore.showMarker = false;
                 currDragElement.style.opacity = prevOpacity;
                 canvasDnd.dragzone = "";
               }
@@ -594,7 +593,7 @@ export const useCanvasStore = defineStore({
                   selectToi.selectedBoxData,
                   closestTarget
                 );
-                showMarker.value = false;
+                canvasStore.showMarker = false;
                 currDragElement.style.opacity = prevOpacity;
               }
             })

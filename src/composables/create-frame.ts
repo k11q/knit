@@ -84,9 +84,6 @@ export function createFrame(e: MouseEvent) {
           rootData.push(frameNode);
         })
         .then(() => {
-          squareStore.turnOnNormalPointer();
-        })
-        .then(() => {
           selectToi.changeSelected(e, frameNode.id);
         });
     }
@@ -164,6 +161,7 @@ export function createFrame(e: MouseEvent) {
           */
   }
   function mouseup(e: MouseEvent) {
+    squareStore.turnOnNormalPointer();
     documentStore.frameCount += 1;
     resizeStore.isResizing = false;
     resizeStore.isResizingBottomRight = false;

@@ -17,9 +17,7 @@ export const useDropMarker = defineStore({
       const selectToi = useCounterStore();
       const squareStore = useSquareStore();
       const canvasDnd = useCanvasDndStore();
-
       let drop = useGetClosestElement(e);
-
       let dropRect = drop.getBoundingClientRect();
       let currDragRect = currDragElement.getBoundingClientRect();
       let paddingLeft = parseInt(drop.style.paddingLeft) | 0;

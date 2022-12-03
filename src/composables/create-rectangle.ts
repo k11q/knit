@@ -67,9 +67,6 @@ export function createRectangle(e: MouseEvent) {
           rootData.push(rectangleNode);
         })
         .then(() => {
-          squareStore.turnOnNormalPointer();
-        })
-        .then(() => {
           selectToi.changeSelected(e, rectangleNode.id);
         });
     }
@@ -143,6 +140,7 @@ export function createRectangle(e: MouseEvent) {
           */
   }
   function mouseup(e: MouseEvent) {
+    squareStore.turnOnNormalPointer();
     documentStore.rectangleCount += 1;
     resizeStore.isResizing = false;
     resizeStore.isResizingBottomRight = false;
