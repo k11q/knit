@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { useCounterStore } from "./counter";
+import { useCanvasStore } from "./canvas";
 import { v4 as uuidv4 } from "uuid";
 
 export const useSquareStore = defineStore({
@@ -90,6 +91,7 @@ export const useSquareStore = defineStore({
     addSquare(event, dataPushed) {
       const selectToi = useCounterStore();
       const squareStore = useSquareStore();
+      const canvasStore = useCanvasStore();
       const uid = () =>
         String(Date.now().toString(32) + Math.random().toString(16)).replace(
           /\./g,
@@ -98,6 +100,7 @@ export const useSquareStore = defineStore({
 
       if (this.normalPointer === true) {
         selectToi.clearSelected();
+        canvasStore.selection = [];
         document.activeElement.blur();
         useSetSelect(event);
       }
@@ -139,9 +142,11 @@ export const useSquareStore = defineStore({
       }
 
       if (this.addSquareActivated === true) {
+        canvasStore.selection = [];
         createRectangle(event);
       }
       if (this.addTextActivated === true) {
+        canvasStore.selection = [];
         this.dataText.name = "text" + this.countBox;
         this.dataText.id = useGetRandomLetter() + uid();
         this.dataText.attr.style.left =
@@ -167,6 +172,7 @@ export const useSquareStore = defineStore({
         this.countBox = this.countBox + 1;
       }
       if (this.addFrameActivated === true) {
+        canvasStore.selection = [];
         createFrame(event);
       }
     },
