@@ -8,42 +8,46 @@
     class="absolute pointer-events-none border-box"
     :style="{
       willChange: 'left, top, height, width',
-      left:
-        selectToi.selectedBoxData?.cssRules[0]?.style?.left &&
-        !useCheckParent(selectToi.selectedBoxData.id)
+      left: selectToi.selectedBoxData.cssRules
+        ? selectToi.selectedBoxData.cssRules[0].style.left &&
+          !useCheckParent(selectToi.selectedBoxData.id)
           ? selectToi.selectedBoxData.cssRules[0].style.left.value + 'px'
           : Math.round(
               useGetElementRect(selectToi.selectedBoxData.id)?.x -
                 addaSquare.offsetLeft
-            ) / addaSquare.scale,
-      top:
-        selectToi.selectedBoxData?.cssRules[0]?.style?.top &&
-        !useCheckParent(selectToi.selectedBoxData.id)
+            ) /
+              addaSquare.scale +
+            'px'
+        : null,
+      top: selectToi.selectedBoxData.cssRules
+        ? selectToi.selectedBoxData.cssRules[0].style.top &&
+          !useCheckParent(selectToi.selectedBoxData.id)
           ? selectToi.selectedBoxData.cssRules[0].style.top.value + 'px'
           : Math.round(
               useGetElementRect(selectToi.selectedBoxData.id)?.y -
                 addaSquare.offsetTop
-            ) / addaSquare.scale,
-      height:
-        selectToi.selectedBoxData?.cssRules[0]?.style?.height &&
-        selectToi.selectedBoxData?.cssRules[0]?.style?.height?.value !==
-          'fit-content' &&
-        !useCheckParent(selectToi.selectedBoxData.id)
+            ) /
+              addaSquare.scale +
+            'px'
+        : null,
+      height: selectToi.selectedBoxData.cssRules
+        ? selectToi.selectedBoxData?.cssRules[0].style?.height?.value !==
+            'fit-content' && !useCheckParent(selectToi.selectedBoxData.id)
           ? selectToi.selectedBoxData.cssRules[0].style.height.value + 'px'
           : Math.round(
               useGetElementRect(selectToi.selectedBoxData.id)?.height
             ) /
               addaSquare.scale +
-            'px',
-      width:
-        selectToi.selectedBoxData?.cssRules[0]?.style?.width &&
-        selectToi.selectedBoxData?.cssRules[0]?.style?.width?.value !==
-          'fit-content' &&
-        !useCheckParent(selectToi.selectedBoxData.id)
+            'px'
+        : null,
+      width: selectToi.selectedBoxData.cssRules
+        ? selectToi.selectedBoxData?.cssRules[0]?.style?.width?.value !==
+            'fit-content' && !useCheckParent(selectToi.selectedBoxData.id)
           ? selectToi.selectedBoxData.cssRules[0].style.width.value + 'px'
           : Math.round(useGetElementRect(selectToi.selectedBoxData.id)?.width) /
               addaSquare.scale +
-            'px',
+            'px'
+        : null,
     }"
   >
     <!--(ON HOLD)radius resizer controller
@@ -373,6 +377,7 @@
         </div>
       </div>
     </div>
+
     <!-- resizer-->
     <div
       class="pointer-events-auto"
@@ -400,27 +405,29 @@
           }"
         >
           {{
-            selectToi.selectedBoxData?.cssRules[0]?.style?.width &&
-            selectToi.selectedBoxData?.cssRules[0]?.style?.width.value !==
-              "fit-content"
-              ? selectToi.selectedBoxData.cssRules[0]?.style.width.value
-              : selectToi.selectedBoxData?.cssRules[0]?.style?.width &&
-                selectToi.selectedBoxData?.cssRules[0]?.style?.width.value ===
-                  "fit-content"
-              ? "Hug"
-              : "Fill"
+            selectToi.selectedBoxData.cssRules
+              ? selectToi.selectedBoxData?.cssRules[0]?.style?.width.value !==
+                "fit-content"
+                ? selectToi.selectedBoxData.cssRules[0]?.style.width.value
+                : selectToi.selectedBoxData?.cssRules[0]?.style?.width &&
+                  selectToi.selectedBoxData?.cssRules[0]?.style?.width.value ===
+                    "fit-content"
+                ? "Hug"
+                : "Fill"
+              : null
           }}
           x
           {{
-            selectToi.selectedBoxData?.cssRules[0]?.style?.height &&
-            selectToi.selectedBoxData?.cssRules[0]?.style?.height.value !==
-              "fit-content"
-              ? selectToi.selectedBoxData.cssRules[0]?.style.height.value
-              : selectToi.selectedBoxData?.cssRules[0]?.style?.height &&
-                selectToi.selectedBoxData?.cssRules[0]?.style?.height.value ===
-                  "fit-content"
-              ? "Hug"
-              : "Fill"
+            selectToi.selectedBoxData.cssRules
+              ? selectToi.selectedBoxData?.cssRules[0]?.style?.height.value !==
+                "fit-content"
+                ? selectToi.selectedBoxData.cssRules[0]?.style.height.value
+                : selectToi.selectedBoxData?.cssRules[0]?.style?.height &&
+                  selectToi.selectedBoxData?.cssRules[0]?.style?.height
+                    .value === "fit-content"
+                ? "Hug"
+                : "Fill"
+              : null
           }}
         </span>
       </p>

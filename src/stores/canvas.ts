@@ -35,19 +35,9 @@ export const useCanvasStore = defineStore({
       const selectToi = useCounterStore();
       const squareStore = useSquareStore();
 
-      if (selectToi.selectedBoxData.cssRules[0].style.left) {
-        selectToi.selectedBoxData.cssRules[0].style.left.value = Math.round(
-          (e.clientX - this.prevX - squareStore.offsetLeft) / squareStore.scale
-        );
-      }
-
-      if (!selectToi.selectedBoxData.cssRules[0].style.left) {
-        selectToi.selectedBoxData.cssRules[0].style.left = {
-          type: "unit",
-          value: 0,
-          unit: "px",
-        };
-      }
+      selectToi.selectedBoxData.cssRules[0].style.left.value = Math.round(
+        (e.clientX - this.prevX - squareStore.offsetLeft) / squareStore.scale
+      );
     },
     setPositionMultiElement(e) {
       const selectToi = useCounterStore();
@@ -98,59 +88,28 @@ export const useCanvasStore = defineStore({
       const squareStore = useSquareStore();
       const element = useGetElement(selectToi.selectedBoxData.id);
 
-      if (selectToi.selectedBoxData.cssRules[0].style.left) {
-        selectToi.selectedBoxData.cssRules[0].style.left.value = Math.round(
-          (e.clientX - this.prevX - squareStore.offsetLeft) /
-            squareStore.scale -
-            element.parentElement.offsetLeft
-        );
-      }
-
-      if (!selectToi.selectedBoxData.cssRules[0].style.left) {
-        selectToi.selectedBoxData.cssRules[0].style.left = {
-          type: "unit",
-          value: 0,
-          unit: "px",
-        };
-      }
+      selectToi.selectedBoxData.cssRules[0].style.left.value = Math.round(
+        (e.clientX - this.prevX - squareStore.offsetLeft) / squareStore.scale -
+          element.parentElement.offsetLeft
+      );
     },
     setTopPosition(e) {
       const selectToi = useCounterStore();
       const squareStore = useSquareStore();
 
-      if (selectToi.selectedBoxData.cssRules[0].style.top) {
-        selectToi.selectedBoxData.cssRules[0].style.top.value = Math.round(
-          (e.clientY - this.prevY - squareStore.offsetTop) / squareStore.scale
-        );
-      }
-
-      if (!selectToi.selectedBoxData.cssRules[0].style.top) {
-        selectToi.selectedBoxData.cssRules[0].style.top = {
-          type: "unit",
-          value: 0,
-          unit: "px",
-        };
-      }
+      selectToi.selectedBoxData.cssRules[0].style.top.value = Math.round(
+        (e.clientY - this.prevY - squareStore.offsetTop) / squareStore.scale
+      );
     },
     setTopPositionWithParent(e) {
       const selectToi = useCounterStore();
       const squareStore = useSquareStore();
       const element = useGetElement(selectToi.selectedBoxData.id);
 
-      if (selectToi.selectedBoxData.cssRules[0].style.top) {
-        selectToi.selectedBoxData.cssRules[0].style.top.value = Math.round(
-          (e.clientY - this.prevY - squareStore.offsetTop) / squareStore.scale -
-            element.parentElement.offsetTop
-        );
-      }
-
-      if (!selectToi.selectedBoxData.cssRules[0].style.top) {
-        selectToi.selectedBoxData.cssRules[0].style.top = {
-          type: "unit",
-          value: 0,
-          unit: "px",
-        };
-      }
+      selectToi.selectedBoxData.cssRules[0].style.top.value = Math.round(
+        (e.clientY - this.prevY - squareStore.offsetTop) / squareStore.scale -
+          element.parentElement.offsetTop
+      );
     },
     dndWithoutParent(e, currDrag) {
       const selectToi = useCounterStore();
@@ -525,6 +484,16 @@ export const useCanvasStore = defineStore({
           selectToi.treeHoverSize = 1;
 
           useTransferData().removeChild(selectToi.data, currDrag);
+          selectToi.selectedBoxData.cssRules[0].style.left = {
+            type: "unit",
+            value: NaN,
+            unit: "px",
+          };
+          selectToi.selectedBoxData.cssRules[0].style.top = {
+            type: "unit",
+            value: NaN,
+            unit: "px",
+          };
           useTransferData().appendCanvasAbove(
             selectToi.data,
             appendPosition,
@@ -567,6 +536,16 @@ export const useCanvasStore = defineStore({
           currDragElement = document.querySelector(`[data-id=${currDrag}]`);
 
           useTransferData().removeChild(selectToi.data, currDrag);
+          selectToi.selectedBoxData.cssRules[0].style.left = {
+            type: "unit",
+            value: NaN,
+            unit: "px",
+          };
+          selectToi.selectedBoxData.cssRules[0].style.top = {
+            type: "unit",
+            value: NaN,
+            unit: "px",
+          };
           useTransferData().appendToCanvas(
             selectToi.data,
             selectToi.selectedBoxData
