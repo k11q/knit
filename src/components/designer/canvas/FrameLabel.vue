@@ -2,14 +2,14 @@
   <template v-for="frame in frames">
     <div
       :style="{
-        left: frame.attr?.style?.left
-          ? (parseInt(frame.attr?.style?.left) +
+        left: frame.cssRules[0].style.left
+          ? (frame.cssRules[0].style.left.value +
               squareStore.offsetLeft / squareStore.scale) *
               squareStore.scale +
             'px'
           : useGetElementRect(frame.id)?.x + 'px',
-        top: frame.attr?.style?.top
-          ? (parseInt(frame.attr?.style?.top) +
+        top: frame.cssRules[0].style.top
+          ? (frame.cssRules[0].style.top.value +
               squareStore.offsetTop / squareStore.scale) *
               squareStore.scale +
             'px'
