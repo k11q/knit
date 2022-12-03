@@ -226,7 +226,8 @@ export const useCanvasStore = defineStore({
                   delete selectToi.selectedBoxData.cssRules[0].style.left;
                   delete selectToi.selectedBoxData.cssRules[0].style.top;
                   useTransferData().removeChild(selectToi.data, currDrag);
-                  selectToi.selectedBoxData.attr.style.position = "static";
+                  selectToi.selectedBoxData.cssRules[0].style.position.value =
+                    "static";
                   useTransferData().appendBefore(
                     selectToi.data,
                     canvasDnd.dragzone,
@@ -248,7 +249,8 @@ export const useCanvasStore = defineStore({
                   delete selectToi.selectedBoxData.cssRules[0].style.left;
                   delete selectToi.selectedBoxData.cssRules[0].style.top;
                   useTransferData().removeChild(selectToi.data, currDrag);
-                  selectToi.selectedBoxData.attr.style.position = "static";
+                  selectToi.selectedBoxData.cssRules[0].style.position.value =
+                    "static";
                   useTransferData().appendChild(
                     selectToi.data,
                     selectToi.selectedBoxData,
@@ -336,7 +338,8 @@ export const useCanvasStore = defineStore({
               closestTarget
             );
 
-            selectToi.selectedBoxData.attr.style.position = "static";
+            selectToi.selectedBoxData.cssRules[0].style.position.value =
+              "static";
             delete selectToi.selectedBoxData.cssRules[0].style.top;
             delete selectToi.selectedBoxData.cssRules[0].style.left;
           }
@@ -346,7 +349,10 @@ export const useCanvasStore = defineStore({
               (i) => i.dataset.id === currDrag
             ) !== -1
           ) {
-            if (selectToi.selectedBoxData.attr.style.position === "static") {
+            if (
+              selectToi.selectedBoxData.cssRules[0].style.position.value ===
+              "static"
+            ) {
               currDragElement = document.querySelector(`[data-id=${currDrag}]`);
               canvasStore.showSolidOutline = true;
               canvasStore.showGhostOutline = true;
@@ -457,7 +463,10 @@ export const useCanvasStore = defineStore({
                 }
               }
             }
-            if (selectToi.selectedBoxData.attr.style.position === "absolute") {
+            if (
+              selectToi.selectedBoxData.cssRules[0].style.position.value ===
+              "absolute"
+            ) {
               canvasStore.setLeftPositionWithParent(e);
               canvasStore.setTopPositionWithParent(e);
             }
@@ -483,7 +492,8 @@ export const useCanvasStore = defineStore({
           canvasStore.showSolidOutline = false;
           canvasStore.showGhostOutline = false;
 
-          selectToi.selectedBoxData.attr.style.position = "absolute";
+          selectToi.selectedBoxData.cssRules[0].style.position.value =
+            "absolute";
           rulerSnap.prevX = prevX;
           rulerSnap.prevY = prevY;
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
@@ -520,7 +530,8 @@ export const useCanvasStore = defineStore({
             selectToi.selectedBoxData
           );
 
-          selectToi.selectedBoxData.attr.style.position = "absolute";
+          selectToi.selectedBoxData.cssRules[0].style.position.value =
+            "absolute";
           canvasStore.setLeftPosition(e);
           canvasStore.setTopPosition(e);
 
@@ -555,7 +566,8 @@ export const useCanvasStore = defineStore({
                 delete selectToi.selectedBoxData.cssRules[0].style.left;
                 delete selectToi.selectedBoxData.cssRules[0].style.top;
                 useTransferData().removeChild(selectToi.data, currDrag);
-                selectToi.selectedBoxData.attr.style.position = "static";
+                selectToi.selectedBoxData.cssRules[0].style.position.value =
+                  "static";
                 useTransferData().appendBefore(
                   selectToi.data,
                   canvasDnd.dragzone,
@@ -578,7 +590,8 @@ export const useCanvasStore = defineStore({
                 delete selectToi.selectedBoxData.cssRules[0].style.top;
                 useTransferData().removeChild(selectToi.data, currDrag);
 
-                selectToi.selectedBoxData.attr.style.position = "static";
+                selectToi.selectedBoxData.cssRules[0].style.position.value =
+                  "static";
                 useTransferData().appendChild(
                   selectToi.data,
                   selectToi.selectedBoxData,

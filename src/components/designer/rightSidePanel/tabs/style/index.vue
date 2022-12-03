@@ -118,9 +118,7 @@
           <input
             type="number"
             :placeholder="
-              selectToi.selectedBoxData.attr?.style.left
-                ? parseInt(selectToi.selectedBoxData.attr?.style.left)
-                : useGetElement(selectToi.selectedBoxData.id)?.offsetLeft
+              useGetElement(selectToi.selectedBoxData.id)?.offsetLeft
             "
             @input="
               (event) => {

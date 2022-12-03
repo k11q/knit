@@ -400,25 +400,25 @@
           }"
         >
           {{
-            selectToi.selectedBoxData.attr?.style.width &&
-            selectToi.selectedBoxData.attr?.style.width !== "fit-content"
-              ? Math.round(
-                  parseInt(selectToi.selectedBoxData.attr?.style.width)
-                )
-              : selectToi.selectedBoxData.attr?.style.width &&
-                selectToi.selectedBoxData.attr?.style.width === "fit-content"
+            selectToi.selectedBoxData?.cssRules[0]?.style?.width &&
+            selectToi.selectedBoxData?.cssRules[0]?.style?.width.value !==
+              "fit-content"
+              ? selectToi.selectedBoxData.cssRules[0]?.style.width.value
+              : selectToi.selectedBoxData?.cssRules[0]?.style?.width &&
+                selectToi.selectedBoxData?.cssRules[0]?.style?.width.value ===
+                  "fit-content"
               ? "Hug"
               : "Fill"
           }}
           x
           {{
-            selectToi.selectedBoxData.attr?.style.height &&
-            selectToi.selectedBoxData.attr?.style.height !== "fit-content"
-              ? Math.round(
-                  parseInt(selectToi.selectedBoxData.attr?.style.height)
-                )
-              : selectToi.selectedBoxData.attr?.style.height &&
-                selectToi.selectedBoxData.attr?.style.height === "fit-content"
+            selectToi.selectedBoxData?.cssRules[0]?.style?.height &&
+            selectToi.selectedBoxData?.cssRules[0]?.style?.height.value !==
+              "fit-content"
+              ? selectToi.selectedBoxData.cssRules[0]?.style.height.value
+              : selectToi.selectedBoxData?.cssRules[0]?.style?.height &&
+                selectToi.selectedBoxData?.cssRules[0]?.style?.height.value ===
+                  "fit-content"
               ? "Hug"
               : "Fill"
           }}

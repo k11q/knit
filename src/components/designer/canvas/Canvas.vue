@@ -83,10 +83,10 @@
         :style="{
           willChange: 'left, top, height, width, outline',
           left: selectToi.selectedBoxData.cssRules
-            ? selectToi.selectedBoxData.cssRules[0].style.left.value
+            ? selectToi.selectedBoxData.cssRules[0].style.left.value + 'px'
             : '',
           top: selectToi.selectedBoxData.cssRules
-            ? selectToi.selectedBoxData.cssRules[0].style.top.value
+            ? selectToi.selectedBoxData.cssRules[0].style.top.value + 'px'
             : '',
           height:
             useGetElementRect(selectToi.selectedBoxData.id)?.height /
