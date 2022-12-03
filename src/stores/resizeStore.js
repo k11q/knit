@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { useCounterStore } from "./counter";
 import { useSquareStore } from "./dataSquare";
 import { useRulerSnapStore } from "./rulerSnap";
+import { useNodeStore } from "./node";
 
 export const useResizeStore = defineStore({
   id: "resize",
@@ -26,34 +27,54 @@ export const useResizeStore = defineStore({
   actions: {
     resizeWidthForward(e) {
       const squareStore = useSquareStore();
-      const selectToi = useCounterStore();
+      const nodeStore = useNodeStore();
 
-      selectToi.selectedBoxData.cssRules[0].style.width.value = Math.round(
-        this.prevWidth + (e.clientX - this.prevX) / squareStore.scale
+      let unit = "px";
+
+      nodeStore.changeWidth(
+        Math.round(
+          this.prevWidth + (e.clientX - this.prevX) / squareStore.scale
+        ),
+        unit
       );
     },
     resizeWidthReverse(e) {
       const squareStore = useSquareStore();
-      const selectToi = useCounterStore();
+      const nodeStore = useNodeStore();
 
-      selectToi.selectedBoxData.cssRules[0].style.width.value = Math.round(
-        this.prevWidth + (this.prevX - e.clientX) / squareStore.scale
+      let unit = "px";
+
+      nodeStore.changeWidth(
+        Math.round(
+          this.prevWidth + (this.prevX - e.clientX) / squareStore.scale
+        ),
+        unit
       );
     },
     resizeHeightForward(e) {
       const squareStore = useSquareStore();
-      const selectToi = useCounterStore();
+      const nodeStore = useNodeStore();
 
-      selectToi.selectedBoxData.cssRules[0].style.height.value = Math.round(
-        this.prevHeight + (e.clientY - this.prevY) / squareStore.scale
+      let unit = "px";
+
+      nodeStore.changeHeight(
+        Math.round(
+          this.prevHeight + (e.clientY - this.prevY) / squareStore.scale
+        ),
+        unit
       );
     },
     resizeHeightReverse(e) {
       const squareStore = useSquareStore();
-      const selectToi = useCounterStore();
+      const nodeStore = useNodeStore();
 
-      selectToi.selectedBoxData.cssRules[0].style.height.value = Math.round(
-        this.prevHeight + (this.prevY - e.clientY) / squareStore.scale
+      let unit = "px";
+
+      nodeStore.changeHeight(
+        Math.round(
+          this.prevHeight + (this.prevY - e.clientY) / squareStore.scale
+        ),
+        unit
       );
     },
     resizeLeftForward(e) {

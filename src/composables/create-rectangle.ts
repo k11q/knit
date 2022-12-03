@@ -33,11 +33,6 @@ export function createRectangle(e: MouseEvent) {
         },
       },
     ],
-    attr: {
-      style: {
-        display: "flex",
-      },
-    },
     children: [],
   };
 

@@ -33,11 +33,6 @@ export function createFrame(e: MouseEvent) {
         },
       },
     ],
-    attr: {
-      style: {
-        display: "flex",
-      },
-    },
     children: [],
   };
 

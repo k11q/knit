@@ -734,14 +734,17 @@
                 :class="{
                   'opacity-100':
                     useCheckCSSRules() &&
+                    selectToi.selectedBoxData.cssRules[0].style.flexDirection &&
                     selectToi.selectedBoxData.cssRules[0].style.flexDirection
                       .value === 'column',
                   'opacity-60':
                     useCheckCSSRules() &&
+                    selectToi.selectedBoxData.cssRules[0].style.flexDirection &&
                     selectToi.selectedBoxData.cssRules[0].style.flexDirection
                       .value !== 'column',
                   'bg-[#2E2E2E]':
                     useCheckCSSRules() &&
+                    selectToi.selectedBoxData.cssRules[0].style.flexDirection &&
                     selectToi.selectedBoxData.cssRules[0].style.flexDirection
                       .value === 'column',
                 }"
@@ -770,14 +773,17 @@
                 :class="{
                   'opacity-100':
                     useCheckCSSRules() &&
+                    selectToi.selectedBoxData.cssRules[0].style.flexDirection &&
                     selectToi.selectedBoxData.cssRules[0].style.flexDirection
                       .value === 'row',
                   'opacity-60':
                     useCheckCSSRules() &&
+                    selectToi.selectedBoxData.cssRules[0].style.flexDirection &&
                     selectToi.selectedBoxData.cssRules[0].style.flexDirection
                       .value !== 'row',
                   'bg-[#2E2E2E]':
                     useCheckCSSRules() &&
+                    selectToi.selectedBoxData.cssRules[0].style.flexDirection &&
                     selectToi.selectedBoxData.cssRules[0].style.flexDirection
                       .value === 'row',
                 }"
