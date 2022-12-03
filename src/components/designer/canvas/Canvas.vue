@@ -82,8 +82,12 @@
         class="absolute pointer-events-none"
         :style="{
           willChange: 'left, top, height, width, outline',
-          left: selectToi.selectedBoxData.attr?.style.left,
-          top: selectToi.selectedBoxData.attr?.style.top,
+          left: selectToi.selectedBoxData.cssRules
+            ? selectToi.selectedBoxData.cssRules[0].style.left.value
+            : '',
+          top: selectToi.selectedBoxData.cssRules
+            ? selectToi.selectedBoxData.cssRules[0].style.top.value
+            : '',
           height:
             useGetElementRect(selectToi.selectedBoxData.id)?.height /
               addaSquare.scale +

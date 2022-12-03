@@ -35,10 +35,9 @@ export const useCanvasStore = defineStore({
       const selectToi = useCounterStore();
       const squareStore = useSquareStore();
 
-      selectToi.selectedBoxData.attr.style.left =
-        Math.round(
-          (e.clientX - this.prevX - squareStore.offsetLeft) / squareStore.scale
-        ) + "px";
+      selectToi.selectedBoxData.cssRules[0].style.left.value = Math.round(
+        (e.clientX - this.prevX - squareStore.offsetLeft) / squareStore.scale
+      );
     },
     setPositionMultiElement(e) {
       const selectToi = useCounterStore();
@@ -62,19 +61,15 @@ export const useCanvasStore = defineStore({
         canvasStore.isDragging = true;
 
         canvasStore.selection.forEach((i, index) => {
-          i.attr.style.left =
-            Math.round(
-              (e.clientX -
-                prevPositions[index].prevX -
-                squareStore.offsetLeft) /
-                squareStore.scale
-            ) + "px";
+          i.cssRules[0].style.left.value = Math.round(
+            (e.clientX - prevPositions[index].prevX - squareStore.offsetLeft) /
+              squareStore.scale
+          );
 
-          i.attr.style.top =
-            Math.round(
-              (e.clientY - prevPositions[index].prevY - squareStore.offsetTop) /
-                squareStore.scale
-            ) + "px";
+          i.cssRules[0].style.top.value = Math.round(
+            (e.clientY - prevPositions[index].prevY - squareStore.offsetTop) /
+              squareStore.scale
+          );
         });
       }
 
@@ -93,31 +88,27 @@ export const useCanvasStore = defineStore({
       const squareStore = useSquareStore();
       const element = useGetElement(selectToi.selectedBoxData.id);
 
-      selectToi.selectedBoxData.attr.style.left =
-        Math.round(
-          (e.clientX - this.prevX - squareStore.offsetLeft) /
-            squareStore.scale -
-            element.parentElement.offsetLeft
-        ) + "px";
+      selectToi.selectedBoxData.cssRules[0].style.left.value = Math.round(
+        (e.clientX - this.prevX - squareStore.offsetLeft) / squareStore.scale -
+          element.parentElement.offsetLeft
+      );
     },
     setTopPosition(e) {
       const selectToi = useCounterStore();
       const squareStore = useSquareStore();
-      selectToi.selectedBoxData.attr.style.top =
-        Math.round(
-          (e.clientY - this.prevY - squareStore.offsetTop) / squareStore.scale
-        ) + "px";
+      selectToi.selectedBoxData.cssRules[0].style.top.value = Math.round(
+        (e.clientY - this.prevY - squareStore.offsetTop) / squareStore.scale
+      );
     },
     setTopPositionWithParent(e) {
       const selectToi = useCounterStore();
       const squareStore = useSquareStore();
       const element = useGetElement(selectToi.selectedBoxData.id);
 
-      selectToi.selectedBoxData.attr.style.top =
-        Math.round(
-          (e.clientY - this.prevY - squareStore.offsetTop) / squareStore.scale -
-            element.parentElement.offsetTop
-        ) + "px";
+      selectToi.selectedBoxData.cssRules[0].style.top.value = Math.round(
+        (e.clientY - this.prevY - squareStore.offsetTop) / squareStore.scale -
+          element.parentElement.offsetTop
+      );
     },
     dndWithoutParent(e, currDrag) {
       const selectToi = useCounterStore();
@@ -232,8 +223,8 @@ export const useCanvasStore = defineStore({
                 ) {
                   //append after
 
-                  delete selectToi.selectedBoxData.attr.style.left;
-                  delete selectToi.selectedBoxData.attr.style.top;
+                  delete selectToi.selectedBoxData.cssRules[0].style.left;
+                  delete selectToi.selectedBoxData.cssRules[0].style.top;
                   useTransferData().removeChild(selectToi.data, currDrag);
                   selectToi.selectedBoxData.attr.style.position = "static";
                   useTransferData().appendBefore(
@@ -254,8 +245,8 @@ export const useCanvasStore = defineStore({
                   !closest.children?.length
                 ) {
                   //append bottom/push
-                  delete selectToi.selectedBoxData.attr.style.left;
-                  delete selectToi.selectedBoxData.attr.style.top;
+                  delete selectToi.selectedBoxData.cssRules[0].style.left;
+                  delete selectToi.selectedBoxData.cssRules[0].style.top;
                   useTransferData().removeChild(selectToi.data, currDrag);
                   selectToi.selectedBoxData.attr.style.position = "static";
                   useTransferData().appendChild(
@@ -346,8 +337,8 @@ export const useCanvasStore = defineStore({
             );
 
             selectToi.selectedBoxData.attr.style.position = "static";
-            delete selectToi.selectedBoxData.attr.style.top;
-            delete selectToi.selectedBoxData.attr.style.left;
+            delete selectToi.selectedBoxData.cssRules[0].style.top;
+            delete selectToi.selectedBoxData.cssRules[0].style.left;
           }
 
           if (
@@ -561,8 +552,8 @@ export const useCanvasStore = defineStore({
               ) {
                 //append after
 
-                delete selectToi.selectedBoxData.attr.style.left;
-                delete selectToi.selectedBoxData.attr.style.top;
+                delete selectToi.selectedBoxData.cssRules[0].style.left;
+                delete selectToi.selectedBoxData.cssRules[0].style.top;
                 useTransferData().removeChild(selectToi.data, currDrag);
                 selectToi.selectedBoxData.attr.style.position = "static";
                 useTransferData().appendBefore(
@@ -583,8 +574,8 @@ export const useCanvasStore = defineStore({
                 !closest.children?.length
               ) {
                 //append bottom/push
-                delete selectToi.selectedBoxData.attr.style.left;
-                delete selectToi.selectedBoxData.attr.style.top;
+                delete selectToi.selectedBoxData.cssRules[0].style.left;
+                delete selectToi.selectedBoxData.cssRules[0].style.top;
                 useTransferData().removeChild(selectToi.data, currDrag);
 
                 selectToi.selectedBoxData.attr.style.position = "static";

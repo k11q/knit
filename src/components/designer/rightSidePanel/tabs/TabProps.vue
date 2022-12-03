@@ -11,7 +11,6 @@
         <p class="font-medium">Stroke</p>
         <div
           v-if="
-            !rightPanelStore.toggleStroke ||
             !selectToi.selectedBoxData.strokeSize ||
             !selectToi.selectedBoxData.strokeColor
           "
@@ -20,7 +19,6 @@
             () => {
               selectToi.selectedBoxData.strokeColor = 'black';
               selectToi.selectedBoxData.strokeSize = 1;
-              rightPanelStore.toggleStroke = true;
             }
           "
         >
@@ -42,7 +40,6 @@
       </div>
       <div
         v-if="
-          rightPanelStore.toggleStroke &&
           selectToi.selectedBoxData.strokeSize &&
           selectToi.selectedBoxData.strokeColor
         "
@@ -92,7 +89,6 @@
                 () => {
                   selectToi.selectedBoxData.strokeColor = '';
                   selectToi.selectedBoxData.strokeSize = 0;
-                  rightPanelStore.toggleStroke = false;
                 }
               "
             >
@@ -208,8 +204,6 @@
 
 <script setup>
 import { useCounterStore } from "@/stores/counter";
-import { useRightPanelStore } from "@/stores/rightPanelStore";
 
 const selectToi = useCounterStore();
-const rightPanelStore = useRightPanelStore();
 </script>

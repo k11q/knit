@@ -9,7 +9,7 @@ export const useSlider = (e, change, currElement, currType) => {
 
   const left = () => {
     const prevX = e.clientX;
-    const prevLeft = parseInt(selectToi.selectedBoxData.attr.style.left);
+    const prevLeft = selectToi.selectedBoxData.cssRules[0].style.left.value;
 
     window.addEventListener("mousemove", mousemove);
     window.addEventListener("mouseup", mouseup);
@@ -17,8 +17,8 @@ export const useSlider = (e, change, currElement, currType) => {
     function mousemove(e) {
       canvasStore.isDragging = true;
 
-      selectToi.selectedBoxData.attr.style.left =
-        prevLeft + ((e.clientX - prevX) / squareStore.scale) * change + "px";
+      selectToi.selectedBoxData.cssRules[0].style.left.value =
+        prevLeft + ((e.clientX - prevX) / squareStore.scale) * change;
     }
 
     function mouseup() {
@@ -39,7 +39,7 @@ export const useSlider = (e, change, currElement, currType) => {
 
   const top = () => {
     const prevX = e.clientX;
-    const prevTop = parseInt(selectToi.selectedBoxData.attr.style.top);
+    const prevTop = selectToi.selectedBoxData.cssRules[0].style.top.value;
 
     window.addEventListener("mousemove", mousemove);
     window.addEventListener("mouseup", mouseup);
@@ -47,8 +47,8 @@ export const useSlider = (e, change, currElement, currType) => {
     function mousemove(e) {
       canvasStore.isDragging = true;
 
-      selectToi.selectedBoxData.attr.style.top =
-        prevTop + ((e.clientX - prevX) / squareStore.scale) * change + "px";
+      selectToi.selectedBoxData.cssRules[0].style.top.value =
+        prevTop + ((e.clientX - prevX) / squareStore.scale) * change;
     }
 
     function mouseup() {
@@ -68,7 +68,7 @@ export const useSlider = (e, change, currElement, currType) => {
   };
   const width = () => {
     const prevX = e.clientX;
-    const prevWidth = parseInt(selectToi.selectedBoxData.attr.style.width);
+    const prevWidth = selectToi.selectedBoxData.cssRules[0].style.width.value;
 
     window.addEventListener("mousemove", mousemove);
     window.addEventListener("mouseup", mouseup);
@@ -76,8 +76,8 @@ export const useSlider = (e, change, currElement, currType) => {
     function mousemove(e) {
       canvasStore.isDragging = true;
 
-      selectToi.selectedBoxData.attr.style.width =
-        prevWidth + ((e.clientX - prevX) / squareStore.scale) * change + "px";
+      selectToi.selectedBoxData.cssRules[0].style.width.value =
+        prevWidth + ((e.clientX - prevX) / squareStore.scale) * change;
     }
 
     function mouseup() {
@@ -97,7 +97,7 @@ export const useSlider = (e, change, currElement, currType) => {
   };
   const height = () => {
     const prevX = e.clientX;
-    const prevHeight = parseInt(selectToi.selectedBoxData.attr.style.height);
+    const prevHeight = selectToi.selectedBoxData.cssRules[0].style.height.value;
 
     window.addEventListener("mousemove", mousemove);
     window.addEventListener("mouseup", mouseup);
@@ -105,8 +105,8 @@ export const useSlider = (e, change, currElement, currType) => {
     function mousemove(e) {
       canvasStore.isDragging = true;
 
-      selectToi.selectedBoxData.attr.style.height =
-        prevHeight + ((e.clientX - prevX) / squareStore.scale) * change + "px";
+      selectToi.selectedBoxData.cssRules[0].style.height.value =
+        prevHeight + ((e.clientX - prevX) / squareStore.scale) * change;
     }
 
     function mouseup() {

@@ -28,80 +28,72 @@ export const useResizeStore = defineStore({
       const squareStore = useSquareStore();
       const selectToi = useCounterStore();
 
-      selectToi.selectedBoxData.attr.style.width =
-        Math.round(
-          this.prevWidth + (e.clientX - this.prevX) / squareStore.scale
-        ) + "px";
+      selectToi.selectedBoxData.cssRules[0].style.width.value = Math.round(
+        this.prevWidth + (e.clientX - this.prevX) / squareStore.scale
+      );
     },
     resizeWidthReverse(e) {
       const squareStore = useSquareStore();
       const selectToi = useCounterStore();
 
-      selectToi.selectedBoxData.attr.style.width =
-        Math.round(
-          this.prevWidth + (this.prevX - e.clientX) / squareStore.scale
-        ) + "px";
+      selectToi.selectedBoxData.cssRules[0].style.width.value = Math.round(
+        this.prevWidth + (this.prevX - e.clientX) / squareStore.scale
+      );
     },
     resizeHeightForward(e) {
       const squareStore = useSquareStore();
       const selectToi = useCounterStore();
 
-      selectToi.selectedBoxData.attr.style.height =
-        Math.round(
-          this.prevHeight + (e.clientY - this.prevY) / squareStore.scale
-        ) + "px";
+      selectToi.selectedBoxData.cssRules[0].style.height.value = Math.round(
+        this.prevHeight + (e.clientY - this.prevY) / squareStore.scale
+      );
     },
     resizeHeightReverse(e) {
       const squareStore = useSquareStore();
       const selectToi = useCounterStore();
 
-      selectToi.selectedBoxData.attr.style.height =
-        Math.round(
-          this.prevHeight + (this.prevY - e.clientY) / squareStore.scale
-        ) + "px";
+      selectToi.selectedBoxData.cssRules[0].style.height.value = Math.round(
+        this.prevHeight + (this.prevY - e.clientY) / squareStore.scale
+      );
     },
     resizeLeftForward(e) {
       const squareStore = useSquareStore();
       const selectToi = useCounterStore();
 
-      if (selectToi.selectedBoxData.attr?.style?.left) {
-        selectToi.selectedBoxData.attr.style.left =
-          Math.round(
-            this.prevLeft + (e.clientX - this.prevX) / squareStore.scale
-          ) + "px";
+      if (selectToi.selectedBoxData.cssRules[0]?.style?.left) {
+        selectToi.selectedBoxData.cssRules[0].style.left.value = Math.round(
+          this.prevLeft + (e.clientX - this.prevX) / squareStore.scale
+        );
       }
     },
     resizeLeftReverse(e) {
       const squareStore = useSquareStore();
       const selectToi = useCounterStore();
 
-      if (selectToi.selectedBoxData.attr?.style?.left) {
-        selectToi.selectedBoxData.attr.style.left =
-          Math.round(
-            this.prevLeft + (this.prevX - e.clientX) / squareStore.scale
-          ) + "px";
+      if (selectToi.selectedBoxData.cssRules[0]?.style?.left) {
+        selectToi.selectedBoxData.cssRules[0].style.left.value = Math.round(
+          this.prevLeft + (this.prevX - e.clientX) / squareStore.scale
+        );
       }
     },
     resizeTopForward(e) {
       const squareStore = useSquareStore();
       const selectToi = useCounterStore();
 
-      if (selectToi.selectedBoxData.attr?.style?.top) {
-        selectToi.selectedBoxData.attr.style.top =
-          Math.round(
-            this.prevTop + (e.clientY - this.prevY) / squareStore.scale
-          ) + "px";
+      if (selectToi.selectedBoxData.cssRules[0]?.style?.top) {
+        selectToi.selectedBoxData.cssRules[0].style.top.value = Math.round(
+          this.prevTop + (e.clientY - this.prevY) / squareStore.scale
+        );
       }
     },
     resizeTopReverse(e) {
       const squareStore = useSquareStore();
       const selectToi = useCounterStore();
 
-      if (selectToi.selectedBoxData.attr?.style?.top) {
-        selectToi.selectedBoxData.attr.style.top =
-          Math.round(
-            this.prevTop + (this.prevY - e.clientY) / squareStore.scale
-          ) + "px";
+      if (selectToi.selectedBoxData.cssRules[0]?.style?.top) {
+        selectToi.selectedBoxData.cssRules[0].style.top.value = Math.round(
+          this.prevTop + (this.prevY - e.clientY) / squareStore.scale
+        );
       }
     },
 
@@ -112,10 +104,18 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        this.prevLeft = parseInt(selectToi.selectedBoxData.attr.style.left);
-        this.prevTop = parseInt(selectToi.selectedBoxData.attr.style.top);
-        this.prevWidth = parseInt(selectToi.selectedBoxData.attr.style.width);
-        this.prevHeight = parseInt(selectToi.selectedBoxData.attr.style.height);
+        this.prevLeft = parseInt(
+          selectToi.selectedBoxData.cssRules[0].style.left.value
+        );
+        this.prevTop = parseInt(
+          selectToi.selectedBoxData.cssRules[0].style.top.value
+        );
+        this.prevWidth = parseInt(
+          selectToi.selectedBoxData.cssRules[0].style.width.value
+        );
+        this.prevHeight = parseInt(
+          selectToi.selectedBoxData.cssRules[0].style.height.value
+        );
 
         this.prevX = e.clientX;
         this.prevY = e.clientY;
@@ -159,10 +159,18 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        this.prevTop = parseInt(selectToi.selectedBoxData.attr.style.top);
-        this.prevWidth = parseInt(selectToi.selectedBoxData.attr.style.width);
-        this.prevHeight = parseInt(selectToi.selectedBoxData.attr.style.height);
-        this.prevLeft = parseInt(selectToi.selectedBoxData.attr.style.left);
+        this.prevTop = parseInt(
+          selectToi.selectedBoxData.cssRules[0].style.top.value
+        );
+        this.prevWidth = parseInt(
+          selectToi.selectedBoxData.cssRules[0].style.width.value
+        );
+        this.prevHeight = parseInt(
+          selectToi.selectedBoxData.cssRules[0].style.height.value
+        );
+        this.prevLeft = parseInt(
+          selectToi.selectedBoxData.cssRules[0].style.left.value
+        );
 
         this.prevX = e.clientX;
         this.prevY = e.clientY;
@@ -208,10 +216,18 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        this.prevLeft = parseInt(selectToi.selectedBoxData.attr.style.left);
-        this.prevTop = parseInt(selectToi.selectedBoxData.attr.style.top);
-        this.prevWidth = parseInt(selectToi.selectedBoxData.attr.style.width);
-        this.prevHeight = parseInt(selectToi.selectedBoxData.attr.style.height);
+        this.prevLeft = parseInt(
+          selectToi.selectedBoxData.cssRules[0].style.left.value
+        );
+        this.prevTop = parseInt(
+          selectToi.selectedBoxData.cssRules[0].style.top.value
+        );
+        this.prevWidth = parseInt(
+          selectToi.selectedBoxData.cssRules[0].style.width.value
+        );
+        this.prevHeight = parseInt(
+          selectToi.selectedBoxData.cssRules[0].style.height.value
+        );
 
         this.prevX = e.clientX;
         this.prevY = e.clientY;
@@ -259,10 +275,18 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        this.prevLeft = parseInt(selectToi.selectedBoxData.attr.style.left);
-        this.prevWidth = parseInt(selectToi.selectedBoxData.attr.style.width);
-        this.prevTop = parseInt(selectToi.selectedBoxData.attr.style.top);
-        this.prevHeight = parseInt(selectToi.selectedBoxData.attr.style.height);
+        this.prevLeft = parseInt(
+          selectToi.selectedBoxData.cssRules[0].style.left.value
+        );
+        this.prevWidth = parseInt(
+          selectToi.selectedBoxData.cssRules[0].style.width.value
+        );
+        this.prevTop = parseInt(
+          selectToi.selectedBoxData.cssRules[0].style.top.value
+        );
+        this.prevHeight = parseInt(
+          selectToi.selectedBoxData.cssRules[0].style.height.value
+        );
 
         this.prevX = e.clientX;
         this.prevY = e.clientY;
@@ -308,8 +332,12 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        this.prevLeft = parseInt(selectToi.selectedBoxData.attr.style.left);
-        this.prevWidth = parseInt(selectToi.selectedBoxData.attr.style.width);
+        this.prevLeft = parseInt(
+          selectToi.selectedBoxData.cssRules[0].style.left.value
+        );
+        this.prevWidth = parseInt(
+          selectToi.selectedBoxData.cssRules[0].style.width.value
+        );
 
         this.prevX = e.clientX;
 
@@ -348,8 +376,12 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        this.prevWidth = parseInt(selectToi.selectedBoxData.attr.style.width);
-        this.prevLeft = parseInt(selectToi.selectedBoxData.attr.style.left);
+        this.prevWidth = parseInt(
+          selectToi.selectedBoxData.cssRules[0].style.width.value
+        );
+        this.prevLeft = parseInt(
+          selectToi.selectedBoxData.cssRules[0].style.left.value
+        );
 
         this.prevX = e.clientX;
 
@@ -390,8 +422,9 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        this.prevHeight = parseInt(selectToi.selectedBoxData.attr.style.height);
-        this.prevTop = parseInt(selectToi.selectedBoxData.attr.style.top);
+        this.prevHeight =
+          selectToi.selectedBoxData.cssRules[0].style.height.value;
+        this.prevTop = selectToi.selectedBoxData.cssRules[0].style.top.value;
 
         this.prevY = e.clientY;
 
@@ -432,8 +465,9 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        this.prevTop = parseInt(selectToi.selectedBoxData.attr.style.top);
-        this.prevHeight = parseInt(selectToi.selectedBoxData.attr.style.height);
+        this.prevTop = selectToi.selectedBoxData.cssRules[0].style.top.value;
+        this.prevHeight =
+          selectToi.selectedBoxData.cssRules[0].style.height.value;
 
         this.prevY = e.clientY;
 

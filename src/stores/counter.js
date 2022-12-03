@@ -289,16 +289,23 @@ export const useCounterStore = defineStore({
         name: "rectangle",
         id: "i78978978723sbwhbcwh",
         type: "div",
+        cssRules: [
+          {
+            breakpoint: 1,
+            style: {
+              backgroundColor: { type: "keyword", value: "white" },
+              paddingLeft: { type: "unit", value: 20, unit: "px" },
+              position: { type: "keyword", value: "absolute" },
+              left: { type: "unit", value: 100, unit: "px" },
+              top: { type: "unit", value: 50, unit: "px" },
+              height: { type: "unit", value: 400, unit: "px" },
+              width: { type: "unit", value: 300, unit: "px" },
+            },
+          },
+        ],
         attr: {
           style: {
             display: "flex",
-            color: "blue",
-            backgroundColor: "blue",
-            height: "500px",
-            width: "300px",
-            left: "50px",
-            top: "50px",
-            position: "absolute",
             flexDirection: "column",
           },
         },
@@ -307,48 +314,64 @@ export const useCounterStore = defineStore({
             name: "rectangle5",
             id: "uhwahcwuhcw0ucfew8dwo",
             type: "box",
+            cssRules: [
+              {
+                breakpoint: 1,
+                style: {
+                  backgroundColor: { type: "keyword", value: "blue" },
+                  position: { type: "keyword", value: "static" },
+                  height: { type: "unit", value: 80, unit: "px" },
+                  width: { type: "unit", value: 80, unit: "px" },
+                },
+              },
+            ],
             attr: {
               style: {
-                backgroundColor: "red",
-                height: "80px",
-                width: "80px",
-                position: "static",
                 flexDirection: "column",
               },
             },
             children: [],
-            parent: "rectangle",
           },
           {
             name: "rectangle6",
             id: "uscwahcag7hcea8hvewhvceh",
             type: "box",
+            cssRules: [
+              {
+                breakpoint: 1,
+                style: {
+                  backgroundColor: { type: "keyword", value: "orange" },
+                  position: { type: "keyword", value: "static" },
+                  height: { type: "unit", value: 70, unit: "px" },
+                  width: { type: "unit", value: 90, unit: "px" },
+                },
+              },
+            ],
             attr: {
               style: {
-                backgroundColor: "yellow",
-                height: "80px",
-                width: "80px",
-                position: "static",
                 flexDirection: "column",
               },
             },
-            parent: "rectangle",
             children: [],
           },
           {
             name: "rectangle18",
             id: "hsufhew9e8uejcecj9ece",
             type: "box",
+            cssRules: [
+              {
+                breakpoint: 1,
+                style: { backgroundColor: { type: "keyword", value: "green" } },
+                height: { type: "unit", value: 80, unit: "px" },
+                width: { type: "unit", value: 70, unit: "px" },
+              },
+            ],
             attr: {
               style: {
-                backgroundColor: "green",
-                height: "80px",
-                width: "80px",
                 position: "static",
                 flexDirection: "column",
               },
             },
-            parent: "rectangle",
             children: [],
           },
         ],
@@ -357,15 +380,21 @@ export const useCounterStore = defineStore({
         name: "rectangle2",
         id: "wcw7c9e8ujev79hn0unm2e",
         type: "div",
+        cssRules: [
+          {
+            breakpoint: 1,
+            style: {
+              backgroundColor: { type: "keyword", value: "blueviolet" },
+              position: { type: "keyword", value: "absolute" },
+              left: { type: "unit", value: 250, unit: "px" },
+              top: { type: "unit", value: 100, unit: "px" },
+              height: { type: "unit", value: 100, unit: "px" },
+              width: { type: "unit", value: 90, unit: "px" },
+            },
+          },
+        ],
         attr: {
           style: {
-            color: "blueviolet",
-            backgroundColor: "blueviolet",
-            height: "100px",
-            width: "100px",
-            X: "300px",
-            Y: "50px",
-            position: "absolute",
             flexDirection: "column",
           },
         },
@@ -374,80 +403,112 @@ export const useCounterStore = defineStore({
             name: "rectangle7",
             id: "weifjewf9ue9vie0vjrwd",
             type: "box",
+            cssRules: [
+              {
+                breakpoint: 1,
+                style: {
+                  backgroundColor: { type: "keyword", value: "blue" },
+                  position: { type: "keyword", value: "absolute" },
+                  left: { type: "unit", value: 20, unit: "px" },
+                  top: { type: "unit", value: 30, unit: "px" },
+                },
+              },
+            ],
             attr: {
               style: {
-                color: "blue",
-                backgroundColor: "blue",
-                position: "absolute",
                 flexDirection: "column",
               },
             },
-            parent: "rectangle2",
             children: [
               {
                 name: "rectangle8",
                 id: "iejeiec9wec9v9evjei",
                 type: "box",
+                cssRules: [
+                  {
+                    breakpoint: 1,
+                    style: {
+                      backgroundColor: { type: "keyword", value: "red" },
+                      position: { type: "keyword", value: "absolute" },
+                      left: { type: "unit", value: 40, unit: "px" },
+                      top: { type: "unit", value: 50, unit: "px" },
+                    },
+                  },
+                ],
                 attr: {
                   style: {
-                    color: "red",
-                    backgroundColor: "red",
-                    position: "absolute",
                     flexDirection: "column",
                   },
                 },
-                parent: "rectangle7",
                 children: [],
               },
               {
                 name: "rectangle9",
                 id: "uwhcuwe9vei09vjejve",
                 type: "box",
+                cssRules: [
+                  {
+                    breakpoint: 1,
+                    style: {
+                      backgroundColor: { type: "keyword", value: "blue" },
+                      position: { type: "keyword", value: "absolute" },
+                      left: { type: "unit", value: 100, unit: "px" },
+                      top: { type: "unit", value: 50, unit: "px" },
+                      height: { type: "unit", value: 80, unit: "px" },
+                      width: { type: "unit", value: 80, unit: "px" },
+                    },
+                  },
+                ],
                 attr: {
                   style: {
-                    color: "red",
-                    backgroundColor: "red",
-                    height: "80px",
-                    width: "80px",
-                    position: "absolute",
                     flexDirection: "column",
                   },
                 },
-                parent: "rectangle8",
                 children: [
                   {
                     name: "rectangle10",
                     id: "owjfcniewceve99eiv9eive0",
                     type: "box",
+                    cssRules: [
+                      {
+                        breakpoint: 1,
+                        style: {
+                          backgroundColor: { type: "keyword", value: "red" },
+                          position: { type: "keyword", value: "absolute" },
+                          left: { type: "unit", value: 10, unit: "px" },
+                          top: { type: "unit", value: 30, unit: "px" },
+                        },
+                      },
+                    ],
                     attr: {
                       style: {
-                        color: "green",
-                        backgroundColor: "red",
-                        position: "absolute",
                         flexDirection: "column",
                       },
                     },
-                    parent: "rectangle9",
                     children: [],
                   },
                   {
                     name: "rectangle11",
                     id: "iwifjweioneoevneiune",
                     type: "box",
+                    cssRules: [
+                      {
+                        breakpoint: 1,
+                        style: {
+                          backgroundColor: { type: "keyword", value: "red" },
+                          position: { type: "keyword", value: "absolute" },
+                          left: { type: "unit", value: 50, unit: "px" },
+                          top: { type: "unit", value: 90, unit: "px" },
+                          height: { type: "unit", value: 80, unit: "px" },
+                          width: { type: "unit", value: 90, unit: "px" },
+                        },
+                      },
+                    ],
                     attr: {
                       style: {
-                        color: "yellow",
-                        backgroundColor: "red",
-                        height: "80px",
-                        width: "80px",
-                        unit: "px",
-                        X: "50px",
-                        Y: "50px",
-                        position: "absolute",
                         flexDirection: "column",
                       },
                     },
-                    parent: "rectangle9",
                     children: [],
                   },
                 ],
@@ -460,16 +521,23 @@ export const useCounterStore = defineStore({
         name: "rectangle3",
         id: "iwjfeevrb-rb99ir8bu9",
         type: "text",
+        cssRules: [
+          {
+            breakpoint: 1,
+            style: {
+              color: { type: "keyword", value: "purple" },
+              position: { type: "keyword", value: "absolute" },
+              left: { type: "unit", value: 240, unit: "px" },
+              top: { type: "unit", value: 60, unit: "px" },
+              height: { type: "keyword", value: "fit-content" },
+              width: { type: "keyword", value: "fit-content" },
+            },
+          },
+        ],
         attr: {
           style: {
             fontSize: "14px",
-            color: "purple",
-            left: "200px",
-            top: "50px",
-            position: "absolute",
             flexDirection: "column",
-            width: "fit-content",
-            height: "fit-content",
           },
         },
         textContent: "Haha",
@@ -480,14 +548,22 @@ export const useCounterStore = defineStore({
         id: "jweijeojveoj9er0irb8u0rb",
         type: "text",
         textContent: "Test",
+        cssRules: [
+          {
+            breakpoint: 1,
+            style: {
+              color: { type: "keyword", value: "white" },
+              position: { type: "keyword", value: "absolute" },
+              left: { type: "unit", value: 120, unit: "px" },
+              top: { type: "unit", value: 20, unit: "px" },
+              height: { type: "keyword", value: "fit-content" },
+              width: { type: "keyword", value: "fit-content" },
+            },
+          },
+        ],
         attr: {
           style: {
             fontSize: "14px",
-            left: "100px",
-            top: "5px",
-            position: "absolute",
-            width: "fit-content",
-            height: "fit-content",
           },
         },
         children: [],
@@ -497,15 +573,21 @@ export const useCounterStore = defineStore({
         id: "owpif9eipiojohuh90i",
         type: "box",
         repeat: true,
+        cssRules: [
+          {
+            breakpoint: 1,
+            style: {
+              backgroundColor: { type: "keyword", value: "purple" },
+              position: { type: "keyword", value: "absolute" },
+              left: { type: "unit", value: 600, unit: "px" },
+              top: { type: "unit", value: 300, unit: "px" },
+              height: { type: "unit", value: 100, unit: "px" },
+              width: { type: "unit", value: 120, unit: "px" },
+            },
+          },
+        ],
         attr: {
           style: {
-            left: "500px",
-            top: "200px",
-            color: "purple",
-            backgroundColor: "purple",
-            height: "100px",
-            width: "120px",
-            position: "absolute",
             flexDirection: "column",
             borderRadius: "1px",
           },

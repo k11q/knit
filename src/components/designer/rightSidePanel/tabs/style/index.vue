@@ -124,7 +124,7 @@
             "
             @input="
               (event) => {
-                selectToi.selectedBoxData.attr.style.left =
+                selectToi.selectedBoxData.cssRules[0].style.left.value =
                   event.target.value + 'px';
               }
             "
@@ -154,7 +154,7 @@
             "
             @input="
               (event) => {
-                selectToi.selectedBoxData.attr.style.top =
+                selectToi.selectedBoxData.cssRules[0].style.top.value =
                   event.target.value + 'px';
               }
             "
@@ -178,17 +178,15 @@
                 if (
                   selectToi.selectedBoxData.attr.style.position != 'absolute'
                 ) {
-                  selectToi.selectedBoxData.attr.style.left = selectToi.getLeft(
-                    selectToi.selectedBoxData.id
-                  );
-                  selectToi.selectedBoxData.attr.style.top = selectToi.getTop(
-                    selectToi.selectedBoxData.id
-                  );
+                  selectToi.selectedBoxData.cssRules[0].style.left.value =
+                    selectToi.getLeft(selectToi.selectedBoxData.id);
+                  selectToi.selectedBoxData.cssRules[0].style.top.value =
+                    selectToi.getTop(selectToi.selectedBoxData.id);
                   selectToi.selectedBoxData.attr.style.position = 'absolute';
                 } else {
                   selectToi.selectedBoxData.attr.style.position = 'static';
-                  delete selectToi.selectedBoxData.attr.style.left;
-                  delete selectToi.selectedBoxData.attr.style.top;
+                  delete selectToi.selectedBoxData.cssRules[0].style.left;
+                  delete selectToi.selectedBoxData.cssRules[0].style.top;
                 }
               }
             "
@@ -273,8 +271,8 @@
             "
             @input="
               (event) => {
-                selectToi.selectedBoxData.attr.style.width =
-                  event.target.value + 'px';
+                selectToi.selectedBoxData.cssRules[0].style.width.value =
+                  event.target.value;
               }
             "
             class="pl-2 bg-transparent w-full placeholder-[#707070]"
@@ -303,8 +301,8 @@
             "
             @input="
               (event) => {
-                selectToi.selectedBoxData.attr.style.height =
-                  event.target.value + 'px';
+                selectToi.selectedBoxData.cssRules[0].style.height.value =
+                  event.target.value;
               }
             "
             :placeholder="
@@ -330,11 +328,12 @@
               () => {
                 if (!selectToi.selectedBoxData.attr.style.aspectRatio) {
                   selectToi.selectedBoxData.attr.style.aspectRatio = 1;
-                  delete selectToi.selectedBoxData.attr.style.width;
+                  delete selectToi.selectedBoxData.cssRules[0].style.width;
                 } else {
-                  selectToi.selectedBoxData.attr.style.width = Math.round(
-                    useGetElementRect(selectToi.selectedBoxData.id)?.width
-                  );
+                  selectToi.selectedBoxData.cssRules[0].style.width.value =
+                    Math.round(
+                      useGetElementRect(selectToi.selectedBoxData.id)?.width
+                    );
                   selectToi.selectedBoxData.attr.style.aspectRatio = 'auto';
                   delete selectToi.selectedBoxData.attr.style.aspectRatio;
                 }
@@ -408,7 +407,10 @@
           </div>
           <div
             class="h-[24px] aspect-square items-center flex flex-none justify-center -ml-[3px] hover:bg-[#2E2E2E] rounded-sm hover:opacity-100"
-            @click="selectToi.selectedBoxData.attr.style.width = 'fit-content'"
+            @click="
+              selectToi.selectedBoxData.cssRules[0].style.width.value =
+                'fit-content'
+            "
             :class="{
               'opacity-100':
                 selectToi.selectedBoxData.attr?.style?.width === 'fit-content',
@@ -437,7 +439,8 @@
             class="h-[24px] aspect-square items-center flex flex-none justify-center hover:bg-[#2E2E2E] rounded-sm hover:opacity-100"
             @click="
               () => {
-                selectToi.selectedBoxData.attr.style.width = '100%';
+                selectToi.selectedBoxData.cssRules[0].style.width.value = 100;
+                selectToi.selectedBoxData.cssRules[0].style.width.unit = '%';
               }
             "
             :class="{
@@ -512,7 +515,10 @@
           </div>
           <div
             class="h-[24px] aspect-square items-center flex flex-none justify-center -ml-[3px] hover:bg-[#2E2E2E] rounded-sm hover:opacity-100"
-            @click="selectToi.selectedBoxData.attr.style.height = 'fit-content'"
+            @click="
+              selectToi.selectedBoxData.cssRules[0].style.top.value =
+                'fit-content'
+            "
             :class="{
               'opacity-100':
                 selectToi.selectedBoxData.attr?.style?.height === 'fit-content',
@@ -541,7 +547,8 @@
             class="h-[24px] aspect-square items-center flex flex-none justify-center hover:bg-[#2E2E2E] rounded-sm hover:opacity-100"
             @click="
               () => {
-                selectToi.selectedBoxData.attr.style.height = '100%';
+                selectToi.selectedBoxData.cssRules[0].style.height.value = 100;
+                selectToi.selectedBoxData.cssRules[0].style.height.unit = '%';
               }
             "
             :class="{
@@ -2716,7 +2723,6 @@
             () => {
               selectToi.selectedBoxData.strokeColor = 'black';
               selectToi.selectedBoxData.strokeSize = 1;
-              rightPanelStore.toggleStroke = true;
             }
           "
         >
@@ -2738,7 +2744,6 @@
       </div>
       <div
         v-if="
-          rightPanelStore.toggleStroke &&
           selectToi.selectedBoxData.strokeSize &&
           selectToi.selectedBoxData.strokeColor
         "
@@ -2811,7 +2816,6 @@
       </div>
       <div
         v-if="
-          rightPanelStore.toggleStroke &&
           selectToi.selectedBoxData.strokeSize &&
           selectToi.selectedBoxData.strokeColor
         "
@@ -3010,7 +3014,6 @@
               selectToi.selectedBoxData.boxShadowBlurRadius = 2;
               selectToi.selectedBoxData.boxShadowSpreadRadius = 2;
               selectToi.selectedBoxData.boxShadowColor = 'black';
-              rightPanelStore.toggleShadow = true;
             }
           "
         >
@@ -3102,7 +3105,6 @@
                   selectToi.selectedBoxData.boxShadowBlurRadius = 0;
                   selectToi.selectedBoxData.boxShadowSpreadRadius = 0;
                   selectToi.selectedBoxData.boxShadowColor = '';
-                  rightPanelStore.toggleShadow = false;
                 }
               "
             >
@@ -3148,7 +3150,6 @@
               selectToi.selectedBoxData.boxShadowBlurRadius = 2;
               selectToi.selectedBoxData.boxShadowSpreadRadius = 2;
               selectToi.selectedBoxData.boxShadowColor = 'black';
-              rightPanelStore.toggleShadow = true;
             }
           "
         >
@@ -3240,7 +3241,6 @@
                   selectToi.selectedBoxData.boxShadowBlurRadius = 0;
                   selectToi.selectedBoxData.boxShadowSpreadRadius = 0;
                   selectToi.selectedBoxData.boxShadowColor = '';
-                  rightPanelStore.toggleShadow = false;
                 }
               "
             >
@@ -3305,11 +3305,9 @@
 
 <script setup>
 import { useCounterStore } from "@/stores/counter";
-import { useRightPanelStore } from "@/stores/rightPanelStore";
 import { useEditorStore } from "@/stores/editor";
 
 const selectToi = useCounterStore();
-const rightPanelStore = useRightPanelStore();
 const editorStore = useEditorStore();
 const customCSS = ref(false);
 

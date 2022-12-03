@@ -727,11 +727,11 @@ export const useRulerSnapStore = defineStore({
               this.show = true;
               if (snapLinesCopy.lineTop) {
                 this.snapTop = true;
-                selectToi.selectedBoxData.attr.style.top =
+                selectToi.selectedBoxData.cssRules[0].style.top.value =
                   Math.round(
                     (snapLinesCopy.lineTop - squareStore.offsetTop) /
                       squareStore.scale
-                  ) + "px";
+                  );
                 if (
                   !snapLinesCopy.lineLeft &&
                   !snapLinesCopy.lineMiddleX &&
@@ -742,13 +742,13 @@ export const useRulerSnapStore = defineStore({
               }
               if (snapLinesCopy.lineMiddleY) {
                 this.snapTop = true;
-                selectToi.selectedBoxData.attr.style.top =
+                selectToi.selectedBoxData.cssRules[0].style.top.value =
                   Math.round(
                     (snapLinesCopy.lineMiddleY -
                       elementRect.height / 2 -
                       squareStore.offsetTop) /
                       squareStore.scale
-                  ) + "px";
+                  );
                 if (
                   !snapLinesCopy.lineLeft &&
                   !snapLinesCopy.lineMiddleX &&
@@ -759,13 +759,13 @@ export const useRulerSnapStore = defineStore({
               }
               if (snapLinesCopy.lineBottom) {
                 this.snapTop = true;
-                selectToi.selectedBoxData.attr.style.top =
+                selectToi.selectedBoxData.cssRules[0].style.top.value =
                   Math.round(
                     (snapLinesCopy.lineBottom -
                       elementRect.height -
                       squareStore.offsetTop) /
                       squareStore.scale
-                  ) + "px";
+                  );
                 if (
                   !snapLinesCopy.lineLeft &&
                   !snapLinesCopy.lineMiddleX &&
@@ -776,11 +776,11 @@ export const useRulerSnapStore = defineStore({
               }
               if (snapLinesCopy.lineLeft) {
                 this.snapLeft = true;
-                selectToi.selectedBoxData.attr.style.left =
+                selectToi.selectedBoxData.cssRules[0].style.left.value =
                   Math.round(
                     (snapLinesCopy.lineLeft - squareStore.offsetLeft) /
                       squareStore.scale
-                  ) + "px";
+                  );
                 if (
                   !snapLinesCopy.lineTop &&
                   !snapLinesCopy.lineMiddleY &&
@@ -791,13 +791,13 @@ export const useRulerSnapStore = defineStore({
               }
               if (snapLinesCopy.lineMiddleX) {
                 this.snapLeft = true;
-                selectToi.selectedBoxData.attr.style.left =
+                selectToi.selectedBoxData.cssRules[0].style.left.value =
                   Math.round(
                     (snapLinesCopy.lineMiddleX -
                       elementRect.width / 2 -
                       squareStore.offsetLeft) /
                       squareStore.scale
-                  ) + "px";
+                  );
                 if (
                   !snapLinesCopy.lineTop &&
                   !snapLinesCopy.lineMiddleY &&
@@ -808,13 +808,13 @@ export const useRulerSnapStore = defineStore({
               }
               if (snapLinesCopy.lineRight) {
                 this.snapLeft = true;
-                selectToi.selectedBoxData.attr.style.left =
+                selectToi.selectedBoxData.cssRules[0].style.left.value =
                   Math.round(
                     (snapLinesCopy.lineRight -
                       elementRect.width -
                       squareStore.offsetLeft) /
                       squareStore.scale
-                  ) + "px";
+                  );
                 if (
                   !snapLinesCopy.lineTop &&
                   !snapLinesCopy.lineMiddleY &&
@@ -972,18 +972,18 @@ export const useRulerSnapStore = defineStore({
                   this.snapWidth = false;
                   this.snapLeft = false;
 
-                  selectToi.selectedBoxData.attr.style.top =
+                  selectToi.selectedBoxData.cssRules[0].style.top.value =
                     Math.round(
                       (snapLinesCopy.lineY - squareStore.offsetTop) /
                         squareStore.scale
-                    ) + "px";
-                  selectToi.selectedBoxData.attr.style.height =
+                    );
+                  selectToi.selectedBoxData.cssRules[0].style.height.value =
                     Math.round(
                       resizeStore.prevTop +
                         resizeStore.prevHeight -
                         (snapLinesCopy.lineY - squareStore.offsetTop) /
                           squareStore.scale
-                    ) + "px";
+                    );
                   let snapLinesCopy2 = {
                     lineTop: snapLinesCopy.lineY,
                   };
@@ -996,12 +996,12 @@ export const useRulerSnapStore = defineStore({
                   this.snapWidth = false;
                   this.snapLeft = false;
 
-                  selectToi.selectedBoxData.attr.style.height =
+                  selectToi.selectedBoxData.cssRules[0].style.height.value =
                     Math.round(
                       (snapLinesCopy.lineY - squareStore.offsetTop) /
                         squareStore.scale -
                         resizeStore.prevTop
-                    ) + "px";
+                    );
                   let snapLinesCopy2 = {
                     lineBottom: snapLinesCopy.lineY,
                   };
@@ -1014,18 +1014,18 @@ export const useRulerSnapStore = defineStore({
                   this.snapWidth = true;
                   this.snapLeft = true;
 
-                  selectToi.selectedBoxData.attr.style.left =
+                  selectToi.selectedBoxData.cssRules[0].style.left.value =
                     Math.round(
                       (snapLinesCopy.lineX - squareStore.offsetLeft) /
                         squareStore.scale
-                    ) + "px";
-                  selectToi.selectedBoxData.attr.style.width =
+                    );
+                  selectToi.selectedBoxData.cssRules[0].style.left.width =
                     Math.round(
                       resizeStore.prevLeft +
                         resizeStore.prevWidth -
                         (snapLinesCopy.lineX - squareStore.offsetLeft) /
                           squareStore.scale
-                    ) + "px";
+                    );
                   let snapLinesCopy2 = {
                     lineLeft: snapLinesCopy.lineX,
                   };
@@ -1038,12 +1038,12 @@ export const useRulerSnapStore = defineStore({
                   this.snapWidth = true;
                   this.snapLeft = false;
 
-                  selectToi.selectedBoxData.attr.style.width =
+                  selectToi.selectedBoxData.cssRules[0].style.width.value =
                     Math.round(
                       (snapLinesCopy.lineX - squareStore.offsetLeft) /
                         squareStore.scale -
                         resizeStore.prevLeft
-                    ) + "px";
+                    );
                   let snapLinesCopy2 = {
                     lineRight: snapLinesCopy.lineX,
                   };
@@ -1054,18 +1054,18 @@ export const useRulerSnapStore = defineStore({
                   if (snapLinesCopy.lineX) {
                     this.snapWidth = true;
                     this.snapLeft = true;
-                    selectToi.selectedBoxData.attr.style.left =
+                    selectToi.selectedBoxData.cssRules[0].style.left.value =
                       Math.round(
                         (snapLinesCopy.lineX - squareStore.offsetLeft) /
                           squareStore.scale
-                      ) + "px";
-                    selectToi.selectedBoxData.attr.style.width =
+                      );
+                    selectToi.selectedBoxData.cssRules[0].style.width.value =
                       Math.round(
                         resizeStore.prevLeft +
                           resizeStore.prevWidth -
                           (snapLinesCopy.lineX - squareStore.offsetLeft) /
                             squareStore.scale
-                      ) + "px";
+                      );
                     if (!snapLinesCopy.lineY) {
                       this.snapHeight = false;
                       this.snapTop = false;
@@ -1074,18 +1074,18 @@ export const useRulerSnapStore = defineStore({
                   if (snapLinesCopy.lineY) {
                     this.snapHeight = true;
                     this.snapTop = true;
-                    selectToi.selectedBoxData.attr.style.top =
+                    selectToi.selectedBoxData.cssRules[0].style.top.value =
                       Math.round(
                         (snapLinesCopy.lineY - squareStore.offsetTop) /
                           squareStore.scale
-                      ) + "px";
-                    selectToi.selectedBoxData.attr.style.height =
+                      );
+                    selectToi.selectedBoxData.cssRules[0].style.height.value =
                       Math.round(
                         resizeStore.prevTop +
                           resizeStore.prevHeight -
                           (snapLinesCopy.lineY - squareStore.offsetTop) /
                             squareStore.scale
-                      ) + "px";
+                      );
 
                     if (!snapLinesCopy.lineX) {
                       this.snapWidth = false;
@@ -1103,12 +1103,12 @@ export const useRulerSnapStore = defineStore({
                   this.snapLeft = false;
                   if (snapLinesCopy.lineX) {
                     this.snapWidth = true;
-                    selectToi.selectedBoxData.attr.style.width =
+                    selectToi.selectedBoxData.cssRules[0].style.width.value =
                       Math.round(
                         (snapLinesCopy.lineX - squareStore.offsetLeft) /
                           squareStore.scale -
                           resizeStore.prevLeft
-                      ) + "px";
+                      );
                     if (!snapLinesCopy.lineY) {
                       this.snapHeight = false;
                       this.snapTop = false;
@@ -1117,18 +1117,18 @@ export const useRulerSnapStore = defineStore({
                   if (snapLinesCopy.lineY) {
                     this.snapHeight = true;
                     this.snapTop = true;
-                    selectToi.selectedBoxData.attr.style.top =
+                    selectToi.selectedBoxData.cssRules[0].style.top.value =
                       Math.round(
                         (snapLinesCopy.lineY - squareStore.offsetTop) /
                           squareStore.scale
-                      ) + "px";
-                    selectToi.selectedBoxData.attr.style.height =
+                      );
+                    selectToi.selectedBoxData.cssRules[0].style.height.value =
                       Math.round(
                         resizeStore.prevTop +
                           resizeStore.prevHeight -
                           (snapLinesCopy.lineY - squareStore.offsetTop) /
                             squareStore.scale
-                      ) + "px";
+                      );
                     if (!snapLinesCopy.lineX) {
                       this.snapWidth = false;
                     }
@@ -1145,30 +1145,30 @@ export const useRulerSnapStore = defineStore({
                   if (snapLinesCopy.lineX) {
                     this.snapWidth = true;
                     this.snapLeft = true;
-                    selectToi.selectedBoxData.attr.style.left =
+                    selectToi.selectedBoxData.cssRules[0].style.left.value =
                       Math.round(
                         (snapLinesCopy.lineX - squareStore.offsetLeft) /
                           squareStore.scale
-                      ) + "px";
-                    selectToi.selectedBoxData.attr.style.width =
+                      );
+                    selectToi.selectedBoxData.cssRules[0].style.width.value =
                       Math.round(
                         resizeStore.prevLeft +
                           resizeStore.prevWidth -
                           (snapLinesCopy.lineX - squareStore.offsetLeft) /
                             squareStore.scale
-                      ) + "px";
+                      );
                     if (!snapLinesCopy.lineY) {
                       this.snapHeight = false;
                     }
                   }
                   if (snapLinesCopy.lineY) {
                     this.snapHeight = true;
-                    selectToi.selectedBoxData.attr.style.height =
+                    selectToi.selectedBoxData.cssRules[0].style.height.value =
                       Math.round(
                         (snapLinesCopy.lineY - squareStore.offsetTop) /
                           squareStore.scale -
                           resizeStore.prevTop
-                      ) + "px";
+                      );
                     if (!snapLinesCopy.lineX) {
                       this.snapWidth = false;
                       this.snapLeft = false;
@@ -1186,24 +1186,24 @@ export const useRulerSnapStore = defineStore({
                   this.snapTop = false;
                   if (snapLinesCopy.lineX) {
                     this.snapWidth = true;
-                    selectToi.selectedBoxData.attr.style.width =
+                    selectToi.selectedBoxData.cssRules[0].style.width.value =
                       Math.round(
                         (snapLinesCopy.lineX - squareStore.offsetLeft) /
                           squareStore.scale -
                           resizeStore.prevLeft
-                      ) + "px";
+                      );
                     if (!snapLinesCopy.lineY) {
                       this.snapHeight = false;
                     }
                   }
                   if (snapLinesCopy.lineY) {
                     this.snapHeight = true;
-                    selectToi.selectedBoxData.attr.style.height =
+                    selectToi.selectedBoxData.cssRules[0].style.height.value =
                       Math.round(
                         (snapLinesCopy.lineY - squareStore.offsetTop) /
                           squareStore.scale -
                           resizeStore.prevTop
-                      ) + "px";
+                      );
                     if (!snapLinesCopy.lineX) {
                       this.snapWidth = false;
                     }

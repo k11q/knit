@@ -9,40 +9,38 @@
     :style="{
       willChange: 'left, top, height, width',
       left:
-        selectToi.selectedBoxData.attr?.style?.left &&
+        selectToi.selectedBoxData?.cssRules[0]?.style?.left &&
         !useCheckParent(selectToi.selectedBoxData.id)
-          ? selectToi.selectedBoxData.attr.style.left
+          ? selectToi.selectedBoxData.cssRules[0].style.left.value + 'px'
           : Math.round(
               useGetElementRect(selectToi.selectedBoxData.id)?.x -
                 addaSquare.offsetLeft
-            ) /
-              addaSquare.scale +
-            'px',
+            ) / addaSquare.scale,
       top:
-        selectToi.selectedBoxData.attr?.style?.top &&
+        selectToi.selectedBoxData?.cssRules[0]?.style?.top &&
         !useCheckParent(selectToi.selectedBoxData.id)
-          ? selectToi.selectedBoxData.attr.style.top
+          ? selectToi.selectedBoxData.cssRules[0].style.top.value + 'px'
           : Math.round(
               useGetElementRect(selectToi.selectedBoxData.id)?.y -
                 addaSquare.offsetTop
-            ) /
-              addaSquare.scale +
-            'px',
+            ) / addaSquare.scale,
       height:
-        selectToi.selectedBoxData.attr?.style?.height &&
-        selectToi.selectedBoxData.attr?.style?.height !== 'fit-content' &&
+        selectToi.selectedBoxData?.cssRules[0]?.style?.height &&
+        selectToi.selectedBoxData?.cssRules[0]?.style?.height?.value !==
+          'fit-content' &&
         !useCheckParent(selectToi.selectedBoxData.id)
-          ? selectToi.selectedBoxData.attr.style.height
+          ? selectToi.selectedBoxData.cssRules[0].style.height.value + 'px'
           : Math.round(
               useGetElementRect(selectToi.selectedBoxData.id)?.height
             ) /
               addaSquare.scale +
             'px',
       width:
-        selectToi.selectedBoxData.attr?.style?.width &&
-        selectToi.selectedBoxData.attr?.style?.width !== 'fit-content' &&
+        selectToi.selectedBoxData?.cssRules[0]?.style?.width &&
+        selectToi.selectedBoxData?.cssRules[0]?.style?.width?.value !==
+          'fit-content' &&
         !useCheckParent(selectToi.selectedBoxData.id)
-          ? selectToi.selectedBoxData.attr.style.width
+          ? selectToi.selectedBoxData.cssRules[0].style.width.value + 'px'
           : Math.round(useGetElementRect(selectToi.selectedBoxData.id)?.width) /
               addaSquare.scale +
             'px',

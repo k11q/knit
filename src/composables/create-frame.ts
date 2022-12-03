@@ -19,30 +19,23 @@ export function createFrame(e: MouseEvent) {
     id: "",
     name: "",
     type: "div",
-    hidden: false,
-    x: 0,
-    y: 0,
-    width: 0,
-    height: 0,
-    blendMode: "passthrough",
-    opacity: 1,
-    effect: [],
-    fill: [],
-    stroke: [],
-    strokeWidth: 1,
-    strokeAlign: "Inside",
-    rotation: 0,
-    cornerRadius: 0,
-    overflow: "scroll",
+    cssRules: [
+      {
+        breakpoint: 1,
+        style: {
+          display: { type: "keyword", value: "flex" },
+          backgroundColor: { type: "keyword", value: "white" },
+          position: { type: "keyword", value: "absolute" },
+          left: { type: "unit", value: 0, unit: "px" },
+          top: { type: "unit", value: 0, unit: "px" },
+          height: { type: "unit", value: 1, unit: "px" },
+          width: { type: "unit", value: 1, unit: "px" },
+        },
+      },
+    ],
     attr: {
       style: {
-        left: "",
-        top: "",
         display: "flex",
-        backgroundColor: "white",
-        height: "1px",
-        width: "1px",
-        position: "absolute",
       },
     },
     children: [],
@@ -58,10 +51,8 @@ export function createFrame(e: MouseEvent) {
   );
 
   frameNode.id = useGetRandomLetter() + uid();
-  frameNode.x = prevX;
-  frameNode.y = prevY;
-  frameNode.attr.style.left = prevX + "px";
-  frameNode.attr.style.top = prevY + "px";
+  frameNode.cssRules[0].style.left.value = prevX;
+  frameNode.cssRules[0].style.top.value = prevY;
 
   resizeStore.prevLeft = prevX;
   resizeStore.prevTop = prevY;
@@ -94,20 +85,19 @@ export function createFrame(e: MouseEvent) {
         rulerSnap.on = true;
         rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
         if (!rulerSnap.snapWidth) {
-          selectToi.selectedBoxData.attr.style.width = positionX - prevX + "px";
-          selectToi.selectedBoxData.width = positionX - prevX;
+          selectToi.selectedBoxData.cssRules[0].style.width.value =
+            positionX - prevX;
         }
         if (!rulerSnap.snapHeight) {
-          selectToi.selectedBoxData.attr.style.height =
-            positionY - prevY + "px";
-          selectToi.selectedBoxData.height = positionY - prevY;
+          selectToi.selectedBoxData.cssRules[0].style.height.value =
+            positionY - prevY;
         }
       } else if (Math.abs(e.movementX) > 5 || Math.abs(e.movementX) > 5) {
         rulerSnap.on = false;
-        selectToi.selectedBoxData.width = positionX - prevX;
-        selectToi.selectedBoxData.height = positionY - prevY;
-        selectToi.selectedBoxData.attr.style.width = positionX - prevX + "px";
-        selectToi.selectedBoxData.attr.style.height = positionY - prevY + "px";
+        selectToi.selectedBoxData.cssRules[0].style.width.value =
+          positionX - prevX;
+        selectToi.selectedBoxData.cssRules[0].style.height.value =
+          positionY - prevY;
       }
     }
     /*

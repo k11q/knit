@@ -19,15 +19,23 @@ export function createRectangle(e: MouseEvent) {
     id: "",
     name: "",
     type: "box",
+    cssRules: [
+      {
+        breakpoint: 1,
+        style: {
+          display: { type: "keyword", value: "flex" },
+          backgroundColor: { type: "keyword", value: "#D9D9D9" },
+          position: { type: "keyword", value: "absolute" },
+          left: { type: "unit", value: 0, unit: "px" },
+          top: { type: "unit", value: 0, unit: "px" },
+          height: { type: "unit", value: 1, unit: "px" },
+          width: { type: "unit", value: 1, unit: "px" },
+        },
+      },
+    ],
     attr: {
       style: {
-        left: "",
-        top: "",
         display: "flex",
-        backgroundColor: "#D9D9D9",
-        height: "1px",
-        width: "1px",
-        position: "absolute",
       },
     },
     children: [],
@@ -43,8 +51,8 @@ export function createRectangle(e: MouseEvent) {
   );
 
   rectangleNode.id = useGetRandomLetter() + uid();
-  rectangleNode.attr.style.left = prevX + "px";
-  rectangleNode.attr.style.top = prevY + "px";
+  rectangleNode.cssRules[0].style.left.value = prevX;
+  rectangleNode.cssRules[0].style.top.value = prevY;
 
   resizeStore.prevLeft = prevX;
   resizeStore.prevTop = prevY;
@@ -77,16 +85,19 @@ export function createRectangle(e: MouseEvent) {
         rulerSnap.on = true;
         rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
         if (!rulerSnap.snapWidth) {
-          selectToi.selectedBoxData.attr.style.width = positionX - prevX + "px";
+          selectToi.selectedBoxData.cssRules[0].style.width.value =
+            positionX - prevX;
         }
         if (!rulerSnap.snapHeight) {
-          selectToi.selectedBoxData.attr.style.height =
-            positionY - prevY + "px";
+          selectToi.selectedBoxData.cssRules[0].style.height.value =
+            positionY - prevY;
         }
       } else if (Math.abs(e.movementX) > 5 || Math.abs(e.movementX) > 5) {
         rulerSnap.on = false;
-        selectToi.selectedBoxData.attr.style.width = positionX - prevX + "px";
-        selectToi.selectedBoxData.attr.style.height = positionY - prevY + "px";
+        selectToi.selectedBoxData.cssRules[0].style.width.value =
+          positionX - prevX;
+        selectToi.selectedBoxData.cssRules[0].style.height.value =
+          positionY - prevY;
       }
     }
     /*

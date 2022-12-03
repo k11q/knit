@@ -61,28 +61,58 @@
         '!hidden': node.display && node.display === 'hide',
       }"
       v-bind="node.attr"
+      :style="{
+        display: node.cssRules[0]?.style?.display?.value,
+        position: node.cssRules[0]?.style?.position?.value,
+        left:
+          node.cssRules[0]?.style?.left?.value +
+          node.cssRules[0]?.style?.left?.unit,
+        top:
+          node.cssRules[0]?.style?.top?.value +
+          node.cssRules[0]?.style?.left?.unit,
+        right:
+          node.cssRules[0]?.style?.right?.value +
+          node.cssRules[0]?.style?.left?.unit,
+        bottom:
+          node.cssRules[0]?.style?.bottom?.value +
+          node.cssRules[0]?.style?.left?.unit,
+        height:
+          node.cssRules[0]?.style?.height?.type === 'unit'
+            ? node.cssRules[0]?.style?.height?.value +
+              node.cssRules[0]?.style?.height?.unit
+            : node.cssRules[0]?.style?.height?.value,
+        width:
+          node.cssRules[0]?.style?.width?.type === 'unit'
+            ? node.cssRules[0]?.style?.width?.value +
+              node.cssRules[0]?.style?.width?.unit
+            : node.cssRules[0]?.style?.width?.value,
+        backgroundColor: node.cssRules[0]?.style?.backgroundColor?.value,
+        color: node.cssRules[0]?.style?.color?.value,
+        paddingLeft:
+          node.cssRules[0]?.style?.paddingLeft?.value +
+          node.cssRules[0]?.style?.paddingLeft?.unit,
+      }"
     >
-      <template v-if="node.type === 'text'">
-        <div
-          v-html="node.textContent"
-          class="cursor-default"
-          :class="{
-            'underline decoration-[#0191FA]':
-              selectToi.selectedBox === node.id && !canvasStore.isDragging,
-            'hover:underline decoration-[#0191FA]': !canvasStore.isDragging,
-            'opacity-0': selectToi.selectedTextEditor === node.id,
-          }"
-          :style="{
-            textDecorationThickness:
-              canvasStore.textHover && selectToi.selectedBox !== node.id
-                ? `${2 / squareStore.scale}px`
-                : `${1 / squareStore.scale}px`,
-          }"
-          draggable="false"
-        ></div>
-      </template>
+      <div
+        v-if="node.type === 'text'"
+        v-html="node.textContent"
+        class="cursor-default"
+        :class="{
+          'underline decoration-[#0191FA]':
+            selectToi.selectedBox === node.id && !canvasStore.isDragging,
+          'hover:underline decoration-[#0191FA]': !canvasStore.isDragging,
+          'opacity-0': selectToi.selectedTextEditor === node.id,
+        }"
+        :style="{
+          textDecorationThickness:
+            canvasStore.textHover && selectToi.selectedBox !== node.id
+              ? `${2 / squareStore.scale}px`
+              : `${1 / squareStore.scale}px`,
+        }"
+        draggable="false"
+      ></div>
       <DesignerCanvasUIBrowser
-        v-if="(node.children && node.type === 'div') || node.type === 'box'"
+        v-if="node.children && (node.type === 'div' || node.type === 'box')"
         :key="node.id"
         :nodes="node.children"
         :depth="depth + 1"
