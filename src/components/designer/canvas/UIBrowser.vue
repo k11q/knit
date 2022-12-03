@@ -60,38 +60,7 @@
               selectToi.selectedTextEditor !== node.id)),
         '!hidden': node.display && node.display === 'hide',
       }"
-      v-bind="node.attr"
-      :style="{
-        display: node.cssRules[0]?.style?.display?.value,
-        position: node.cssRules[0]?.style?.position?.value,
-        left:
-          node.cssRules[0]?.style?.left?.value +
-          node.cssRules[0]?.style?.left?.unit,
-        top:
-          node.cssRules[0]?.style?.top?.value +
-          node.cssRules[0]?.style?.left?.unit,
-        right:
-          node.cssRules[0]?.style?.right?.value +
-          node.cssRules[0]?.style?.left?.unit,
-        bottom:
-          node.cssRules[0]?.style?.bottom?.value +
-          node.cssRules[0]?.style?.left?.unit,
-        height:
-          node.cssRules[0]?.style?.height?.type === 'unit'
-            ? node.cssRules[0]?.style?.height?.value +
-              node.cssRules[0]?.style?.height?.unit
-            : node.cssRules[0]?.style?.height?.value,
-        width:
-          node.cssRules[0]?.style?.width?.type === 'unit'
-            ? node.cssRules[0]?.style?.width?.value +
-              node.cssRules[0]?.style?.width?.unit
-            : node.cssRules[0]?.style?.width?.value,
-        backgroundColor: node.cssRules[0]?.style?.backgroundColor?.value,
-        color: node.cssRules[0]?.style?.color?.value,
-        paddingLeft:
-          node.cssRules[0]?.style?.paddingLeft?.value +
-          node.cssRules[0]?.style?.paddingLeft?.unit,
-      }"
+      :style="styleProps(node)"
     >
       <div
         v-if="node.type === 'text'"
@@ -159,6 +128,53 @@ const props = defineProps({
     default: 0,
   },
 });
+
+function styleProps(node) {
+  return {
+    display: node.cssRules[0]?.style?.display?.value,
+    flexDirection: node.cssRules[0]?.style?.flexDirection?.value,
+    justifyContent: node.cssRules[0]?.style?.justifyContent?.value,
+    alignItems: node.cssRules[0]?.style?.alignItems?.value,
+    gap:
+      node.cssRules[0]?.style?.gap?.value + node.cssRules[0]?.style?.gap?.unit,
+    borderRadius:
+      node.cssRules[0]?.style?.borderRadius?.value +
+      node.cssRules[0]?.style?.borderRadius?.unit,
+    position: node.cssRules[0]?.style?.position?.value,
+    left:
+      node.cssRules[0]?.style?.left?.value +
+      node.cssRules[0]?.style?.left?.unit,
+    top:
+      node.cssRules[0]?.style?.top?.value + node.cssRules[0]?.style?.top?.unit,
+    right:
+      node.cssRules[0]?.style?.right?.value +
+      node.cssRules[0]?.style?.right?.unit,
+    bottom:
+      node.cssRules[0]?.style?.bottom?.value +
+      node.cssRules[0]?.style?.bottom?.unit,
+    height:
+      node.cssRules[0]?.style?.height?.type === "unit"
+        ? node.cssRules[0]?.style?.height?.value +
+          node.cssRules[0]?.style?.height?.unit
+        : node.cssRules[0]?.style?.height?.value,
+    width:
+      node.cssRules[0]?.style?.width?.type === "unit"
+        ? node.cssRules[0]?.style?.width?.value +
+          node.cssRules[0]?.style?.width?.unit
+        : node.cssRules[0]?.style?.width?.value,
+    backgroundColor: node.cssRules[0]?.style?.backgroundColor?.value,
+    color: node.cssRules[0]?.style?.color?.value,
+    fontSize:
+      node.cssRules[0]?.style?.fontSize?.value +
+      node.cssRules[0]?.style?.fontSize?.unit,
+    lineHeight:
+      node.cssRules[0]?.style?.lineHeight?.value +
+      node.cssRules[0]?.style?.lineHeight?.unit,
+    paddingLeft:
+      node.cssRules[0]?.style?.paddingLeft?.value +
+      node.cssRules[0]?.style?.paddingLeft?.unit,
+  };
+}
 
 useHead({
   link: [

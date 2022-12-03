@@ -293,6 +293,8 @@ export const useCounterStore = defineStore({
           {
             breakpoint: 1,
             style: {
+              display: { type: "keyword", value: "flex" },
+              flexDirection: { type: "keyword", value: "column" },
               backgroundColor: { type: "keyword", value: "white" },
               paddingLeft: { type: "unit", value: 20, unit: "px" },
               position: { type: "keyword", value: "absolute" },
@@ -303,12 +305,6 @@ export const useCounterStore = defineStore({
             },
           },
         ],
-        attr: {
-          style: {
-            display: "flex",
-            flexDirection: "column",
-          },
-        },
         children: [
           {
             name: "rectangle5",
@@ -318,6 +314,8 @@ export const useCounterStore = defineStore({
               {
                 breakpoint: 1,
                 style: {
+                  display: { type: "keyword", value: "flex" },
+                  flexDirection: { type: "keyword", value: "column" },
                   backgroundColor: { type: "keyword", value: "blue" },
                   position: { type: "keyword", value: "static" },
                   height: { type: "unit", value: 80, unit: "px" },
@@ -325,11 +323,6 @@ export const useCounterStore = defineStore({
                 },
               },
             ],
-            attr: {
-              style: {
-                flexDirection: "column",
-              },
-            },
             children: [],
           },
           {
@@ -340,6 +333,8 @@ export const useCounterStore = defineStore({
               {
                 breakpoint: 1,
                 style: {
+                  display: { type: "keyword", value: "flex" },
+                  flexDirection: { type: "keyword", value: "column" },
                   backgroundColor: { type: "keyword", value: "orange" },
                   position: { type: "keyword", value: "static" },
                   height: { type: "unit", value: 70, unit: "px" },
@@ -347,11 +342,6 @@ export const useCounterStore = defineStore({
                 },
               },
             ],
-            attr: {
-              style: {
-                flexDirection: "column",
-              },
-            },
             children: [],
           },
           {
@@ -361,17 +351,16 @@ export const useCounterStore = defineStore({
             cssRules: [
               {
                 breakpoint: 1,
-                style: { backgroundColor: { type: "keyword", value: "green" } },
-                height: { type: "unit", value: 80, unit: "px" },
-                width: { type: "unit", value: 70, unit: "px" },
+                style: {
+                  display: { type: "keyword", value: "flex" },
+                  flexDirection: { type: "keyword", value: "column" },
+                  position: { type: "keyword", value: "static" },
+                  backgroundColor: { type: "keyword", value: "green" },
+                  height: { type: "unit", value: 80, unit: "px" },
+                  width: { type: "unit", value: 70, unit: "px" },
+                },
               },
             ],
-            attr: {
-              style: {
-                position: "static",
-                flexDirection: "column",
-              },
-            },
             children: [],
           },
         ],
@@ -384,6 +373,8 @@ export const useCounterStore = defineStore({
           {
             breakpoint: 1,
             style: {
+              display: { type: "keyword", value: "flex" },
+              flexDirection: { type: "keyword", value: "column" },
               backgroundColor: { type: "keyword", value: "blueviolet" },
               position: { type: "keyword", value: "absolute" },
               left: { type: "unit", value: 250, unit: "px" },
@@ -393,11 +384,6 @@ export const useCounterStore = defineStore({
             },
           },
         ],
-        attr: {
-          style: {
-            flexDirection: "column",
-          },
-        },
         children: [
           {
             name: "rectangle7",
@@ -407,6 +393,8 @@ export const useCounterStore = defineStore({
               {
                 breakpoint: 1,
                 style: {
+                  display: { type: "keyword", value: "flex" },
+                  flexDirection: { type: "keyword", value: "column" },
                   backgroundColor: { type: "keyword", value: "blue" },
                   position: { type: "keyword", value: "absolute" },
                   left: { type: "unit", value: 20, unit: "px" },
@@ -414,11 +402,6 @@ export const useCounterStore = defineStore({
                 },
               },
             ],
-            attr: {
-              style: {
-                flexDirection: "column",
-              },
-            },
             children: [
               {
                 name: "rectangle8",
@@ -428,6 +411,8 @@ export const useCounterStore = defineStore({
                   {
                     breakpoint: 1,
                     style: {
+                      display: { type: "keyword", value: "flex" },
+                      flexDirection: { type: "keyword", value: "column" },
                       backgroundColor: { type: "keyword", value: "red" },
                       position: { type: "keyword", value: "absolute" },
                       left: { type: "unit", value: 40, unit: "px" },
@@ -435,11 +420,6 @@ export const useCounterStore = defineStore({
                     },
                   },
                 ],
-                attr: {
-                  style: {
-                    flexDirection: "column",
-                  },
-                },
                 children: [],
               },
               {
@@ -450,6 +430,8 @@ export const useCounterStore = defineStore({
                   {
                     breakpoint: 1,
                     style: {
+                      display: { type: "keyword", value: "flex" },
+                      flexDirection: { type: "keyword", value: "column" },
                       backgroundColor: { type: "keyword", value: "blue" },
                       position: { type: "keyword", value: "absolute" },
                       left: { type: "unit", value: 100, unit: "px" },
@@ -459,11 +441,6 @@ export const useCounterStore = defineStore({
                     },
                   },
                 ],
-                attr: {
-                  style: {
-                    flexDirection: "column",
-                  },
-                },
                 children: [
                   {
                     name: "rectangle10",
@@ -473,6 +450,8 @@ export const useCounterStore = defineStore({
                       {
                         breakpoint: 1,
                         style: {
+                          display: { type: "keyword", value: "flex" },
+                          flexDirection: { type: "keyword", value: "column" },
                           backgroundColor: { type: "keyword", value: "red" },
                           position: { type: "keyword", value: "absolute" },
                           left: { type: "unit", value: 10, unit: "px" },
@@ -480,11 +459,6 @@ export const useCounterStore = defineStore({
                         },
                       },
                     ],
-                    attr: {
-                      style: {
-                        flexDirection: "column",
-                      },
-                    },
                     children: [],
                   },
                   {
@@ -495,6 +469,8 @@ export const useCounterStore = defineStore({
                       {
                         breakpoint: 1,
                         style: {
+                          display: { type: "keyword", value: "flex" },
+                          flexDirection: { type: "keyword", value: "column" },
                           backgroundColor: { type: "keyword", value: "red" },
                           position: { type: "keyword", value: "absolute" },
                           left: { type: "unit", value: 50, unit: "px" },
@@ -504,11 +480,6 @@ export const useCounterStore = defineStore({
                         },
                       },
                     ],
-                    attr: {
-                      style: {
-                        flexDirection: "column",
-                      },
-                    },
                     children: [],
                   },
                 ],
@@ -525,21 +496,18 @@ export const useCounterStore = defineStore({
           {
             breakpoint: 1,
             style: {
+              display: { type: "keyword", value: "flex" },
+              flexDirection: { type: "keyword", value: "column" },
               color: { type: "keyword", value: "purple" },
               position: { type: "keyword", value: "absolute" },
               left: { type: "unit", value: 240, unit: "px" },
               top: { type: "unit", value: 60, unit: "px" },
               height: { type: "keyword", value: "fit-content" },
               width: { type: "keyword", value: "fit-content" },
+              fontSize: { type: "unit", value: 16, unit: "px" },
             },
           },
         ],
-        attr: {
-          style: {
-            fontSize: "14px",
-            flexDirection: "column",
-          },
-        },
         textContent: "Haha",
         children: [],
       },
@@ -558,14 +526,10 @@ export const useCounterStore = defineStore({
               top: { type: "unit", value: 20, unit: "px" },
               height: { type: "keyword", value: "fit-content" },
               width: { type: "keyword", value: "fit-content" },
+              fontSize: { type: "unit", value: 14, unit: "px" },
             },
           },
         ],
-        attr: {
-          style: {
-            fontSize: "14px",
-          },
-        },
         children: [],
       },
       {
@@ -577,21 +541,18 @@ export const useCounterStore = defineStore({
           {
             breakpoint: 1,
             style: {
+              display: { type: "keyword", value: "flex" },
+              flexDirection: { type: "keyword", value: "column" },
               backgroundColor: { type: "keyword", value: "purple" },
               position: { type: "keyword", value: "absolute" },
               left: { type: "unit", value: 600, unit: "px" },
               top: { type: "unit", value: 300, unit: "px" },
               height: { type: "unit", value: 100, unit: "px" },
               width: { type: "unit", value: 120, unit: "px" },
+              borderRadius: { type: "unit", value: 4, unit: "px" },
             },
           },
         ],
-        attr: {
-          style: {
-            flexDirection: "column",
-            borderRadius: "1px",
-          },
-        },
         children: [],
       },
     ],
@@ -609,11 +570,26 @@ export const useCounterStore = defineStore({
       });
     },
     changeAlign(value) {
-      this.selectedBoxData.attr.style.alignItems = value;
-      console.log("changed align! to " + value);
+      if (!this.selectedBoxData.cssRules[0].style.alignItems) {
+        this.selectedBoxData.cssRules[0].style.alignItems = {
+          type: "keyword",
+          value: value,
+        };
+      }
+      if (this.selectedBoxData.cssRules[0].style.alignItems) {
+        this.selectedBoxData.cssRules[0].style.alignItems.value = value;
+      }
     },
     changeJustify(value) {
-      this.selectedBoxData.attr.style.justifyContent = value;
+      if (!this.selectedBoxData.cssRules[0].style.justifyContent) {
+        this.selectedBoxData.cssRules[0].style.justifyContent = {
+          type: "keyword",
+          value: value,
+        };
+      }
+      if (this.selectedBoxData.cssRules[0].style.justifyContent) {
+        this.selectedBoxData.cssRules[0].style.justifyContent.value = value;
+      }
     },
     changeSelected(e, id) {
       const squareStore = useSquareStore();

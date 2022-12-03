@@ -123,7 +123,7 @@
             @input="
               (event) => {
                 selectToi.selectedBoxData.cssRules[0].style.left.value =
-                  event.target.value + 'px';
+                  event.target.value;
               }
             "
             class="w-2/3 pl-2 bg-transparent placeholder-[#707070]"
@@ -153,7 +153,7 @@
             @input="
               (event) => {
                 selectToi.selectedBoxData.cssRules[0].style.top.value =
-                  event.target.value + 'px';
+                  event.target.value;
               }
             "
             class="w-2/3 pl-2 bg-transparent placeholder-[#707070]"
@@ -165,24 +165,30 @@
             v-if="useCheckParent(selectToi.selectedBoxData?.id)"
             :class="{
               'bg-[#2E2E2E]':
-                selectToi.selectedBoxData.attr.style.position === 'absolute',
+                selectToi.selectedBoxData.cssRules[0].style.position?.value ===
+                'absolute',
               'opacity-100':
-                selectToi.selectedBoxData.attr.style.position === 'absolute',
+                selectToi.selectedBoxData.cssRules[0].style.position?.value ===
+                'absolute',
               'opacity-60':
-                selectToi.selectedBoxData.attr.style.position !== 'absolute',
+                selectToi.selectedBoxData.cssRules[0].style.position?.value !==
+                'absolute',
             }"
             @click="
               () => {
                 if (
-                  selectToi.selectedBoxData.attr.style.position != 'absolute'
+                  selectToi.selectedBoxData.cssRules[0].style.position?.value !=
+                  'absolute'
                 ) {
                   selectToi.selectedBoxData.cssRules[0].style.left.value =
                     selectToi.getLeft(selectToi.selectedBoxData.id);
                   selectToi.selectedBoxData.cssRules[0].style.top.value =
                     selectToi.getTop(selectToi.selectedBoxData.id);
-                  selectToi.selectedBoxData.attr.style.position = 'absolute';
+                  selectToi.selectedBoxData.cssRules[0].style.position.value =
+                    'absolute';
                 } else {
-                  selectToi.selectedBoxData.attr.style.position = 'static';
+                  selectToi.selectedBoxData.cssRules[0].style.position.value =
+                    'static';
                   delete selectToi.selectedBoxData.cssRules[0].style.left;
                   delete selectToi.selectedBoxData.cssRules[0].style.top;
                 }
@@ -263,9 +269,10 @@
               Math.round(useGetElementRect(selectToi.selectedBoxData.id)?.width)
             "
             :value="
-              selectToi.selectedBoxData.attr?.style.width === '100%'
-                ? ''
-                : parseInt(selectToi.selectedBoxData.attr?.style.width)
+              useCheckCSSRules() &&
+              selectToi.selectedBoxData.cssRules[0].style.width
+                ? selectToi.selectedBoxData.cssRules[0].style.width.value
+                : null
             "
             @input="
               (event) => {
@@ -293,9 +300,10 @@
           <input
             type="number"
             :value="
-              selectToi.selectedBoxData.attr?.style.height === '100%'
-                ? ''
-                : parseInt(selectToi.selectedBoxData.attr?.style.height, 10)
+              useCheckCSSRules() &&
+              selectToi.selectedBoxData.cssRules[0].style.width
+                ? selectToi.selectedBoxData.cssRules[0].style.width.value
+                : null
             "
             @input="
               (event) => {
@@ -324,16 +332,18 @@
             }"
             @click="
               () => {
-                if (!selectToi.selectedBoxData.attr.style.aspectRatio) {
-                  selectToi.selectedBoxData.attr.style.aspectRatio = 1;
+                if (!selectToi.selectedBoxData.cssRules[0].style.aspectRatio) {
+                  selectToi.selectedBoxData.cssRules[0].style.aspectRatio = 1;
                   delete selectToi.selectedBoxData.cssRules[0].style.width;
                 } else {
                   selectToi.selectedBoxData.cssRules[0].style.width.value =
                     Math.round(
                       useGetElementRect(selectToi.selectedBoxData.id)?.width
                     );
-                  selectToi.selectedBoxData.attr.style.aspectRatio = 'auto';
-                  delete selectToi.selectedBoxData.attr.style.aspectRatio;
+                  selectToi.selectedBoxData.cssRules[0].style.aspectRatio =
+                    'auto';
+                  delete selectToi.selectedBoxData.cssRules[0].style
+                    .aspectRatio;
                 }
               }
             "
@@ -365,11 +375,15 @@
             class="h-[24px] aspect-square items-center flex flex-none justify-center rounded-sm"
             :class="{
               'opacity-100':
-                selectToi.selectedBoxData.attr?.style?.width !== '100%' &&
-                selectToi.selectedBoxData.attr?.style?.width !== 'fit-content',
+                selectToi.selectedBoxData.cssRules[0].style.width.value !==
+                  '100%' &&
+                selectToi.selectedBoxData.cssRules[0].style.width.value !==
+                  'fit-content',
               'opacity-60':
-                selectToi.selectedBoxData.attr?.style?.width === '100%' ||
-                selectToi.selectedBoxData.attr?.style?.width === 'fit-content',
+                selectToi.selectedBoxData.cssRules[0].style.width.value ===
+                  '100%' ||
+                selectToi.selectedBoxData.cssRules[0].style.width.value ===
+                  'fit-content',
             }"
           >
             <svg
@@ -407,15 +421,21 @@
             class="h-[24px] aspect-square items-center flex flex-none justify-center -ml-[3px] hover:bg-[#2E2E2E] rounded-sm hover:opacity-100"
             @click="
               selectToi.selectedBoxData.cssRules[0].style.width.value =
-                'fit-content'
+                'fit-content';
+              selectToi.selectedBoxData.cssRules[0].style.width.type =
+                'keyword';
+              delete selectToi.selectedBoxData.cssRules[0].style.width.unit;
             "
             :class="{
               'opacity-100':
-                selectToi.selectedBoxData.attr?.style?.width === 'fit-content',
+                selectToi.selectedBoxData.cssRules[0].style.width.value ===
+                'fit-content',
               'opacity-60':
-                selectToi.selectedBoxData.attr?.style?.width !== 'fit-content',
+                selectToi.selectedBoxData.cssRules[0].style.width.value !==
+                'fit-content',
               'bg-[#2E2E2E]':
-                selectToi.selectedBoxData.attr?.style?.width === 'fit-content',
+                selectToi.selectedBoxData.cssRules[0].style.width.value ===
+                'fit-content',
             }"
           >
             <svg
@@ -443,11 +463,14 @@
             "
             :class="{
               'opacity-100':
-                selectToi.selectedBoxData.attr?.style?.width === '100%',
+                selectToi.selectedBoxData.cssRules[0].style.width.value ===
+                '100%',
               'opacity-60':
-                selectToi.selectedBoxData.attr?.style?.width !== '100%',
+                selectToi.selectedBoxData.cssRules[0].style.width.value !==
+                '100%',
               'bg-[#2E2E2E]':
-                selectToi.selectedBoxData.attr?.style?.width === '100%',
+                selectToi.selectedBoxData.cssRules[0].style.width.value ===
+                '100%',
             }"
           >
             <svg
@@ -471,11 +494,15 @@
             class="h-[24px] aspect-square items-center flex flex-none justify-center rounded-sm"
             :class="{
               'opacity-100':
-                selectToi.selectedBoxData.attr?.style?.height !== '100%' &&
-                selectToi.selectedBoxData.attr?.style?.height !== 'fit-content',
+                selectToi.selectedBoxData.cssRules[0].style.height.value !==
+                  '100%' &&
+                selectToi.selectedBoxData.cssRules[0].style.height.value !==
+                  'fit-content',
               'opacity-60':
-                selectToi.selectedBoxData.attr?.style?.height === '100%' ||
-                selectToi.selectedBoxData.attr?.style?.height === 'fit-content',
+                selectToi.selectedBoxData.cssRules[0].style.height.value ===
+                  '100%' ||
+                selectToi.selectedBoxData.cssRules[0].style.height.value ===
+                  'fit-content',
             }"
           >
             <svg
@@ -514,16 +541,19 @@
           <div
             class="h-[24px] aspect-square items-center flex flex-none justify-center -ml-[3px] hover:bg-[#2E2E2E] rounded-sm hover:opacity-100"
             @click="
-              selectToi.selectedBoxData.cssRules[0].style.top.value =
+              selectToi.selectedBoxData.cssRules[0].style.height.value =
                 'fit-content'
             "
             :class="{
               'opacity-100':
-                selectToi.selectedBoxData.attr?.style?.height === 'fit-content',
+                selectToi.selectedBoxData.cssRules[0].style.height.value ===
+                'fit-content',
               'bg-[#2E2E2E]':
-                selectToi.selectedBoxData.attr?.style?.height === 'fit-content',
+                selectToi.selectedBoxData.cssRules[0].style.height.value ===
+                'fit-content',
               'opacity-60':
-                selectToi.selectedBoxData.attr?.style?.height !== 'fit-content',
+                selectToi.selectedBoxData.cssRules[0].style.height.value !==
+                'fit-content',
             }"
           >
             <svg
@@ -551,11 +581,14 @@
             "
             :class="{
               'opacity-100':
-                selectToi.selectedBoxData.attr?.style?.height === '100%',
+                selectToi.selectedBoxData.cssRules[0].style.height.value ===
+                '100%',
               'bg-[#2E2E2E]':
-                selectToi.selectedBoxData.attr?.style?.height === '100%',
+                selectToi.selectedBoxData.cssRules[0].style.height.value ===
+                '100%',
               'opacity-60':
-                selectToi.selectedBoxData.attr?.style?.height !== '100%',
+                selectToi.selectedBoxData.cssRules[0].style.height.value !==
+                '100%',
             }"
           >
             <svg
@@ -643,12 +676,15 @@
           <input
             type="number"
             :value="
-              parseInt(selectToi.selectedBoxData.attr?.style.borderRadius, 10)
+              useCheckCSSRules() &&
+              selectToi.selectedBoxData.cssRules[0].style.borderRadius
+                ? selectToi.selectedBoxData.cssRules[0].style.borderRadius.value
+                : null
             "
             @input="
               (event) => {
-                selectToi.selectedBoxData.attr.style.borderRadius =
-                  event.target.value + 'px';
+                selectToi.selectedBoxData.cssRules[0].style.borderRadius.value =
+                  event.target.value;
               }
             "
             placeholder="0"
@@ -692,18 +728,22 @@
               <div
                 class="h-[24px] aspect-square items-center flex flex-none justify-center -ml-[3px] hover:bg-[#2E2E2E] rounded-sm hover:opacity-100"
                 @click="
-                  selectToi.selectedBoxData.attr.style.flexDirection = 'column'
+                  selectToi.selectedBoxData.cssRules[0].style.flexDirection.value =
+                    'column'
                 "
                 :class="{
                   'opacity-100':
-                    selectToi.selectedBoxData.attr?.style?.flexDirection ===
-                    'column',
+                    useCheckCSSRules() &&
+                    selectToi.selectedBoxData.cssRules[0].style.flexDirection
+                      .value === 'column',
                   'opacity-60':
-                    selectToi.selectedBoxData.attr?.style?.flexDirection !==
-                    'column',
+                    useCheckCSSRules() &&
+                    selectToi.selectedBoxData.cssRules[0].style.flexDirection
+                      .value !== 'column',
                   'bg-[#2E2E2E]':
-                    selectToi.selectedBoxData.attr?.style?.flexDirection ===
-                    'column',
+                    useCheckCSSRules() &&
+                    selectToi.selectedBoxData.cssRules[0].style.flexDirection
+                      .value === 'column',
                 }"
               >
                 <svg
@@ -724,18 +764,22 @@
               <div
                 class="h-[24px] aspect-square items-center flex flex-none justify-center -ml-[3px] hover:bg-[#2E2E2E] rounded-sm hover:opacity-100"
                 @click="
-                  selectToi.selectedBoxData.attr.style.flexDirection = 'row'
+                  selectToi.selectedBoxData.cssRules[0].style.flexDirection.value =
+                    'row'
                 "
                 :class="{
                   'opacity-100':
-                    selectToi.selectedBoxData.attr?.style?.flexDirection ===
-                    'row',
+                    useCheckCSSRules() &&
+                    selectToi.selectedBoxData.cssRules[0].style.flexDirection
+                      .value === 'row',
                   'opacity-60':
-                    selectToi.selectedBoxData.attr?.style?.flexDirection !==
-                    'row',
+                    useCheckCSSRules() &&
+                    selectToi.selectedBoxData.cssRules[0].style.flexDirection
+                      .value !== 'row',
                   'bg-[#2E2E2E]':
-                    selectToi.selectedBoxData.attr?.style?.flexDirection ===
-                    'row',
+                    useCheckCSSRules() &&
+                    selectToi.selectedBoxData.cssRules[0].style.flexDirection
+                      .value === 'row',
                 }"
               >
                 <svg
@@ -798,11 +842,25 @@
               </div>
               <input
                 type="number"
-                :value="parseInt(selectToi.selectedBoxData.attr?.style.gap, 10)"
-                @input="
+                :value="
+                  useCheckCSSRules() &&
+                  selectToi.selectedBoxData.cssRules[0].style.gap
+                    ? selectToi.selectedBoxData.cssRules[0].style.gap.value
+                    : null
+                "
+                @change="
                   (event) => {
-                    selectToi.selectedBoxData.attr.style.gap =
-                      event.target.value + 'px';
+                    if (!selectToi.selectedBoxData.cssRules[0].style.gap) {
+                      selectToi.selectedBoxData.cssRules[0].style.gap = {
+                        type: 'unit',
+                        value: 0,
+                        unit: 'px',
+                      };
+                    }
+                    if (selectToi.selectedBoxData.cssRules[0].style.gap) {
+                      selectToi.selectedBoxData.cssRules[0].style.gap.value =
+                        event.target.value;
+                    }
                   }
                 "
                 placeholder="0"
@@ -839,9 +897,9 @@
                 "
                 @input="
                   (event) => {
-                    (selectToi.selectedBoxData.attr.style.paddingLeft =
+                    (selectToi.selectedBoxData.cssRules[0].style.paddingLeft =
                       event.target.value + 'px'),
-                      (selectToi.selectedBoxData.attr.style.paddingRight =
+                      (selectToi.selectedBoxData.cssRules[0].style.paddingRight =
                         event.target.value + 'px');
                   }
                 "
@@ -853,16 +911,17 @@
           <div class="flex flex-col w-1/2">
             <div
               v-if="
-                !selectToi.selectedBoxData.attr?.style.flexDirection ||
-                selectToi.selectedBoxData.attr?.style.flexDirection === 'column'
+                useCheckCSSRules() &&
+                selectToi.selectedBoxData.cssRules[0].style.flexDirection
+                  ?.value === 'column'
               "
               class="h-16 w-16 border rounded-sm border-[#3E3E3E] bg-[#222222] aspect-square grid grid-cols-3 flex-none items-start"
             >
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  selectToi.changeAlign('start');
-                  selectToi.changeJustify('start');
+                  nodeStore.changeAlign('start');
+                  nodeStore.changeJustify('start');
                 "
               >
                 <div
@@ -929,8 +988,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  selectToi.changeAlign('center');
-                  selectToi.changeJustify('start');
+                  nodeStore.changeAlign('center');
+                  nodeStore.changeJustify('start');
                 "
               >
                 <div
@@ -992,8 +1051,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  selectToi.changeAlign('end');
-                  selectToi.changeJustify('start');
+                  nodeStore.changeAlign('end');
+                  nodeStore.changeJustify('start');
                 "
               >
                 <div
@@ -1055,8 +1114,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  selectToi.changeAlign('start');
-                  selectToi.changeJustify('center');
+                  nodeStore.changeAlign('start');
+                  nodeStore.changeJustify('center');
                 "
               >
                 <div
@@ -1118,8 +1177,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  selectToi.changeAlign('center');
-                  selectToi.changeJustify('center');
+                  nodeStore.changeAlign('center');
+                  nodeStore.changeJustify('center');
                 "
               >
                 <div
@@ -1181,8 +1240,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  selectToi.changeAlign('end');
-                  selectToi.changeJustify('center');
+                  nodeStore.changeAlign('end');
+                  nodeStore.changeJustify('center');
                 "
               >
                 <div
@@ -1244,8 +1303,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  selectToi.changeAlign('start');
-                  selectToi.changeJustify('end');
+                  nodeStore.changeAlign('start');
+                  nodeStore.changeJustify('end');
                 "
               >
                 <div
@@ -1307,8 +1366,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  selectToi.changeAlign('center');
-                  selectToi.changeJustify('end');
+                  nodeStore.changeAlign('center');
+                  nodeStore.changeJustify('end');
                 "
               >
                 <div
@@ -1370,8 +1429,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  selectToi.changeAlign('end');
-                  selectToi.changeJustify('end');
+                  nodeStore.changeAlign('end');
+                  nodeStore.changeJustify('end');
                 "
               >
                 <div
@@ -1433,16 +1492,17 @@
             </div>
             <div
               v-if="
-                selectToi.selectedBoxData.attr?.style.flexDirection &&
-                selectToi.selectedBoxData.attr?.style.flexDirection === 'row'
+                useCheckCSSRules() &&
+                selectToi.selectedBoxData.cssRules[0].style.flexDirection
+                  ?.value === 'row'
               "
               class="h-16 w-16 border rounded-sm border-[#3E3E3E] bg-[#222222] aspect-square grid grid-cols-3 flex-none items-start"
             >
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  selectToi.changeAlign('start');
-                  selectToi.changeJustify('start');
+                  nodeStore.changeAlign('start');
+                  nodeStore.changeJustify('start');
                 "
               >
                 <div
@@ -1509,8 +1569,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  selectToi.changeAlign('start');
-                  selectToi.changeJustify('center');
+                  nodeStore.changeAlign('start');
+                  nodeStore.changeJustify('center');
                 "
               >
                 <div
@@ -1575,8 +1635,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  selectToi.changeAlign('start');
-                  selectToi.changeJustify('end');
+                  nodeStore.changeAlign('start');
+                  nodeStore.changeJustify('end');
                 "
               >
                 <div
@@ -1641,8 +1701,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  selectToi.changeAlign('center');
-                  selectToi.changeJustify('start');
+                  nodeStore.changeAlign('center');
+                  nodeStore.changeJustify('start');
                 "
               >
                 <div
@@ -1707,8 +1767,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  selectToi.changeAlign('center');
-                  selectToi.changeJustify('center');
+                  nodeStore.changeAlign('center');
+                  nodeStore.changeJustify('center');
                 "
               >
                 <div
@@ -1773,8 +1833,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  selectToi.changeAlign('center');
-                  selectToi.changeJustify('end');
+                  nodeStore.changeAlign('center');
+                  nodeStore.changeJustify('end');
                 "
               >
                 <div
@@ -1839,8 +1899,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  selectToi.changeAlign('end');
-                  selectToi.changeJustify('start');
+                  nodeStore.changeAlign('end');
+                  nodeStore.changeJustify('start');
                 "
               >
                 <div
@@ -1905,8 +1965,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  selectToi.changeAlign('end');
-                  selectToi.changeJustify('center');
+                  nodeStore.changeAlign('end');
+                  nodeStore.changeJustify('center');
                 "
               >
                 <div
@@ -1971,8 +2031,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  selectToi.changeAlign('end');
-                  selectToi.changeJustify('end');
+                  nodeStore.changeAlign('end');
+                  nodeStore.changeJustify('end');
                 "
               >
                 <div
@@ -2067,9 +2127,9 @@
                   "
                   @input="
                     (event) => {
-                      (selectToi.selectedBoxData.attr.style.paddingBottom =
+                      (selectToi.selectedBoxData.cssRules[0].style.paddingBottom =
                         event.target.value + 'px'),
-                        (selectToi.selectedBoxData.attr.style.paddingTop =
+                        (selectToi.selectedBoxData.cssRules[0].style.paddingTop =
                           event.target.value + 'px');
                     }
                   "
@@ -2360,7 +2420,7 @@
             :value="selectToi.selectedBoxData.attr?.style.backgroundColor"
             @input="
               (event) => {
-                selectToi.selectedBoxData.attr.style.backgroundColor =
+                selectToi.selectedBoxData.cssRules[0].style.backgroundColor =
                   event.target.value;
               }
             "
@@ -2515,9 +2575,9 @@
                   "
                   @input="
                     (event) => {
-                      (selectToi.selectedBoxData.attr.style.paddingBottom =
+                      (selectToi.selectedBoxData.cssRules[0].style.paddingBottom =
                         event.target.value + 'px'),
-                        (selectToi.selectedBoxData.attr.style.paddingTop =
+                        (selectToi.selectedBoxData.cssRules[0].style.paddingTop =
                           event.target.value + 'px');
                     }
                   "
@@ -2544,9 +2604,9 @@
                   "
                   @input="
                     (event) => {
-                      (selectToi.selectedBoxData.attr.style.paddingBottom =
+                      (selectToi.selectedBoxData.cssRules[0].style.paddingBottom =
                         event.target.value + 'px'),
-                        (selectToi.selectedBoxData.attr.style.paddingTop =
+                        (selectToi.selectedBoxData.cssRules[0].style.paddingTop =
                           event.target.value + 'px');
                     }
                   "
@@ -2597,7 +2657,7 @@
               <select
                 :value="selectToi.selectedBoxData.attr?.style.position"
                 @change="
-                  selectToi.selectedBoxData.attr.style.position =
+                  selectToi.selectedBoxData.cssRules[0].style.position =
                     $event.target.value
                 "
                 class="bg-transparent"
@@ -2641,7 +2701,7 @@
                 :value="parseInt(selectToi.selectedBoxData.attr?.style.gap, 10)"
                 @input="
                   (event) => {
-                    selectToi.selectedBoxData.attr.style.gap =
+                    selectToi.selectedBoxData.cssRules[0].style.gap =
                       event.target.value + 'px';
                   }
                 "
@@ -2665,9 +2725,9 @@
                 "
                 @input="
                   (event) => {
-                    (selectToi.selectedBoxData.attr.style.paddingLeft =
+                    (selectToi.selectedBoxData.cssRules[0].style.paddingLeft =
                       event.target.value + 'px'),
-                      (selectToi.selectedBoxData.attr.style.paddingRight =
+                      (selectToi.selectedBoxData.cssRules[0].style.paddingRight =
                         event.target.value + 'px');
                   }
                 "
@@ -2691,9 +2751,9 @@
                 "
                 @input="
                   (event) => {
-                    (selectToi.selectedBoxData.attr.style.paddingLeft =
+                    (selectToi.selectedBoxData.cssRules[0].style.paddingLeft =
                       event.target.value + 'px'),
-                      (selectToi.selectedBoxData.attr.style.paddingRight =
+                      (selectToi.selectedBoxData.cssRules[0].style.paddingRight =
                         event.target.value + 'px');
                   }
                 "
@@ -2752,12 +2812,12 @@
             class="h-[14px] aspect-square items-center flex flex-none"
             :style="{
               'background-color':
-                selectToi.selectedBoxData.attr.style.outlineColor,
+                selectToi.selectedBoxData.cssRules[0].style.outlineColor,
             }"
           ></div>
           <input
             type="text"
-            v-model="selectToi.selectedBoxData.attr.style.outlineColor"
+            v-model="selectToi.selectedBoxData.cssRules[0].style.outlineColor"
             class="w-full px-2 bg-transparent"
             placeholder="transparent"
           />
@@ -2862,10 +2922,12 @@
             <input
               type="number"
               :value="
-                parseInt(selectToi.selectedBoxData.attr.style.outlineWidth)
+                parseInt(
+                  selectToi.selectedBoxData.cssRules[0].style.outlineWidth
+                )
               "
               @input.stop="
-                selectToi.selectedBoxData.attr.style.outlineWidth =
+                selectToi.selectedBoxData.cssRules[0].style.outlineWidth =
                   $event.target.value + 'px'
               "
               class="w-full px-2 bg-transparent"
@@ -2945,7 +3007,8 @@
             :value="selectToi.selectedBoxData.attr?.style.color"
             @input="
               (event) => {
-                selectToi.selectedBoxData.attr.style.color = event.target.value;
+                selectToi.selectedBoxData.cssRules[0].style.color =
+                  event.target.value;
               }
             "
             class="w-full px-2 bg-transparent"
@@ -3304,9 +3367,11 @@
 <script setup>
 import { useCounterStore } from "@/stores/counter";
 import { useEditorStore } from "@/stores/editor";
+import { useNodeStore } from "@/stores/node";
 
 const selectToi = useCounterStore();
 const editorStore = useEditorStore();
+const nodeStore = useNodeStore();
 const customCSS = ref(false);
 
 const text = ref("");
