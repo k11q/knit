@@ -104,12 +104,8 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        this.prevLeft = parseInt(
-          selectToi.selectedBoxData.cssRules[0].style.left.value
-        );
-        this.prevTop = parseInt(
-          selectToi.selectedBoxData.cssRules[0].style.top.value
-        );
+        this.prevLeft = selectToi.selectedBoxData.cssRules[0].style.left?.value;
+        this.prevTop = selectToi.selectedBoxData.cssRules[0].style.top?.value;
         this.prevWidth = parseInt(
           selectToi.selectedBoxData.cssRules[0].style.width.value
         );
@@ -160,7 +156,7 @@ export const useResizeStore = defineStore({
         const selectToi = useCounterStore();
 
         this.prevTop = parseInt(
-          selectToi.selectedBoxData.cssRules[0].style.top.value
+          selectToi.selectedBoxData.cssRules[0].style.top?.value
         );
         this.prevWidth = parseInt(
           selectToi.selectedBoxData.cssRules[0].style.width.value
@@ -169,7 +165,7 @@ export const useResizeStore = defineStore({
           selectToi.selectedBoxData.cssRules[0].style.height.value
         );
         this.prevLeft = parseInt(
-          selectToi.selectedBoxData.cssRules[0].style.left.value
+          selectToi.selectedBoxData.cssRules[0].style.left?.value
         );
 
         this.prevX = e.clientX;
@@ -217,10 +213,10 @@ export const useResizeStore = defineStore({
         const selectToi = useCounterStore();
 
         this.prevLeft = parseInt(
-          selectToi.selectedBoxData.cssRules[0].style.left.value
+          selectToi.selectedBoxData.cssRules[0].style.left?.value
         );
         this.prevTop = parseInt(
-          selectToi.selectedBoxData.cssRules[0].style.top.value
+          selectToi.selectedBoxData.cssRules[0].style.top?.value
         );
         this.prevWidth = parseInt(
           selectToi.selectedBoxData.cssRules[0].style.width.value
@@ -276,13 +272,13 @@ export const useResizeStore = defineStore({
         const selectToi = useCounterStore();
 
         this.prevLeft = parseInt(
-          selectToi.selectedBoxData.cssRules[0].style.left.value
+          selectToi.selectedBoxData.cssRules[0].style.left?.value
         );
         this.prevWidth = parseInt(
           selectToi.selectedBoxData.cssRules[0].style.width.value
         );
         this.prevTop = parseInt(
-          selectToi.selectedBoxData.cssRules[0].style.top.value
+          selectToi.selectedBoxData.cssRules[0].style.top?.value
         );
         this.prevHeight = parseInt(
           selectToi.selectedBoxData.cssRules[0].style.height.value
@@ -332,12 +328,9 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        this.prevLeft = parseInt(
-          selectToi.selectedBoxData.cssRules[0].style.left.value
-        );
-        this.prevWidth = parseInt(
-          selectToi.selectedBoxData.cssRules[0].style.width.value
-        );
+        this.prevLeft = selectToi.selectedBoxData.cssRules[0].style.left?.value;
+        this.prevWidth =
+          selectToi.selectedBoxData.cssRules[0].style.width.value;
 
         this.prevX = e.clientX;
 
@@ -380,7 +373,7 @@ export const useResizeStore = defineStore({
           selectToi.selectedBoxData.cssRules[0].style.width.value
         );
         this.prevLeft = parseInt(
-          selectToi.selectedBoxData.cssRules[0].style.left.value
+          selectToi.selectedBoxData.cssRules[0].style.left?.value
         );
 
         this.prevX = e.clientX;
@@ -424,7 +417,7 @@ export const useResizeStore = defineStore({
 
         this.prevHeight =
           selectToi.selectedBoxData.cssRules[0].style.height.value;
-        this.prevTop = selectToi.selectedBoxData.cssRules[0].style.top.value;
+        this.prevTop = selectToi.selectedBoxData.cssRules[0].style.top?.value;
 
         this.prevY = e.clientY;
 
@@ -465,7 +458,7 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        this.prevTop = selectToi.selectedBoxData.cssRules[0].style.top.value;
+        this.prevTop = selectToi.selectedBoxData.cssRules[0].style.top?.value;
         this.prevHeight =
           selectToi.selectedBoxData.cssRules[0].style.height.value;
 

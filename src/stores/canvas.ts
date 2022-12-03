@@ -290,6 +290,7 @@ export const useCanvasStore = defineStore({
       const dropMarker = useDropMarker();
       const canvasDnd = useCanvasDndStore();
       const paddingResize = usePaddingResizeStore();
+      const squareStore = useSquareStore();
       let isDragging = false;
 
       selectToi.changeSelected(e, currDrag);
@@ -486,12 +487,18 @@ export const useCanvasStore = defineStore({
           useTransferData().removeChild(selectToi.data, currDrag);
           selectToi.selectedBoxData.cssRules[0].style.left = {
             type: "unit",
-            value: NaN,
+            value: Math.round(
+              (e.clientX - canvasStore.prevX - squareStore.offsetLeft) /
+                squareStore.scale
+            ),
             unit: "px",
           };
           selectToi.selectedBoxData.cssRules[0].style.top = {
             type: "unit",
-            value: NaN,
+            value: Math.round(
+              (e.clientY - canvasStore.prevY - squareStore.offsetTop) /
+                squareStore.scale
+            ),
             unit: "px",
           };
           useTransferData().appendCanvasAbove(
@@ -538,12 +545,18 @@ export const useCanvasStore = defineStore({
           useTransferData().removeChild(selectToi.data, currDrag);
           selectToi.selectedBoxData.cssRules[0].style.left = {
             type: "unit",
-            value: NaN,
+            value: Math.round(
+              (e.clientX - canvasStore.prevX - squareStore.offsetLeft) /
+                squareStore.scale
+            ),
             unit: "px",
           };
           selectToi.selectedBoxData.cssRules[0].style.top = {
             type: "unit",
-            value: NaN,
+            value: Math.round(
+              (e.clientY - canvasStore.prevY - squareStore.offsetTop) /
+                squareStore.scale
+            ),
             unit: "px",
           };
           useTransferData().appendToCanvas(
