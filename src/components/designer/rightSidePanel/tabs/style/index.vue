@@ -926,8 +926,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  nodeStore.changeAlign('start');
-                  nodeStore.changeJustify('start');
+                  changeAlign('start');
+                  changeJustify('start');
                 "
               >
                 <div
@@ -994,8 +994,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  nodeStore.changeAlign('center');
-                  nodeStore.changeJustify('start');
+                  changeAlign('center');
+                  changeJustify('start');
                 "
               >
                 <div
@@ -1057,8 +1057,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  nodeStore.changeAlign('end');
-                  nodeStore.changeJustify('start');
+                  changeAlign('end');
+                  changeJustify('start');
                 "
               >
                 <div
@@ -1120,8 +1120,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  nodeStore.changeAlign('start');
-                  nodeStore.changeJustify('center');
+                  changeAlign('start');
+                  changeJustify('center');
                 "
               >
                 <div
@@ -1183,8 +1183,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  nodeStore.changeAlign('center');
-                  nodeStore.changeJustify('center');
+                  changeAlign('center');
+                  changeJustify('center');
                 "
               >
                 <div
@@ -1246,8 +1246,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  nodeStore.changeAlign('end');
-                  nodeStore.changeJustify('center');
+                  changeAlign('end');
+                  changeJustify('center');
                 "
               >
                 <div
@@ -1309,8 +1309,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  nodeStore.changeAlign('start');
-                  nodeStore.changeJustify('end');
+                  changeAlign('start');
+                  changeJustify('end');
                 "
               >
                 <div
@@ -1372,8 +1372,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  nodeStore.changeAlign('center');
-                  nodeStore.changeJustify('end');
+                  changeAlign('center');
+                  changeJustify('end');
                 "
               >
                 <div
@@ -1435,8 +1435,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  nodeStore.changeAlign('end');
-                  nodeStore.changeJustify('end');
+                  changeAlign('end');
+                  changeJustify('end');
                 "
               >
                 <div
@@ -1507,8 +1507,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  nodeStore.changeAlign('start');
-                  nodeStore.changeJustify('start');
+                  changeAlign('start');
+                  changeJustify('start');
                 "
               >
                 <div
@@ -1575,8 +1575,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  nodeStore.changeAlign('start');
-                  nodeStore.changeJustify('center');
+                  changeAlign('start');
+                  changeJustify('center');
                 "
               >
                 <div
@@ -1641,8 +1641,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  nodeStore.changeAlign('start');
-                  nodeStore.changeJustify('end');
+                  changeAlign('start');
+                  changeJustify('end');
                 "
               >
                 <div
@@ -1707,8 +1707,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  nodeStore.changeAlign('center');
-                  nodeStore.changeJustify('start');
+                  changeAlign('center');
+                  changeJustify('start');
                 "
               >
                 <div
@@ -1773,8 +1773,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  nodeStore.changeAlign('center');
-                  nodeStore.changeJustify('center');
+                  changeAlign('center');
+                  changeJustify('center');
                 "
               >
                 <div
@@ -1839,8 +1839,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  nodeStore.changeAlign('center');
-                  nodeStore.changeJustify('end');
+                  changeAlign('center');
+                  changeJustify('end');
                 "
               >
                 <div
@@ -1905,8 +1905,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  nodeStore.changeAlign('end');
-                  nodeStore.changeJustify('start');
+                  changeAlign('end');
+                  changeJustify('start');
                 "
               >
                 <div
@@ -1971,8 +1971,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  nodeStore.changeAlign('end');
-                  nodeStore.changeJustify('center');
+                  changeAlign('end');
+                  changeJustify('center');
                 "
               >
                 <div
@@ -2037,8 +2037,8 @@
               <div
                 class="aspect-square flex flex-row items-center justify-center relative"
                 @click="
-                  nodeStore.changeAlign('end');
-                  nodeStore.changeJustify('end');
+                  changeAlign('end');
+                  changeJustify('end');
                 "
               >
                 <div
@@ -3373,11 +3373,9 @@
 <script setup>
 import { useCounterStore } from "@/stores/counter";
 import { useEditorStore } from "@/stores/editor";
-import { useNodeStore } from "@/stores/node";
 
 const selectToi = useCounterStore();
 const editorStore = useEditorStore();
-const nodeStore = useNodeStore();
 const customCSS = ref(false);
 
 const text = ref("");

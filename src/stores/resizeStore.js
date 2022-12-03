@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { useCounterStore } from "./counter";
 import { useSquareStore } from "./dataSquare";
 import { useRulerSnapStore } from "./rulerSnap";
-import { useNodeStore } from "./node";
+import { changeLeft } from "../composables/node";
 
 export const useResizeStore = defineStore({
   id: "resize",
@@ -27,11 +27,10 @@ export const useResizeStore = defineStore({
   actions: {
     resizeWidthForward(e) {
       const squareStore = useSquareStore();
-      const nodeStore = useNodeStore();
 
       let unit = "px";
 
-      nodeStore.changeWidth(
+      changeWidth(
         Math.round(
           this.prevWidth + (e.clientX - this.prevX) / squareStore.scale
         ),
@@ -40,11 +39,10 @@ export const useResizeStore = defineStore({
     },
     resizeWidthReverse(e) {
       const squareStore = useSquareStore();
-      const nodeStore = useNodeStore();
 
       let unit = "px";
 
-      nodeStore.changeWidth(
+      changeWidth(
         Math.round(
           this.prevWidth + (this.prevX - e.clientX) / squareStore.scale
         ),
@@ -53,11 +51,10 @@ export const useResizeStore = defineStore({
     },
     resizeHeightForward(e) {
       const squareStore = useSquareStore();
-      const nodeStore = useNodeStore();
 
       let unit = "px";
 
-      nodeStore.changeHeight(
+      changeHeight(
         Math.round(
           this.prevHeight + (e.clientY - this.prevY) / squareStore.scale
         ),
@@ -66,11 +63,10 @@ export const useResizeStore = defineStore({
     },
     resizeHeightReverse(e) {
       const squareStore = useSquareStore();
-      const nodeStore = useNodeStore();
 
       let unit = "px";
 
-      nodeStore.changeHeight(
+      changeHeight(
         Math.round(
           this.prevHeight + (this.prevY - e.clientY) / squareStore.scale
         ),
@@ -79,13 +75,15 @@ export const useResizeStore = defineStore({
     },
     resizeLeftForward(e) {
       const squareStore = useSquareStore();
-      const selectToi = useCounterStore();
 
-      if (selectToi.selectedBoxData.cssRules[0]?.style?.left) {
-        selectToi.selectedBoxData.cssRules[0].style.left.value = Math.round(
+      let unit = "px";
+
+      changeLeft(
+        Math.round(
           this.prevLeft + (e.clientX - this.prevX) / squareStore.scale
-        );
-      }
+        ),
+        unit
+      );
     },
     resizeLeftReverse(e) {
       const squareStore = useSquareStore();
