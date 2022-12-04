@@ -1,4 +1,4 @@
-import { useCounterStore } from "@/stores/counter";
+import { useCounterStore } from "~~/src/stores/counter";
 
 export function useCheckCSSRules() {
   const selectToi = useCounterStore();

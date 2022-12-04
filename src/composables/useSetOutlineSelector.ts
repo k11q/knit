@@ -1,5 +1,5 @@
-import { useSquareStore } from "@/stores/dataSquare";
-import { useCounterStore } from "@/stores/counter";
+import { useSquareStore } from "~~/src/stores/dataSquare";
+import { useCounterStore } from "~~/src/stores/counter";
 
 export default function (id: string) {
   const squareStore = useSquareStore();

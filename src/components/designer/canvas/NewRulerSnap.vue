@@ -62,7 +62,7 @@
 </template>
 
 <script setup lang="ts">
-import { useRulerSnapStore } from "@/stores/rulerSnap";
+import { useRulerSnapStore } from "~~/src/stores/rulerSnap";
 
 const rulerSnap = useRulerSnapStore();
 </script>

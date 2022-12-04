@@ -459,10 +459,10 @@
 </template>
 
 <script setup>
-import { useCounterStore } from "@/stores/counter";
-import { useSquareStore } from "@/stores/dataSquare";
-import { useResizeStore } from "@/stores/resizeStore";
-import { usePaddingResizeStore } from "@/stores/paddingResizeStore";
+import { useCounterStore } from "~~/src/stores/counter";
+import { useSquareStore } from "~~/src/stores/dataSquare";
+import { useResizeStore } from "~~/src/stores/resizeStore";
+import { usePaddingResizeStore } from "~~/src/stores/paddingResizeStore";
 import { useCanvasStore } from "~~/src/stores/canvas";
 
 const selectToi = useCounterStore();

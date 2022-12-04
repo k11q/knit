@@ -105,12 +105,7 @@
           <div
             class="h-[18px] aspect-square items-center flex flex-none cursor-ew-resize"
             @mousedown.stop.prevent="
-              useSlider(
-                $event,
-                1,
-                selectToi.selectedBoxData.id,
-                selectToi.selectedBoxData.type
-              ).left()
+              useSlider($event, selectToi.selectedBoxData.id).left()
             "
           >
             <p class="opacity-60 text-center w-full">X</p>
@@ -133,12 +128,7 @@
           <div
             class="h-[18px] aspect-square items-center flex flex-none cursor-ew-resize"
             @mousedown.stop.prevent="
-              useSlider(
-                $event,
-                1,
-                selectToi.selectedBoxData.id,
-                selectToi.selectedBoxData.type
-              ).top()
+              useSlider($event, selectToi.selectedBoxData.id).top()
             "
           >
             <p class="opacity-60 text-center w-full">Y</p>
@@ -181,9 +171,9 @@
                   'absolute'
                 ) {
                   selectToi.selectedBoxData.cssRules[0].style.left.value =
-                    selectToi.getLeft(selectToi.selectedBoxData.id);
+                    getLeft(selectToi.selectedBoxData.id);
                   selectToi.selectedBoxData.cssRules[0].style.top.value =
-                    selectToi.getTop(selectToi.selectedBoxData.id);
+                    getTop(selectToi.selectedBoxData.id);
                   selectToi.selectedBoxData.cssRules[0].style.position.value =
                     'absolute';
                 } else {
@@ -253,12 +243,7 @@
           <div
             class="h-[18px] aspect-square items-center flex flex-none cursor-ew-resize"
             @mousedown.stop.prevent="
-              useSlider(
-                $event,
-                1,
-                selectToi.selectedBoxData.id,
-                selectToi.selectedBoxData.type
-              ).width()
+              useSlider($event, selectToi.selectedBoxData.id).width()
             "
           >
             <p class="opacity-60 text-center w-full">W</p>
@@ -287,12 +272,7 @@
           <div
             class="h-[18px] aspect-square items-center flex flex-none cursor-ew-resize"
             @mousedown.stop.prevent="
-              useSlider(
-                $event,
-                1,
-                selectToi.selectedBoxData.id,
-                selectToi.selectedBoxData.type
-              ).height()
+              useSlider($event, selectToi.selectedBoxData.id).height()
             "
           >
             <p class="opacity-60 text-center w-full">H</p>
@@ -301,8 +281,8 @@
             type="number"
             :value="
               useCheckCSSRules() &&
-              selectToi.selectedBoxData.cssRules[0].style.width
-                ? selectToi.selectedBoxData.cssRules[0].style.width.value
+              selectToi.selectedBoxData.cssRules[0].style.height
+                ? selectToi.selectedBoxData.cssRules[0].style.height.value
                 : null
             "
             @input="
@@ -649,12 +629,7 @@
           <div
             class="h-[18px] aspect-square items-center flex flex-none justify-center opacity-60 cursor-ew-resize"
             @mousedown.stop.prevent="
-              useSlider(
-                $event,
-                1,
-                selectToi.selectedBoxData.id,
-                selectToi.selectedBoxData.type
-              ).borderRadius()
+              useSlider($event, selectToi.selectedBoxData.id).borderRadius()
             "
           >
             <svg
@@ -808,12 +783,7 @@
               <div
                 class="aspect-square items-center flex flex-col justify-center flex-none opacity-60 h-[18px] cursor-ew-resize"
                 @mousedown.stop.prevent="
-                  useSlider(
-                    $event,
-                    1,
-                    selectToi.selectedBoxData.id,
-                    selectToi.selectedBoxData.type
-                  ).gap()
+                  useSlider($event, selectToi.selectedBoxData.id).gap()
                 "
               >
                 <svg
@@ -2627,12 +2597,7 @@
               <div
                 class="aspect-square items-center flex flex-col justify-center flex-none opacity-60 h-[18px] cursor-ew-resize"
                 @mousedown.stop.prevent="
-                  useSlider(
-                    $event,
-                    1,
-                    selectToi.selectedBoxData.id,
-                    selectToi.selectedBoxData.type
-                  ).gap()
+                  useSlider($event, selectToi.selectedBoxData.id).gap()
                 "
               >
                 <svg
@@ -2678,12 +2643,7 @@
               <div
                 class="aspect-square items-center flex flex-col justify-center flex-none opacity-60 h-[18px] cursor-ew-resize"
                 @mousedown.stop.prevent="
-                  useSlider(
-                    $event,
-                    1,
-                    selectToi.selectedBoxData.id,
-                    selectToi.selectedBoxData.type
-                  ).gap()
+                  useSlider($event, selectToi.selectedBoxData.id).gap()
                 "
               >
                 <svg
@@ -3371,7 +3331,7 @@
 </template>
 
 <script setup>
-import { useCounterStore } from "@/stores/counter";
+import { useCounterStore } from "~~/src/stores/counter";
 import { useEditorStore } from "@/stores/editor";
 
 const selectToi = useCounterStore();

@@ -123,9 +123,9 @@
   </div>
 </template>
 
-<script setup>
-import { useSquareStore } from "@/stores/dataSquare";
-import { useCounterStore } from "@/stores/counter";
+<script setup lang="ts">
+import { useSquareStore } from "~~/src/stores/dataSquare";
+import { useCounterStore } from "~~/src/stores/counter";
 
 const addaSquare = useSquareStore();
 const selectToi = useCounterStore();

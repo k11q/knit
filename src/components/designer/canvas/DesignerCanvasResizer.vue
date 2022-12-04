@@ -527,12 +527,12 @@
   </div>
 </template>
 
-<script setup>
-import { useCounterStore } from "@/stores/counter";
-import { useSquareStore } from "@/stores/dataSquare";
+<script setup lang="ts">
+import { useCounterStore } from "~~/src/stores/counter";
+import { useSquareStore } from "~~/src/stores/dataSquare";
 import { useCanvasStore } from "@/stores/canvas";
-import { useResizeStore } from "@/stores/resizeStore";
-import { usePaddingResizeStore } from "@/stores/paddingResizeStore";
+import { useResizeStore } from "~~/src/stores/resizeStore";
+import { usePaddingResizeStore } from "~~/src/stores/paddingResizeStore";
 
 const selectToi = useCounterStore();
 const addaSquare = useSquareStore();

@@ -241,9 +241,9 @@
 </template>
 
 <script setup>
-import { useCounterStore } from "@/stores/counter";
-import { useTreeDndStore } from "@/stores/treeDnd";
-import { useSquareStore } from "@/stores/dataSquare";
+import { useCounterStore } from "~~/src/stores/counter";
+import { useTreeDndStore } from "~~/src/stores/treeDnd";
+import { useSquareStore } from "~~/src/stores/dataSquare";
 
 const selectToi = useCounterStore();
 const treeDnd = useTreeDndStore();

@@ -266,11 +266,11 @@
 
 <script setup>
 import { useCounterStore } from "@/stores/counter";
-import { useSquareStore } from "@/stores/dataSquare";
-import { useResizeStore } from "@/stores/resizeStore";
-import { useDropMarker } from "@/stores/dropMarker";
-import { useSelectStore } from "@/stores/selectStore";
-import { useRulerSnapStore } from "@/stores/rulerSnap";
+import { useSquareStore } from "~~/src/stores/dataSquare";
+import { useResizeStore } from "~~/src/stores/resizeStore";
+import { useDropMarker } from "~~/src/stores/dropMarker";
+import { useSelectStore } from "~~/src/stores/selectStore";
+import { useRulerSnapStore } from "~~/src/stores/rulerSnap";
 import { useCanvasStore } from "~~/src/stores/canvas";
 
 const selectToi = useCounterStore();

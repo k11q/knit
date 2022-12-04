@@ -132,7 +132,7 @@
 </template>
 
 <script setup>
-import { useCounterStore } from "@/stores/counter";
+import { useCounterStore } from "~~/src/stores/counter";
 const user = useSupabaseUser();
 
 const selectToi = useCounterStore();

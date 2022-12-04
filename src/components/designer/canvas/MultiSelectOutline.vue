@@ -22,12 +22,13 @@
   </template>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useSquareStore } from "@/stores/dataSquare";
+import { Node as knitNode } from "@/stores/counter";
 
 const squareStore = useSquareStore();
 
 const props = defineProps({
-  elements: Array,
+  elements: Array<knitNode>,
 });
 </script>

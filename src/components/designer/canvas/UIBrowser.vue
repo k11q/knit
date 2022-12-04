@@ -10,7 +10,7 @@
       @mousedown.stop="
         node.type === 'text' && selectToi.selectedTextEditor === node.id
           ? ''
-          : testDown($event, node.id, node.type)
+          : testDown($event, node.id)
       "
       @mouseout="
         () => {
@@ -91,10 +91,11 @@
 </template>
 
 <script setup lang="ts">
-import { useCounterStore } from "@/stores/counter";
-import { useSquareStore } from "@/stores/dataSquare";
+import { useCounterStore } from "~~/src/stores/counter";
+import { useSquareStore } from "~~/src/stores/dataSquare";
 import { usePaddingResizeStore } from "@/stores/paddingResizeStore";
 import { useCanvasStore } from "~~/src/stores/canvas";
+import { Node as knitNode } from "~~/src/stores/counter";
 
 const selectToi = useCounterStore();
 const squareStore = useSquareStore();
@@ -122,57 +123,59 @@ const testDown = (e: Event, currDrag: string) => {
 };
 
 const props = defineProps({
-  nodes: Array,
+  nodes: Array<knitNode>,
   depth: {
     type: Number,
     default: 0,
   },
 });
 
-function styleProps(node) {
+function styleProps(node: knitNode) {
   return {
     display: node.cssRules[0]?.style?.display?.value,
     flexDirection: node.cssRules[0]?.style?.flexDirection?.value,
     justifyContent: node.cssRules[0]?.style?.justifyContent?.value,
     alignItems: node.cssRules[0]?.style?.alignItems?.value,
     gap:
-      node.cssRules[0]?.style?.gap?.value + node.cssRules[0]?.style?.gap?.unit,
+      node.cssRules[0]?.style?.gap?.value! +
+      node.cssRules[0]?.style?.gap?.unit!,
     borderRadius:
-      node.cssRules[0]?.style?.borderRadius?.value +
-      node.cssRules[0]?.style?.borderRadius?.unit,
+      node.cssRules[0]?.style?.borderRadius?.value! +
+      node.cssRules[0]?.style?.borderRadius?.unit!,
     position: node.cssRules[0]?.style?.position?.value,
     left:
-      node.cssRules[0]?.style?.left?.value +
-      node.cssRules[0]?.style?.left?.unit,
+      node.cssRules[0]?.style?.left?.value! +
+      node.cssRules[0]?.style?.left?.unit!,
     top:
-      node.cssRules[0]?.style?.top?.value + node.cssRules[0]?.style?.top?.unit,
+      node.cssRules[0]?.style?.top?.value! +
+      node.cssRules[0]?.style?.top?.unit!,
     right:
-      node.cssRules[0]?.style?.right?.value +
-      node.cssRules[0]?.style?.right?.unit,
+      node.cssRules[0]?.style?.right?.value! +
+      node.cssRules[0]?.style?.right?.unit!,
     bottom:
-      node.cssRules[0]?.style?.bottom?.value +
-      node.cssRules[0]?.style?.bottom?.unit,
+      node.cssRules[0]?.style?.bottom?.value! +
+      node.cssRules[0]?.style?.bottom?.unit!,
     height:
       node.cssRules[0]?.style?.height?.type === "unit"
         ? node.cssRules[0]?.style?.height?.value +
-          node.cssRules[0]?.style?.height?.unit
+          node.cssRules[0]?.style?.height?.unit!
         : node.cssRules[0]?.style?.height?.value,
     width:
       node.cssRules[0]?.style?.width?.type === "unit"
         ? node.cssRules[0]?.style?.width?.value +
-          node.cssRules[0]?.style?.width?.unit
+          node.cssRules[0]?.style?.width?.unit!
         : node.cssRules[0]?.style?.width?.value,
     backgroundColor: node.cssRules[0]?.style?.backgroundColor?.value,
     color: node.cssRules[0]?.style?.color?.value,
     fontSize:
-      node.cssRules[0]?.style?.fontSize?.value +
-      node.cssRules[0]?.style?.fontSize?.unit,
+      node.cssRules[0]?.style?.fontSize?.value! +
+      node.cssRules[0]?.style?.fontSize?.unit!,
     lineHeight:
-      node.cssRules[0]?.style?.lineHeight?.value +
-      node.cssRules[0]?.style?.lineHeight?.unit,
+      node.cssRules[0]?.style?.lineHeight?.value! +
+      node.cssRules[0]?.style?.lineHeight?.unit!,
     paddingLeft:
-      node.cssRules[0]?.style?.paddingLeft?.value +
-      node.cssRules[0]?.style?.paddingLeft?.unit,
+      node.cssRules[0]?.style?.paddingLeft?.value! +
+      node.cssRules[0]?.style?.paddingLeft?.unit!,
   };
 }
 

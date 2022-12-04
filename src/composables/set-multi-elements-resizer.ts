@@ -1,5 +1,5 @@
 import { useCanvasStore } from "@/stores/canvas";
-import { useSquareStore } from "@/stores/dataSquare";
+import { useSquareStore } from "~~/src/stores/dataSquare";
 
 export function useSetMultiElementsResizer() {
   const canvasStore = useCanvasStore();

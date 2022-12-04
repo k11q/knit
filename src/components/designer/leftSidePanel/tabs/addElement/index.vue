@@ -172,7 +172,7 @@
 </template>
 
 <script setup>
-import { useSquareStore } from "@/stores/dataSquare";
+import { useSquareStore } from "~~/src/stores/dataSquare";
 
 const addaSquare = useSquareStore();
 </script>

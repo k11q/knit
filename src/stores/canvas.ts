@@ -1,16 +1,17 @@
 import { defineStore } from "pinia";
 import { useSquareStore } from "./dataSquare";
 import { useCounterStore } from "./counter";
-import { useCanvasDndStore } from "@/stores/canvasDnd";
-import { useDropMarker } from "@/stores/dropMarker";
-import { usePaddingResizeStore } from "@/stores/paddingResizeStore";
-import { useRulerSnapStore } from "@/stores/rulerSnap";
+import { useCanvasDndStore } from "~~/src/stores/canvasDnd";
+import { useDropMarker } from "~~/src/stores/dropMarker";
+import { usePaddingResizeStore } from "~~/src/stores/paddingResizeStore";
+import { useRulerSnapStore } from "~~/src/stores/rulerSnap";
 import { changeLeft, changeTop } from "../composables/node";
+import { Node } from "./counter";
 
 export const useCanvasStore = defineStore({
   id: "canvasStore",
   state: () => ({
-    selection: [],
+    selection: [] as Node[],
     isPinchZoom: false,
     isDragging: false,
     hoverId: "",
@@ -32,7 +33,7 @@ export const useCanvasStore = defineStore({
     },
   }),
   actions: {
-    setLeftPosition(e) {
+    setLeftPosition(e: MouseEvent) {
       const squareStore = useSquareStore();
 
       let unit = "px";
@@ -44,7 +45,7 @@ export const useCanvasStore = defineStore({
         unit
       );
     },
-    setPositionMultiElement(e) {
+    setPositionMultiElement(e: MouseEvent) {
       const selectToi = useCounterStore();
       const squareStore = useSquareStore();
       const canvasStore = useCanvasStore();
@@ -66,12 +67,12 @@ export const useCanvasStore = defineStore({
         canvasStore.isDragging = true;
 
         canvasStore.selection.forEach((i, index) => {
-          i.cssRules[0].style.left.value = Math.round(
+          i.cssRules[0].style.left!.value = Math.round(
             (e.clientX - prevPositions[index].prevX - squareStore.offsetLeft) /
               squareStore.scale
           );
 
-          i.cssRules[0].style.top.value = Math.round(
+          i.cssRules[0].style.top!.value = Math.round(
             (e.clientY - prevPositions[index].prevY - squareStore.offsetTop) /
               squareStore.scale
           );
@@ -93,7 +94,7 @@ export const useCanvasStore = defineStore({
       const squareStore = useSquareStore();
       const element = useGetElement(selectToi.selectedBoxData.id);
 
-      selectToi.selectedBoxData.cssRules[0].style.left.value = Math.round(
+      selectToi.selectedBoxData.cssRules[0].style.left!.value = Math.round(
         (e.clientX - this.prevX - squareStore.offsetLeft) / squareStore.scale -
           element.parentElement.offsetLeft
       );

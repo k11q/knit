@@ -28,9 +28,9 @@
 </template>
 
 <script setup>
-import { useCounterStore } from "@/stores/counter";
-import { useCanvasDndStore } from "@/stores/canvasDnd";
-import { useSquareStore } from "@/stores/dataSquare";
+import { useCounterStore } from "~~/src/stores/counter";
+import { useCanvasDndStore } from "~~/src/stores/canvasDnd";
+import { useSquareStore } from "~~/src/stores/dataSquare";
 
 const selectToi = useCounterStore();
 const subdomain = useSubdomain();

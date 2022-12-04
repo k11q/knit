@@ -42,11 +42,11 @@
   </aside>
 </template>
 
-<script setup>
-import { useSquareStore } from "@/stores/dataSquare";
-import { useCounterStore } from "@/stores/counter";
+<script setup lang="ts">
+import { useSquareStore } from "~~/src/stores/dataSquare";
+import { useCounterStore } from "~~/src/stores/counter";
 
-let activeTab = ref("style");
+const activeTab = ref("style");
 
 const selectToi = useCounterStore();
 const route = useRoute();

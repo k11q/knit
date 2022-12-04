@@ -1,4 +1,4 @@
-import { useSquareStore } from "@/stores/dataSquare";
+import { useSquareStore } from "~~/src/stores/dataSquare";
 
 export function useGetAllSurfaceElements() {
   const squareStore = useSquareStore();

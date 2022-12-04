@@ -1,5 +1,5 @@
-import { useCounterStore } from "@/stores/counter";
-import { useSquareStore } from "@/stores/dataSquare";
+import { useCounterStore } from "~~/src/stores/counter";
+import { useSquareStore } from "~~/src/stores/dataSquare";
 
 export default function (id: string) {
   const selectToi = useCounterStore();

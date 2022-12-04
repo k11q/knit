@@ -77,7 +77,7 @@
 </template>
 
 <script setup>
-import { useCounterStore } from "@/stores/counter";
+import { useCounterStore } from "~~/src/stores/counter";
 
 const route = useRoute();
 const paramsId = route.params.id;

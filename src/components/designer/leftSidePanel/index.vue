@@ -243,7 +243,7 @@
 </template>
 
 <script setup>
-import { useCounterStore } from "@/stores/counter";
+import { useCounterStore } from "~~/src/stores/counter";
 
 const selectToi = useCounterStore();
 let activeTab = ref("layers");

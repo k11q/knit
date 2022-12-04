@@ -13,7 +13,7 @@
 
 <script lang="ts" setup>
 import { useEditor, EditorContent } from "@tiptap/vue-3";
-import { useSquareStore } from "@/stores/dataSquare";
+import { useSquareStore } from "~~/src/stores/dataSquare";
 import { useEditorStore } from "@/stores/editor";
 import StarterKit from "@tiptap/starter-kit";
 import HardBreak from "@tiptap/extension-hard-break";

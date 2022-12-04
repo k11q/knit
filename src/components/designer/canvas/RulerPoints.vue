@@ -14,8 +14,8 @@
 </template>
 
 <script setup>
-import { useSquareStore } from "@/stores/dataSquare";
-import { useRulerSnapStore } from "@/stores/rulerSnap";
+import { useSquareStore } from "~~/src/stores/dataSquare";
+import { useRulerSnapStore } from "~~/src/stores/rulerSnap";
 
 const rulerSnap = useRulerSnapStore();
 

@@ -55,16 +55,17 @@
   </template>
 </template>
 
-<script setup>
-import { useCounterStore } from "@/stores/counter";
-import { useSquareStore } from "@/stores/dataSquare";
+<script setup lang="ts">
+import { useCounterStore } from "~~/src/stores/counter";
+import { useSquareStore } from "~~/src/stores/dataSquare";
 import { useCanvasStore } from "~~/src/stores/canvas";
+import { Node as knitNode } from "@/stores/counter";
 
 const selectToi = useCounterStore();
 const squareStore = useSquareStore();
 const canvasStore = useCanvasStore();
 
 const props = defineProps({
-  frames: Array,
+  frames: Array<knitNode>,
 });
 </script>
