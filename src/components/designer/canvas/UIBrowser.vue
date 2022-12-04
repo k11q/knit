@@ -7,49 +7,10 @@
       "
       :data-id="node.id"
       :data-component="node.type"
-      @mousedown.stop="
-        node.type === 'text' && selectToi.selectedTextEditor === node.id
-          ? ''
-          : testDown($event, node.id)
-      "
-      @mouseout="
-        () => {
-          selectToi.treeHover = false;
-          selectToi.treeHoverId = '';
-          canvasStore.textHover = false;
-          if (selectToi.selectedBox === node.id && node.type !== 'text') {
-            paddingResize.showPaddingResizer = false;
-          }
-        }
-      "
-      @mouseover.stop="
-        () => {
-          if (
-            selectToi.selectedBox !== node.id &&
-            node.type !== 'text' &&
-            (node.type !== 'box' ||
-              (node.type === 'box' && !canvasStore.isDragging)) &&
-            canvasStore.selection.findIndex((i) => i.id === node.id) === -1
-          ) {
-            useSetOutlineHover(node.id);
-          } else if (
-            selectToi.selectedBox !== node.id &&
-            node.type === 'text' &&
-            !canvasStore.isDragging
-          ) {
-            canvasStore.textHover = true;
-          }
-          if (selectToi.selectedBox === node.id && node.type !== 'text') {
-            paddingResize.setShowPaddingResizer();
-          }
-          if (!canvasStore.isDragging) {
-            selectToi.treeHoverId = node.id;
-          }
-        }
-      "
-      @dblclick.prevent="
-        node.type === 'text' ? makeEditable($event, node.id) : null
-      "
+      @mousedown.stop="mousedown($event, node.id, node.type)"
+      @mouseout="mouseout(node.id, node.type)"
+      @mouseover.stop="mouseover(node.id, node.type)"
+      @dblclick.prevent="dblclick(node.id, node.type)"
       :class="{
         'pointer-events-none':
           selectToi.selectedBox === node.id &&
@@ -93,7 +54,7 @@
 <script setup lang="ts">
 import { useCounterStore } from "~~/src/stores/counter";
 import { useSquareStore } from "~~/src/stores/dataSquare";
-import { usePaddingResizeStore } from "@/stores/paddingResizeStore";
+import { usePaddingResizeStore } from "~~/src/stores/paddingResizeStore";
 import { useCanvasStore } from "~~/src/stores/canvas";
 import { Node as knitNode } from "~~/src/stores/counter";
 
@@ -102,25 +63,67 @@ const squareStore = useSquareStore();
 const paddingResize = usePaddingResizeStore();
 const canvasStore = useCanvasStore();
 
-function makeEditable(e: Event, id: string) {
-  selectToi.selectedTextEditor = id;
-  useSetOutlineSelector("");
+function dblclick(id: string, type: string) {
+  if (type === "text") {
+    makeEditable(id);
+  }
+  function makeEditable(id: string) {
+    selectToi.selectedTextEditor = id;
+    useSetOutlineSelector("");
+  }
 }
 
-//dnd on canvas
-const testDown = (e: Event, currDrag: string) => {
-  if (!squareStore.dragPointer && !squareStore.draggingPointer) {
-    if (!useCheckParent(currDrag) && !canvasStore.selection.length) {
-      canvasStore.dndWithoutParent(e, currDrag);
-    }
-    if (useCheckParent(currDrag) && !canvasStore.selection.length) {
-      canvasStore.dndWithParent(e, currDrag);
-    }
-    if (canvasStore.selection.length) {
-      canvasStore.setPositionMultiElement(e);
+function mousedown(e: MouseEvent, id: string, type: string) {
+  if (type !== "text" || selectToi.selectedTextEditor !== id) {
+    testDown(e, id);
+  }
+
+  function testDown(e: MouseEvent, currDrag: string) {
+    if (!squareStore.dragPointer && !squareStore.draggingPointer) {
+      if (!useCheckParent(currDrag) && !canvasStore.selection.length) {
+        canvasStore.dndWithoutParent(e, currDrag);
+      }
+      if (useCheckParent(currDrag) && !canvasStore.selection.length) {
+        canvasStore.dndWithParent(e, currDrag);
+      }
+      if (canvasStore.selection.length) {
+        canvasStore.setPositionMultiElement(e);
+      }
     }
   }
-};
+}
+
+function mouseout(id: string, type: string) {
+  selectToi.treeHover = false;
+  selectToi.treeHoverId = "";
+  canvasStore.textHover = false;
+  if (selectToi.selectedBox === id && type !== "text") {
+    paddingResize.showPaddingResizer = false;
+  }
+}
+
+function mouseover(id: string, type: string) {
+  if (
+    selectToi.selectedBox !== id &&
+    type !== "text" &&
+    (type !== "box" || (type === "box" && !canvasStore.isDragging)) &&
+    canvasStore.selection.findIndex((i) => i.id === id) === -1
+  ) {
+    useSetOutlineHover(id);
+  } else if (
+    selectToi.selectedBox !== id &&
+    type === "text" &&
+    !canvasStore.isDragging
+  ) {
+    canvasStore.textHover = true;
+  }
+  if (selectToi.selectedBox === id && type !== "text") {
+    paddingResize.setShowPaddingResizer();
+  }
+  if (!canvasStore.isDragging) {
+    selectToi.treeHoverId = id;
+  }
+}
 
 const props = defineProps({
   nodes: Array<knitNode>,

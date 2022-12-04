@@ -13,15 +13,17 @@ export type CSSRuleDetails = {
 export type CSSRule = {
   display: CSSRuleDetails;
   position: CSSRuleDetails;
+  left?: CSSRuleDetails;
+  top?: CSSRuleDetails;
+  height?: CSSRuleDetails;
+  width?: CSSRuleDetails;
+
   flexDirection?: CSSRuleDetails;
   alignItems?: CSSRuleDetails;
   justifyContent?: CSSRuleDetails;
-  left?: CSSRuleDetails;
-  top?: CSSRuleDetails;
+
   right?: CSSRuleDetails;
   bottom?: CSSRuleDetails;
-  height?: CSSRuleDetails;
-  width?: CSSRuleDetails;
   color?: CSSRuleDetails;
   backgroundColor?: CSSRuleDetails;
   borderRadius?: CSSRuleDetails;
@@ -51,7 +53,7 @@ export type Node = {
   id: string;
   type: "box" | "div" | "text";
   textContent?: string;
-  display: "hide" | "show";
+  display?: "hide" | "show";
   cssRules: Array<Breakpoint>;
   children: Array<Node>;
 };
@@ -609,7 +611,7 @@ export const useCounterStore = defineStore({
         ],
         children: [],
       },
-    ] as Document,
+    ] as Array<Node>,
   }),
   actions: {
     getChildElement(arr: Document, value: string) {

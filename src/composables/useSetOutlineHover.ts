@@ -7,8 +7,8 @@ export default function (id: string) {
 
   selectToi.treeHover = true;
   selectToi.treeHoverId = id;
-  let target: HTMLElement = document.querySelector(`[data-id=${id}]`)!;
-  let selectedTarget = target.getBoundingClientRect();
+  let target: HTMLElement = document.querySelector(`[data-id=${id}]`);
+  let selectedTarget = target?.getBoundingClientRect();
 
   selectToi.treeHoverHTMLX = Math.round(
     (selectedTarget.x - squareStore.offsetLeft) / squareStore.scale

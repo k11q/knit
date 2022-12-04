@@ -52,8 +52,8 @@ export const useCanvasStore = defineStore({
       let prevPositions = [];
 
       canvasStore.selection.forEach((i) => {
-        let prevX = e.clientX - useGetElementRect(i.id).x;
-        let prevY = e.clientY - useGetElementRect(i.id).y;
+        let prevX = e.clientX - useGetElementRect(i.id)!.x;
+        let prevY = e.clientY - useGetElementRect(i.id)!.y;
 
         prevPositions.push({ id: i.id, prevX: prevX, prevY: prevY });
       });
@@ -112,17 +112,17 @@ export const useCanvasStore = defineStore({
         unit
       );
     },
-    setTopPositionWithParent(e) {
+    setTopPositionWithParent(e: MouseEvent) {
       const selectToi = useCounterStore();
       const squareStore = useSquareStore();
-      const element = useGetElement(selectToi.selectedBoxData.id);
+      const element = useGetElement(selectToi.selectedBoxData.id)!;
 
-      selectToi.selectedBoxData.cssRules[0].style.top.value = Math.round(
+      selectToi.selectedBoxData.cssRules[0].style.top!.value = Math.round(
         (e.clientY - this.prevY - squareStore.offsetTop) / squareStore.scale -
-          element.parentElement.offsetTop
+          element.parentElement!.offsetTop
       );
     },
-    dndWithoutParent(e, currDrag) {
+    dndWithoutParent(e: MouseEvent, currDrag: string) {
       const selectToi = useCounterStore();
       const canvasDnd = useCanvasDndStore();
       const dropMarker = useDropMarker();
@@ -133,13 +133,23 @@ export const useCanvasStore = defineStore({
       canvasDnd.isDragging = true;
       canvasDnd.currDrag = currDrag;
       let isDragging = false;
-      let currDragElement = document.querySelector(`[data-id=${currDrag}]`);
+      let currDragElement = document.querySelector(
+        `[data-id=${currDrag}]`
+      )! as HTMLElement;
       let currDragElementRect = currDragElement?.getBoundingClientRect();
+      let currDragData = findOne(selectToi.data, currDrag);
       let prevOpacity = currDragElement.style.opacity;
-      let closest = null;
+      let closest = {} as HTMLElement;
       let closestTarget = "";
       let prevX = e.clientX - currDragElementRect.x;
       let prevY = e.clientY - currDragElementRect.y;
+      let cloneId = useCreateId();
+      let clonedData = JSON.parse(JSON.stringify(currDragData)) as Node;
+      function changeId(id: string, node: Node) {
+        node.id = id;
+        node.children.forEach((i) => changeId(useCreateId(), i));
+      }
+      changeId(cloneId, clonedData);
       this.prevX = prevX;
       this.prevY = prevY;
 
@@ -169,9 +179,18 @@ export const useCanvasStore = defineStore({
         window.addEventListener("mousemove", mousemove);
         window.addEventListener("mouseup", mouseup);
 
-        function mousemove(e) {
+        function mousemove(e: MouseEvent) {
           e.preventDefault();
           e.stopPropagation();
+
+          if (e.altKey) {
+            if (!findOne(selectToi.data, cloneId)) {
+              appendBefore(selectToi.data, currDrag, clonedData);
+            }
+            if (findOne(selectToi.data, cloneId)) {
+              console.log("done");
+            }
+          }
 
           useGetElement(currDrag).style.willChange = "left, top";
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
@@ -195,7 +214,7 @@ export const useCanvasStore = defineStore({
           closest = useGetClosestElement(e);
 
           if (closest) {
-            closestTarget = useGetClosestDroppableId(e);
+            closestTarget = useGetClosestDroppableId(e)!;
           }
 
           if (!closest) {
@@ -216,7 +235,7 @@ export const useCanvasStore = defineStore({
               rulerSnap.on = false;
               canvasStore.showMarker = true;
               dropMarker.setMarker(e, currDragElement);
-              currDragElement.style.opacity = 0;
+              currDragElement.style.opacity = "0";
 
               useSetOutlineHover(closestTarget);
             }
@@ -281,7 +300,7 @@ export const useCanvasStore = defineStore({
           }
           selectToi.treeHoverSize = 1;
           isDragging = false;
-          useGetElement(currDrag).style.willChange = null;
+          useGetElement(currDrag)!.style.willChange = "";
           window.removeEventListener("mousemove", mousemove);
           window.removeEventListener("mouseup", mouseup);
           //reselect
@@ -294,7 +313,7 @@ export const useCanvasStore = defineStore({
         }
       }
     },
-    dndWithParent(e, currDrag) {
+    dndWithParent(e: MouseEvent, currDrag: string) {
       const selectToi = useCounterStore();
       const canvasStore = useCanvasStore();
       const rulerSnap = useRulerSnapStore();
@@ -306,17 +325,19 @@ export const useCanvasStore = defineStore({
 
       selectToi.changeSelected(e, currDrag);
       this.currDrag = currDrag;
-      let currDragElement = document.querySelector(`[data-id=${currDrag}]`);
+      let currDragElement = document.querySelector(
+        `[data-id=${currDrag}]`
+      ) as HTMLElement!;
       let currDragElementRect = currDragElement.getBoundingClientRect();
       let closestElement;
-      let closest = null;
+      let closest = {} as HTMLElement;
       let closestTarget = "";
       let prevX = e.clientX - currDragElementRect.x;
       let prevY = e.clientY - currDragElementRect.y;
       this.prevX = prevX;
       this.prevY = prevY;
       let parentElement = currDragElement.parentElement;
-      let parentId = currDragElement.parentElement.dataset.id;
+      let parentId = currDragElement.parentElement!.dataset.id!;
       let prevOpacity = currDragElement.style.opacity;
       let appendPosition = useGetRootId(parentId);
 
@@ -326,24 +347,22 @@ export const useCanvasStore = defineStore({
       function mousemove(e) {
         e.preventDefault();
 
-        useGetElement(currDrag).style.willChange = "left, top";
+        useGetElement(currDrag)!.style.willChange = "left, top";
         isDragging = true;
         canvasStore.isDragging = true;
 
         closest = useGetClosestElement(e);
         //kalau closest same id chg position
         if (closest && closest.dataset.id === parentId) {
-          closestTarget = useGetClosestDroppableId(e);
+          closestTarget = useGetClosestDroppableId(e)!;
           rulerSnap.show = false;
           currDragElement.style.opacity = prevOpacity;
           canvasStore.showMarker = false;
           selectToi.treeHoverSize = 1;
 
-          if (
-            [...parentElement.children].findIndex(
-              (i) => i.dataset.id === currDrag
-            ) === -1
-          ) {
+          let children = [...parentElement!.children] as HTMLElement[];
+
+          if (children.findIndex((i) => i.dataset.id === currDrag) === -1) {
             useTransferData().removeChild(selectToi.data, currDrag);
             useTransferData().appendChild(
               selectToi.data,
@@ -357,16 +376,14 @@ export const useCanvasStore = defineStore({
             delete selectToi.selectedBoxData.cssRules[0].style.left;
           }
 
-          if (
-            [...parentElement.children].findIndex(
-              (i) => i.dataset.id === currDrag
-            ) !== -1
-          ) {
+          if (children.findIndex((i) => i.dataset.id === currDrag) !== -1) {
             if (
               selectToi.selectedBoxData.cssRules[0].style.position.value ===
               "static"
             ) {
-              currDragElement = document.querySelector(`[data-id=${currDrag}]`);
+              currDragElement = document.querySelector(
+                `[data-id=${currDrag}]`
+              )!;
               canvasStore.showSolidOutline = true;
               canvasStore.showGhostOutline = true;
               canvasStore.ghostOutlineLeft = e.clientX - prevX;
@@ -391,8 +408,8 @@ export const useCanvasStore = defineStore({
               ) {
                 function getPreviousSiblingMiddlePoint() {
                   let middlePoint =
-                    prevSibling.getBoundingClientRect().y +
-                    prevSibling.getBoundingClientRect().height / 2;
+                    prevSibling!.getBoundingClientRect().y +
+                    prevSibling!.getBoundingClientRect().height / 2;
                   return middlePoint;
                 }
 

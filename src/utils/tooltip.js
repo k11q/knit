@@ -1,4 +1,4 @@
-import focusable from "./focusable.js";
+import focusable from "./focusable";
 
 /**
  * Generates a random string of defined length based on

@@ -1,4 +1,4 @@
-import { useCounterStore } from "../stores/counter";
+import { Node, useCounterStore } from "../stores/counter";
 import { useSquareStore } from "../stores/dataSquare";
 import { useRulerSnapStore } from "../stores/rulerSnap";
 import { useResizeStore } from "../stores/resizeStore";
@@ -10,18 +10,14 @@ export function createFrame(e: MouseEvent) {
   const rulerSnap = useRulerSnapStore();
   const resizeStore = useResizeStore();
   const documentStore = useDocumentStore();
-  const uid = () =>
-    String(Date.now().toString(32) + Math.random().toString(16)).replace(
-      /\./g,
-      ""
-    );
+
   let frameNode = {
-    id: "",
     name: "",
-    type: "div",
+    id: "",
+    type: "div" as "box" | "div" | "text",
     cssRules: [
       {
-        breakpoint: 1,
+        breakpoint: 1 as string | number,
         style: {
           display: { type: "keyword", value: "flex" },
           backgroundColor: { type: "keyword", value: "white" },
@@ -33,7 +29,7 @@ export function createFrame(e: MouseEvent) {
         },
       },
     ],
-    children: [],
+    children: [] as Node[],
   };
 
   let rootData = selectToi.data;
@@ -45,7 +41,8 @@ export function createFrame(e: MouseEvent) {
     (e.clientY - squareStore.offsetTop) / squareStore.scale
   );
 
-  frameNode.id = useGetRandomLetter() + uid();
+  frameNode.id = useCreateId();
+  frameNode.name = "frame" + documentStore.frameCount;
   frameNode.cssRules[0].style.left.value = prevX;
   frameNode.cssRules[0].style.top.value = prevY;
 
@@ -64,7 +61,6 @@ export function createFrame(e: MouseEvent) {
     );
 
     if (rootData.findIndex((i) => i.id === frameNode.id) === -1) {
-      frameNode.name = "frame" + documentStore.frameCount;
       Promise.resolve()
         .then(() => {
           rootData.push(frameNode);
@@ -80,19 +76,15 @@ export function createFrame(e: MouseEvent) {
         rulerSnap.on = true;
         rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
         if (!rulerSnap.snapWidth) {
-          selectToi.selectedBoxData.cssRules[0].style.width.value =
-            positionX - prevX;
+          changeWidth(positionX - prevX);
         }
         if (!rulerSnap.snapHeight) {
-          selectToi.selectedBoxData.cssRules[0].style.height.value =
-            positionY - prevY;
+          changeHeight(positionY - prevY);
         }
       } else if (Math.abs(e.movementX) > 5 || Math.abs(e.movementX) > 5) {
         rulerSnap.on = false;
-        selectToi.selectedBoxData.cssRules[0].style.width.value =
-          positionX - prevX;
-        selectToi.selectedBoxData.cssRules[0].style.height.value =
-          positionY - prevY;
+        changeWidth(positionX - prevX);
+        changeHeight(positionY - prevY);
       }
     }
     /*
@@ -145,7 +137,7 @@ export function createFrame(e: MouseEvent) {
           }
           */
   }
-  function mouseup(e: MouseEvent) {
+  function mouseup() {
     squareStore.turnOnNormalPointer();
     documentStore.frameCount += 1;
     resizeStore.isResizing = false;

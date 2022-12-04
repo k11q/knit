@@ -4,8 +4,8 @@
       class="absolute border-box"
       :style="{
         willChange: 'left, top',
-        left: element.cssRules[0].style.left.value + 'px',
-        top: element.cssRules[0].style.top.value + 'px',
+        left: element.cssRules[0].style.left?.value + 'px',
+        top: element.cssRules[0].style.top?.value + 'px',
         width:
           element.cssRules[0].style?.width &&
           element.cssRules[0].style.width.value !== 'fit-content'

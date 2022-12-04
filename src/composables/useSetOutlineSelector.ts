@@ -6,8 +6,8 @@ export default function (id: string) {
   const selectToi = useCounterStore();
 
   console.log("id = " + id);
-  let target: HTMLElement = document.querySelector(`[data-id=${id}]`)!;
-  let selectedTarget = target.getBoundingClientRect();
+  let target: HTMLElement = document.querySelector(`[data-id=${id}]`);
+  let selectedTarget = target?.getBoundingClientRect();
 
   selectToi.selectedBoxHTMLX = Math.round(
     (selectedTarget.x - squareStore.offsetLeft) / squareStore.scale

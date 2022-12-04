@@ -1,3 +1,5 @@
+import { Node } from "../stores/counter";
+
 export function useTransferData() {
   function appendChild(arr, data, closestTarget) {
     arr.every((i) => {
@@ -78,4 +80,55 @@ export function useTransferData() {
     appendCanvasAbove,
     appendToCanvas,
   };
+}
+
+export function appendBefore(
+  array: Node[],
+  dropId: string,
+  currDragData: Node
+) {
+  array.every((i, index) => {
+    if (i.id === dropId) {
+      array.splice(index, 0, currDragData);
+      return false;
+    } else {
+      appendBefore(i.children, dropId, currDragData);
+      return true;
+    }
+  });
+}
+
+export function appendAfter(array: Node[], dropId: string, currDragData: Node) {
+  array.every((i, index) => {
+    if (i.id === dropId) {
+      array.splice(index + 1, 0, currDragData);
+      return false;
+    } else {
+      appendBefore(i.children, dropId, currDragData);
+      return true;
+    }
+  });
+}
+
+export function findOne(array: Node[], id: string): Node | boolean {
+  let data = {} as Node;
+  let exist = false;
+
+  array.every((i) => {
+    if (i.id === id) {
+      data = i;
+      exist = true;
+      return false;
+    } else {
+      findOne(i.children, id);
+      return true;
+    }
+  });
+  if (exist) {
+    console.log("data" + data);
+    return data;
+  } else {
+    console.log("false");
+    return false;
+  }
 }
