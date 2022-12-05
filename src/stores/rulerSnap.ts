@@ -637,87 +637,6 @@ export const useRulerSnapStore = defineStore({
             e;
           }
         });
-        //calculate the distance if theres 2 lines for each position
-        if (snapLinesCopy.lineTop && snapLinesCopy.lineBottom) {
-          if (
-            Math.abs(snapLinesCopy.lineTop - currDragTop) >
-            Math.abs(snapLinesCopy.lineBottom - currDragBottom)
-          ) {
-            snapLinesCopy.lineTop = NaN;
-          } else if (
-            Math.abs(snapLinesCopy.lineTop - currDragTop) <
-            Math.abs(snapLinesCopy.lineBottom - currDragBottom)
-          ) {
-            snapLinesCopy.lineBottom = NaN;
-          }
-        }
-        if (snapLinesCopy.lineTop && snapLinesCopy.lineMiddleY) {
-          if (
-            Math.abs(snapLinesCopy.lineTop - currDragTop) >
-            Math.abs(snapLinesCopy.lineMiddleY - currDragMiddleY)
-          ) {
-            snapLinesCopy.lineTop = NaN;
-          } else if (
-            Math.abs(snapLinesCopy.lineTop - currDragTop) <
-            Math.abs(snapLinesCopy.lineMiddleY - currDragMiddleY)
-          ) {
-            snapLinesCopy.lineMiddleY = NaN;
-          }
-        }
-        if (snapLinesCopy.lineBottom && snapLinesCopy.lineMiddleY) {
-          if (
-            Math.abs(snapLinesCopy.lineBottom - currDragBottom) >
-            Math.abs(snapLinesCopy.lineMiddleY - currDragMiddleY)
-          ) {
-            snapLinesCopy.lineBottom = NaN;
-          } else if (
-            Math.abs(snapLinesCopy.lineBottom - currDragBottom) <
-            Math.abs(snapLinesCopy.lineMiddleY - currDragMiddleY)
-          ) {
-            snapLinesCopy.lineMiddleY = NaN;
-          }
-        }
-
-        if (snapLinesCopy.lineLeft && snapLinesCopy.lineRight) {
-          if (
-            Math.abs(snapLinesCopy.lineLeft - currDragLeft) >
-            Math.abs(snapLinesCopy.lineRight - currDragRight)
-          ) {
-            snapLinesCopy.lineLeft = NaN;
-          } else if (
-            Math.abs(snapLinesCopy.lineLeft - currDragLeft) <
-            Math.abs(snapLinesCopy.lineRight - currDragRight)
-          ) {
-            snapLinesCopy.lineRight = NaN;
-          }
-        }
-        if (snapLinesCopy.lineLeft && snapLinesCopy.lineMiddleX) {
-          if (
-            Math.abs(snapLinesCopy.lineLeft - currDragLeft) >
-            Math.abs(snapLinesCopy.lineMiddleX - currDragMiddleX)
-          ) {
-            snapLinesCopy.lineLeft = NaN;
-          } else if (
-            Math.abs(snapLinesCopy.lineLeft - currDragLeft) <
-            Math.abs(snapLinesCopy.lineMiddleX - currDragMiddleX)
-          ) {
-            snapLinesCopy.lineMiddleX = NaN;
-          }
-        }
-        if (snapLinesCopy.lineRight && snapLinesCopy.lineMiddleX) {
-          if (
-            Math.abs(snapLinesCopy.lineRight - currDragRight) >
-            Math.abs(snapLinesCopy.lineMiddleX - currDragMiddleX)
-          ) {
-            snapLinesCopy.lineRight = NaN;
-          } else if (
-            Math.abs(snapLinesCopy.lineRight - currDragRight) <
-            Math.abs(snapLinesCopy.lineMiddleX - currDragMiddleX)
-          ) {
-            snapLinesCopy.lineMiddleX = NaN;
-          }
-        }
-        //snap /notsnap where there is/isnt line
         if (
           snapLinesCopy.lineTop ||
           snapLinesCopy.lineMiddleY ||
@@ -726,6 +645,88 @@ export const useRulerSnapStore = defineStore({
           snapLinesCopy.lineMiddleX ||
           snapLinesCopy.lineRight
         ) {
+          //calculate the distance if theres 2 lines for each position
+          if (snapLinesCopy.lineTop && snapLinesCopy.lineBottom) {
+            if (
+              Math.abs(snapLinesCopy.lineTop - currDragTop) >
+              Math.abs(snapLinesCopy.lineBottom - currDragBottom)
+            ) {
+              snapLinesCopy.lineTop = NaN;
+            } else if (
+              Math.abs(snapLinesCopy.lineTop - currDragTop) <
+              Math.abs(snapLinesCopy.lineBottom - currDragBottom)
+            ) {
+              snapLinesCopy.lineBottom = NaN;
+            }
+          }
+          if (snapLinesCopy.lineTop && snapLinesCopy.lineMiddleY) {
+            if (
+              Math.abs(snapLinesCopy.lineTop - currDragTop) >
+              Math.abs(snapLinesCopy.lineMiddleY - currDragMiddleY)
+            ) {
+              snapLinesCopy.lineTop = NaN;
+            } else if (
+              Math.abs(snapLinesCopy.lineTop - currDragTop) <
+              Math.abs(snapLinesCopy.lineMiddleY - currDragMiddleY)
+            ) {
+              snapLinesCopy.lineMiddleY = NaN;
+            }
+          }
+          if (snapLinesCopy.lineBottom && snapLinesCopy.lineMiddleY) {
+            if (
+              Math.abs(snapLinesCopy.lineBottom - currDragBottom) >
+              Math.abs(snapLinesCopy.lineMiddleY - currDragMiddleY)
+            ) {
+              snapLinesCopy.lineBottom = NaN;
+            } else if (
+              Math.abs(snapLinesCopy.lineBottom - currDragBottom) <
+              Math.abs(snapLinesCopy.lineMiddleY - currDragMiddleY)
+            ) {
+              snapLinesCopy.lineMiddleY = NaN;
+            }
+          }
+
+          if (snapLinesCopy.lineLeft && snapLinesCopy.lineRight) {
+            if (
+              Math.abs(snapLinesCopy.lineLeft - currDragLeft) >
+              Math.abs(snapLinesCopy.lineRight - currDragRight)
+            ) {
+              snapLinesCopy.lineLeft = NaN;
+            } else if (
+              Math.abs(snapLinesCopy.lineLeft - currDragLeft) <
+              Math.abs(snapLinesCopy.lineRight - currDragRight)
+            ) {
+              snapLinesCopy.lineRight = NaN;
+            }
+          }
+          if (snapLinesCopy.lineLeft && snapLinesCopy.lineMiddleX) {
+            if (
+              Math.abs(snapLinesCopy.lineLeft - currDragLeft) >
+              Math.abs(snapLinesCopy.lineMiddleX - currDragMiddleX)
+            ) {
+              snapLinesCopy.lineLeft = NaN;
+            } else if (
+              Math.abs(snapLinesCopy.lineLeft - currDragLeft) <
+              Math.abs(snapLinesCopy.lineMiddleX - currDragMiddleX)
+            ) {
+              snapLinesCopy.lineMiddleX = NaN;
+            }
+          }
+          if (snapLinesCopy.lineRight && snapLinesCopy.lineMiddleX) {
+            if (
+              Math.abs(snapLinesCopy.lineRight - currDragRight) >
+              Math.abs(snapLinesCopy.lineMiddleX - currDragMiddleX)
+            ) {
+              snapLinesCopy.lineRight = NaN;
+            } else if (
+              Math.abs(snapLinesCopy.lineRight - currDragRight) <
+              Math.abs(snapLinesCopy.lineMiddleX - currDragMiddleX)
+            ) {
+              snapLinesCopy.lineMiddleX = NaN;
+            }
+          }
+          //snap /notsnap where there is/isnt line
+
           this.show = true;
           this.snapLines = { ...snapLinesCopy };
           this.setSiblingsPoints(id);
@@ -814,16 +815,7 @@ export const useRulerSnapStore = defineStore({
               this.snapTop = false;
             }
           }
-        }
-
-        if (
-          !snapLinesCopy.lineTop &&
-          !snapLinesCopy.lineMiddleY &&
-          !snapLinesCopy.lineBottom &&
-          !snapLinesCopy.lineLeft &&
-          !snapLinesCopy.lineMiddleX &&
-          !snapLinesCopy.lineRight
-        ) {
+        } else {
           this.show = false;
           this.snapTop = false;
           this.snapLeft = false;
