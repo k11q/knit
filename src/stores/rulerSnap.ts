@@ -651,8 +651,7 @@ export const useRulerSnapStore = defineStore({
                 Math.abs(snapLinesCopy.lineBottom - currDragBottom)
               ) {
                 snapLinesCopy.lineTop = NaN;
-              }
-              if (
+              } else if (
                 Math.abs(snapLinesCopy.lineTop - currDragTop) <
                 Math.abs(snapLinesCopy.lineBottom - currDragBottom)
               ) {
@@ -665,8 +664,7 @@ export const useRulerSnapStore = defineStore({
                 Math.abs(snapLinesCopy.lineMiddleY - currDragMiddleY)
               ) {
                 snapLinesCopy.lineTop = NaN;
-              }
-              if (
+              } else if (
                 Math.abs(snapLinesCopy.lineTop - currDragTop) <
                 Math.abs(snapLinesCopy.lineMiddleY - currDragMiddleY)
               ) {
@@ -679,8 +677,7 @@ export const useRulerSnapStore = defineStore({
                 Math.abs(snapLinesCopy.lineMiddleY - currDragMiddleY)
               ) {
                 snapLinesCopy.lineBottom = NaN;
-              }
-              if (
+              } else if (
                 Math.abs(snapLinesCopy.lineBottom - currDragBottom) <
                 Math.abs(snapLinesCopy.lineMiddleY - currDragMiddleY)
               ) {
@@ -694,8 +691,7 @@ export const useRulerSnapStore = defineStore({
                 Math.abs(snapLinesCopy.lineRight - currDragRight)
               ) {
                 snapLinesCopy.lineLeft = NaN;
-              }
-              if (
+              } else if (
                 Math.abs(snapLinesCopy.lineLeft - currDragLeft) <
                 Math.abs(snapLinesCopy.lineRight - currDragRight)
               ) {
@@ -708,8 +704,7 @@ export const useRulerSnapStore = defineStore({
                 Math.abs(snapLinesCopy.lineMiddleX - currDragMiddleX)
               ) {
                 snapLinesCopy.lineLeft = NaN;
-              }
-              if (
+              } else if (
                 Math.abs(snapLinesCopy.lineLeft - currDragLeft) <
                 Math.abs(snapLinesCopy.lineMiddleX - currDragMiddleX)
               ) {
@@ -722,8 +717,7 @@ export const useRulerSnapStore = defineStore({
                 Math.abs(snapLinesCopy.lineMiddleX - currDragMiddleX)
               ) {
                 snapLinesCopy.lineRight = NaN;
-              }
-              if (
+              } else if (
                 Math.abs(snapLinesCopy.lineRight - currDragRight) <
                 Math.abs(snapLinesCopy.lineMiddleX - currDragMiddleX)
               ) {
@@ -741,15 +735,39 @@ export const useRulerSnapStore = defineStore({
               snapLinesCopy.lineRight
             ) {
               this.show = true;
-              if (snapLinesCopy.lineTop) {
+              if (
+                snapLinesCopy.lineTop ||
+                snapLinesCopy.lineMiddleY ||
+                snapLinesCopy.lineBottom
+              ) {
                 this.snapTop = true;
 
-                changeTop(
-                  Math.round(
-                    (snapLinesCopy.lineTop - squareStore.offsetTop) /
-                      squareStore.scale
-                  )
-                );
+                if (snapLinesCopy.lineTop) {
+                  changeTop(
+                    Math.round(
+                      (snapLinesCopy.lineTop - squareStore.offsetTop) /
+                        squareStore.scale
+                    )
+                  );
+                } else if (snapLinesCopy.lineMiddleY) {
+                  changeTop(
+                    Math.round(
+                      (snapLinesCopy.lineMiddleY -
+                        elementRect.height / 2 -
+                        squareStore.offsetTop) /
+                        squareStore.scale
+                    )
+                  );
+                } else if (snapLinesCopy.lineBottom) {
+                  changeTop(
+                    Math.round(
+                      (snapLinesCopy.lineBottom -
+                        elementRect.height -
+                        squareStore.offsetTop) /
+                        squareStore.scale
+                    )
+                  );
+                }
 
                 if (
                   !snapLinesCopy.lineLeft &&
@@ -759,95 +777,40 @@ export const useRulerSnapStore = defineStore({
                   this.snapLeft = false;
                 }
               }
-              if (snapLinesCopy.lineMiddleY) {
-                this.snapTop = true;
 
-                changeTop(
-                  Math.round(
-                    (snapLinesCopy.lineMiddleY -
-                      elementRect.height / 2 -
-                      squareStore.offsetTop) /
-                      squareStore.scale
-                  )
-                );
-
-                if (
-                  !snapLinesCopy.lineLeft &&
-                  !snapLinesCopy.lineMiddleX &&
-                  !snapLinesCopy.lineRight
-                ) {
-                  this.snapLeft = false;
-                }
-              }
-              if (snapLinesCopy.lineBottom) {
-                this.snapTop = true;
-
-                changeTop(
-                  Math.round(
-                    (snapLinesCopy.lineBottom -
-                      elementRect.height -
-                      squareStore.offsetTop) /
-                      squareStore.scale
-                  )
-                );
-
-                if (
-                  !snapLinesCopy.lineLeft &&
-                  !snapLinesCopy.lineMiddleX &&
-                  !snapLinesCopy.lineRight
-                ) {
-                  this.snapLeft = false;
-                }
-              }
-              if (snapLinesCopy.lineLeft) {
+              if (
+                snapLinesCopy.lineLeft ||
+                snapLinesCopy.lineMiddleX ||
+                snapLinesCopy.lineRight
+              ) {
                 this.snapLeft = true;
 
-                changeLeft(
-                  Math.round(
-                    (snapLinesCopy.lineLeft - squareStore.offsetLeft) /
-                      squareStore.scale
-                  )
-                );
-
-                if (
-                  !snapLinesCopy.lineTop &&
-                  !snapLinesCopy.lineMiddleY &&
-                  !snapLinesCopy.lineBottom
-                ) {
-                  this.snapTop = false;
+                if (snapLinesCopy.lineLeft) {
+                  changeLeft(
+                    Math.round(
+                      (snapLinesCopy.lineLeft - squareStore.offsetLeft) /
+                        squareStore.scale
+                    )
+                  );
+                } else if (snapLinesCopy.lineMiddleX) {
+                  changeLeft(
+                    Math.round(
+                      (snapLinesCopy.lineMiddleX -
+                        elementRect.width / 2 -
+                        squareStore.offsetLeft) /
+                        squareStore.scale
+                    )
+                  );
+                } else if (snapLinesCopy.lineRight) {
+                  changeLeft(
+                    Math.round(
+                      (snapLinesCopy.lineRight -
+                        elementRect.width -
+                        squareStore.offsetLeft) /
+                        squareStore.scale
+                    )
+                  );
                 }
-              }
-              if (snapLinesCopy.lineMiddleX) {
-                this.snapLeft = true;
-
-                changeLeft(
-                  Math.round(
-                    (snapLinesCopy.lineMiddleX -
-                      elementRect.width / 2 -
-                      squareStore.offsetLeft) /
-                      squareStore.scale
-                  )
-                );
-
-                if (
-                  !snapLinesCopy.lineTop &&
-                  !snapLinesCopy.lineMiddleY &&
-                  !snapLinesCopy.lineBottom
-                ) {
-                  this.snapTop = false;
-                }
-              }
-              if (snapLinesCopy.lineRight) {
-                this.snapLeft = true;
-
-                changeLeft(
-                  Math.round(
-                    (snapLinesCopy.lineRight -
-                      elementRect.width -
-                      squareStore.offsetLeft) /
-                      squareStore.scale
-                  )
-                );
 
                 if (
                   !snapLinesCopy.lineTop &&

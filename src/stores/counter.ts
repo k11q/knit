@@ -4,13 +4,13 @@ import { useCanvasDndStore } from "./canvasDnd";
 import { usePaddingResizeStore } from "./paddingResizeStore";
 import { useCanvasStore } from "./canvas";
 
-export type CSSRuleDetails = {
+export interface CSSRuleDetails {
   type: "unit" | "keyword";
   value: number | string;
   unit?: string;
-};
+}
 
-export type CSSRule = {
+export interface CSSRule {
   display: CSSRuleDetails;
   position: CSSRuleDetails;
   left?: CSSRuleDetails;
@@ -41,14 +41,14 @@ export type CSSRule = {
   marginTop?: CSSRuleDetails;
   marginRight?: CSSRuleDetails;
   marginBottom?: CSSRuleDetails;
-};
+}
 
-export type Breakpoint = {
+export interface Breakpoint {
   id: number | string;
   style: CSSRule;
-};
+}
 
-export type Node = {
+export interface Node {
   name: string;
   id: string;
   type: "box" | "div" | "text";
@@ -57,7 +57,7 @@ export type Node = {
   expandTree?: boolean;
   cssRules: Array<Breakpoint>;
   children: Array<Node>;
-};
+}
 
 export type Document = Array<Node>;
 
@@ -619,7 +619,7 @@ export const useCounterStore = defineStore({
     ] as Array<Node>,
   }),
   actions: {
-    getChildElement(arr: Document, value: string) {
+    getChildElement(arr: Node[], value: string) {
       arr.every((i) => {
         if (i.id === value) {
           this.selectedBoxData = i;

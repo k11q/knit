@@ -8,11 +8,11 @@ import { useRulerSnapStore } from "~~/src/stores/rulerSnap";
 import { changeLeft, changeTop } from "../composables/node";
 import { Node } from "./counter";
 
-type Positions = {
+interface Positions {
   id: string;
   prevX: number;
   prevY: number;
-};
+}
 
 export const useCanvasStore = defineStore({
   id: "canvasStore",
