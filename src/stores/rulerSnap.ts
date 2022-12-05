@@ -322,17 +322,17 @@ export const useRulerSnapStore = defineStore({
     /*
     setShowPointer(x, y) {
       if (
-        (this.snapLines?.lineLeft < x + 4 &&
-          this.snapLines?.lineLeft > y - 4) ||
-        (this.snapLines?.lineMiddleX < x + 4 &&
-          this.snapLines?.lineMiddleX > x - 4) ||
-        (this.snapLines?.lineRight < x + 4 &&
-          this.snapLines?.lineRight > x - 4) ||
-        (this.snapLines?.lineTop < y + 4 && this.snapLines?.lineTop > y - 4) ||
-        (this.snapLines?.lineMiddleY < y + 4 &&
-          this.csnapLines?.lineMiddleY > y - 4) ||
-        (this.snapLines?.lineBottom < y + 4 &&
-          this.snapLines?.lineBottom > y - 4)
+        (this.snapLines?.lineLeft < x + 5 &&
+          this.snapLines?.lineLeft > y - 5) ||
+        (this.snapLines?.lineMiddleX < x + 5 &&
+          this.snapLines?.lineMiddleX > x - 5) ||
+        (this.snapLines?.lineRight < x + 5 &&
+          this.snapLines?.lineRight > x - 5) ||
+        (this.snapLines?.lineTop < y + 5 && this.snapLines?.lineTop > y - 5) ||
+        (this.snapLines?.lineMiddleY < y + 5 &&
+          this.csnapLines?.lineMiddleY > y - 5) ||
+        (this.snapLines?.lineBottom < y + 5 &&
+          this.snapLines?.lineBottom > y - 5)
       ) {
         return true;
       } else return false;
@@ -383,45 +383,45 @@ export const useRulerSnapStore = defineStore({
 
           //if any add to selected siblings
           if (
-            (currDragTop < siblingTop + 3 && currDragTop > siblingTop - 3) ||
-            (currDragTop < siblingMiddleY + 3 &&
-              currDragTop > siblingMiddleY - 3) ||
-            (currDragTop < siblingBottom + 3 &&
-              currDragTop > siblingBottom - 3) ||
-            (currDragMiddleY < siblingTop + 3 &&
-              currDragMiddleY > siblingTop - 3) ||
-            (currDragMiddleY < siblingMiddleY + 3 &&
-              currDragMiddleY > siblingMiddleY - 3) ||
-            (currDragMiddleY < siblingBottom + 3 &&
-              currDragMiddleY > siblingBottom - 3) ||
-            (currDragBottom < siblingTop + 3 &&
-              currDragBottom > siblingTop - 3) ||
-            (currDragBottom < siblingMiddleY + 3 &&
-              currDragBottom > siblingMiddleY - 3) ||
-            (currDragBottom < siblingBottom + 3 &&
-              currDragBottom > siblingBottom - 3) ||
-            (currDragLeft < siblingLeft + 3 &&
-              currDragLeft > siblingLeft - 3) ||
-            (currDragLeft < siblingMiddleX + 3 &&
-              currDragLeft > siblingMiddleX - 3) ||
-            (currDragLeft < siblingRight + 3 &&
-              currDragLeft > siblingRight - 3) ||
-            (currDragMiddleX < siblingLeft + 3 &&
-              currDragMiddleX > siblingLeft - 3) ||
-            (currDragMiddleX < siblingMiddleX + 3 &&
-              currDragMiddleX > siblingMiddleX - 3) ||
-            (currDragMiddleX < siblingRight + 3 &&
-              currDragMiddleX > siblingRight - 3) ||
-            (currDragRight < siblingLeft + 3 &&
-              currDragRight > siblingLeft - 3) ||
-            (currDragRight < siblingMiddleX + 3 &&
-              currDragRight > siblingMiddleX - 3) ||
-            (currDragRight < siblingRight + 3 &&
-              currDragRight > siblingRight - 3)
+            (currDragTop < siblingTop + 5 && currDragTop > siblingTop - 5) ||
+            (currDragTop < siblingMiddleY + 5 &&
+              currDragTop > siblingMiddleY - 5) ||
+            (currDragTop < siblingBottom + 5 &&
+              currDragTop > siblingBottom - 5) ||
+            (currDragMiddleY < siblingTop + 5 &&
+              currDragMiddleY > siblingTop - 5) ||
+            (currDragMiddleY < siblingMiddleY + 5 &&
+              currDragMiddleY > siblingMiddleY - 5) ||
+            (currDragMiddleY < siblingBottom + 5 &&
+              currDragMiddleY > siblingBottom - 5) ||
+            (currDragBottom < siblingTop + 5 &&
+              currDragBottom > siblingTop - 5) ||
+            (currDragBottom < siblingMiddleY + 5 &&
+              currDragBottom > siblingMiddleY - 5) ||
+            (currDragBottom < siblingBottom + 5 &&
+              currDragBottom > siblingBottom - 5) ||
+            (currDragLeft < siblingLeft + 5 &&
+              currDragLeft > siblingLeft - 5) ||
+            (currDragLeft < siblingMiddleX + 5 &&
+              currDragLeft > siblingMiddleX - 5) ||
+            (currDragLeft < siblingRight + 5 &&
+              currDragLeft > siblingRight - 5) ||
+            (currDragMiddleX < siblingLeft + 5 &&
+              currDragMiddleX > siblingLeft - 5) ||
+            (currDragMiddleX < siblingMiddleX + 5 &&
+              currDragMiddleX > siblingMiddleX - 5) ||
+            (currDragMiddleX < siblingRight + 5 &&
+              currDragMiddleX > siblingRight - 5) ||
+            (currDragRight < siblingLeft + 5 &&
+              currDragRight > siblingLeft - 5) ||
+            (currDragRight < siblingMiddleX + 5 &&
+              currDragRight > siblingMiddleX - 5) ||
+            (currDragRight < siblingRight + 5 &&
+              currDragRight > siblingRight - 5)
           ) {
             //find distance between moving element and all other elements
             //top to top
-            if (currDragTop < siblingTop + 3 && currDragTop > siblingTop - 3) {
+            if (currDragTop < siblingTop + 5 && currDragTop > siblingTop - 5) {
               if (
                 !snapLinesCopy.lineTop ||
                 (snapLinesCopy.lineTop &&
@@ -433,8 +433,8 @@ export const useRulerSnapStore = defineStore({
             }
             //top to middleY
             if (
-              currDragTop < siblingMiddleY + 3 &&
-              currDragTop > siblingMiddleY - 3
+              currDragTop < siblingMiddleY + 5 &&
+              currDragTop > siblingMiddleY - 5
             ) {
               if (
                 !snapLinesCopy.lineTop ||
@@ -447,8 +447,8 @@ export const useRulerSnapStore = defineStore({
             }
             //top to bottom
             if (
-              currDragTop < siblingBottom + 3 &&
-              currDragTop > siblingBottom - 3
+              currDragTop < siblingBottom + 5 &&
+              currDragTop > siblingBottom - 5
             ) {
               if (
                 !snapLinesCopy.lineTop ||
@@ -462,8 +462,8 @@ export const useRulerSnapStore = defineStore({
 
             //middleY to top
             if (
-              currDragMiddleY < siblingTop + 3 &&
-              currDragMiddleY > siblingTop - 3
+              currDragMiddleY < siblingTop + 5 &&
+              currDragMiddleY > siblingTop - 5
             ) {
               if (
                 !snapLinesCopy.lineMiddleY ||
@@ -476,8 +476,8 @@ export const useRulerSnapStore = defineStore({
             }
             //middleY to middleY
             if (
-              currDragMiddleY < siblingMiddleY + 3 &&
-              currDragMiddleY > siblingMiddleY - 3
+              currDragMiddleY < siblingMiddleY + 5 &&
+              currDragMiddleY > siblingMiddleY - 5
             ) {
               if (
                 !snapLinesCopy.lineMiddleY ||
@@ -490,8 +490,8 @@ export const useRulerSnapStore = defineStore({
             }
             //middleY to bottom
             if (
-              currDragMiddleY < siblingBottom + 3 &&
-              currDragMiddleY > siblingBottom - 3
+              currDragMiddleY < siblingBottom + 5 &&
+              currDragMiddleY > siblingBottom - 5
             ) {
               if (
                 !snapLinesCopy.lineMiddleY ||
@@ -505,8 +505,8 @@ export const useRulerSnapStore = defineStore({
 
             //bottom to top
             if (
-              currDragBottom < siblingTop + 3 &&
-              currDragBottom > siblingTop - 3
+              currDragBottom < siblingTop + 5 &&
+              currDragBottom > siblingTop - 5
             ) {
               if (
                 !snapLinesCopy.lineBottom ||
@@ -519,8 +519,8 @@ export const useRulerSnapStore = defineStore({
             }
             //bottom to middleY
             if (
-              currDragBottom < siblingMiddleY + 3 &&
-              currDragBottom > siblingMiddleY - 3
+              currDragBottom < siblingMiddleY + 5 &&
+              currDragBottom > siblingMiddleY - 5
             ) {
               if (
                 !snapLinesCopy.lineBottom ||
@@ -533,8 +533,8 @@ export const useRulerSnapStore = defineStore({
             }
             //bottom to bottom
             if (
-              currDragBottom < siblingBottom + 3 &&
-              currDragBottom > siblingBottom - 3
+              currDragBottom < siblingBottom + 5 &&
+              currDragBottom > siblingBottom - 5
             ) {
               if (
                 !snapLinesCopy.lineBottom ||
@@ -548,8 +548,8 @@ export const useRulerSnapStore = defineStore({
 
             //left to left
             if (
-              currDragLeft < siblingLeft + 3 &&
-              currDragLeft > siblingLeft - 3
+              currDragLeft < siblingLeft + 5 &&
+              currDragLeft > siblingLeft - 5
             ) {
               if (
                 !snapLinesCopy.lineLeft ||
@@ -562,8 +562,8 @@ export const useRulerSnapStore = defineStore({
             }
             //left to middleX
             if (
-              currDragLeft < siblingMiddleX + 3 &&
-              currDragLeft > siblingMiddleX - 3
+              currDragLeft < siblingMiddleX + 5 &&
+              currDragLeft > siblingMiddleX - 5
             ) {
               if (
                 !snapLinesCopy.lineLeft ||
@@ -576,8 +576,8 @@ export const useRulerSnapStore = defineStore({
             }
             //left to right
             if (
-              currDragLeft < siblingRight + 3 &&
-              currDragLeft > siblingRight - 3
+              currDragLeft < siblingRight + 5 &&
+              currDragLeft > siblingRight - 5
             ) {
               if (
                 !snapLinesCopy.lineLeft ||
@@ -591,8 +591,8 @@ export const useRulerSnapStore = defineStore({
 
             //middleX to left
             if (
-              currDragMiddleX < siblingLeft + 3 &&
-              currDragMiddleX > siblingLeft - 3
+              currDragMiddleX < siblingLeft + 5 &&
+              currDragMiddleX > siblingLeft - 5
             ) {
               if (
                 !snapLinesCopy.lineMiddleX ||
@@ -605,8 +605,8 @@ export const useRulerSnapStore = defineStore({
             }
             //middleX to middleX
             if (
-              currDragMiddleX < siblingMiddleX + 3 &&
-              currDragMiddleX > siblingMiddleX - 3
+              currDragMiddleX < siblingMiddleX + 5 &&
+              currDragMiddleX > siblingMiddleX - 5
             ) {
               if (
                 !snapLinesCopy.lineMiddleX ||
@@ -619,8 +619,8 @@ export const useRulerSnapStore = defineStore({
             }
             //middleX to right
             if (
-              currDragMiddleX < siblingRight + 3 &&
-              currDragMiddleX > siblingRight - 3
+              currDragMiddleX < siblingRight + 5 &&
+              currDragMiddleX > siblingRight - 5
             ) {
               if (
                 !snapLinesCopy.lineMiddleX ||
@@ -634,8 +634,8 @@ export const useRulerSnapStore = defineStore({
 
             //right to left
             if (
-              currDragRight < siblingLeft + 3 &&
-              currDragRight > siblingLeft - 3
+              currDragRight < siblingLeft + 5 &&
+              currDragRight > siblingLeft - 5
             ) {
               if (
                 !snapLinesCopy.lineRight ||
@@ -648,8 +648,8 @@ export const useRulerSnapStore = defineStore({
             }
             //right to middleX
             if (
-              currDragRight < siblingMiddleX + 3 &&
-              currDragRight > siblingMiddleX - 3
+              currDragRight < siblingMiddleX + 5 &&
+              currDragRight > siblingMiddleX - 5
             ) {
               if (
                 !snapLinesCopy.lineRight ||
@@ -662,8 +662,8 @@ export const useRulerSnapStore = defineStore({
             }
             //right to right
             if (
-              currDragRight < siblingRight + 3 &&
-              currDragRight > siblingRight - 3
+              currDragRight < siblingRight + 5 &&
+              currDragRight > siblingRight - 5
             ) {
               if (
                 !snapLinesCopy.lineRight ||
@@ -768,10 +768,6 @@ export const useRulerSnapStore = defineStore({
           }
           //snap /notsnap where there is/isnt line
 
-          this.show = true;
-          this.selectedSiblings = [...selectedSiblingsCopy];
-          this.snapLines = { ...snapLinesCopy };
-          this.setSiblingsPoints(id);
           if (
             snapLinesCopy.lineTop ||
             snapLinesCopy.lineMiddleY ||
@@ -857,6 +853,10 @@ export const useRulerSnapStore = defineStore({
               this.snapTop = false;
             }
           }
+          this.show = true;
+          this.selectedSiblings = [...selectedSiblingsCopy];
+          this.snapLines = { ...snapLinesCopy };
+          this.setSiblingsPoints(id);
         } else {
           this.show = false;
           this.snapTop = false;
@@ -902,16 +902,16 @@ export const useRulerSnapStore = defineStore({
             let siblingRight = siblingRect.x + siblingRect.width;
 
             if (
-              (clientY < siblingTop + 3 && clientY > siblingTop - 3) ||
-              (clientY < siblingBottom + 3 && clientY > siblingBottom - 3) ||
-              (clientY < siblingBottom + 3 && clientY > siblingBottom - 3) ||
-              (clientX < siblingLeft + 3 && clientX > siblingLeft - 3) ||
-              (clientX < siblingMiddleX + 3 && clientX > siblingMiddleX - 3) ||
-              (clientX < siblingRight + 3 && clientX > siblingRight - 3)
+              (clientY < siblingTop + 5 && clientY > siblingTop - 5) ||
+              (clientY < siblingBottom + 5 && clientY > siblingBottom - 5) ||
+              (clientY < siblingBottom + 5 && clientY > siblingBottom - 5) ||
+              (clientX < siblingLeft + 5 && clientX > siblingLeft - 5) ||
+              (clientX < siblingMiddleX + 5 && clientX > siblingMiddleX - 5) ||
+              (clientX < siblingRight + 5 && clientX > siblingRight - 5)
             ) {
               if (!resizeStore.isResizingLeft || !resizeStore.isResizingRight) {
                 //clientY to top
-                if (clientY < siblingTop + 3 && clientY > siblingTop - 3) {
+                if (clientY < siblingTop + 5 && clientY > siblingTop - 5) {
                   if (
                     !snapLinesCopy.lineY ||
                     (snapLinesCopy.lineY &&
@@ -922,8 +922,8 @@ export const useRulerSnapStore = defineStore({
                 }
                 //clientY to middleY
                 if (
-                  clientY < siblingMiddleY + 3 &&
-                  clientY > siblingMiddleY - 3
+                  clientY < siblingMiddleY + 5 &&
+                  clientY > siblingMiddleY - 5
                 ) {
                   if (
                     !snapLinesCopy.lineY ||
@@ -935,8 +935,8 @@ export const useRulerSnapStore = defineStore({
                 }
                 //clientY to bottom
                 if (
-                  clientY < siblingBottom + 3 &&
-                  clientY > siblingBottom - 3
+                  clientY < siblingBottom + 5 &&
+                  clientY > siblingBottom - 5
                 ) {
                   if (
                     !snapLinesCopy.lineY ||
@@ -950,7 +950,7 @@ export const useRulerSnapStore = defineStore({
 
               if (!resizeStore.isResizingTop || !resizeStore.isResizingBottom) {
                 //clientX to left
-                if (clientX < siblingLeft + 3 && clientX > siblingLeft - 3) {
+                if (clientX < siblingLeft + 5 && clientX > siblingLeft - 5) {
                   if (
                     !snapLinesCopy.lineX ||
                     (snapLinesCopy.lineX &&
@@ -961,8 +961,8 @@ export const useRulerSnapStore = defineStore({
                 }
                 //clientX to middleX
                 if (
-                  clientX < siblingMiddleX + 3 &&
-                  clientX > siblingMiddleX - 3
+                  clientX < siblingMiddleX + 5 &&
+                  clientX > siblingMiddleX - 5
                 ) {
                   if (
                     !snapLinesCopy.lineX ||
@@ -973,7 +973,7 @@ export const useRulerSnapStore = defineStore({
                   }
                 }
                 //clientX to right
-                if (clientX < siblingRight + 3 && clientX > siblingRight - 3) {
+                if (clientX < siblingRight + 5 && clientX > siblingRight - 5) {
                   if (
                     !snapLinesCopy.lineX ||
                     (snapLinesCopy.lineX &&
