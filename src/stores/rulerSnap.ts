@@ -726,11 +726,9 @@ export const useRulerSnapStore = defineStore({
           snapLinesCopy.lineMiddleX ||
           snapLinesCopy.lineRight
         ) {
-          this.snapLines = { ...snapLinesCopy };
-          Promise.resolve().then(() => {
-            this.setSiblingsPoints(id);
-          });
           this.show = true;
+          this.snapLines = { ...snapLinesCopy };
+          this.setSiblingsPoints(id);
           if (
             snapLinesCopy.lineTop ||
             snapLinesCopy.lineMiddleY ||
@@ -1242,9 +1240,7 @@ export const useRulerSnapStore = defineStore({
               };
               this.snapLines = { ...snapLinesCopy2 };
             }
-            Promise.resolve().then(() => {
-              this.setSiblingsPoints(id);
-            });
+            this.setSiblingsPoints(id);
           }
           if (!snapLinesCopy.lineX && !snapLinesCopy.lineY) {
             this.show = false;
