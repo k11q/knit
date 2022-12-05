@@ -4,20 +4,24 @@ import { useCounterStore } from "~~/src/stores/counter";
 export function getLeft(): number | string | null {
   const selectToi = useCounterStore();
 
-  if (!selectToi.selectedBoxData.cssRules[0].style.left) {
-    return null;
-  } else {
-    return selectToi.selectedBoxData.cssRules[0].style.left.value;
-  }
+  if (selectToi.selectedBoxData.cssRules) {
+    if (!selectToi.selectedBoxData.cssRules[0].style.left) {
+      return null;
+    } else {
+      return selectToi.selectedBoxData.cssRules[0].style.left.value;
+    }
+  } else return null;
 }
 export function getTop(): number | string | null {
   const selectToi = useCounterStore();
 
-  if (selectToi.selectedBoxData.cssRules[0].style.top) {
-    return selectToi.selectedBoxData.cssRules[0].style.top.value;
-  } else {
-    return null;
-  }
+  if (selectToi.selectedBoxData.cssRules) {
+    if (selectToi.selectedBoxData.cssRules[0].style.top) {
+      return selectToi.selectedBoxData.cssRules[0].style.top.value;
+    } else {
+      return null;
+    }
+  } else return null;
 }
 export function getRight(): number | string | null {
   const selectToi = useCounterStore();
