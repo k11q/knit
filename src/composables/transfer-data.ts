@@ -125,10 +125,8 @@ export function findOne(array: Node[], id: string): Node | boolean {
     }
   });
   if (exist) {
-    console.log("data" + data);
     return data;
   } else {
-    console.log("false");
     return false;
   }
 }

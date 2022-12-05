@@ -8,6 +8,12 @@ import { useRulerSnapStore } from "~~/src/stores/rulerSnap";
 import { changeLeft, changeTop } from "../composables/node";
 import { Node } from "./counter";
 
+type Positions = {
+  id: string;
+  prevX: number;
+  prevY: number;
+};
+
 export const useCanvasStore = defineStore({
   id: "canvasStore",
   state: () => ({
@@ -36,20 +42,17 @@ export const useCanvasStore = defineStore({
     setLeftPosition(e: MouseEvent) {
       const squareStore = useSquareStore();
 
-      let unit = "px";
-
       changeLeft(
         Math.round(
           (e.clientX - this.prevX - squareStore.offsetLeft) / squareStore.scale
-        ),
-        unit
+        )
       );
     },
     setPositionMultiElement(e: MouseEvent) {
       const selectToi = useCounterStore();
       const squareStore = useSquareStore();
       const canvasStore = useCanvasStore();
-      let prevPositions = [];
+      let prevPositions = [] as Positions[];
 
       canvasStore.selection.forEach((i) => {
         let prevX = e.clientX - useGetElementRect(i.id)!.x;
@@ -61,7 +64,7 @@ export const useCanvasStore = defineStore({
       window.addEventListener("mousemove", mousemove);
       window.addEventListener("mouseup", mouseup);
 
-      function mousemove(e) {
+      function mousemove(e: MouseEvent) {
         e.preventDefault();
         e.stopPropagation();
         canvasStore.isDragging = true;
@@ -79,7 +82,7 @@ export const useCanvasStore = defineStore({
         });
       }
 
-      function mouseup(e) {
+      function mouseup(e: MouseEvent) {
         canvasStore.multiSelectResizerRect.left = "";
         canvasStore.multiSelectResizerRect.top = "";
         useSetMultiElementsResizer();
@@ -89,27 +92,26 @@ export const useCanvasStore = defineStore({
         window.removeEventListener("mouseup", mouseup);
       }
     },
-    setLeftPositionWithParent(e) {
+    setLeftPositionWithParent(e: MouseEvent) {
       const selectToi = useCounterStore();
       const squareStore = useSquareStore();
       const element = useGetElement(selectToi.selectedBoxData.id);
 
-      selectToi.selectedBoxData.cssRules[0].style.left!.value = Math.round(
-        (e.clientX - this.prevX - squareStore.offsetLeft) / squareStore.scale -
-          element.parentElement.offsetLeft
+      changeLeft(
+        Math.round(
+          (e.clientX - this.prevX - squareStore.offsetLeft) /
+            squareStore.scale -
+            element!.parentElement!.offsetLeft
+        )
       );
     },
-    setTopPosition(e) {
-      const selectToi = useCounterStore();
+    setTopPosition(e: MouseEvent) {
       const squareStore = useSquareStore();
-
-      let unit = "px";
 
       changeTop(
         Math.round(
           (e.clientY - this.prevY - squareStore.offsetTop) / squareStore.scale
-        ),
-        unit
+        )
       );
     },
     setTopPositionWithParent(e: MouseEvent) {
@@ -117,9 +119,11 @@ export const useCanvasStore = defineStore({
       const squareStore = useSquareStore();
       const element = useGetElement(selectToi.selectedBoxData.id)!;
 
-      selectToi.selectedBoxData.cssRules[0].style.top!.value = Math.round(
-        (e.clientY - this.prevY - squareStore.offsetTop) / squareStore.scale -
-          element.parentElement!.offsetTop
+      changeTop(
+        Math.round(
+          (e.clientY - this.prevY - squareStore.offsetTop) / squareStore.scale -
+            element.parentElement!.offsetTop
+        )
       );
     },
     dndWithoutParent(e: MouseEvent, currDrag: string) {
@@ -147,7 +151,9 @@ export const useCanvasStore = defineStore({
       let clonedData = JSON.parse(JSON.stringify(currDragData)) as Node;
       function changeId(id: string, node: Node) {
         node.id = id;
-        node.children.forEach((i) => changeId(useCreateId(), i));
+        if (node.children) {
+          node.children.forEach((i) => changeId(useCreateId(), i));
+        }
       }
       changeId(cloneId, clonedData);
       this.prevX = prevX;
@@ -183,16 +189,13 @@ export const useCanvasStore = defineStore({
           e.preventDefault();
           e.stopPropagation();
 
-          if (e.altKey) {
-            if (!findOne(selectToi.data, cloneId)) {
-              appendBefore(selectToi.data, currDrag, clonedData);
-            }
-            if (findOne(selectToi.data, cloneId)) {
-              console.log("done");
-            }
-          }
-          useGetElement(currDrag).style.willChange = "left, top";
+          useGetElement(currDrag)!.style.willChange = "left, top";
           function update() {
+            if (e.altKey) {
+              if (!findOne(selectToi.data, cloneId)) {
+                appendBefore(selectToi.data, currDrag, clonedData);
+              }
+            }
             if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
               rulerSnap.on = true;
               rulerSnap.setRulerSnap(e, currDrag);
@@ -330,7 +333,7 @@ export const useCanvasStore = defineStore({
       this.currDrag = currDrag;
       let currDragElement = document.querySelector(
         `[data-id=${currDrag}]`
-      ) as HTMLElement!;
+      ) as HTMLElement;
       let currDragElementRect = currDragElement.getBoundingClientRect();
       let closestElement;
       let closest = {} as HTMLElement;
@@ -347,7 +350,7 @@ export const useCanvasStore = defineStore({
       window.addEventListener("mousemove", mousemove);
       window.addEventListener("mouseup", mouseup);
 
-      function mousemove(e) {
+      function mousemove(e: MouseEvent) {
         e.preventDefault();
 
         useGetElement(currDrag)!.style.willChange = "left, top";
@@ -395,9 +398,11 @@ export const useCanvasStore = defineStore({
                 canvasStore.ghostOutlineTop = e.clientY - prevY;
 
                 //kalau prev/next sibling 'absolute' cari sampai jumpa static
-                let prevSibling = currDragElement.previousElementSibling;
+                let prevSibling =
+                  currDragElement.previousElementSibling as HTMLElement;
                 let prevSiblingId;
-                let nextSibling = currDragElement.nextElementSibling;
+                let nextSibling =
+                  currDragElement.nextElementSibling as HTMLElement;
                 let nextSiblingId;
 
                 if (prevSibling) {
@@ -572,8 +577,8 @@ export const useCanvasStore = defineStore({
           ) {
             canvasStore.showSolidOutline = false;
             canvasStore.showGhostOutline = false;
-            closestTarget = useGetClosestDroppableId(e);
-            currDragElement = document.querySelector(`[data-id=${currDrag}]`);
+            closestTarget = useGetClosestDroppableId(e)!;
+            currDragElement = document.querySelector(`[data-id=${currDrag}]`)!;
 
             useTransferData().removeChild(selectToi.data, currDrag);
             selectToi.selectedBoxData.cssRules[0].style.left = {
@@ -605,7 +610,7 @@ export const useCanvasStore = defineStore({
             rulerSnap.on = false;
             canvasStore.showMarker = true;
             dropMarker.setMarker(e, currDragElement);
-            currDragElement.style.opacity = 0;
+            currDragElement.style.opacity = "0";
 
             useSetOutlineHover(closestTarget);
 
@@ -685,7 +690,7 @@ export const useCanvasStore = defineStore({
         canvasStore.showGhostOutline = false;
         canvasStore.showSolidOutline = false;
         rulerSnap.show = false;
-        useGetElement(currDrag).style.willChange = null;
+        currDragElement.style.willChange = "";
         window.removeEventListener("mousemove", mousemove);
         window.removeEventListener("mouseup", mouseup);
 
@@ -693,9 +698,6 @@ export const useCanvasStore = defineStore({
           canvasStore.isDragging = false;
         }, 0);
       }
-    },
-    changeX(id, value) {
-      useGetElementData();
     },
   },
 });
