@@ -813,8 +813,8 @@ export const useRulerSnapStore = defineStore({
               this.snapTop = false;
             }
           }
-          this.setSiblingsPoints(id);
           this.snapLines = { ...snapLinesCopy };
+          this.setSiblingsPoints(id);
         }
 
         if (
