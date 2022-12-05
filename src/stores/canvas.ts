@@ -189,7 +189,8 @@ export const useCanvasStore = defineStore({
           e.preventDefault();
           e.stopPropagation();
 
-          useGetElement(currDrag)!.style.willChange = "transform";
+          useGetElement(currDrag)!.style.willChange =
+            "left, top, height, width";
           function update() {
             if (e.altKey) {
               if (!findOne(selectToi.data, cloneId)) {
@@ -353,7 +354,7 @@ export const useCanvasStore = defineStore({
       function mousemove(e: MouseEvent) {
         e.preventDefault();
 
-        useGetElement(currDrag)!.style.willChange = "transform";
+        useGetElement(currDrag)!.style.willChange = "left, top, height, width";
         isDragging = true;
         canvasStore.isDragging = true;
 
