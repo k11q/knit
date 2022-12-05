@@ -188,6 +188,7 @@ function styleProps(node: knitNode) {
       props.depth === 0
         ? `translateX(${node.cssRules[0]?.style?.left?.value}px) translateY(${node.cssRules[0]?.style?.top?.value}px)`
         : "",
+    transition: props.depth === 0 ? "opacity 50ms ease-out 0s" : "",
   };
 }
 
