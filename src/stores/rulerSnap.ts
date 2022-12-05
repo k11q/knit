@@ -291,7 +291,7 @@ export const useRulerSnapStore = defineStore({
       this.snapPoints = [...siblingPointsCopy];
 
       let rulerPositionCopy = {} as RulerPosition;
-      this.snapPoints.map((i) => {
+      this.snapPoints.forEach((i) => {
         if (
           !rulerPositionCopy.top ||
           (rulerPositionCopy.top && i.y < rulerPositionCopy.top)
@@ -717,7 +717,6 @@ export const useRulerSnapStore = defineStore({
             snapLinesCopy.lineMiddleX = NaN;
           }
         }
-        this.snapLines = { ...snapLinesCopy };
         //snap /notsnap where there is/isnt line
         if (
           snapLinesCopy.lineTop ||
@@ -727,6 +726,10 @@ export const useRulerSnapStore = defineStore({
           snapLinesCopy.lineMiddleX ||
           snapLinesCopy.lineRight
         ) {
+          this.snapLines = { ...snapLinesCopy };
+          Promise.resolve().then(() => {
+            this.setSiblingsPoints(id);
+          });
           this.show = true;
           if (
             snapLinesCopy.lineTop ||
@@ -813,8 +816,6 @@ export const useRulerSnapStore = defineStore({
               this.snapTop = false;
             }
           }
-          this.snapLines = { ...snapLinesCopy };
-          this.setSiblingsPoints(id);
         }
 
         if (
@@ -1241,7 +1242,9 @@ export const useRulerSnapStore = defineStore({
               };
               this.snapLines = { ...snapLinesCopy2 };
             }
-            this.setSiblingsPoints(id);
+            Promise.resolve().then(() => {
+              this.setSiblingsPoints(id);
+            });
           }
           if (!snapLinesCopy.lineX && !snapLinesCopy.lineY) {
             this.show = false;
