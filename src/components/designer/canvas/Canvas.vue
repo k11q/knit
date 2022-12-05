@@ -2,7 +2,7 @@
   <div
     class="absolute inset-0 overflow-hidden"
     @wheel="usePinchZoom($event)"
-    @mousedown.stop.prevent="addaSquare.addSquare($event, selectToi.data)"
+    @mousedown.stop.prevent="addaSquare.addSquare($event)"
     :class="{
       'cursor-crosshair':
         addaSquare.addSquareActivated === true ||
@@ -17,7 +17,7 @@
       data-id="canvas"
       class="w-0 h-0 overflow-visible absolute"
       :style="{
-        willChange: canvasStore.isPinchZoom ? 'transform' : null,
+        willChange: canvasStore.isPinchZoom ? 'transform' : '',
         transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
       }"
     >
@@ -264,7 +264,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useCounterStore } from "@/stores/counter";
 import { useSquareStore } from "~~/src/stores/dataSquare";
 import { useResizeStore } from "~~/src/stores/resizeStore";
@@ -287,7 +287,7 @@ onMounted(() => {
   addaSquare.offsetLeft = vw(50);
   addaSquare.offsetTop = vh(50);
 
-  function vh(percent) {
+  function vh(percent: number) {
     var h = Math.max(
       document.documentElement.clientHeight,
       window.innerHeight || 0
@@ -295,7 +295,7 @@ onMounted(() => {
     return (percent * h) / 100;
   }
 
-  function vw(percent) {
+  function vw(percent: number) {
     var w = Math.max(
       document.documentElement.clientWidth,
       window.innerWidth || 0

@@ -364,14 +364,14 @@ export const useRulerSnapStore = defineStore({
         lineMiddle: NaN,
       };
 
-      if (this.on) {
-        let siblings = [
-          ...document.querySelector(`[data-id=${id}]`)!.parentElement!.children,
-        ] as HTMLElement[];
-        this.siblings = siblings.filter(
-          (el) => el.dataset.id !== id
-        ) as HTMLElement[];
+      let siblings = [
+        ...document.querySelector(`[data-id=${id}]`)!.parentElement!.children,
+      ] as HTMLElement[];
+      this.siblings = siblings.filter(
+        (el) => el.dataset.id !== id
+      ) as HTMLElement[];
 
+      if (this.on) {
         Promise.resolve()
           .then(() => {
             this.siblings.forEach((i) => {

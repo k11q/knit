@@ -91,6 +91,24 @@ export function getColor(): number | string | null {
     return selectToi.selectedBoxData.cssRules[0].style.color.value;
   }
 }
+export function getAlign(): number | string | null {
+  const selectToi = useCounterStore();
+
+  if (!selectToi.selectedBoxData.cssRules[0].style.alignItems) {
+    return null;
+  } else {
+    return selectToi.selectedBoxData.cssRules[0].style.alignItems.value;
+  }
+}
+export function getJustify(): number | string | null {
+  const selectToi = useCounterStore();
+
+  if (!selectToi.selectedBoxData.cssRules[0].style.justifyContent) {
+    return null;
+  } else {
+    return selectToi.selectedBoxData.cssRules[0].style.justifyContent.value;
+  }
+}
 
 //functions
 export function changeLeft(value: number, unit: string = "px") {

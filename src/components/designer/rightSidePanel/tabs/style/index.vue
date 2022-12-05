@@ -136,8 +136,8 @@
           <input
             type="number"
             :placeholder="
-              selectToi.selectedBoxData.attr?.style.top
-                ? parseInt(selectToi.selectedBoxData.attr?.style.top)
+              getTop()
+                ? parseInt(getTop())
                 : useGetElement(selectToi.selectedBoxData.id)?.offsetTop
             "
             @input="
@@ -724,20 +724,7 @@
                       .value === 'column',
                 }"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <line x1="12" y1="5" x2="12" y2="19"></line>
-                  <polyline points="19 12 12 19 5 12"></polyline>
-                </svg>
+                <UIIcon name="arrow-down" :size="18" />
               </div>
               <div
                 class="h-[24px] aspect-square items-center flex flex-none justify-center -ml-[3px] hover:bg-[#2E2E2E] rounded-sm hover:opacity-100"
@@ -763,20 +750,7 @@
                       .value === 'row',
                 }"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                  <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
+                <UIIcon name="arrow-right" :size="18" />
               </div>
             </div>
             <div class="flex flex-row items-center h-8">
@@ -901,33 +875,19 @@
                 "
               >
                 <div
-                  v-show="
-                    selectToi.selectedBoxData.attr?.style.alignItems !==
-                      'start' ||
-                    selectToi.selectedBoxData.attr?.style.justifyContent !==
-                      'start'
-                  "
+                  v-show="getAlign() !== 'start' || getJustify() !== 'start'"
                   class="h-0.5 aspect-square rounded-full bg-[#505050]"
                 ></div>
                 <svg
                   class="absolute top-0.5 left-0.5 text-[#6EB0E0]"
                   :class="{
                     'opacity-100 ':
-                      (selectToi.selectedBoxData.attr?.style.alignItems ===
-                        'start' &&
-                        selectToi.selectedBoxData.attr?.style.justifyContent ===
-                          'start') ||
-                      (!selectToi.selectedBoxData.attr?.style.alignItems &&
-                        !selectToi.selectedBoxData.attr?.style.justifyContent),
+                      (getAlign() === 'start' && getJustify() === 'start') ||
+                      (!getAlign() && !getJustify()),
                     'opacity-0 hover:opacity-30':
-                      (selectToi.selectedBoxData &&
-                        selectToi.selectedBoxData.attr?.style.alignItems !==
-                          'start') ||
-                      (selectToi.selectedBoxData.attr?.style.justifyContent !==
-                        'start' &&
-                        (selectToi.selectedBoxData.attr?.style.alignItems ||
-                          selectToi.selectedBoxData.attr?.style
-                            .justifyContent)),
+                      getAlign() !== 'start' ||
+                      (getJustify() !== 'start' &&
+                        (getAlign() || getJustify())),
                   }"
                   width="18"
                   height="18"
@@ -969,28 +929,16 @@
                 "
               >
                 <div
-                  v-show="
-                    selectToi.selectedBoxData.attr?.style.alignItems !==
-                      'center' ||
-                    selectToi.selectedBoxData.attr?.style.justifyContent !==
-                      'start'
-                  "
+                  v-show="getAlign() !== 'center' || getJustify() !== 'start'"
                   class="h-0.5 aspect-square rounded-full bg-[#505050]"
                 ></div>
                 <svg
                   class="absolute flex-none top-0.5 text-[#6EB0E0]"
                   :class="{
                     'opacity-100 ':
-                      selectToi.selectedBoxData.attr?.style.alignItems ===
-                        'center' &&
-                      selectToi.selectedBoxData.attr?.style.justifyContent ===
-                        'start',
+                      getAlign() === 'center' && getJustify() === 'start',
                     'opacity-0 hover:opacity-30':
-                      (selectToi.selectedBoxData &&
-                        selectToi.selectedBoxData.attr?.style.alignItems !==
-                          'center') ||
-                      selectToi.selectedBoxData.attr?.style.justifyContent !==
-                        'start',
+                      getAlign() !== 'center' || getJustify() !== 'start',
                   }"
                   width="18"
                   height="18"
@@ -1032,28 +980,17 @@
                 "
               >
                 <div
-                  v-show="
-                    selectToi.selectedBoxData.attr?.style.alignItems !==
-                      'end' ||
-                    selectToi.selectedBoxData.attr?.style.justifyContent !==
-                      'start'
-                  "
+                  v-show="getAlign() !== 'end' || getJustify() !== 'start'"
                   class="h-0.5 aspect-square rounded-full bg-[#505050]"
                 ></div>
                 <svg
                   class="absolute flex-none top-0.5 right-0.5 text-[#6EB0E0]"
                   :class="{
                     'opacity-100 ':
-                      selectToi.selectedBoxData.attr?.style.alignItems ===
-                        'end' &&
-                      selectToi.selectedBoxData.attr?.style.justifyContent ===
-                        'start',
+                      getAlign() === 'end' && getJustify() === 'start',
                     'opacity-0 hover:opacity-30':
-                      (selectToi.selectedBoxData &&
-                        selectToi.selectedBoxData.attr?.style.alignItems !==
-                          'end') ||
-                      selectToi.selectedBoxData.attr?.style.justifyContent !==
-                        'start',
+                      (selectToi.selectedBoxData && getAlign() !== 'end') ||
+                      getJustify() !== 'start',
                   }"
                   width="18"
                   height="18"
@@ -1095,28 +1032,16 @@
                 "
               >
                 <div
-                  v-show="
-                    selectToi.selectedBoxData.attr?.style.alignItems !==
-                      'start' ||
-                    selectToi.selectedBoxData.attr?.style.justifyContent !==
-                      'center'
-                  "
+                  v-show="getAlign() !== 'start' || getJustify() !== 'center'"
                   class="h-0.5 aspect-square rounded-full bg-[#505050]"
                 ></div>
                 <svg
                   class="absolute flex-none left-0.5 text-[#6EB0E0]"
                   :class="{
                     'opacity-100 ':
-                      selectToi.selectedBoxData.attr?.style.alignItems ===
-                        'start' &&
-                      selectToi.selectedBoxData.attr?.style.justifyContent ===
-                        'center',
+                      getAlign() === 'start' && getJustify() === 'center',
                     'opacity-0 hover:opacity-30':
-                      (selectToi.selectedBoxData &&
-                        selectToi.selectedBoxData.attr?.style.alignItems !==
-                          'start') ||
-                      selectToi.selectedBoxData.attr?.style.justifyContent !==
-                        'center',
+                      getAlign() !== 'start' || getJustify() !== 'center',
                   }"
                   width="18"
                   height="18"
@@ -1158,28 +1083,17 @@
                 "
               >
                 <div
-                  v-show="
-                    selectToi.selectedBoxData.attr?.style.alignItems !==
-                      'center' ||
-                    selectToi.selectedBoxData.attr?.style.justifyContent !==
-                      'center'
-                  "
+                  v-show="getAlign() !== 'center' || getJustify() !== 'center'"
                   class="h-0.5 aspect-square rounded-full bg-[#505050]"
                 ></div>
                 <svg
                   class="absolute inset-0 flex-none text-[#6EB0E0]"
                   :class="{
                     'opacity-100 ':
-                      selectToi.selectedBoxData.attr?.style.alignItems ===
-                        'center' &&
-                      selectToi.selectedBoxData.attr?.style.justifyContent ===
-                        'center',
+                      getAlign() === 'center' && getJustify() === 'center',
                     'opacity-0 hover:opacity-30':
-                      (selectToi.selectedBoxData &&
-                        selectToi.selectedBoxData.attr?.style.alignItems !==
-                          'center') ||
-                      selectToi.selectedBoxData.attr?.style.justifyContent !==
-                        'center',
+                      (selectToi.selectedBoxData && getAlign() !== 'center') ||
+                      getJustify() !== 'center',
                   }"
                   width="18"
                   height="18"
@@ -1221,28 +1135,17 @@
                 "
               >
                 <div
-                  v-show="
-                    selectToi.selectedBoxData.attr?.style.alignItems !==
-                      'end' ||
-                    selectToi.selectedBoxData.attr?.style.justifyContent !==
-                      'center'
-                  "
+                  v-show="getAlign() !== 'end' || getJustify() !== 'center'"
                   class="h-0.5 aspect-square rounded-full bg-[#505050]"
                 ></div>
                 <svg
                   class="absolute flex-none right-0.5 text-[#6EB0E0]"
                   :class="{
                     'opacity-100 ':
-                      selectToi.selectedBoxData.attr?.style.alignItems ===
-                        'end' &&
-                      selectToi.selectedBoxData.attr?.style.justifyContent ===
-                        'center',
+                      getAlign() === 'end' && getJustify() === 'center',
                     'opacity-0 hover:opacity-30':
-                      (selectToi.selectedBoxData &&
-                        selectToi.selectedBoxData.attr?.style.alignItems !==
-                          'end') ||
-                      selectToi.selectedBoxData.attr?.style.justifyContent !==
-                        'center',
+                      (selectToi.selectedBoxData && getAlign() !== 'end') ||
+                      getJustify() !== 'center',
                   }"
                   width="18"
                   height="18"
@@ -1284,28 +1187,17 @@
                 "
               >
                 <div
-                  v-show="
-                    selectToi.selectedBoxData.attr?.style.alignItems !==
-                      'start' ||
-                    selectToi.selectedBoxData.attr?.style.justifyContent !==
-                      'end'
-                  "
+                  v-show="getAlign() !== 'start' || getJustify() !== 'end'"
                   class="h-0.5 aspect-square rounded-full bg-[#505050]"
                 ></div>
                 <svg
                   class="absolute flex-none left-0.5 bottom-0.5 text-[#6EB0E0]"
                   :class="{
                     'opacity-100 ':
-                      selectToi.selectedBoxData.attr?.style.alignItems ===
-                        'start' &&
-                      selectToi.selectedBoxData.attr?.style.justifyContent ===
-                        'end',
+                      getAlign() === 'start' && getJustify() === 'end',
                     'opacity-0 hover:opacity-30':
-                      (selectToi.selectedBoxData &&
-                        selectToi.selectedBoxData.attr?.style.alignItems !==
-                          'start') ||
-                      selectToi.selectedBoxData.attr?.style.justifyContent !==
-                        'end',
+                      (selectToi.selectedBoxData && getAlign() !== 'start') ||
+                      getJustify() !== 'end',
                   }"
                   width="18"
                   height="18"
@@ -1347,28 +1239,17 @@
                 "
               >
                 <div
-                  v-show="
-                    selectToi.selectedBoxData.attr?.style.alignItems !==
-                      'center' ||
-                    selectToi.selectedBoxData.attr?.style.justifyContent !==
-                      'end'
-                  "
+                  v-show="getAlign() !== 'center' || getJustify() !== 'end'"
                   class="h-0.5 aspect-square rounded-full bg-[#505050]"
                 ></div>
                 <svg
                   class="absolute flex-none bottom-0.5 text-[#6EB0E0]"
                   :class="{
                     'opacity-100 ':
-                      selectToi.selectedBoxData.attr?.style.alignItems ===
-                        'center' &&
-                      selectToi.selectedBoxData.attr?.style.justifyContent ===
-                        'end',
+                      getAlign() === 'center' && getJustify() === 'end',
                     'opacity-0 hover:opacity-30':
-                      (selectToi.selectedBoxData &&
-                        selectToi.selectedBoxData.attr?.style.alignItems !==
-                          'center') ||
-                      selectToi.selectedBoxData.attr?.style.justifyContent !==
-                        'end',
+                      (selectToi.selectedBoxData && getAlign() !== 'center') ||
+                      getJustify() !== 'end',
                   }"
                   width="18"
                   height="18"
@@ -1410,28 +1291,17 @@
                 "
               >
                 <div
-                  v-show="
-                    selectToi.selectedBoxData.attr?.style.alignItems !==
-                      'end' ||
-                    selectToi.selectedBoxData.attr?.style.justifyContent !==
-                      'end'
-                  "
+                  v-show="getAlign() !== 'end' || getJustify() !== 'end'"
                   class="h-0.5 aspect-square rounded-full bg-[#505050]"
                 ></div>
                 <svg
                   class="absolute flex-none right-0.5 bottom-0.5 text-[#6EB0E0]"
                   :class="{
                     'opacity-100 ':
-                      selectToi.selectedBoxData.attr?.style.alignItems ===
-                        'end' &&
-                      selectToi.selectedBoxData.attr?.style.justifyContent ===
-                        'end',
+                      getAlign() === 'end' && getJustify() === 'end',
                     'opacity-0 hover:opacity-30':
-                      (selectToi.selectedBoxData &&
-                        selectToi.selectedBoxData.attr?.style.alignItems !==
-                          'end') ||
-                      selectToi.selectedBoxData.attr?.style.justifyContent !==
-                        'end',
+                      (selectToi.selectedBoxData && getAlign() !== 'end') ||
+                      getJustify() !== 'end',
                   }"
                   width="18"
                   height="18"
@@ -1482,30 +1352,18 @@
                 "
               >
                 <div
-                  v-show="
-                    selectToi.selectedBoxData.attr?.style.alignItems !==
-                      'start' ||
-                    selectToi.selectedBoxData.attr?.style.justifyContent !==
-                      'start'
-                  "
+                  v-show="getAlign() !== 'start' || getJustify() !== 'start'"
                   class="h-0.5 aspect-square rounded-full bg-[#505050]"
                 ></div>
                 <svg
                   class="absolute top-0.5 left-0.5 text-[#6EB0E0]"
                   :class="{
                     'opacity-100 ':
-                      (selectToi.selectedBoxData.attr?.style.alignItems ===
-                        'start' &&
-                        selectToi.selectedBoxData.attr?.style.justifyContent ===
-                          'start') ||
-                      (!selectToi.selectedBoxData.attr?.style.alignItems &&
-                        !selectToi.selectedBoxData.attr?.style.justifyContent),
+                      (getAlign() === 'start' && getJustify() === 'start') ||
+                      (!getAlign() && !getJustify()),
                     'opacity-0 hover:opacity-30':
-                      (selectToi.selectedBoxData &&
-                        selectToi.selectedBoxData.attr?.style.alignItems !==
-                          'start') ||
-                      selectToi.selectedBoxData.attr?.style.justifyContent !==
-                        'start',
+                      (selectToi.selectedBoxData && getAlign() !== 'start') ||
+                      getJustify() !== 'start',
                   }"
                   width="18"
                   height="18"
@@ -1550,28 +1408,17 @@
                 "
               >
                 <div
-                  v-show="
-                    selectToi.selectedBoxData.attr?.style.alignItems !==
-                      'start' ||
-                    selectToi.selectedBoxData.attr?.style.justifyContent !==
-                      'center'
-                  "
+                  v-show="getAlign() !== 'start' || getJustify() !== 'center'"
                   class="h-0.5 aspect-square rounded-full bg-[#505050]"
                 ></div>
                 <svg
                   class="absolute flex-none top-0.5 text-[#6EB0E0]"
                   :class="{
                     'opacity-100 ':
-                      selectToi.selectedBoxData.attr?.style.alignItems ===
-                        'start' &&
-                      selectToi.selectedBoxData.attr?.style.justifyContent ===
-                        'center',
+                      getAlign() === 'start' && getJustify() === 'center',
                     'opacity-0 hover:opacity-30':
-                      (selectToi.selectedBoxData &&
-                        selectToi.selectedBoxData.attr?.style.alignItems !==
-                          'start') ||
-                      selectToi.selectedBoxData.attr?.style.justifyContent !==
-                        'center',
+                      (selectToi.selectedBoxData && getAlign() !== 'start') ||
+                      getJustify() !== 'center',
                   }"
                   width="18"
                   height="18"
@@ -1616,28 +1463,17 @@
                 "
               >
                 <div
-                  v-show="
-                    selectToi.selectedBoxData.attr?.style.alignItems !==
-                      'start' ||
-                    selectToi.selectedBoxData.attr?.style.justifyContent !==
-                      'end'
-                  "
+                  v-show="getAlign() !== 'start' || getJustify() !== 'end'"
                   class="h-0.5 aspect-square rounded-full bg-[#505050]"
                 ></div>
                 <svg
                   class="absolute flex-none top-0.5 right-0.5 text-[#6EB0E0]"
                   :class="{
                     'opacity-100 ':
-                      selectToi.selectedBoxData.attr?.style.alignItems ===
-                        'start' &&
-                      selectToi.selectedBoxData.attr?.style.justifyContent ===
-                        'end',
+                      getAlign() === 'start' && getJustify() === 'end',
                     'opacity-0 hover:opacity-30':
-                      (selectToi.selectedBoxData &&
-                        selectToi.selectedBoxData.attr?.style.alignItems !==
-                          'start') ||
-                      selectToi.selectedBoxData.attr?.style.justifyContent !==
-                        'end',
+                      (selectToi.selectedBoxData && getAlign() !== 'start') ||
+                      getJustify() !== 'end',
                   }"
                   width="18"
                   height="18"
@@ -1682,28 +1518,17 @@
                 "
               >
                 <div
-                  v-show="
-                    selectToi.selectedBoxData.attr?.style.alignItems !==
-                      'center' ||
-                    selectToi.selectedBoxData.attr?.style.justifyContent !==
-                      'start'
-                  "
+                  v-show="getAlign() !== 'center' || getJustify() !== 'start'"
                   class="h-0.5 aspect-square rounded-full bg-[#505050]"
                 ></div>
                 <svg
                   class="absolute flex-none left-0.5 text-[#6EB0E0]"
                   :class="{
                     'opacity-100 ':
-                      selectToi.selectedBoxData.attr?.style.alignItems ===
-                        'center' &&
-                      selectToi.selectedBoxData.attr?.style.justifyContent ===
-                        'start',
+                      getAlign() === 'center' && getJustify() === 'start',
                     'opacity-0 hover:opacity-30':
-                      (selectToi.selectedBoxData &&
-                        selectToi.selectedBoxData.attr?.style.alignItems !==
-                          'center') ||
-                      selectToi.selectedBoxData.attr?.style.justifyContent !==
-                        'start',
+                      (selectToi.selectedBoxData && getAlign() !== 'center') ||
+                      getJustify() !== 'start',
                   }"
                   width="18"
                   height="18"
@@ -1748,28 +1573,17 @@
                 "
               >
                 <div
-                  v-show="
-                    selectToi.selectedBoxData.attr?.style.alignItems !==
-                      'center' ||
-                    selectToi.selectedBoxData.attr?.style.justifyContent !==
-                      'center'
-                  "
+                  v-show="getAlign() !== 'center' || getJustify() !== 'center'"
                   class="h-0.5 aspect-square rounded-full bg-[#505050]"
                 ></div>
                 <svg
                   class="absolute inset-0 flex-none text-[#6EB0E0]"
                   :class="{
                     'opacity-100 ':
-                      selectToi.selectedBoxData.attr?.style.alignItems ===
-                        'center' &&
-                      selectToi.selectedBoxData.attr?.style.justifyContent ===
-                        'center',
+                      getAlign() === 'center' && getJustify() === 'center',
                     'opacity-0 hover:opacity-30':
-                      (selectToi.selectedBoxData &&
-                        selectToi.selectedBoxData.attr?.style.alignItems !==
-                          'center') ||
-                      selectToi.selectedBoxData.attr?.style.justifyContent !==
-                        'center',
+                      (selectToi.selectedBoxData && getAlign() !== 'center') ||
+                      getJustify() !== 'center',
                   }"
                   width="18"
                   height="18"
@@ -1814,28 +1628,17 @@
                 "
               >
                 <div
-                  v-show="
-                    selectToi.selectedBoxData.attr?.style.alignItems !==
-                      'center' ||
-                    selectToi.selectedBoxData.attr?.style.justifyContent !==
-                      'end'
-                  "
+                  v-show="getAlign() !== 'center' || getJustify() !== 'end'"
                   class="h-0.5 aspect-square rounded-full bg-[#505050]"
                 ></div>
                 <svg
                   class="absolute flex-none right-0.5 text-[#6EB0E0]"
                   :class="{
                     'opacity-100 ':
-                      selectToi.selectedBoxData.attr?.style.alignItems ===
-                        'center' &&
-                      selectToi.selectedBoxData.attr?.style.justifyContent ===
-                        'end',
+                      getAlign() === 'center' && getJustify() === 'end',
                     'opacity-0 hover:opacity-30':
-                      (selectToi.selectedBoxData &&
-                        selectToi.selectedBoxData.attr?.style.alignItems !==
-                          'center') ||
-                      selectToi.selectedBoxData.attr?.style.justifyContent !==
-                        'end',
+                      (selectToi.selectedBoxData && getAlign() !== 'center') ||
+                      getJustify() !== 'end',
                   }"
                   width="18"
                   height="18"
@@ -1880,28 +1683,17 @@
                 "
               >
                 <div
-                  v-show="
-                    selectToi.selectedBoxData.attr?.style.alignItems !==
-                      'end' ||
-                    selectToi.selectedBoxData.attr?.style.justifyContent !==
-                      'start'
-                  "
+                  v-show="getAlign() !== 'end' || getJustify() !== 'start'"
                   class="h-0.5 aspect-square rounded-full bg-[#505050]"
                 ></div>
                 <svg
                   class="absolute flex-none left-0.5 bottom-0.5 text-[#6EB0E0]"
                   :class="{
                     'opacity-100 ':
-                      selectToi.selectedBoxData.attr?.style.alignItems ===
-                        'end' &&
-                      selectToi.selectedBoxData.attr?.style.justifyContent ===
-                        'start',
+                      getAlign() === 'end' && getJustify() === 'start',
                     'opacity-0 hover:opacity-30':
-                      (selectToi.selectedBoxData &&
-                        selectToi.selectedBoxData.attr?.style.alignItems !==
-                          'end') ||
-                      selectToi.selectedBoxData.attr?.style.justifyContent !==
-                        'start',
+                      (selectToi.selectedBoxData && getAlign() !== 'end') ||
+                      getJustify() !== 'start',
                   }"
                   width="18"
                   height="18"
@@ -1946,28 +1738,17 @@
                 "
               >
                 <div
-                  v-show="
-                    selectToi.selectedBoxData.attr?.style.alignItems !==
-                      'end' ||
-                    selectToi.selectedBoxData.attr?.style.justifyContent !==
-                      'center'
-                  "
+                  v-show="getAlign() !== 'end' || getJustify() !== 'center'"
                   class="h-0.5 aspect-square rounded-full bg-[#505050]"
                 ></div>
                 <svg
                   class="absolute flex-none bottom-0.5 text-[#6EB0E0]"
                   :class="{
                     'opacity-100 ':
-                      selectToi.selectedBoxData.attr?.style.alignItems ===
-                        'end' &&
-                      selectToi.selectedBoxData.attr?.style.justifyContent ===
-                        'center',
+                      getAlign() === 'end' && getJustify() === 'center',
                     'opacity-0 hover:opacity-30':
-                      (selectToi.selectedBoxData &&
-                        selectToi.selectedBoxData.attr?.style.alignItems !==
-                          'end') ||
-                      selectToi.selectedBoxData.attr?.style.justifyContent !==
-                        'center',
+                      (selectToi.selectedBoxData && getAlign() !== 'end') ||
+                      getJustify() !== 'center',
                   }"
                   width="18"
                   height="18"
@@ -2012,28 +1793,17 @@
                 "
               >
                 <div
-                  v-show="
-                    selectToi.selectedBoxData.attr?.style.alignItems !==
-                      'end' ||
-                    selectToi.selectedBoxData.attr?.style.justifyContent !==
-                      'end'
-                  "
+                  v-show="getAlign() !== 'end' || getJustify() !== 'end'"
                   class="h-0.5 aspect-square rounded-full bg-[#505050]"
                 ></div>
                 <svg
                   class="absolute flex-none right-0.5 bottom-0.5 text-[#6EB0E0]"
                   :class="{
                     'opacity-100 ':
-                      selectToi.selectedBoxData.attr?.style.alignItems ===
-                        'end' &&
-                      selectToi.selectedBoxData.attr?.style.justifyContent ===
-                        'end',
+                      getAlign() === 'end' && getJustify() === 'end',
                     'opacity-0 hover:opacity-30':
-                      (selectToi.selectedBoxData &&
-                        selectToi.selectedBoxData.attr?.style.alignItems !==
-                          'end') ||
-                      selectToi.selectedBoxData.attr?.style.justifyContent !==
-                        'end',
+                      (selectToi.selectedBoxData && getAlign() !== 'end') ||
+                      getJustify() !== 'end',
                   }"
                   width="18"
                   height="18"
