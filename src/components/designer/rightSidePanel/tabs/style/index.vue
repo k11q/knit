@@ -136,8 +136,8 @@
           <input
             type="number"
             :placeholder="
-              getTop()
-                ? parseInt(getTop())
+              selectToi.selectedBoxData.attr?.style.top
+                ? parseInt(selectToi.selectedBoxData.attr?.style.top)
                 : useGetElement(selectToi.selectedBoxData.id)?.offsetTop
             "
             @input="

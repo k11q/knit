@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     "@nuxtjs/supabase",
     "@pinia/nuxt",
   ],
-  buildModules: ["@pinia/nuxt"],
+  buildModules: ["@pinia/nuxt", "gpu.js"],
   headlessui: {
     prefix: "Headless",
   },
