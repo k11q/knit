@@ -813,8 +813,8 @@ export const useRulerSnapStore = defineStore({
               this.snapTop = false;
             }
           }
-          this.snapLines = { ...snapLinesCopy };
           this.setSiblingsPoints(id);
+          this.snapLines = { ...snapLinesCopy };
         }
 
         if (
@@ -953,8 +953,7 @@ export const useRulerSnapStore = defineStore({
                 Math.round(
                   (snapLinesCopy.lineY - squareStore.offsetTop) /
                     squareStore.scale
-                ),
-                unit
+                )
               );
 
               changeHeight(
@@ -963,8 +962,7 @@ export const useRulerSnapStore = defineStore({
                     resizeStore.prevHeight -
                     (snapLinesCopy.lineY - squareStore.offsetTop) /
                       squareStore.scale
-                ),
-                unit
+                )
               );
               let snapLinesCopy2 = {
                 lineTop: snapLinesCopy.lineY,
