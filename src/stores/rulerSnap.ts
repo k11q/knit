@@ -813,6 +813,8 @@ export const useRulerSnapStore = defineStore({
               this.snapTop = false;
             }
           }
+          this.snapLines = { ...snapLinesCopy };
+          this.setSiblingsPoints(id);
         }
 
         if (
@@ -827,8 +829,6 @@ export const useRulerSnapStore = defineStore({
           this.snapTop = false;
           this.snapLeft = false;
         }
-        this.snapLines = { ...snapLinesCopy };
-        this.setSiblingsPoints(id);
       } else if (!this.on) {
         this.snapTop = false;
         this.snapLeft = false;
@@ -1243,6 +1243,7 @@ export const useRulerSnapStore = defineStore({
               };
               this.snapLines = { ...snapLinesCopy2 };
             }
+            this.setSiblingsPoints(id);
           }
           if (!snapLinesCopy.lineX && !snapLinesCopy.lineY) {
             this.show = false;
@@ -1251,7 +1252,6 @@ export const useRulerSnapStore = defineStore({
             this.snapTop = false;
             this.snapLeft = false;
           }
-          this.setSiblingsPoints(id);
         }
         if (!this.on) {
           this.snapTop = false;
