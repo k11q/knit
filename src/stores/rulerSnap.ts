@@ -147,6 +147,49 @@ export const useRulerSnapStore = defineStore({
       const element = document.querySelector(`[data-id=${id}]`)!;
       const elementRect = element.getBoundingClientRect();
 
+      //set element points
+      if (this.snapLines.lineTop) {
+        siblingPointsCopy.push(
+          { x: elementRect.x, y: elementRect.y },
+          { x: elementRect.x + elementRect.width, y: elementRect.y }
+        );
+      }
+      if (this.snapLines.lineMiddleY) {
+        siblingPointsCopy.push({
+          x: elementRect.x + elementRect.width / 2,
+          y: elementRect.y + elementRect.height / 2,
+        });
+      }
+      if (this.snapLines.lineBottom) {
+        siblingPointsCopy.push(
+          { x: elementRect.x, y: elementRect.y + elementRect.height },
+          {
+            x: elementRect.x + elementRect.width,
+            y: elementRect.y + elementRect.height,
+          }
+        );
+      }
+      if (this.snapLines.lineLeft) {
+        siblingPointsCopy.push(
+          { x: elementRect.x, y: elementRect.y },
+          { x: elementRect.x, y: elementRect.y + elementRect.height }
+        );
+      }
+      if (this.snapLines.lineMiddleX) {
+        siblingPointsCopy.push({
+          x: elementRect.x + elementRect.width / 2,
+          y: elementRect.y + elementRect.height / 2,
+        });
+      }
+      if (this.snapLines.lineRight) {
+        siblingPointsCopy.push(
+          { x: elementRect.x + elementRect.width, y: elementRect.y },
+          {
+            x: elementRect.x + elementRect.width,
+            y: elementRect.y + elementRect.height,
+          }
+        );
+      }
       this.siblings.forEach((i) => {
         let siblingRect = i.getBoundingClientRect();
 
@@ -243,50 +286,6 @@ export const useRulerSnapStore = defineStore({
             }
           );
         }
-
-        //set element points
-        if (this.snapLines.lineTop) {
-          siblingPointsCopy.push(
-            { x: elementRect.x, y: elementRect.y },
-            { x: elementRect.x + elementRect.width, y: elementRect.y }
-          );
-        }
-        if (this.snapLines.lineMiddleY) {
-          siblingPointsCopy.push({
-            x: elementRect.x + elementRect.width / 2,
-            y: elementRect.y + elementRect.height / 2,
-          });
-        }
-        if (this.snapLines.lineBottom) {
-          siblingPointsCopy.push(
-            { x: elementRect.x, y: elementRect.y + elementRect.height },
-            {
-              x: elementRect.x + elementRect.width,
-              y: elementRect.y + elementRect.height,
-            }
-          );
-        }
-        if (this.snapLines.lineLeft) {
-          siblingPointsCopy.push(
-            { x: elementRect.x, y: elementRect.y },
-            { x: elementRect.x, y: elementRect.y + elementRect.height }
-          );
-        }
-        if (this.snapLines.lineMiddleX) {
-          siblingPointsCopy.push({
-            x: elementRect.x + elementRect.width / 2,
-            y: elementRect.y + elementRect.height / 2,
-          });
-        }
-        if (this.snapLines.lineRight) {
-          siblingPointsCopy.push(
-            { x: elementRect.x + elementRect.width, y: elementRect.y },
-            {
-              x: elementRect.x + elementRect.width,
-              y: elementRect.y + elementRect.height,
-            }
-          );
-        }
       });
       this.snapPoints = [...siblingPointsCopy];
 
@@ -367,9 +366,7 @@ export const useRulerSnapStore = defineStore({
       let siblings = [
         ...document.querySelector(`[data-id=${id}]`)!.parentElement!.children,
       ] as HTMLElement[];
-      this.siblings = siblings.filter(
-        (el) => el.dataset.id !== id
-      ) as HTMLElement[];
+      this.siblings = siblings.filter((el) => el.dataset.id !== id);
 
       if (this.on) {
         this.siblings.forEach((i) => {
