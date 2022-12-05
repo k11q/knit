@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { Node } from "./counter";
 
 export const useTreeDndStore = defineStore({
   id: "treeDnd",
@@ -10,14 +11,14 @@ export const useTreeDndStore = defineStore({
     currDrop: "",
     currDropPosition: "",
     currDrag: "",
-    currDragValue: "",
+    currDragValue: {} as Node,
     currDropHTML: "",
     clientY: "",
     dragzone: "",
     spareDragzone: "",
   }),
   actions: {
-    setCurrDragValue(arr: Array<any>, value: string) {
+    setCurrDragValue(arr: Node[], value: string) {
       arr.every((i) => {
         if (i.id === value) {
           this.currDragValue = i;
@@ -33,7 +34,7 @@ export const useTreeDndStore = defineStore({
       this.displayDroppable = false;
       console.log("remove droppable");
     },
-    dndRemove(arr: Array<any>) {
+    dndRemove(arr: Node[]) {
       arr.every((i) => {
         if (i.id === this.currDrag) {
           arr.splice(
@@ -47,7 +48,7 @@ export const useTreeDndStore = defineStore({
         }
       });
     },
-    dndAppendTop(arr: Array<any>, currDrop: string) {
+    dndAppendTop(arr: Node[], currDrop: string) {
       arr.every((i) => {
         if (i.id === this.currDrop) {
           if (currDrop) {
@@ -64,7 +65,7 @@ export const useTreeDndStore = defineStore({
         }
       });
     },
-    dndAppendBottom(arr: Array<any>, currDrop: string) {
+    dndAppendBottom(arr: Node[], currDrop: string) {
       arr.every((i) => {
         if (i.id === this.currDrop) {
           if (currDrop) {
@@ -85,7 +86,7 @@ export const useTreeDndStore = defineStore({
         }
       });
     },
-    dndAppendMiddle(arr: Array<any>, currDrop: string) {
+    dndAppendMiddle(arr: Node[], currDrop: string) {
       arr.every((i) => {
         if (i.id === this.currDrop) {
           if (currDrop) {

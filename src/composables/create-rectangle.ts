@@ -16,7 +16,7 @@ export function createRectangle(e: MouseEvent) {
     type: "box",
     cssRules: [
       {
-        breakpoint: 1,
+        id: 1,
         style: {
           display: { type: "keyword", value: "flex" },
           backgroundColor: { type: "keyword", value: "#D9D9D9" },
@@ -28,8 +28,8 @@ export function createRectangle(e: MouseEvent) {
         },
       },
     ],
-    children: [] as Node[],
-  };
+    children: [],
+  } as Node;
 
   let rootData = selectToi.data;
 
@@ -41,8 +41,8 @@ export function createRectangle(e: MouseEvent) {
   );
 
   rectangleNode.id = useCreateId();
-  rectangleNode.cssRules[0].style.left.value = prevX;
-  rectangleNode.cssRules[0].style.top.value = prevY;
+  rectangleNode.cssRules[0].style.left!.value = prevX;
+  rectangleNode.cssRules[0].style.top!.value = prevY;
 
   resizeStore.prevLeft = prevX;
   resizeStore.prevTop = prevY;

@@ -1,16 +1,24 @@
 import { useSquareStore } from "~~/src/stores/dataSquare";
 
+type Point = {
+  id: string;
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+};
+
 export function useGetAllSurfaceElements() {
   const squareStore = useSquareStore();
 
   let surfaceElements = [
     ...document.querySelector(`[data-id="canvas"]`)!.children,
-  ];
-  let allPoints = [];
-  let allPointsTransformed = [];
+  ] as HTMLElement[];
+  let allPoints = [] as Point[];
+  let allPointsTransformed = [] as Point[];
 
   surfaceElements.forEach((i) => {
-    let id = i.dataset.id;
+    let id = i.dataset.id as string;
     let rect = i.getBoundingClientRect();
     let left = rect.x;
     let top = rect.y;

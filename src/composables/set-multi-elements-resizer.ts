@@ -6,28 +6,28 @@ export function useSetMultiElementsResizer() {
   const squareStore = useSquareStore();
 
   canvasStore.selection.forEach((i) => {
-    let left = i.cssRules[0].style?.left.value;
-    let top = i.cssRules[0].style?.top.value;
-    let width = i.cssRules[0].style?.width.value
-      ? i.cssRules[0].style?.width.value
-      : useGetElementRect(i.id).width / squareStore.scale;
+    let left = i.cssRules[0].style?.left?.value as number;
+    let top = i.cssRules[0].style?.top?.value as number;
+    let width = i.cssRules[0].style?.width?.value
+      ? (i.cssRules[0].style?.width.value as number)
+      : ((useGetElementRect(i.id)!.width / squareStore.scale) as number);
     let height = i.cssRules[0].style?.height
-      ? i.cssRules[0].style.height.value
-      : useGetElementRect(i.id).height / squareStore.scale;
+      ? (i.cssRules[0].style.height.value as number)
+      : ((useGetElementRect(i.id)!.height / squareStore.scale) as number);
 
     if (
       !parseInt(canvasStore.multiSelectResizerRect.left) ||
       left < parseInt(canvasStore.multiSelectResizerRect.left)
     ) {
       canvasStore.multiSelectResizerRect.left =
-        i.cssRules[0].style?.left.value + "px";
+        i.cssRules[0].style.left?.value + "px";
     }
     if (
       !parseInt(canvasStore.multiSelectResizerRect.top) ||
       top < parseInt(canvasStore.multiSelectResizerRect.top)
     ) {
       canvasStore.multiSelectResizerRect.top =
-        i.cssRules[0].style?.top.value + "px";
+        i.cssRules[0].style.top?.value + "px";
     }
     if (
       !parseInt(canvasStore.multiSelectResizerRect.width) ||

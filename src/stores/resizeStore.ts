@@ -25,7 +25,7 @@ export const useResizeStore = defineStore({
     isResizingBottomRight: false,
   }),
   actions: {
-    resizeWidthForward(e) {
+    resizeWidthForward(e: MouseEvent) {
       const squareStore = useSquareStore();
 
       let unit = "px";
@@ -37,7 +37,7 @@ export const useResizeStore = defineStore({
         unit
       );
     },
-    resizeWidthReverse(e) {
+    resizeWidthReverse(e: MouseEvent) {
       const squareStore = useSquareStore();
 
       let unit = "px";
@@ -49,7 +49,7 @@ export const useResizeStore = defineStore({
         unit
       );
     },
-    resizeHeightForward(e) {
+    resizeHeightForward(e: MouseEvent) {
       const squareStore = useSquareStore();
 
       let unit = "px";
@@ -61,7 +61,7 @@ export const useResizeStore = defineStore({
         unit
       );
     },
-    resizeHeightReverse(e) {
+    resizeHeightReverse(e: MouseEvent) {
       const squareStore = useSquareStore();
 
       let unit = "px";
@@ -73,7 +73,7 @@ export const useResizeStore = defineStore({
         unit
       );
     },
-    resizeLeftForward(e) {
+    resizeLeftForward(e: MouseEvent) {
       const squareStore = useSquareStore();
 
       let unit = "px";
@@ -85,7 +85,7 @@ export const useResizeStore = defineStore({
         unit
       );
     },
-    resizeLeftReverse(e) {
+    resizeLeftReverse(e: MouseEvent) {
       const squareStore = useSquareStore();
 
       let unit = "px";
@@ -97,7 +97,7 @@ export const useResizeStore = defineStore({
         unit
       );
     },
-    resizeTopForward(e) {
+    resizeTopForward(e: MouseEvent) {
       const squareStore = useSquareStore();
 
       let unit = "px";
@@ -107,7 +107,7 @@ export const useResizeStore = defineStore({
         unit
       );
     },
-    resizeTopReverse(e) {
+    resizeTopReverse(e: MouseEvent) {
       const squareStore = useSquareStore();
 
       let unit = "px";
@@ -118,21 +118,21 @@ export const useResizeStore = defineStore({
       );
     },
 
-    resizeBottomRight(e) {
+    resizeBottomRight(e: MouseEvent) {
       const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
       const rulerSnap = useRulerSnapStore();
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        this.prevLeft = selectToi.selectedBoxData.cssRules[0].style.left?.value;
-        this.prevTop = selectToi.selectedBoxData.cssRules[0].style.top?.value;
-        this.prevWidth = parseInt(
-          selectToi.selectedBoxData.cssRules[0].style.width.value
-        );
-        this.prevHeight = parseInt(
-          selectToi.selectedBoxData.cssRules[0].style.height.value
-        );
+        this.prevLeft = selectToi.selectedBoxData.cssRules[0].style.left
+          ?.value as number;
+        this.prevTop = selectToi.selectedBoxData.cssRules[0].style.top
+          ?.value as number;
+        this.prevWidth = selectToi.selectedBoxData.cssRules[0].style.width
+          ?.value as number;
+        this.prevHeight = selectToi.selectedBoxData.cssRules[0].style.height
+          ?.value as number;
 
         this.prevX = e.clientX;
         this.prevY = e.clientY;
@@ -142,7 +142,7 @@ export const useResizeStore = defineStore({
         window.addEventListener("mousemove", mousemove);
         window.addEventListener("mouseup", mouseup);
 
-        function mousemove(e) {
+        function mousemove(e: MouseEvent) {
           resizeStore.isResizingBottomRight = true;
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
             rulerSnap.on = true;
@@ -169,25 +169,21 @@ export const useResizeStore = defineStore({
         }
       }
     },
-    resizeBottomLeft(e) {
+    resizeBottomLeft(e: MouseEvent) {
       const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
       const rulerSnap = useRulerSnapStore();
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        this.prevTop = parseInt(
-          selectToi.selectedBoxData.cssRules[0].style.top?.value
-        );
-        this.prevWidth = parseInt(
-          selectToi.selectedBoxData.cssRules[0].style.width.value
-        );
-        this.prevHeight = parseInt(
-          selectToi.selectedBoxData.cssRules[0].style.height.value
-        );
-        this.prevLeft = parseInt(
-          selectToi.selectedBoxData.cssRules[0].style.left?.value
-        );
+        this.prevTop = selectToi.selectedBoxData.cssRules[0].style.top
+          ?.value as number;
+        this.prevWidth = selectToi.selectedBoxData.cssRules[0].style.width
+          ?.value as number;
+        this.prevHeight = selectToi.selectedBoxData.cssRules[0].style.height
+          ?.value as number;
+        this.prevLeft = selectToi.selectedBoxData.cssRules[0].style.left
+          ?.value as number;
 
         this.prevX = e.clientX;
         this.prevY = e.clientY;
@@ -197,7 +193,7 @@ export const useResizeStore = defineStore({
         window.addEventListener("mousemove", mousemove);
         window.addEventListener("mouseup", mouseup);
 
-        function mousemove(e) {
+        function mousemove(e: MouseEvent) {
           resizeStore.isResizingBottomLeft = true;
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
             rulerSnap.on = true;
@@ -226,25 +222,21 @@ export const useResizeStore = defineStore({
         }
       }
     },
-    resizeTopLeft(e) {
+    resizeTopLeft(e: MouseEvent) {
       const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
       const rulerSnap = useRulerSnapStore();
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        this.prevLeft = parseInt(
-          selectToi.selectedBoxData.cssRules[0].style.left?.value
-        );
-        this.prevTop = parseInt(
-          selectToi.selectedBoxData.cssRules[0].style.top?.value
-        );
-        this.prevWidth = parseInt(
-          selectToi.selectedBoxData.cssRules[0].style.width.value
-        );
-        this.prevHeight = parseInt(
-          selectToi.selectedBoxData.cssRules[0].style.height.value
-        );
+        this.prevTop = selectToi.selectedBoxData.cssRules[0].style.top
+          ?.value as number;
+        this.prevWidth = selectToi.selectedBoxData.cssRules[0].style.width
+          ?.value as number;
+        this.prevHeight = selectToi.selectedBoxData.cssRules[0].style.height
+          ?.value as number;
+        this.prevLeft = selectToi.selectedBoxData.cssRules[0].style.left
+          ?.value as number;
 
         this.prevX = e.clientX;
         this.prevY = e.clientY;
@@ -254,7 +246,7 @@ export const useResizeStore = defineStore({
         window.addEventListener("mousemove", mousemove);
         window.addEventListener("mouseup", mouseup);
 
-        function mousemove(e) {
+        function mousemove(e: MouseEvent) {
           resizeStore.isResizingTopLeft = true;
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
             rulerSnap.on = true;
@@ -285,25 +277,21 @@ export const useResizeStore = defineStore({
         }
       }
     },
-    resizeTopRight(e) {
+    resizeTopRight(e: MouseEvent) {
       const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
       const rulerSnap = useRulerSnapStore();
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        this.prevLeft = parseInt(
-          selectToi.selectedBoxData.cssRules[0].style.left?.value
-        );
-        this.prevWidth = parseInt(
-          selectToi.selectedBoxData.cssRules[0].style.width.value
-        );
-        this.prevTop = parseInt(
-          selectToi.selectedBoxData.cssRules[0].style.top?.value
-        );
-        this.prevHeight = parseInt(
-          selectToi.selectedBoxData.cssRules[0].style.height.value
-        );
+        this.prevTop = selectToi.selectedBoxData.cssRules[0].style.top
+          ?.value as number;
+        this.prevWidth = selectToi.selectedBoxData.cssRules[0].style.width
+          ?.value as number;
+        this.prevHeight = selectToi.selectedBoxData.cssRules[0].style.height
+          ?.value as number;
+        this.prevLeft = selectToi.selectedBoxData.cssRules[0].style.left
+          ?.value as number;
 
         this.prevX = e.clientX;
         this.prevY = e.clientY;
@@ -313,7 +301,7 @@ export const useResizeStore = defineStore({
         window.addEventListener("mousemove", mousemove);
         window.addEventListener("mouseup", mouseup);
 
-        function mousemove(e) {
+        function mousemove(e: MouseEvent) {
           resizeStore.isResizingTopRight = true;
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
             rulerSnap.on = true;
@@ -342,16 +330,17 @@ export const useResizeStore = defineStore({
         }
       }
     },
-    resizeRight(e) {
+    resizeRight(e: MouseEvent) {
       const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
       const rulerSnap = useRulerSnapStore();
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        this.prevLeft = selectToi.selectedBoxData.cssRules[0].style.left?.value;
-        this.prevWidth =
-          selectToi.selectedBoxData.cssRules[0].style.width.value;
+        this.prevWidth = selectToi.selectedBoxData.cssRules[0].style.width
+          ?.value as number;
+        this.prevLeft = selectToi.selectedBoxData.cssRules[0].style.left
+          ?.value as number;
 
         this.prevX = e.clientX;
 
@@ -360,7 +349,7 @@ export const useResizeStore = defineStore({
         window.addEventListener("mousemove", mousemove);
         window.addEventListener("mouseup", mouseup);
 
-        function mousemove(e) {
+        function mousemove(e: MouseEvent) {
           resizeStore.isResizingRight = true;
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
             rulerSnap.on = true;
@@ -383,19 +372,17 @@ export const useResizeStore = defineStore({
         }
       }
     },
-    resizeLeft(e) {
+    resizeLeft(e: MouseEvent) {
       const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
       const rulerSnap = useRulerSnapStore();
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        this.prevWidth = parseInt(
-          selectToi.selectedBoxData.cssRules[0].style.width.value
-        );
-        this.prevLeft = parseInt(
-          selectToi.selectedBoxData.cssRules[0].style.left.value
-        );
+        this.prevWidth = selectToi.selectedBoxData.cssRules[0].style.width
+          ?.value as number;
+        this.prevLeft = selectToi.selectedBoxData.cssRules[0].style.left
+          ?.value as number;
 
         this.prevX = e.clientX;
 
@@ -404,7 +391,7 @@ export const useResizeStore = defineStore({
         window.addEventListener("mousemove", mousemove);
         window.addEventListener("mouseup", mouseup);
 
-        function mousemove(e) {
+        function mousemove(e: MouseEvent) {
           resizeStore.isResizingLeft = true;
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
             rulerSnap.on = true;
@@ -429,16 +416,17 @@ export const useResizeStore = defineStore({
         }
       }
     },
-    resizeTop(e) {
+    resizeTop(e: MouseEvent) {
       const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
       const rulerSnap = useRulerSnapStore();
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        this.prevHeight =
-          selectToi.selectedBoxData.cssRules[0].style.height.value;
-        this.prevTop = selectToi.selectedBoxData.cssRules[0].style.top.value;
+        this.prevTop = selectToi.selectedBoxData.cssRules[0].style.top
+          ?.value as number;
+        this.prevHeight = selectToi.selectedBoxData.cssRules[0].style.height
+          ?.value as number;
 
         this.prevY = e.clientY;
 
@@ -447,7 +435,7 @@ export const useResizeStore = defineStore({
         window.addEventListener("mousemove", mousemove);
         window.addEventListener("mouseup", mouseup);
 
-        function mousemove(e) {
+        function mousemove(e: MouseEvent) {
           resizeStore.isResizingTop = true;
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
             rulerSnap.on = true;
@@ -472,16 +460,17 @@ export const useResizeStore = defineStore({
         }
       }
     },
-    resizeBottom(e) {
+    resizeBottom(e: MouseEvent) {
       const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
       const rulerSnap = useRulerSnapStore();
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        this.prevTop = selectToi.selectedBoxData.cssRules[0].style.top?.value;
-        this.prevHeight =
-          selectToi.selectedBoxData.cssRules[0].style.height.value;
+        this.prevTop = selectToi.selectedBoxData.cssRules[0].style.top
+          ?.value as number;
+        this.prevHeight = selectToi.selectedBoxData.cssRules[0].style.height
+          ?.value as number;
 
         this.prevY = e.clientY;
 
@@ -490,7 +479,7 @@ export const useResizeStore = defineStore({
         window.addEventListener("mousemove", mousemove);
         window.addEventListener("mouseup", mouseup);
 
-        function mousemove(e) {
+        function mousemove(e: MouseEvent) {
           resizeStore.isResizingBottom = true;
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
             rulerSnap.on = true;

@@ -3,13 +3,13 @@
     <div
       :style="{
         left: frame.cssRules[0].style.left
-          ? (frame.cssRules[0].style.left.value +
+          ? (frame.cssRules[0].style.left.value as number +
               squareStore.offsetLeft / squareStore.scale) *
               squareStore.scale +
             'px'
           : useGetElementRect(frame.id)?.x + 'px',
         top: frame.cssRules[0].style.top
-          ? (frame.cssRules[0].style.top.value +
+          ? (frame.cssRules[0].style.top.value as number +
               squareStore.offsetTop / squareStore.scale) *
               squareStore.scale +
             'px'
@@ -18,9 +18,7 @@
       class="absolute overflow-x-hidden -mt-5 pointer-events-auto cursor-default overflow-ellipsis"
     >
       <p
-        @mousedown.stop="
-          canvasStore.dndWithoutParent($event, frame.id, frame.type)
-        "
+        @mousedown.stop="canvasStore.dndWithoutParent($event, frame.id)"
         @mouseover.stop="
           () => {
             if (!canvasStore.isDragging) {
@@ -35,7 +33,7 @@
             selectToi.treeHoverId = '';
           }
         "
-        @click="selectToi.changeSelected($event, frame.id, frame.type)"
+        @click="selectToi.changeSelected($event, frame.id)"
         class="fixed pointer-events-auto cursor-default hover:text-[#6EB0E0] hover:opacity-100 overflow-hidden overflow-ellipsis"
         :class="{
           'text-[#6EB0E0] opacity-100':

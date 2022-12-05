@@ -54,11 +54,17 @@ export type Node = {
   type: "box" | "div" | "text";
   textContent?: string;
   display?: "hide" | "show";
+  expandTree?: boolean;
   cssRules: Array<Breakpoint>;
   children: Array<Node>;
 };
 
 export type Document = Array<Node>;
+
+interface MouseEventExtra extends MouseEvent {
+  layerX?: number;
+  layerY?: number;
+}
 
 export const useCounterStore = defineStore({
   id: "counter",
@@ -592,10 +598,9 @@ export const useCounterStore = defineStore({
         name: "rectangle12",
         id: "owpif9eipiojohuh90i",
         type: "box",
-        repeat: true,
         cssRules: [
           {
-            breakpoint: 1,
+            id: 1,
             style: {
               display: { type: "keyword", value: "flex" },
               flexDirection: { type: "keyword", value: "column" },
@@ -625,7 +630,7 @@ export const useCounterStore = defineStore({
         }
       });
     },
-    changeSelected(e: MouseEvent, id: string) {
+    changeSelected(e: MouseEventExtra, id: string) {
       const squareStore = useSquareStore();
       const paddingResize = usePaddingResizeStore();
 
@@ -645,13 +650,13 @@ export const useCounterStore = defineStore({
             }
           });
 
-        this.prevX = e.layerX;
-        this.prevY = e.layerY;
+        this.prevX = e.layerX as number;
+        this.prevY = e.layerY as number;
       }
     },
-    changeSelectedNewlyAdded(e: MouseEvent, newData: Node) {
-      this.prevX = e.layerX;
-      this.prevY = e.layerY;
+    changeSelectedNewlyAdded(e: MouseEventExtra, newData: Node) {
+      this.prevX = e.layerX as number;
+      this.prevY = e.layerY as number;
 
       Promise.resolve().then(() => {
         this.selectedBox = newData.id;
@@ -669,7 +674,7 @@ export const useCounterStore = defineStore({
       } else {
         let canvasDnd = useCanvasDndStore();
         this.selectedBox = "";
-        this.selectedBoxData = {};
+        this.selectedBoxData = {} as Node;
         canvasStore.selection = [];
         canvasStore.multiSelectResizerRect = {
           left: "",

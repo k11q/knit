@@ -13,14 +13,13 @@
   </template>
 </template>
 
-<script setup>
-import { useSquareStore } from "~~/src/stores/dataSquare";
-import { useRulerSnapStore } from "~~/src/stores/rulerSnap";
+<script setup lang="ts">
+import { Point, useRulerSnapStore } from "@/stores/rulerSnap";
 
 const rulerSnap = useRulerSnapStore();
 
 const props = defineProps({
-  points: Array,
+  points: Array<Point>,
 });
 </script>
 

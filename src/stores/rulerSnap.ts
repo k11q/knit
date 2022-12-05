@@ -4,6 +4,30 @@ import { useSquareStore } from "./dataSquare";
 import { useResizeStore } from "./resizeStore";
 import { useCanvasStore } from "./canvas";
 
+export type Point = {
+  x: number;
+  y: number;
+};
+
+type Points = Point[];
+
+type RulerPosition = {
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
+
+type Line = {
+  lineTop?: number;
+  lineMiddleY?: number;
+  lineBottom?: number;
+  lineLeft?: number;
+  lineMiddleX?: number;
+  lineRight?: number;
+  lineMiddle?: number;
+};
+
 export const useRulerSnapStore = defineStore({
   id: "rulerSnap",
   state: () => ({
@@ -16,23 +40,15 @@ export const useRulerSnapStore = defineStore({
     currDragPoints: {},
     displayedPoints: {},
     lines: {},
-    snapLines: {
-      lineTop: NaN,
-      lineMiddleY: NaN,
-      lineBottom: NaN,
-      lineLeft: NaN,
-      lineMiddleX: NaN,
-      lineRight: NaN,
-      lineMiddle: NaN,
-    },
+    snapLines: {} as Line,
     rulerPosition: {
       top: NaN,
       bottom: NaN,
       left: NaN,
       right: NaN,
     },
-    snapPoints: [],
-    siblings: [],
+    snapPoints: [] as Points,
+    siblings: [] as HTMLElement[],
     siblingsPoints: [],
     prevX: NaN,
     prevY: NaN,
@@ -126,9 +142,9 @@ export const useRulerSnapStore = defineStore({
       }
     },
     */
-    setSiblingsPoints(id) {
-      let siblingPointsCopy = [];
-      const element = document.querySelector(`[data-id=${id}]`);
+    setSiblingsPoints(id: string) {
+      let siblingPointsCopy = [] as Points;
+      const element = document.querySelector(`[data-id=${id}]`)!;
       const elementRect = element.getBoundingClientRect();
 
       this.siblings.forEach((i) => {
@@ -274,7 +290,7 @@ export const useRulerSnapStore = defineStore({
       });
       this.snapPoints = [...siblingPointsCopy];
 
-      let rulerPositionCopy = {};
+      let rulerPositionCopy = {} as RulerPosition;
       this.snapPoints.map((i) => {
         if (
           !rulerPositionCopy.top ||
@@ -322,17 +338,15 @@ export const useRulerSnapStore = defineStore({
       } else return false;
     },
     */
-    setRulerSnap(e, id) {
-      const selectToi = useCounterStore();
+    setRulerSnap(e: MouseEvent, id: string) {
       const squareStore = useSquareStore();
       const rulerSnap = useRulerSnapStore();
 
-      const element = document.querySelector(`[data-id=${id}]`);
+      const element = document.querySelector(`[data-id=${id}]`)!;
       const elementRect = element.getBoundingClientRect();
 
       const prevX = this.prevX;
       const prevY = this.prevY;
-      const currDragPointsCopy = {};
 
       const currDragTop = e.clientY - prevY;
       const currDragMiddleY = e.clientY - prevY + elementRect.height / 2;
@@ -341,7 +355,6 @@ export const useRulerSnapStore = defineStore({
       const currDragMiddleX = e.clientX - prevX + elementRect.width / 2;
       const currDragRight = e.clientX - prevX + elementRect.width;
 
-      let siblingPointsCopy = [];
       let snapLinesCopy = {
         lineTop: NaN,
         lineMiddleY: NaN,
@@ -353,9 +366,12 @@ export const useRulerSnapStore = defineStore({
       };
 
       if (this.on) {
-        this.siblings = [
+        let siblings = [
           ...document.querySelector(`[data-id=${id}]`)!.parentElement!.children,
-        ].filter((el) => el.dataset.id !== id)!;
+        ] as HTMLElement[];
+        this.siblings = siblings.filter(
+          (el) => el.dataset.id !== id
+        ) as HTMLElement[];
 
         Promise.resolve()
           .then(() => {
@@ -865,7 +881,7 @@ export const useRulerSnapStore = defineStore({
         this.snapLeft = false;
       }
     },
-    setResizeSnap(e, id) {
+    setResizeSnap(e: MouseEvent, id: string) {
       const squareStore = useSquareStore();
       const resizeStore = useResizeStore();
       const selectToi = useCounterStore();
@@ -881,9 +897,13 @@ export const useRulerSnapStore = defineStore({
 
       if (!useCheckParent(id)) {
         if (this.on) {
-          this.siblings = [
-            ...document.querySelector(`[data-id=${id}]`).parentElement.children,
-          ].filter((el) => el.dataset.id !== id);
+          let siblings = [
+            ...document.querySelector(`[data-id=${id}]`)!.parentElement!
+              .children,
+          ] as HTMLElement[];
+          this.siblings = siblings.filter(
+            (el) => el.dataset.id !== id
+          ) as HTMLElement[];
 
           Promise.resolve()
             .then(() => {
@@ -1100,14 +1120,12 @@ export const useRulerSnapStore = defineStore({
                     );
 
                     changeWidth(
-                      (selectToi.selectedBoxData.cssRules[0].style.width.value =
-                        Math.round(
-                          resizeStore.prevLeft +
-                            resizeStore.prevWidth -
-                            (snapLinesCopy.lineX - squareStore.offsetLeft) /
-                              squareStore.scale
-                        )),
-                      unit
+                      Math.round(
+                        resizeStore.prevLeft +
+                          resizeStore.prevWidth -
+                          (snapLinesCopy.lineX - squareStore.offsetLeft) /
+                            squareStore.scale
+                      )
                     );
 
                     if (!snapLinesCopy.lineY) {

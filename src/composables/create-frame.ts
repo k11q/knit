@@ -14,10 +14,10 @@ export function createFrame(e: MouseEvent) {
   let frameNode = {
     name: "",
     id: "",
-    type: "div" as "box" | "div" | "text",
+    type: "div",
     cssRules: [
       {
-        breakpoint: 1 as string | number,
+        id: 1,
         style: {
           display: { type: "keyword", value: "flex" },
           backgroundColor: { type: "keyword", value: "white" },
@@ -29,8 +29,8 @@ export function createFrame(e: MouseEvent) {
         },
       },
     ],
-    children: [] as Node[],
-  };
+    children: [],
+  } as Node;
 
   let rootData = selectToi.data;
 
@@ -43,8 +43,8 @@ export function createFrame(e: MouseEvent) {
 
   frameNode.id = useCreateId();
   frameNode.name = "frame" + documentStore.frameCount;
-  frameNode.cssRules[0].style.left.value = prevX;
-  frameNode.cssRules[0].style.top.value = prevY;
+  frameNode.cssRules[0].style.left!.value = prevX;
+  frameNode.cssRules[0].style.top!.value = prevY;
 
   resizeStore.prevLeft = prevX;
   resizeStore.prevTop = prevY;
