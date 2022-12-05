@@ -135,7 +135,8 @@ const props = defineProps({
 
 function styleProps(node: knitNode) {
   return {
-    display: node.cssRules[0]?.style?.display?.value,
+    display:
+      props.depth === 0 ? "fixed" : node.cssRules[0]?.style?.display?.value,
     flexDirection: node.cssRules[0]?.style?.flexDirection?.value,
     justifyContent: node.cssRules[0]?.style?.justifyContent?.value,
     alignItems: node.cssRules[0]?.style?.alignItems?.value,
@@ -147,11 +148,15 @@ function styleProps(node: knitNode) {
       node.cssRules[0]?.style?.borderRadius?.unit!,
     position: node.cssRules[0]?.style?.position?.value,
     left:
-      node.cssRules[0]?.style?.left?.value! +
-      node.cssRules[0]?.style?.left?.unit!,
+      props.depth !== 0
+        ? node.cssRules[0]?.style?.left?.value! +
+          node.cssRules[0]?.style?.left?.unit!
+        : "",
     top:
-      node.cssRules[0]?.style?.top?.value! +
-      node.cssRules[0]?.style?.top?.unit!,
+      props.depth !== 0
+        ? node.cssRules[0]?.style?.top?.value! +
+          node.cssRules[0]?.style?.top?.unit!
+        : "",
     right:
       node.cssRules[0]?.style?.right?.value! +
       node.cssRules[0]?.style?.right?.unit!,
@@ -179,6 +184,10 @@ function styleProps(node: knitNode) {
     paddingLeft:
       node.cssRules[0]?.style?.paddingLeft?.value! +
       node.cssRules[0]?.style?.paddingLeft?.unit!,
+    transform:
+      props.depth === 0
+        ? `translateX(${node.cssRules[0]?.style?.left?.value}px) translateY(${node.cssRules[0]?.style?.top?.value}px)`
+        : "",
   };
 }
 
