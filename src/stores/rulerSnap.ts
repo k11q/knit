@@ -49,6 +49,7 @@ export const useRulerSnapStore = defineStore({
     },
     snapPoints: [] as Points,
     siblings: [] as HTMLElement[],
+    selectedSiblings: [] as HTMLElement[],
     siblingsPoints: [],
     prevX: NaN,
     prevY: NaN,
@@ -190,7 +191,7 @@ export const useRulerSnapStore = defineStore({
           }
         );
       }
-      this.siblings.forEach((i) => {
+      this.selectedSiblings.forEach((i) => {
         let siblingRect = i.getBoundingClientRect();
 
         //set siblings points
@@ -363,6 +364,8 @@ export const useRulerSnapStore = defineStore({
         lineMiddle: NaN,
       };
 
+      let selectedSiblingsCopy = [] as HTMLElement[];
+
       let siblings = [
         ...document.querySelector(`[data-id=${id}]`)!.parentElement!.children,
       ] as HTMLElement[];
@@ -378,260 +381,301 @@ export const useRulerSnapStore = defineStore({
           let siblingMiddleX = siblingRect.x + siblingRect.width / 2;
           let siblingRight = siblingRect.x + siblingRect.width;
 
-          //find distance between moving element and all other elements
-          //top to top
-          if (currDragTop < siblingTop + 3 && currDragTop > siblingTop - 3) {
-            if (
-              !snapLinesCopy.lineTop ||
-              (snapLinesCopy.lineTop &&
-                currDragTop - snapLinesCopy.lineTop > currDragTop - siblingTop)
-            ) {
-              snapLinesCopy.lineTop = siblingTop;
-            }
-          }
-          //top to middleY
+          //if any add to selected siblings
           if (
-            currDragTop < siblingMiddleY + 3 &&
-            currDragTop > siblingMiddleY - 3
+            (currDragTop < siblingTop + 3 && currDragTop > siblingTop - 3) ||
+            (currDragTop < siblingMiddleY + 3 &&
+              currDragTop > siblingMiddleY - 3) ||
+            (currDragTop < siblingBottom + 3 &&
+              currDragTop > siblingBottom - 3) ||
+            (currDragMiddleY < siblingTop + 3 &&
+              currDragMiddleY > siblingTop - 3) ||
+            (currDragMiddleY < siblingMiddleY + 3 &&
+              currDragMiddleY > siblingMiddleY - 3) ||
+            (currDragMiddleY < siblingBottom + 3 &&
+              currDragMiddleY > siblingBottom - 3) ||
+            (currDragBottom < siblingTop + 3 &&
+              currDragBottom > siblingTop - 3) ||
+            (currDragBottom < siblingMiddleY + 3 &&
+              currDragBottom > siblingMiddleY - 3) ||
+            (currDragBottom < siblingBottom + 3 &&
+              currDragBottom > siblingBottom - 3) ||
+            (currDragLeft < siblingLeft + 3 &&
+              currDragLeft > siblingLeft - 3) ||
+            (currDragLeft < siblingMiddleX + 3 &&
+              currDragLeft > siblingMiddleX - 3) ||
+            (currDragLeft < siblingRight + 3 &&
+              currDragLeft > siblingRight - 3) ||
+            (currDragMiddleX < siblingLeft + 3 &&
+              currDragMiddleX > siblingLeft - 3) ||
+            (currDragMiddleX < siblingMiddleX + 3 &&
+              currDragMiddleX > siblingMiddleX - 3) ||
+            (currDragMiddleX < siblingRight + 3 &&
+              currDragMiddleX > siblingRight - 3) ||
+            (currDragRight < siblingLeft + 3 &&
+              currDragRight > siblingLeft - 3) ||
+            (currDragRight < siblingMiddleX + 3 &&
+              currDragRight > siblingMiddleX - 3) ||
+            (currDragRight < siblingRight + 3 &&
+              currDragRight > siblingRight - 3)
           ) {
-            if (
-              !snapLinesCopy.lineTop ||
-              (snapLinesCopy.lineTop &&
-                currDragTop - snapLinesCopy.lineTop >
-                  currDragTop - siblingMiddleY)
-            ) {
-              snapLinesCopy.lineTop = siblingMiddleY;
+            //find distance between moving element and all other elements
+            //top to top
+            if (currDragTop < siblingTop + 3 && currDragTop > siblingTop - 3) {
+              if (
+                !snapLinesCopy.lineTop ||
+                (snapLinesCopy.lineTop &&
+                  currDragTop - snapLinesCopy.lineTop >
+                    currDragTop - siblingTop)
+              ) {
+                snapLinesCopy.lineTop = siblingTop;
+              }
             }
-          }
-          //top to bottom
-          if (
-            currDragTop < siblingBottom + 3 &&
-            currDragTop > siblingBottom - 3
-          ) {
+            //top to middleY
             if (
-              !snapLinesCopy.lineTop ||
-              (snapLinesCopy.lineTop &&
-                currDragTop - snapLinesCopy.lineTop >
-                  currDragTop - siblingBottom)
+              currDragTop < siblingMiddleY + 3 &&
+              currDragTop > siblingMiddleY - 3
             ) {
-              snapLinesCopy.lineTop = siblingBottom;
+              if (
+                !snapLinesCopy.lineTop ||
+                (snapLinesCopy.lineTop &&
+                  currDragTop - snapLinesCopy.lineTop >
+                    currDragTop - siblingMiddleY)
+              ) {
+                snapLinesCopy.lineTop = siblingMiddleY;
+              }
             }
-          }
+            //top to bottom
+            if (
+              currDragTop < siblingBottom + 3 &&
+              currDragTop > siblingBottom - 3
+            ) {
+              if (
+                !snapLinesCopy.lineTop ||
+                (snapLinesCopy.lineTop &&
+                  currDragTop - snapLinesCopy.lineTop >
+                    currDragTop - siblingBottom)
+              ) {
+                snapLinesCopy.lineTop = siblingBottom;
+              }
+            }
 
-          //middleY to top
-          if (
-            currDragMiddleY < siblingTop + 3 &&
-            currDragMiddleY > siblingTop - 3
-          ) {
+            //middleY to top
             if (
-              !snapLinesCopy.lineMiddleY ||
-              (snapLinesCopy.lineMiddleY &&
-                currDragMiddleY - snapLinesCopy.lineMiddleY >
-                  currDragMiddleY - siblingTop)
+              currDragMiddleY < siblingTop + 3 &&
+              currDragMiddleY > siblingTop - 3
             ) {
-              snapLinesCopy.lineMiddleY = siblingTop;
+              if (
+                !snapLinesCopy.lineMiddleY ||
+                (snapLinesCopy.lineMiddleY &&
+                  currDragMiddleY - snapLinesCopy.lineMiddleY >
+                    currDragMiddleY - siblingTop)
+              ) {
+                snapLinesCopy.lineMiddleY = siblingTop;
+              }
             }
-          }
-          //middleY to middleY
-          if (
-            currDragMiddleY < siblingMiddleY + 3 &&
-            currDragMiddleY > siblingMiddleY - 3
-          ) {
+            //middleY to middleY
             if (
-              !snapLinesCopy.lineMiddleY ||
-              (snapLinesCopy.lineMiddleY &&
-                currDragMiddleY - snapLinesCopy.lineMiddleY >
-                  currDragMiddleY - siblingMiddleY)
+              currDragMiddleY < siblingMiddleY + 3 &&
+              currDragMiddleY > siblingMiddleY - 3
             ) {
-              snapLinesCopy.lineMiddleY = siblingMiddleY;
+              if (
+                !snapLinesCopy.lineMiddleY ||
+                (snapLinesCopy.lineMiddleY &&
+                  currDragMiddleY - snapLinesCopy.lineMiddleY >
+                    currDragMiddleY - siblingMiddleY)
+              ) {
+                snapLinesCopy.lineMiddleY = siblingMiddleY;
+              }
             }
-          }
-          //middleY to bottom
-          if (
-            currDragMiddleY < siblingBottom + 3 &&
-            currDragMiddleY > siblingBottom - 3
-          ) {
+            //middleY to bottom
             if (
-              !snapLinesCopy.lineMiddleY ||
-              (snapLinesCopy.lineMiddleY &&
-                currDragMiddleY - snapLinesCopy.lineMiddleY >
-                  currDragMiddleY - siblingBottom)
+              currDragMiddleY < siblingBottom + 3 &&
+              currDragMiddleY > siblingBottom - 3
             ) {
-              snapLinesCopy.lineMiddleY = siblingBottom;
+              if (
+                !snapLinesCopy.lineMiddleY ||
+                (snapLinesCopy.lineMiddleY &&
+                  currDragMiddleY - snapLinesCopy.lineMiddleY >
+                    currDragMiddleY - siblingBottom)
+              ) {
+                snapLinesCopy.lineMiddleY = siblingBottom;
+              }
             }
-          }
 
-          //bottom to top
-          if (
-            currDragBottom < siblingTop + 3 &&
-            currDragBottom > siblingTop - 3
-          ) {
+            //bottom to top
             if (
-              !snapLinesCopy.lineBottom ||
-              (snapLinesCopy.lineBottom &&
-                currDragBottom - snapLinesCopy.lineBottom >
-                  currDragBottom - siblingTop)
+              currDragBottom < siblingTop + 3 &&
+              currDragBottom > siblingTop - 3
             ) {
-              snapLinesCopy.lineBottom = siblingTop;
+              if (
+                !snapLinesCopy.lineBottom ||
+                (snapLinesCopy.lineBottom &&
+                  currDragBottom - snapLinesCopy.lineBottom >
+                    currDragBottom - siblingTop)
+              ) {
+                snapLinesCopy.lineBottom = siblingTop;
+              }
             }
-          }
-          //bottom to middleY
-          if (
-            currDragBottom < siblingMiddleY + 3 &&
-            currDragBottom > siblingMiddleY - 3
-          ) {
+            //bottom to middleY
             if (
-              !snapLinesCopy.lineBottom ||
-              (snapLinesCopy.lineBottom &&
-                currDragBottom - snapLinesCopy.lineBottom >
-                  currDragBottom - siblingMiddleY)
+              currDragBottom < siblingMiddleY + 3 &&
+              currDragBottom > siblingMiddleY - 3
             ) {
-              snapLinesCopy.lineBottom = siblingMiddleY;
+              if (
+                !snapLinesCopy.lineBottom ||
+                (snapLinesCopy.lineBottom &&
+                  currDragBottom - snapLinesCopy.lineBottom >
+                    currDragBottom - siblingMiddleY)
+              ) {
+                snapLinesCopy.lineBottom = siblingMiddleY;
+              }
             }
-          }
-          //bottom to bottom
-          if (
-            currDragBottom < siblingBottom + 3 &&
-            currDragBottom > siblingBottom - 3
-          ) {
+            //bottom to bottom
             if (
-              !snapLinesCopy.lineBottom ||
-              (snapLinesCopy.lineBottom &&
-                currDragBottom - snapLinesCopy.lineBottom >
-                  currDragBottom - siblingBottom)
+              currDragBottom < siblingBottom + 3 &&
+              currDragBottom > siblingBottom - 3
             ) {
-              snapLinesCopy.lineBottom = siblingBottom;
+              if (
+                !snapLinesCopy.lineBottom ||
+                (snapLinesCopy.lineBottom &&
+                  currDragBottom - snapLinesCopy.lineBottom >
+                    currDragBottom - siblingBottom)
+              ) {
+                snapLinesCopy.lineBottom = siblingBottom;
+              }
             }
-          }
 
-          //left to left
-          if (
-            currDragLeft < siblingLeft + 3 &&
-            currDragLeft > siblingLeft - 3
-          ) {
+            //left to left
             if (
-              !snapLinesCopy.lineLeft ||
-              (snapLinesCopy.lineLeft &&
-                currDragLeft - snapLinesCopy.lineLeft >
-                  currDragLeft - siblingLeft)
+              currDragLeft < siblingLeft + 3 &&
+              currDragLeft > siblingLeft - 3
             ) {
-              snapLinesCopy.lineLeft = siblingLeft;
+              if (
+                !snapLinesCopy.lineLeft ||
+                (snapLinesCopy.lineLeft &&
+                  currDragLeft - snapLinesCopy.lineLeft >
+                    currDragLeft - siblingLeft)
+              ) {
+                snapLinesCopy.lineLeft = siblingLeft;
+              }
             }
-          }
-          //left to middleX
-          if (
-            currDragLeft < siblingMiddleX + 3 &&
-            currDragLeft > siblingMiddleX - 3
-          ) {
+            //left to middleX
             if (
-              !snapLinesCopy.lineLeft ||
-              (snapLinesCopy.lineLeft &&
-                currDragLeft - snapLinesCopy.lineLeft >
-                  currDragLeft - siblingMiddleX)
+              currDragLeft < siblingMiddleX + 3 &&
+              currDragLeft > siblingMiddleX - 3
             ) {
-              snapLinesCopy.lineLeft = siblingMiddleX;
+              if (
+                !snapLinesCopy.lineLeft ||
+                (snapLinesCopy.lineLeft &&
+                  currDragLeft - snapLinesCopy.lineLeft >
+                    currDragLeft - siblingMiddleX)
+              ) {
+                snapLinesCopy.lineLeft = siblingMiddleX;
+              }
             }
-          }
-          //left to right
-          if (
-            currDragLeft < siblingRight + 3 &&
-            currDragLeft > siblingRight - 3
-          ) {
+            //left to right
             if (
-              !snapLinesCopy.lineLeft ||
-              (snapLinesCopy.lineLeft &&
-                currDragLeft - snapLinesCopy.lineLeft >
-                  currDragLeft - siblingRight)
+              currDragLeft < siblingRight + 3 &&
+              currDragLeft > siblingRight - 3
             ) {
-              snapLinesCopy.lineLeft = siblingRight;
+              if (
+                !snapLinesCopy.lineLeft ||
+                (snapLinesCopy.lineLeft &&
+                  currDragLeft - snapLinesCopy.lineLeft >
+                    currDragLeft - siblingRight)
+              ) {
+                snapLinesCopy.lineLeft = siblingRight;
+              }
             }
-          }
 
-          //middleX to left
-          if (
-            currDragMiddleX < siblingLeft + 3 &&
-            currDragMiddleX > siblingLeft - 3
-          ) {
+            //middleX to left
             if (
-              !snapLinesCopy.lineMiddleX ||
-              (snapLinesCopy.lineMiddleX &&
-                currDragMiddleX - snapLinesCopy.lineMiddleX >
-                  currDragMiddleX - siblingLeft)
+              currDragMiddleX < siblingLeft + 3 &&
+              currDragMiddleX > siblingLeft - 3
             ) {
-              snapLinesCopy.lineMiddleX = siblingLeft;
+              if (
+                !snapLinesCopy.lineMiddleX ||
+                (snapLinesCopy.lineMiddleX &&
+                  currDragMiddleX - snapLinesCopy.lineMiddleX >
+                    currDragMiddleX - siblingLeft)
+              ) {
+                snapLinesCopy.lineMiddleX = siblingLeft;
+              }
             }
-          }
-          //middleX to middleX
-          if (
-            currDragMiddleX < siblingMiddleX + 3 &&
-            currDragMiddleX > siblingMiddleX - 3
-          ) {
+            //middleX to middleX
             if (
-              !snapLinesCopy.lineMiddleX ||
-              (snapLinesCopy.lineMiddleX &&
-                currDragMiddleX - snapLinesCopy.lineMiddleX >
-                  currDragMiddleX - siblingMiddleX)
+              currDragMiddleX < siblingMiddleX + 3 &&
+              currDragMiddleX > siblingMiddleX - 3
             ) {
-              snapLinesCopy.lineMiddleX = siblingMiddleX;
+              if (
+                !snapLinesCopy.lineMiddleX ||
+                (snapLinesCopy.lineMiddleX &&
+                  currDragMiddleX - snapLinesCopy.lineMiddleX >
+                    currDragMiddleX - siblingMiddleX)
+              ) {
+                snapLinesCopy.lineMiddleX = siblingMiddleX;
+              }
             }
-          }
-          //middleX to right
-          if (
-            currDragMiddleX < siblingRight + 3 &&
-            currDragMiddleX > siblingRight - 3
-          ) {
+            //middleX to right
             if (
-              !snapLinesCopy.lineMiddleX ||
-              (snapLinesCopy.lineMiddleX &&
-                currDragMiddleX - snapLinesCopy.lineMiddleX >
-                  currDragMiddleX - siblingRight)
+              currDragMiddleX < siblingRight + 3 &&
+              currDragMiddleX > siblingRight - 3
             ) {
-              snapLinesCopy.lineMiddleX = siblingRight;
+              if (
+                !snapLinesCopy.lineMiddleX ||
+                (snapLinesCopy.lineMiddleX &&
+                  currDragMiddleX - snapLinesCopy.lineMiddleX >
+                    currDragMiddleX - siblingRight)
+              ) {
+                snapLinesCopy.lineMiddleX = siblingRight;
+              }
             }
-          }
 
-          //right to left
-          if (
-            currDragRight < siblingLeft + 3 &&
-            currDragRight > siblingLeft - 3
-          ) {
+            //right to left
             if (
-              !snapLinesCopy.lineRight ||
-              (snapLinesCopy.lineRight &&
-                currDragRight - snapLinesCopy.lineRight >
-                  currDragRight - siblingLeft)
+              currDragRight < siblingLeft + 3 &&
+              currDragRight > siblingLeft - 3
             ) {
-              snapLinesCopy.lineRight = siblingLeft;
+              if (
+                !snapLinesCopy.lineRight ||
+                (snapLinesCopy.lineRight &&
+                  currDragRight - snapLinesCopy.lineRight >
+                    currDragRight - siblingLeft)
+              ) {
+                snapLinesCopy.lineRight = siblingLeft;
+              }
             }
-          }
-          //right to middleX
-          if (
-            currDragRight < siblingMiddleX + 3 &&
-            currDragRight > siblingMiddleX - 3
-          ) {
+            //right to middleX
             if (
-              !snapLinesCopy.lineRight ||
-              (snapLinesCopy.lineRight &&
-                currDragRight - snapLinesCopy.lineRight >
-                  currDragRight - siblingMiddleX)
+              currDragRight < siblingMiddleX + 3 &&
+              currDragRight > siblingMiddleX - 3
             ) {
-              snapLinesCopy.lineRight = siblingMiddleX;
+              if (
+                !snapLinesCopy.lineRight ||
+                (snapLinesCopy.lineRight &&
+                  currDragRight - snapLinesCopy.lineRight >
+                    currDragRight - siblingMiddleX)
+              ) {
+                snapLinesCopy.lineRight = siblingMiddleX;
+              }
             }
-          }
-          //right to right
-          if (
-            currDragRight < siblingRight + 3 &&
-            currDragRight > siblingRight - 3
-          ) {
+            //right to right
             if (
-              !snapLinesCopy.lineRight ||
-              (snapLinesCopy.lineRight &&
-                currDragRight - snapLinesCopy.lineRight >
-                  currDragRight - siblingRight)
+              currDragRight < siblingRight + 3 &&
+              currDragRight > siblingRight - 3
             ) {
-              snapLinesCopy.lineRight = siblingRight;
+              if (
+                !snapLinesCopy.lineRight ||
+                (snapLinesCopy.lineRight &&
+                  currDragRight - snapLinesCopy.lineRight >
+                    currDragRight - siblingRight)
+              ) {
+                snapLinesCopy.lineRight = siblingRight;
+              }
+              e;
             }
-            e;
+            selectedSiblingsCopy.push(i);
           }
         });
         if (
@@ -725,6 +769,7 @@ export const useRulerSnapStore = defineStore({
           //snap /notsnap where there is/isnt line
 
           this.show = true;
+          this.selectedSiblings = [...selectedSiblingsCopy];
           this.snapLines = { ...snapLinesCopy };
           this.setSiblingsPoints(id);
           if (
@@ -838,6 +883,7 @@ export const useRulerSnapStore = defineStore({
 
       if (!useCheckParent(id)) {
         if (this.on) {
+          let selectedSiblingsCopy = [] as HTMLElement[];
           let siblings = [
             ...document.querySelector(`[data-id=${id}]`)!.parentElement!
               .children,
@@ -855,76 +901,89 @@ export const useRulerSnapStore = defineStore({
             let siblingMiddleX = siblingRect.x + siblingRect.width / 2;
             let siblingRight = siblingRect.x + siblingRect.width;
 
-            if (!resizeStore.isResizingLeft || !resizeStore.isResizingRight) {
-              //clientY to top
-              if (clientY < siblingTop + 3 && clientY > siblingTop - 3) {
+            if (
+              (clientY < siblingTop + 3 && clientY > siblingTop - 3) ||
+              (clientY < siblingBottom + 3 && clientY > siblingBottom - 3) ||
+              (clientY < siblingBottom + 3 && clientY > siblingBottom - 3) ||
+              (clientX < siblingLeft + 3 && clientX > siblingLeft - 3) ||
+              (clientX < siblingMiddleX + 3 && clientX > siblingMiddleX - 3) ||
+              (clientX < siblingRight + 3 && clientX > siblingRight - 3)
+            ) {
+              if (!resizeStore.isResizingLeft || !resizeStore.isResizingRight) {
+                //clientY to top
+                if (clientY < siblingTop + 3 && clientY > siblingTop - 3) {
+                  if (
+                    !snapLinesCopy.lineY ||
+                    (snapLinesCopy.lineY &&
+                      clientY - snapLinesCopy.lineY > clientY - siblingTop)
+                  ) {
+                    snapLinesCopy.lineY = siblingTop;
+                  }
+                }
+                //clientY to middleY
                 if (
-                  !snapLinesCopy.lineY ||
-                  (snapLinesCopy.lineY &&
-                    clientY - snapLinesCopy.lineY > clientY - siblingTop)
+                  clientY < siblingMiddleY + 3 &&
+                  clientY > siblingMiddleY - 3
                 ) {
-                  snapLinesCopy.lineY = siblingTop;
+                  if (
+                    !snapLinesCopy.lineY ||
+                    (snapLinesCopy.lineY &&
+                      clientY - snapLinesCopy.lineY > clientY - siblingMiddleY)
+                  ) {
+                    snapLinesCopy.lineY = siblingMiddleY;
+                  }
+                }
+                //clientY to bottom
+                if (
+                  clientY < siblingBottom + 3 &&
+                  clientY > siblingBottom - 3
+                ) {
+                  if (
+                    !snapLinesCopy.lineY ||
+                    (snapLinesCopy.lineY &&
+                      clientY - snapLinesCopy.lineY > clientY - siblingBottom)
+                  ) {
+                    snapLinesCopy.lineY = siblingBottom;
+                  }
                 }
               }
-              //clientY to middleY
-              if (
-                clientY < siblingMiddleY + 3 &&
-                clientY > siblingMiddleY - 3
-              ) {
-                if (
-                  !snapLinesCopy.lineY ||
-                  (snapLinesCopy.lineY &&
-                    clientY - snapLinesCopy.lineY > clientY - siblingMiddleY)
-                ) {
-                  snapLinesCopy.lineY = siblingMiddleY;
-                }
-              }
-              //clientY to bottom
-              if (clientY < siblingBottom + 3 && clientY > siblingBottom - 3) {
-                if (
-                  !snapLinesCopy.lineY ||
-                  (snapLinesCopy.lineY &&
-                    clientY - snapLinesCopy.lineY > clientY - siblingBottom)
-                ) {
-                  snapLinesCopy.lineY = siblingBottom;
-                }
-              }
-            }
 
-            if (!resizeStore.isResizingTop || !resizeStore.isResizingBottom) {
-              //clientX to left
-              if (clientX < siblingLeft + 3 && clientX > siblingLeft - 3) {
+              if (!resizeStore.isResizingTop || !resizeStore.isResizingBottom) {
+                //clientX to left
+                if (clientX < siblingLeft + 3 && clientX > siblingLeft - 3) {
+                  if (
+                    !snapLinesCopy.lineX ||
+                    (snapLinesCopy.lineX &&
+                      clientX - snapLinesCopy.lineX > clientX - siblingLeft)
+                  ) {
+                    snapLinesCopy.lineX = siblingLeft;
+                  }
+                }
+                //clientX to middleX
                 if (
-                  !snapLinesCopy.lineX ||
-                  (snapLinesCopy.lineX &&
-                    clientX - snapLinesCopy.lineX > clientX - siblingLeft)
+                  clientX < siblingMiddleX + 3 &&
+                  clientX > siblingMiddleX - 3
                 ) {
-                  snapLinesCopy.lineX = siblingLeft;
+                  if (
+                    !snapLinesCopy.lineX ||
+                    (snapLinesCopy.lineX &&
+                      clientX - snapLinesCopy.lineX > clientX - siblingMiddleX)
+                  ) {
+                    snapLinesCopy.lineX = siblingMiddleX;
+                  }
+                }
+                //clientX to right
+                if (clientX < siblingRight + 3 && clientX > siblingRight - 3) {
+                  if (
+                    !snapLinesCopy.lineX ||
+                    (snapLinesCopy.lineX &&
+                      clientX - snapLinesCopy.lineX > clientX - siblingRight)
+                  ) {
+                    snapLinesCopy.lineX = siblingRight;
+                  }
                 }
               }
-              //clientX to middleX
-              if (
-                clientX < siblingMiddleX + 3 &&
-                clientX > siblingMiddleX - 3
-              ) {
-                if (
-                  !snapLinesCopy.lineX ||
-                  (snapLinesCopy.lineX &&
-                    clientX - snapLinesCopy.lineX > clientX - siblingMiddleX)
-                ) {
-                  snapLinesCopy.lineX = siblingMiddleX;
-                }
-              }
-              //clientX to right
-              if (clientX < siblingRight + 3 && clientX > siblingRight - 3) {
-                if (
-                  !snapLinesCopy.lineX ||
-                  (snapLinesCopy.lineX &&
-                    clientX - snapLinesCopy.lineX > clientX - siblingRight)
-                ) {
-                  snapLinesCopy.lineX = siblingRight;
-                }
-              }
+              selectedSiblingsCopy.push(i);
             }
           });
 
@@ -1229,6 +1288,7 @@ export const useRulerSnapStore = defineStore({
               };
               this.snapLines = { ...snapLinesCopy2 };
             }
+            this.selectedSiblings = [...selectedSiblingsCopy];
             this.setSiblingsPoints(id);
           }
           if (!snapLinesCopy.lineX && !snapLinesCopy.lineY) {
