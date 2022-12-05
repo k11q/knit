@@ -192,7 +192,7 @@ export const useCanvasStore = defineStore({
             }
           }
           useGetElement(currDrag).style.willChange = "left, top";
-          function moveElement() {
+          function update() {
             if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
               rulerSnap.on = true;
               rulerSnap.setRulerSnap(e, currDrag);
@@ -243,7 +243,7 @@ export const useCanvasStore = defineStore({
             }
           }
 
-          window.requestAnimationFrame(moveElement);
+          requestAnimationFrame(update);
         }
         function mouseup() {
           if (isDragging) {
