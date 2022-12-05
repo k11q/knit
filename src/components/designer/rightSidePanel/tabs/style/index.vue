@@ -113,7 +113,9 @@
           <input
             type="number"
             :placeholder="
-              useGetElement(selectToi.selectedBoxData.id)?.offsetLeft
+              getLeft()
+                ? getLeft()
+                : useGetElementRect(selectToi.selectedBoxData.id)?.left
             "
             @input="
               (event) => {
@@ -136,9 +138,9 @@
           <input
             type="number"
             :placeholder="
-              selectToi.selectedBoxData.attr?.style.top
-                ? parseInt(selectToi.selectedBoxData.attr?.style.top)
-                : useGetElement(selectToi.selectedBoxData.id)?.offsetTop
+              getTop()
+                ? getTop()
+                : useGetElementRect(selectToi.selectedBoxData.id)?.top
             "
             @input="
               (event) => {
