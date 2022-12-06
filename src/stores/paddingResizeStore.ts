@@ -27,18 +27,16 @@ export const usePaddingResizeStore = defineStore({
     setResizerSize(id: string) {
       const selectToi = useCounterStore();
 
-      this.topResizerHeight = parseInt(
-        useGetElement(selectToi.selectedBoxData.id)?.style?.paddingTop
-      );
-      this.bottomResizerHeight = parseInt(
-        useGetElement(selectToi.selectedBoxData.id)?.style?.paddingBottom
-      );
-      this.leftResizerWidth = parseInt(
-        useGetElement(selectToi.selectedBoxData.id)?.style?.paddingLeft
-      );
-      this.rightResizerWidth = parseInt(
-        useGetElement(selectToi.selectedBoxData.id)?.style?.paddingRight
-      );
+      if (selectToi.selectedBoxData) {
+        let element = useGetElement(
+          selectToi.selectedBoxData.id
+        ) as HTMLElement;
+
+        this.topResizerHeight = parseInt(element?.style?.paddingTop);
+        this.bottomResizerHeight = parseInt(element?.style?.paddingBottom);
+        this.leftResizerWidth = parseInt(element?.style?.paddingLeft);
+        this.rightResizerWidth = parseInt(element?.style?.paddingRight);
+      }
     },
     setGap(id: string) {
       let element = useGetElement(id) as HTMLElement;

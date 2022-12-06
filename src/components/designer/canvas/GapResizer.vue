@@ -17,7 +17,7 @@
         left: gap.left + 'px',
         height: gap.height + 'px',
         top: gap.top + 'px',
-        right: `${1 / squareStore.scale}px`,
+        right: gap.right ? gap.right + 'px' : `${1 / squareStore.scale}px`,
         border: canvasStore.isResizingGap
           ? `${1.5 / squareStore.scale}px solid #E93372`
           : '',
