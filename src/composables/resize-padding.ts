@@ -91,7 +91,7 @@ export function useResizePaddingRight(e: MouseEvent) {
         );
         changePaddingRight(paddingResize.rightResizerWidth);
       }
-      if (getPaddingLeft() && getPaddingLeft()! <= 0) {
+      if (getPaddingRight() && getPaddingRight()! <= 0) {
         paddingResize.rightResizerWidth = 0;
         changePaddingRight(0);
       }
