@@ -1,9 +1,9 @@
 <template>
   <aside
-    class="border-l w-60 flex flex-col h-screen overflow-x-hidden pb-16 z-10 bg-[#18181A] border-[#040407]"
+    class="border-l w-60 flex flex-col h-screen overflow-x-hidden pb-16 z-10 bg-[#262626] border-[#3A3A3A]"
   >
     <div
-      class="h-10 flex-none flex flex-row items-center px-2 sticky top-0 bg-[#18181A]"
+      class="h-10 flex-none flex flex-row items-center px-2 sticky top-0 bg-[#262626]"
     >
       <div
         class="px-2 h-full items-center flex flex-row cursor-default"

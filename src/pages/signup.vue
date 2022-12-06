@@ -36,7 +36,7 @@ const emailSignUp = async () => {
     class="bg-[#181818] min-h-screen flex items-center justify-center text-xs text-[#EFEEF1]"
   >
     <div
-      class="rounded-md p-8 bg-[#1F1F23] gap-8 flex flex-col w-[500px] border-[#040407] border"
+      class="rounded-md p-8 bg-[#1F1F23] gap-8 flex flex-col w-[500px] border-[#3A3A3A] border"
     >
       <div class="flex flex-col w-full gap-3">
         <p class="text-[#E0E0E0]">Log in with</p>

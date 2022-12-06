@@ -74,7 +74,7 @@
         }"
       ></div>
       <div
-        class="absolute -ml-4 hover:bg-[#18181A] rounded-sm"
+        class="absolute -ml-4 hover:bg-[#262626] rounded-sm"
         v-if="node.children && node.children.length"
         @mousedown.prevent.stop="
           () => {

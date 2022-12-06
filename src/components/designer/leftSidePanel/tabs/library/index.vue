@@ -27,7 +27,7 @@
         class="flex-grow bg-transparent px-4 py-2 focus:outline-none placeholder-[#EFEEF1] placeholder-opacity-60"
       />
     </div>
-    <div class="flex flex-col border-t border-[#040407] p-2">
+    <div class="flex flex-col border-t border-[#3A3A3A] p-2">
       <div class="flex flex-row gap-[10px] pl-2 items-center">
         <p class="flex-grow opacity-80">Font</p>
         <div
@@ -70,7 +70,7 @@
         <p class="flex-grow">SF Pro</p>
       </div>
     </div>
-    <div class="flex flex-col border-t border-[#040407] p-2">
+    <div class="flex flex-col border-t border-[#3A3A3A] p-2">
       <div class="flex flex-row gap-[10px] pl-2 items-center">
         <p class="flex-grow opacity-80">Text</p>
         <div
@@ -123,7 +123,7 @@
         <p class="flex-grow">text-md</p>
       </div>
     </div>
-    <div class="flex flex-col border-t border-[#040407] p-2">
+    <div class="flex flex-col border-t border-[#3A3A3A] p-2">
       <div class="flex flex-row gap-[10px] pl-2 items-center">
         <p class="flex-grow opacity-80">Colors</p>
         <div

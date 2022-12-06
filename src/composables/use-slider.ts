@@ -15,7 +15,7 @@ export const useSlider = (
 
   const left = () => {
     const prevX = e.clientX;
-    const prevLeft = getLeft()!;
+    const prevLeft = getLeft() as number;
 
     window.addEventListener("mousemove", mousemove);
     window.addEventListener("mouseup", mouseup);
@@ -47,7 +47,7 @@ export const useSlider = (
   };
   const top = () => {
     const prevX = e.clientX;
-    const prevTop = getTop()!;
+    const prevTop = getTop() as number;
 
     window.addEventListener("mousemove", mousemove);
     window.addEventListener("mouseup", mouseup);
@@ -77,7 +77,7 @@ export const useSlider = (
   };
   const width = () => {
     const prevX = e.clientX;
-    const prevWidth = getWidth()!;
+    const prevWidth = getWidth() as number;
 
     window.addEventListener("mousemove", mousemove);
     window.addEventListener("mouseup", mouseup);
@@ -109,7 +109,7 @@ export const useSlider = (
   };
   const height = () => {
     const prevX = e.clientX;
-    const prevHeight = getHeight()!;
+    const prevHeight = getHeight() as number;
 
     window.addEventListener("mousemove", mousemove);
     window.addEventListener("mouseup", mouseup);
@@ -141,7 +141,7 @@ export const useSlider = (
   };
   const borderRadius = () => {
     const prevX = e.clientX;
-    let prevBorderRadius = getBorderRadius()!;
+    let prevBorderRadius = getBorderRadius() as number;
 
     window.addEventListener("mousemove", mousemove);
     window.addEventListener("mouseup", mouseup);
@@ -173,7 +173,7 @@ export const useSlider = (
   };
   const gap = () => {
     const prevX = e.clientX;
-    let prevGap = getGap()!;
+    let prevGap = getGap() as number;
 
     window.addEventListener("mousemove", mousemove);
     window.addEventListener("mouseup", mouseup);

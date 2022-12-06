@@ -2,7 +2,7 @@
   <div class="flex flex-col h-fit">
     <!--pages-->
     <div
-      class="flex flex-col border-b pt-[5px] gap-[1px] pb-3 border-[#040407]"
+      class="flex flex-col border-b pt-[5px] gap-[1px] pb-3 border-[#3A3A3A]"
     >
       <div class="flex flex-row justify-between pl-4 pr-2 items-center">
         <p class="font-medium">Pages</p>
@@ -38,7 +38,7 @@
             :to="`/project/${paramsId}/${canvas.id}`"
             class="cursor-default"
           >
-            <div class="flex flex-row gap-2 hover:bg-[#18181A] py-2 px-4">
+            <div class="flex flex-row gap-2 hover:bg-[#262626] py-2 px-4">
               <div
                 class="flex flex-col items-center justify-center w-3 flex-none aspect-square"
               >

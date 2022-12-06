@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-14 border-b flex flex-row flex-none justify-between z-10 bg-[#18181A] border-[#040407] p-2 border-r"
+    class="h-14 border-b flex flex-row flex-none justify-between z-10 bg-[#262626] border-[#3A3A3A] p-2 border-r"
   >
     <div class="flex flex-row gap-2 w-60">
       <NuxtLink
