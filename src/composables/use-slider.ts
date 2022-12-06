@@ -1,6 +1,7 @@
 import { useCounterStore } from "~~/src/stores/counter";
 import { useSquareStore } from "~~/src/stores/dataSquare";
 import { useCanvasStore } from "@/stores/canvas";
+import { usePaddingResizeStore } from "../stores/paddingResizeStore";
 
 export const useSlider = (
   e: MouseEvent,
@@ -10,6 +11,7 @@ export const useSlider = (
   const selectToi = useCounterStore();
   const squareStore = useSquareStore();
   const canvasStore = useCanvasStore();
+  const paddingResize = usePaddingResizeStore();
 
   const left = () => {
     const prevX = e.clientX;
@@ -177,8 +179,6 @@ export const useSlider = (
     window.addEventListener("mouseup", mouseup);
 
     function mousemove(e: MouseEvent) {
-      canvasStore.isDragging = true;
-
       changeGap(
         Math.round(prevGap + ((e.clientX - prevX) / squareStore.scale) * change)
       );

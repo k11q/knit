@@ -71,11 +71,13 @@ export function getBorderRadius(): number | string | null {
 export function getGap(): number | string | null {
   const selectToi = useCounterStore();
 
-  if (!selectToi.selectedBoxData.cssRules[0].style.gap) {
-    return null;
-  } else {
-    return selectToi.selectedBoxData.cssRules[0].style.gap.value;
-  }
+  if (selectToi.selectedBoxData.cssRules) {
+    if (!selectToi.selectedBoxData.cssRules[0].style.gap) {
+      return null;
+    } else {
+      return selectToi.selectedBoxData.cssRules[0].style.gap.value;
+    }
+  } else return null;
 }
 export function getBackgroundColor(): number | string | null {
   const selectToi = useCounterStore();

@@ -20,6 +20,7 @@ export const useCanvasStore = defineStore({
     selection: [] as Node[],
     isPinchZoom: false,
     isDragging: false,
+    isResizingGap: false,
     hoverId: "",
     currDrag: "",
     prevX: NaN,

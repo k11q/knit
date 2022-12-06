@@ -209,6 +209,7 @@
         />
       </ClientOnly>
     </div>
+
     <!--NEW Ruler element-->
     <div
       v-show="rulerSnap.show && rulerSnap.on && !canvasStore.isPinchZoom"
@@ -263,6 +264,7 @@ import { useDropMarker } from "~~/src/stores/dropMarker";
 import { useSelectStore } from "~~/src/stores/selectStore";
 import { useRulerSnapStore } from "~~/src/stores/rulerSnap";
 import { useCanvasStore } from "~~/src/stores/canvas";
+import { usePaddingResizeStore } from "~~/src/stores/paddingResizeStore";
 
 const selectToi = useCounterStore();
 const addaSquare = useSquareStore();
@@ -271,6 +273,7 @@ const dropMarker = useDropMarker();
 const selectStore = useSelectStore();
 const rulerSnap = useRulerSnapStore();
 const canvasStore = useCanvasStore();
+const paddingResize = usePaddingResizeStore();
 
 onMounted(() => {
   useAddKeyupShortcuts();

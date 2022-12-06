@@ -2,6 +2,15 @@ import { defineStore } from "pinia";
 import { useSquareStore } from "./dataSquare";
 import { useCounterStore } from "./counter";
 
+export type GapPosition = {
+  top: number;
+  bottom?: number;
+  height?: number;
+  left: number;
+  right: number;
+  width?: number;
+};
+
 export const usePaddingResizeStore = defineStore({
   id: "paddingResize",
   state: () => ({
@@ -12,12 +21,13 @@ export const usePaddingResizeStore = defineStore({
     bottomResizerHeight: NaN,
     leftResizerWidth: NaN,
     rightResizerWidth: NaN,
+    gap: [] as GapPosition[],
   }),
   actions: {
     setShowPaddingResizer() {
       this.showPaddingResizer = true;
     },
-    setResizerSize(id) {
+    setResizerSize(id: string) {
       const selectToi = useCounterStore();
 
       this.topResizerHeight = parseInt(
@@ -33,7 +43,50 @@ export const usePaddingResizeStore = defineStore({
         useGetElement(selectToi.selectedBoxData.id)?.style?.paddingRight
       );
     },
-    resizePaddingRight(e) {
+    setGap(id: string) {
+      let element = useGetElement(id) as HTMLElement;
+      if (element.children) {
+        let children = [...element.children] as HTMLElement[];
+        let staticChildren = children.filter(
+          (i) => i.style.position === "static"
+        );
+
+        let paddingLeft: number;
+        let paddingRight: number;
+        let gap: number;
+
+        if (element.style.paddingLeft) {
+          paddingLeft = parseInt(element.style.paddingLeft);
+        } else paddingLeft = 0;
+        if (element.style.paddingRight) {
+          paddingRight = parseInt(element.style.paddingRight);
+        } else paddingRight = 0;
+        if (getGap()) {
+          gap = getGap() as number;
+        } else gap = 0;
+
+        let gapsClone = [] as GapPosition[];
+        this.gap = [] as GapPosition[];
+
+        if (staticChildren.length) {
+          staticChildren.forEach((i, index) => {
+            if (index !== staticChildren.length - 1) {
+              let rect = i.getBoundingClientRect();
+              let bottom = i.offsetTop + i.offsetHeight;
+
+              gapsClone.push({
+                top: bottom,
+                left: paddingLeft,
+                right: paddingRight,
+                height: gap,
+              });
+            }
+          });
+          this.gap = [...gapsClone];
+        }
+      }
+    },
+    resizePaddingRight(e: MouseEvent) {
       const paddingResize = usePaddingResizeStore();
       const squareStore = useSquareStore();
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
@@ -41,7 +94,9 @@ export const usePaddingResizeStore = defineStore({
         this.currentResizing = "right";
 
         let prevPaddingRight =
-          parseInt(selectToi.selectedBoxData.attr.style.paddingRight) || 0;
+          parseInt(
+            useGetElement(selectToi.selectedBoxData.id)!.style?.paddingRight
+          ) || 0;
 
         let prevX = e.clientX;
 
@@ -53,7 +108,9 @@ export const usePaddingResizeStore = defineStore({
         function mousemove(e) {
           if (
             !selectToi.selectedBoxData.attr.style.paddingRight ||
-            parseInt(selectToi.selectedBoxData.attr.style.paddingRight) >= 0
+            parseInt(
+              useGetElement(selectToi.selectedBoxData.id)!.style?.paddingRight
+            ) >= 0
           ) {
             paddingResize.rightResizerWidth = Math.round(
               prevPaddingRight / 2 +
@@ -78,7 +135,7 @@ export const usePaddingResizeStore = defineStore({
         }
       }
     },
-    resizePaddingLeft(e) {
+    resizePaddingLeft(e: MouseEvent) {
       const paddingResize = usePaddingResizeStore();
       const squareStore = useSquareStore();
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
@@ -121,7 +178,7 @@ export const usePaddingResizeStore = defineStore({
         }
       }
     },
-    resizePaddingTop(e) {
+    resizePaddingTop(e: MouseEvent) {
       const paddingResize = usePaddingResizeStore();
       const squareStore = useSquareStore();
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
@@ -163,7 +220,7 @@ export const usePaddingResizeStore = defineStore({
         }
       }
     },
-    resizePaddingBottom(e) {
+    resizePaddingBottom(e: MouseEvent) {
       const paddingResize = usePaddingResizeStore();
       const squareStore = useSquareStore();
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {

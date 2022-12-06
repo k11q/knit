@@ -77,11 +77,9 @@ function mousedown(e: MouseEvent, id: string, type: string) {
   if (type !== "text" || selectToi.selectedTextEditor !== id) {
     if (!squareStore.dragPointer && !squareStore.draggingPointer) {
       if (!useCheckParent(id) && !canvasStore.selection.length) {
-        console.log("noparent" + id);
         canvasStore.dndWithoutParent(e, id);
       }
       if (useCheckParent(id) && !canvasStore.selection.length) {
-        console.log("parent" + id);
         canvasStore.dndWithParent(e, id);
       }
       if (canvasStore.selection.length) {
