@@ -103,7 +103,8 @@ function mouseover(id: string, type: string) {
     selectToi.selectedBox !== id &&
     type !== "text" &&
     (type !== "box" || (type === "box" && !canvasStore.isDragging)) &&
-    canvasStore.selection.findIndex((i) => i.id === id) === -1
+    canvasStore.selection.findIndex((i) => i.id === id) === -1 &&
+    !canvasStore.isResizingGap
   ) {
     useSetOutlineHover(id);
   } else if (
@@ -119,6 +120,7 @@ function mouseover(id: string, type: string) {
   if (!canvasStore.isDragging) {
     selectToi.treeHoverId = id;
   }
+  console.log("overid" + selectToi.treeHoverId);
 }
 
 const props = defineProps({

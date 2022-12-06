@@ -19,8 +19,11 @@ export function useResizeGap(e: MouseEvent) {
     document.addEventListener("mouseup", mouseup);
 
     function mousemove(e: MouseEvent) {
-      changeGap(prevGap + (e.clientY - prevY));
-      paddingResize.setGap(selectToi.selectedBoxData.id);
+      function update() {
+        changeGap(prevGap + (e.clientY - prevY));
+        paddingResize.setGap(selectToi.selectedBoxData.id);
+      }
+      window.requestAnimationFrame(update);
     }
 
     function mouseup() {

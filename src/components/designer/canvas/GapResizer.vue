@@ -4,7 +4,14 @@
     class="overflow-visible flex items-center justify-center text-center relative"
   >
     <div
-      @mouseenter="hoverState = true"
+      @mouseenter="
+        () => {
+          hoverState = true;
+          if (selectToi.selectedBoxData) {
+            selectToi.treeHoverId = selectToi.selectedBoxData.id;
+          }
+        }
+      "
       @mouseleave="hoverState = false"
       :style="{
         left: gap.left + 'px',
@@ -47,10 +54,12 @@ import { GapPosition } from "~~/src/stores/paddingResizeStore";
 import { useResizeStore } from "@/stores/resizeStore";
 import { useSquareStore } from "~~/src/stores/dataSquare";
 import { useCanvasStore } from "@/stores/canvas";
+import { useCounterStore } from "@/stores/counter";
 
 const resizeStore = useResizeStore();
 const squareStore = useSquareStore();
 const canvasStore = useCanvasStore();
+const selectToi = useCounterStore();
 
 const hoverState = ref(false);
 
