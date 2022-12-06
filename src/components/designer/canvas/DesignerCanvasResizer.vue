@@ -7,7 +7,6 @@
     "
     class="absolute pointer-events-none border-box"
     :style="{
-      willChange: 'left, top, height, width',
       left: selectToi.selectedBoxData.cssRules
         ? selectToi.selectedBoxData.cssRules[0].style.left &&
           !useCheckParent(selectToi.selectedBoxData.id)
@@ -370,6 +369,65 @@
             :style="{
               width: `${2 / addaSquare.scale}px`,
               height: `${16 / addaSquare.scale}px`,
+              outline: `${1 / addaSquare.scale}px solid white`,
+              borderRadius: `${0.5 / addaSquare.scale}px`,
+            }"
+          ></div>
+        </div>
+      </div>
+    </div>
+    <!--gap resizer-->
+    <div
+      class="pointer-events-auto"
+      v-show="
+        (useGetElementRect(selectToi.selectedBoxData.id)?.width > 100 ||
+          useGetElementRect(selectToi.selectedBoxData.id)?.height > 100) &&
+        useGetElement(selectToi.selectedBoxData.id)?.children?.length &&
+        !resizeStore.isResizing
+      "
+    >
+      <div
+        v-show="
+          paddingResize.showPaddingResizer ||
+          (paddingResize.currentResizing && !resizeStore.isResizing)
+        "
+        @mouseover.prevent="paddingResize.setShowPaddingResizer"
+        @mouseout="
+          paddingResize.currentResizing
+            ? null
+            : (paddingResize.showPaddingResizer = false)
+        "
+        class="absolute top-0 w-full flex flex-row items-center justify-center pointer-events-none"
+        :class="{
+          'border-red-500': paddingResize.currentResizing === 'top',
+          'hover:bg-pink-500/50': !paddingResize.currentResizing,
+        }"
+        :style="{
+          height:
+            paddingResize.topResizerHeight ||
+            paddingResize.topResizerHeight === 0
+              ? `${paddingResize.topResizerHeight}px`
+              : `${(8 * 1) / addaSquare.scale}px`,
+          borderWidth:
+            paddingResize.currentResizing === 'top'
+              ? `${1 / addaSquare.scale}px`
+              : null,
+        }"
+      >
+        <!--padding top resizer handler-->
+        <div
+          class="flex items-center justify-center flex-none hover:cursor-row-resize pointer-events-auto"
+          @mousedown.stop.prevent="paddingResize.resizePaddingTop($event)"
+          :style="{
+            height: `${18 / addaSquare.scale}px`,
+          }"
+        >
+          <div
+            @mousedown.stop.prevent="paddingResize.resizePaddingTop($event)"
+            class="bg-red-500"
+            :style="{
+              height: `${2 / addaSquare.scale}px`,
+              width: `${16 / addaSquare.scale}px`,
               outline: `${1 / addaSquare.scale}px solid white`,
               borderRadius: `${0.5 / addaSquare.scale}px`,
             }"

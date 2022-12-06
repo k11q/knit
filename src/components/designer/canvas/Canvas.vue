@@ -33,7 +33,6 @@
       v-show="!canvasStore.isPinchZoom"
       class="fixed top-0 left-0 w-0 h-0 overflow-visible"
       :style="{
-        willChange: 'transform',
         transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
       }"
     >
@@ -81,7 +80,6 @@
         v-show="canvasStore.showMarker"
         class="absolute pointer-events-none"
         :style="{
-          willChange: 'left, top, height, width, outline',
           left: selectToi.selectedBoxData.cssRules
             ? selectToi.selectedBoxData.cssRules[0].style?.left
               ? selectToi.selectedBoxData.cssRules[0].style.left.value + 'px'
@@ -108,7 +106,6 @@
         v-show="canvasStore.showGhostOutline"
         class="absolute pointer-events-none"
         :style="{
-          willChange: 'left, top, height, width, outline',
           left:
             (canvasStore.ghostOutlineLeft - addaSquare.offsetLeft) /
               addaSquare.scale +
@@ -131,7 +128,6 @@
         v-show="canvasStore.showSolidOutline"
         class="absolute pointer-events-none"
         :style="{
-          willChange: 'left, top, height, width, outline',
           left:
             (useGetElementRect(canvasStore.currDrag)?.left -
               addaSquare.offsetLeft) /
@@ -156,7 +152,6 @@
         v-show="selectStore.showSelect"
         class="absolute pointer-events-none"
         :style="{
-          willChange: 'left, top, height, width, border',
           left: selectStore.X + 'px',
           top: selectStore.Y + 'px',
           height: selectStore.height + 'px',
@@ -177,7 +172,6 @@
       "
       class="fixed top-0 left-0 overflow-visible pointer-events-none"
       :style="{
-        willChange: 'transform',
         transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
       }"
     >
@@ -192,7 +186,6 @@
       "
       class="fixed top-0 left-0 overflow-visible pointer-events-none"
       :style="{
-        willChange: 'transform',
         transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
       }"
     >
@@ -227,13 +220,11 @@
     <div
       class="fixed top-0 left-0 overflow-visible pointer-events-none"
       :style="{
-        willChange: 'transform',
         transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
       }"
     >
       <div
         :style="{
-          willChange: 'left, top',
           left:
             (useGetElementRect(selectToi.selectedBoxData.id)?.left -
               addaSquare.offsetLeft) /
