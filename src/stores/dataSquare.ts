@@ -48,7 +48,7 @@ export const useSquareStore = defineStore({
       const canvasStore = useCanvasStore();
 
       if (this.normalPointer === true) {
-        selectToi.clearSelected();
+        useSetDeselect();
         canvasStore.selection = [];
         useSetSelect(event);
       }
@@ -107,7 +107,7 @@ export const useSquareStore = defineStore({
         Promise.resolve()
           .then(() => {
             dataPushed.push({ ...clonedDataText });
-            selectToi.changeSelectedNewlyAdded(event, clonedDataText);
+            useSetSelectSingle(event, clonedDataText);
           })
           .then(() => {
             useSetOutlineSelector(clonedDataText.id);

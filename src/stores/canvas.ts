@@ -172,7 +172,7 @@ export const useCanvasStore = defineStore({
         !selectToi.selectedTextEditor ||
         selectToi.selectedTextEditor === currDrag
       ) {
-        selectToi.changeSelected(e, currDrag);
+        useSetSelectSingle(e, currDrag);
         useSetOutlineSelector(currDrag);
       }
       useSetOutlineSelector(currDrag);
@@ -330,7 +330,7 @@ export const useCanvasStore = defineStore({
       const squareStore = useSquareStore();
       let isDragging = false;
 
-      selectToi.changeSelected(e, currDrag);
+      useSetSelectSingle(e, currDrag);
       this.currDrag = currDrag;
       let currDragElement = document.querySelector(
         `[data-id=${currDrag}]`

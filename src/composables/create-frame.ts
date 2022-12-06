@@ -66,7 +66,7 @@ export function createFrame(e: MouseEvent) {
           rootData.push(frameNode);
         })
         .then(() => {
-          selectToi.changeSelected(e, frameNode.id);
+          useSetSelectSingle(e, frameNode.id);
         });
     }
     if (rootData.findIndex((i) => i.id === frameNode.id) !== -1) {

@@ -33,7 +33,7 @@
             selectToi.treeHoverId = '';
           }
         "
-        @click="selectToi.changeSelected($event, frame.id)"
+        @click="useSetSelectSingle($event, frame.id)"
         class="fixed pointer-events-auto cursor-default hover:text-[#6EB0E0] hover:opacity-100 overflow-hidden overflow-ellipsis"
         :class="{
           'text-[#6EB0E0] opacity-100':

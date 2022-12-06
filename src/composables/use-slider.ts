@@ -31,7 +31,7 @@ export const useSlider = (
     function mouseup() {
       Promise.resolve()
         .then(() => {
-          selectToi.changeSelected(e, currElement);
+          useSetSelectSingle(e, currElement);
         })
         .then(() => {
           useSetOutlineSelector(currElement);
@@ -61,7 +61,7 @@ export const useSlider = (
     function mouseup() {
       Promise.resolve()
         .then(() => {
-          selectToi.changeSelected(e, currElement);
+          useSetSelectSingle(e, currElement);
         })
         .then(() => {
           useSetOutlineSelector(currElement);
@@ -93,7 +93,7 @@ export const useSlider = (
     function mouseup() {
       Promise.resolve()
         .then(() => {
-          selectToi.changeSelected(e, currElement);
+          useSetSelectSingle(e, currElement);
         })
         .then(() => {
           useSetOutlineSelector(currElement);
@@ -125,7 +125,7 @@ export const useSlider = (
     function mouseup() {
       Promise.resolve()
         .then(() => {
-          selectToi.changeSelected(e, currElement);
+          useSetSelectSingle(e, currElement);
         })
         .then(() => {
           useSetOutlineSelector(currElement);
@@ -157,7 +157,7 @@ export const useSlider = (
     function mouseup() {
       Promise.resolve()
         .then(() => {
-          selectToi.changeSelected(e, currElement);
+          useSetSelectSingle(e, currElement);
         })
         .then(() => {
           useSetOutlineSelector(currElement);
@@ -187,7 +187,7 @@ export const useSlider = (
     function mouseup() {
       Promise.resolve()
         .then(() => {
-          selectToi.changeSelected(e, currElement);
+          useSetSelectSingle(e, currElement);
         })
         .then(() => {
           useSetOutlineSelector(currElement);

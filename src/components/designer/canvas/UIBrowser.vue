@@ -75,16 +75,14 @@ function dblclick(id: string, type: string) {
 
 function mousedown(e: MouseEvent, id: string, type: string) {
   if (type !== "text" || selectToi.selectedTextEditor !== id) {
-    testDown(e, id);
-  }
-
-  function testDown(e: MouseEvent, currDrag: string) {
     if (!squareStore.dragPointer && !squareStore.draggingPointer) {
-      if (!useCheckParent(currDrag) && !canvasStore.selection.length) {
-        canvasStore.dndWithoutParent(e, currDrag);
+      if (!useCheckParent(id) && !canvasStore.selection.length) {
+        console.log("noparent" + id);
+        canvasStore.dndWithoutParent(e, id);
       }
-      if (useCheckParent(currDrag) && !canvasStore.selection.length) {
-        canvasStore.dndWithParent(e, currDrag);
+      if (useCheckParent(id) && !canvasStore.selection.length) {
+        console.log("parent" + id);
+        canvasStore.dndWithParent(e, id);
       }
       if (canvasStore.selection.length) {
         canvasStore.setPositionMultiElement(e);

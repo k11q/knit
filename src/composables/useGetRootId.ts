@@ -1,12 +1,20 @@
 export default function (id: string) {
-  let element = useGetElement(id)!;
-  let parent = element.parentElement!;
-  let parentElement: string = parent.dataset.id!;
+  let rootId;
 
-  if (parentElement !== "canvas") {
-    useGetRootId(parentElement);
+  function getRoot(id: string) {
+    let element = useGetElement(id)!;
+    let parent = element.parentElement!;
+    let parentElement = parent.dataset.id as string;
+    if (id !== "canvas") {
+      getRoot(parentElement);
+    }
+    if (parentElement === "canvas") {
+      rootId = element.dataset.id as string;
+      return;
+    }
   }
-  if (parentElement === "canvas") {
-    return element.dataset.id;
-  }
+
+  getRoot(id);
+
+  return rootId;
 }

@@ -1,8 +1,4 @@
 import { defineStore } from "pinia";
-import { useSquareStore } from "./dataSquare";
-import { useCanvasDndStore } from "./canvasDnd";
-import { usePaddingResizeStore } from "./paddingResizeStore";
-import { useCanvasStore } from "./canvas";
 
 export interface CSSRuleDetails {
   type: "unit" | "keyword";
@@ -61,7 +57,7 @@ export interface Node {
 
 export type Document = Array<Node>;
 
-interface MouseEventExtra extends MouseEvent {
+export interface MouseEventExtra extends MouseEvent {
   layerX?: number;
   layerY?: number;
 }
@@ -618,73 +614,5 @@ export const useCounterStore = defineStore({
       },
     ] as Array<Node>,
   }),
-  actions: {
-    getChildElement(arr: Node[], value: string) {
-      arr.every((i) => {
-        if (i.id === value) {
-          this.selectedBoxData = i;
-          return false;
-        } else {
-          this.getChildElement(i.children, value);
-          return true;
-        }
-      });
-    },
-    changeSelected(e: MouseEventExtra, id: string) {
-      const squareStore = useSquareStore();
-      const paddingResize = usePaddingResizeStore();
-
-      if (squareStore.dragPointer || squareStore.draggingPointer) {
-      } else {
-        e.stopPropagation();
-
-        Promise.resolve()
-          .then(() => {
-            paddingResize.setResizerSize(id);
-          })
-          .then(() => {
-            this.selectedBox = id;
-
-            if (e.target) {
-              this.getChildElement(this.data, id);
-            }
-          });
-
-        this.prevX = e.layerX as number;
-        this.prevY = e.layerY as number;
-      }
-    },
-    changeSelectedNewlyAdded(e: MouseEventExtra, newData: Node) {
-      this.prevX = e.layerX as number;
-      this.prevY = e.layerY as number;
-
-      Promise.resolve().then(() => {
-        this.selectedBox = newData.id;
-      });
-
-      if (e.target) {
-        this.getChildElement(this.data, newData.id);
-      }
-    },
-    clearSelected() {
-      const canvasStore = useCanvasStore();
-      if (this.selectedTextEditor) {
-        useSetOutlineSelector(this.selectedTextEditor);
-        this.selectedTextEditor = "";
-      } else {
-        let canvasDnd = useCanvasDndStore();
-        this.selectedBox = "";
-        this.selectedBoxData = {} as Node;
-        canvasStore.selection = [];
-        canvasStore.multiSelectResizerRect = {
-          left: "",
-          top: "",
-          height: "",
-          width: "",
-        };
-        canvasDnd.currDrag = "";
-        canvasDnd.currDragValue = "";
-      }
-    },
-  },
+  actions: {},
 });

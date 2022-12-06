@@ -400,7 +400,7 @@
         class="absolute top-0 w-full flex flex-row items-center justify-center pointer-events-none"
         :class="{
           'border-red-500': paddingResize.currentResizing === 'top',
-          'hover:bg-pink-500/50': !paddingResize.currentResizing,
+          'hover:bg-blue-500/50': !paddingResize.currentResizing,
         }"
         :style="{
           height:

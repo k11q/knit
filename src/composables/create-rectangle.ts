@@ -65,7 +65,7 @@ export function createRectangle(e: MouseEvent) {
           rootData.push(rectangleNode);
         })
         .then(() => {
-          selectToi.changeSelected(e, rectangleNode.id);
+          useSetSelectSingle(e, rectangleNode.id);
         });
     }
     if (rootData.findIndex((i) => i.id === rectangleNode.id) !== -1) {

@@ -12,7 +12,7 @@ export default function () {
         selectToi.data,
         selectToi.selectedBoxData.id
       );
-      selectToi.clearSelected();
+      useSetDeselect();
     }
   }
 }

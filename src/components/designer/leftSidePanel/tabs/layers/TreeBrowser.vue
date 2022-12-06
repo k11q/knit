@@ -171,10 +171,10 @@
               selectToi.selectedBoxData.display === 'hide'
             ) {
               delete selectToi.selectedBoxData.display;
-              selectToi.clearSelected();
+              useSetDeselect();
             } else {
               selectToi.selectedBoxData.display = 'hide';
-              selectToi.changeSelected($event, node.id, node.type);
+              useSetSelectSingle($event, node.id, node.type);
               useSetOutlineSelector(node.id);
             }
           }
@@ -271,7 +271,7 @@ function changePageTitle(title) {
 
 const dragAndDrop = (e, currDrag) => {
   if (!squareStore.dragPointer && !squareStore.draggingPointer) {
-    selectToi.changeSelected(e, currDrag);
+    useSetSelectSingle(e, currDrag);
     useSetOutlineSelector(currDrag);
 
     window.addEventListener("mousemove", mousemove, e);
