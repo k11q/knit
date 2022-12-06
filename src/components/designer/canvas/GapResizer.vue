@@ -12,7 +12,11 @@
           }
         }
       "
-      @mouseleave="hoverState = false"
+      @mouseleave="
+        () => {
+          hoverState = false;
+        }
+      "
       :style="{
         left: gap.left + 'px',
         height: gap.height + 'px',
@@ -29,6 +33,14 @@
     >
       <div
         @mousedown.stop.prevent="useResizeGap($event)"
+        @mouseenter="
+          getGap()
+            ? (canvasStore.cursorLabel = getGap() as string)
+            : (canvasStore.cursorLabel = '0')
+        "
+        @mouseleave="
+          canvasStore.isResizingGap ? '' : (canvasStore.cursorLabel = '')
+        "
         class="flex items-center justify-center flex-none hover:cursor-row-resize"
         :style="{
           height: `${18 / squareStore.scale}px`,

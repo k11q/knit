@@ -9,11 +9,21 @@
       <DesignerLeftSidePanel />
       <DesignerRightSidePanel />
     </div>
+    <div
+      v-if="canvasStore.cursorLabel"
+      :style="{ left: `${x + 10}px`, top: `${y - 25}px`, lineHeight: 1 }"
+      class="bg-red-600 absolute pointer-events-none px-1 rounded-sm py-0.5"
+    >
+      {{ canvasStore.cursorLabel }}
+    </div>
   </div>
 </template>
 
-<script setup>
-import { useCounterStore } from "~~/src/stores/counter";
+<script setup lang="ts">
+import { useCounterStore } from "@/stores/counter";
+import { useCanvasStore } from "@/stores/canvas";
 
 const selectToi = useCounterStore();
+const canvasStore = useCanvasStore();
+const { x, y } = useMouse();
 </script>

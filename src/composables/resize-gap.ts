@@ -19,6 +19,10 @@ export function useResizeGap(e: MouseEvent) {
     document.addEventListener("mouseup", mouseup);
 
     function mousemove(e: MouseEvent) {
+      if (getGap()) {
+        canvasStore.cursorLabel = getGap() as string;
+      } else canvasStore.cursorLabel = "";
+
       function update() {
         changeGap(prevGap + (e.clientY - prevY));
         paddingResize.setGap(selectToi.selectedBoxData.id);
@@ -28,6 +32,7 @@ export function useResizeGap(e: MouseEvent) {
 
     function mouseup() {
       canvasStore.isResizingGap = false;
+      canvasStore.cursorLabel = "";
       document.removeEventListener("mousemove", mousemove);
       document.removeEventListener("mouseup", mouseup);
     }

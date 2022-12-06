@@ -22,6 +22,8 @@ export const useCanvasStore = defineStore({
     isDragging: false,
     isResizingGap: false,
     isResizingPadding: false,
+    cursorType: "",
+    cursorLabel: "",
     hoverId: "",
     currDrag: "",
     prevX: NaN,

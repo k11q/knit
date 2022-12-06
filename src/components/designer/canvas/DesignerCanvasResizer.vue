@@ -327,6 +327,21 @@
       </div>
     </div>
 
+    <!--gap resizer-->
+    <div
+      v-show="
+        (useGetElementRect(selectToi.selectedBoxData.id)?.width > 100 ||
+          useGetElementRect(selectToi.selectedBoxData.id)?.height > 100) &&
+        selectToi.selectedBoxData &&
+        paddingResize.gap.length &&
+        selectToi.treeHoverId &&
+        !canvasStore.isResizingPadding
+      "
+      class="absolute inset-0 overflow-visible pointer-events-none"
+    >
+      <DesignerCanvasGapResizer :gaps="paddingResize.gap" />
+    </div>
+
     <!--padding resizer-->
     <div
       class="pointer-events-auto"
@@ -379,6 +394,14 @@
         <div
           class="flex items-center justify-center flex-none hover:cursor-row-resize pointer-events-auto"
           @mousedown.stop.prevent="useResizePaddingTop($event)"
+          @mouseenter="
+            getPaddingTop()
+              ? (canvasStore.cursorLabel = getPaddingTop() as string)
+              : (canvasStore.cursorLabel = '0')
+          "
+          @mouseleave="
+            canvasStore.isResizingPadding ? '' : (canvasStore.cursorLabel = '')
+          "
           :style="{
             height: `${18 / addaSquare.scale}px`,
           }"
@@ -437,6 +460,14 @@
         <div
           class="flex items-center justify-center flex-none hover:cursor-row-resize pointer-events-auto"
           @mousedown.stop.prevent="useResizePaddingBottom($event)"
+          @mouseenter="
+            getPaddingBottom()
+              ? (canvasStore.cursorLabel = getPaddingBottom() as string)
+              : (canvasStore.cursorLabel = '0')
+          "
+          @mouseleave="
+            canvasStore.isResizingPadding ? '' : (canvasStore.cursorLabel = '')
+          "
           :style="{
             height: `${18 / addaSquare.scale}px`,
           }"
@@ -495,6 +526,14 @@
         <div
           class="flex items-center justify-center flex-none hover:cursor-col-resize"
           @mousedown.stop.prevent="useResizePaddingLeft($event)"
+          @mouseenter="
+            getPaddingLeft()
+              ? (canvasStore.cursorLabel = getPaddingLeft() as string)
+              : (canvasStore.cursorLabel = '0')
+          "
+          @mouseleave="
+            canvasStore.isResizingPadding ? '' : (canvasStore.cursorLabel = '')
+          "
           :style="{
             width: `${18 / addaSquare.scale}px`,
           }"
@@ -553,6 +592,14 @@
         <div
           class="flex items-center justify-center flex-none hover:cursor-col-resize pointer-events-auto"
           @mousedown.stop.prevent="useResizePaddingRight($event)"
+          @mouseenter="
+            getPaddingRight()
+              ? (canvasStore.cursorLabel = getPaddingRight() as string)
+              : (canvasStore.cursorLabel = '0')
+          "
+          @mouseleave="
+            canvasStore.isResizingPadding ? '' : (canvasStore.cursorLabel = '')
+          "
           :style="{
             width: `${18 / addaSquare.scale}px`,
           }"
@@ -571,21 +618,6 @@
           ></div>
         </div>
       </div>
-    </div>
-
-    <!--gap resizer-->
-    <div
-      v-show="
-        (useGetElementRect(selectToi.selectedBoxData.id)?.width > 100 ||
-          useGetElementRect(selectToi.selectedBoxData.id)?.height > 100) &&
-        selectToi.selectedBoxData &&
-        paddingResize.gap.length &&
-        selectToi.treeHoverId &&
-        !canvasStore.isResizingPadding
-      "
-      class="absolute inset-0 overflow-visible pointer-events-none"
-    >
-      <DesignerCanvasGapResizer :gaps="paddingResize.gap" />
     </div>
   </div>
 </template>

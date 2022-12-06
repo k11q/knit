@@ -26,6 +26,9 @@ export function useResizePaddingLeft(e: MouseEvent) {
     window.addEventListener("mouseup", mouseup);
 
     function mousemove(e: MouseEvent) {
+      if (getPaddingLeft()) {
+        canvasStore.cursorLabel = getPaddingLeft() as string;
+      } else canvasStore.cursorLabel = "0";
       if (!getPaddingLeft() || getPaddingLeft()! >= 0) {
         paddingResize.leftResizerWidth = Math.round(
           prevPaddingLeft / 2 +
@@ -42,6 +45,7 @@ export function useResizePaddingLeft(e: MouseEvent) {
     function mouseup() {
       paddingResize.isResizing = false;
       canvasStore.isResizingPadding = false;
+      canvasStore.cursorLabel = "";
       paddingResize.currentResizing = "";
       paddingResize.setGap(selectToi.selectedBoxData.id);
 
@@ -74,6 +78,9 @@ export function useResizePaddingRight(e: MouseEvent) {
     window.addEventListener("mouseup", mouseup);
 
     function mousemove(e: MouseEvent) {
+      if (getPaddingRight()) {
+        canvasStore.cursorLabel = getPaddingRight() as string;
+      } else canvasStore.cursorLabel = "0";
       if (!getPaddingRight() || getPaddingRight()! >= 0) {
         paddingResize.rightResizerWidth = Math.round(
           prevPaddingRight / 2 +
@@ -90,6 +97,7 @@ export function useResizePaddingRight(e: MouseEvent) {
     function mouseup() {
       paddingResize.isResizing = false;
       canvasStore.isResizingPadding = false;
+      canvasStore.cursorLabel = "";
       paddingResize.currentResizing = "";
       paddingResize.setGap(selectToi.selectedBoxData.id);
 
@@ -122,6 +130,10 @@ export function useResizePaddingTop(e: MouseEvent) {
     window.addEventListener("mouseup", mouseup);
 
     function mousemove(e: MouseEvent) {
+      if (getPaddingTop()) {
+        canvasStore.cursorLabel = getPaddingTop() as string;
+      } else canvasStore.cursorLabel = "0";
+
       if (!getPaddingTop() || getPaddingTop()! >= 0) {
         paddingResize.topResizerHeight = Math.round(
           prevPaddingTop / 2 +
@@ -138,6 +150,7 @@ export function useResizePaddingTop(e: MouseEvent) {
     function mouseup() {
       paddingResize.isResizing = false;
       canvasStore.isResizingPadding = false;
+      canvasStore.cursorLabel = "";
       paddingResize.currentResizing = "";
       paddingResize.setGap(selectToi.selectedBoxData.id);
 
@@ -170,6 +183,9 @@ export function useResizePaddingBottom(e: MouseEvent) {
     window.addEventListener("mouseup", mouseup);
 
     function mousemove(e: MouseEvent) {
+      if (getPaddingBottom()) {
+        canvasStore.cursorLabel = getPaddingBottom() as string;
+      } else canvasStore.cursorLabel = "0";
       if (!getPaddingBottom() || getPaddingBottom()! >= 0) {
         paddingResize.bottomResizerHeight = Math.round(
           prevPaddingBottom / 2 +
@@ -186,6 +202,7 @@ export function useResizePaddingBottom(e: MouseEvent) {
     function mouseup() {
       paddingResize.isResizing = false;
       canvasStore.isResizingPadding = false;
+      canvasStore.cursorLabel = "";
       paddingResize.currentResizing = "";
       paddingResize.setGap(selectToi.selectedBoxData.id);
 
