@@ -11,7 +11,9 @@
         height: gap.height + 'px',
         top: gap.top + 'px',
         right: `${1 / squareStore.scale}px`,
-        border: `${1 / squareStore.scale}px solid #E93372`,
+        border: canvasStore.isResizingGap
+          ? `${1.5 / squareStore.scale}px solid #E93372`
+          : '',
       }"
       class="absolute pointer-events-auto overflow-visible flex items-center justify-center"
       :class="{

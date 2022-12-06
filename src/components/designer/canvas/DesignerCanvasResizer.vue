@@ -379,7 +379,12 @@
 
     <!--gap resizer-->
     <div
-      v-if="selectToi.selectedBoxData && paddingResize.gap.length"
+      v-show="
+        (useGetElementRect(selectToi.selectedBoxData.id)?.width > 100 ||
+          useGetElementRect(selectToi.selectedBoxData.id)?.height > 100) &&
+        selectToi.selectedBoxData &&
+        paddingResize.gap.length
+      "
       class="absolute inset-0 overflow-visible pointer-events-none"
     >
       <DesignerCanvasGapResizer :gaps="paddingResize.gap" />
