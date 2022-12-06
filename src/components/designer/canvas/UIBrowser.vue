@@ -104,7 +104,8 @@ function mouseover(id: string, type: string) {
     type !== "text" &&
     (type !== "box" || (type === "box" && !canvasStore.isDragging)) &&
     canvasStore.selection.findIndex((i) => i.id === id) === -1 &&
-    !canvasStore.isResizingGap
+    !canvasStore.isResizingGap &&
+    !canvasStore.isResizingPadding
   ) {
     useSetOutlineHover(id);
   } else if (
