@@ -79,6 +79,50 @@ export function getGap(): number | string | null {
     }
   } else return null;
 }
+export function getPaddingLeft(): number | string | null {
+  const selectToi = useCounterStore();
+
+  if (selectToi.selectedBoxData.cssRules) {
+    if (!selectToi.selectedBoxData.cssRules[0].style.paddingLeft) {
+      return null;
+    } else {
+      return selectToi.selectedBoxData.cssRules[0].style.paddingLeft.value;
+    }
+  } else return null;
+}
+export function getPaddingRight(): number | string | null {
+  const selectToi = useCounterStore();
+
+  if (selectToi.selectedBoxData.cssRules) {
+    if (!selectToi.selectedBoxData.cssRules[0].style.paddingRight) {
+      return null;
+    } else {
+      return selectToi.selectedBoxData.cssRules[0].style.paddingRight.value;
+    }
+  } else return null;
+}
+export function getPaddingTop(): number | string | null {
+  const selectToi = useCounterStore();
+
+  if (selectToi.selectedBoxData.cssRules) {
+    if (!selectToi.selectedBoxData.cssRules[0].style.paddingTop) {
+      return null;
+    } else {
+      return selectToi.selectedBoxData.cssRules[0].style.paddingTop.value;
+    }
+  } else return null;
+}
+export function getPaddingBottom(): number | string | null {
+  const selectToi = useCounterStore();
+
+  if (selectToi.selectedBoxData.cssRules) {
+    if (!selectToi.selectedBoxData.cssRules[0].style.paddingBottom) {
+      return null;
+    } else {
+      return selectToi.selectedBoxData.cssRules[0].style.paddingBottom.value;
+    }
+  } else return null;
+}
 export function getBackgroundColor(): number | string | null {
   const selectToi = useCounterStore();
 
@@ -205,6 +249,62 @@ export function changeGap(value: number, unit: string = "px") {
   }
   if (selectToi.selectedBoxData.cssRules[0].style.gap) {
     selectToi.selectedBoxData.cssRules[0].style.gap.value = value;
+  }
+}
+export function changePaddingLeft(value: number, unit: string = "px") {
+  const selectToi = useCounterStore();
+
+  if (!selectToi.selectedBoxData.cssRules[0].style.paddingLeft) {
+    selectToi.selectedBoxData.cssRules[0].style.paddingLeft = {
+      type: "unit",
+      value: value,
+      unit: unit,
+    };
+  }
+  if (selectToi.selectedBoxData.cssRules[0].style.paddingLeft) {
+    selectToi.selectedBoxData.cssRules[0].style.paddingLeft.value = value;
+  }
+}
+export function changePaddingRight(value: number, unit: string = "px") {
+  const selectToi = useCounterStore();
+
+  if (!selectToi.selectedBoxData.cssRules[0].style.paddingRight) {
+    selectToi.selectedBoxData.cssRules[0].style.paddingRight = {
+      type: "unit",
+      value: value,
+      unit: unit,
+    };
+  }
+  if (selectToi.selectedBoxData.cssRules[0].style.paddingRight) {
+    selectToi.selectedBoxData.cssRules[0].style.paddingRight.value = value;
+  }
+}
+export function changePaddingTop(value: number, unit: string = "px") {
+  const selectToi = useCounterStore();
+
+  if (!selectToi.selectedBoxData.cssRules[0].style.paddingTop) {
+    selectToi.selectedBoxData.cssRules[0].style.paddingTop = {
+      type: "unit",
+      value: value,
+      unit: unit,
+    };
+  }
+  if (selectToi.selectedBoxData.cssRules[0].style.paddingTop) {
+    selectToi.selectedBoxData.cssRules[0].style.paddingTop.value = value;
+  }
+}
+export function changePaddingBottom(value: number, unit: string = "px") {
+  const selectToi = useCounterStore();
+
+  if (!selectToi.selectedBoxData.cssRules[0].style.paddingBottom) {
+    selectToi.selectedBoxData.cssRules[0].style.paddingBottom = {
+      type: "unit",
+      value: value,
+      unit: unit,
+    };
+  }
+  if (selectToi.selectedBoxData.cssRules[0].style.paddingBottom) {
+    selectToi.selectedBoxData.cssRules[0].style.paddingBottom.value = value;
   }
 }
 export function changeAlign(value: string) {

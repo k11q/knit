@@ -114,9 +114,6 @@ function mouseover(id: string, type: string) {
   ) {
     canvasStore.textHover = true;
   }
-  if (selectToi.selectedBox === id && type !== "text") {
-    paddingResize.setShowPaddingResizer();
-  }
   if (!canvasStore.isDragging) {
     selectToi.treeHoverId = id;
   }
@@ -177,6 +174,15 @@ function styleProps(node: knitNode) {
     paddingLeft:
       node.cssRules[0]?.style?.paddingLeft?.value! +
       node.cssRules[0]?.style?.paddingLeft?.unit!,
+    paddingRight:
+      node.cssRules[0]?.style?.paddingRight?.value! +
+      node.cssRules[0]?.style?.paddingRight?.unit!,
+    paddingTop:
+      node.cssRules[0]?.style?.paddingTop?.value! +
+      node.cssRules[0]?.style?.paddingTop?.unit!,
+    paddingBottom:
+      node.cssRules[0]?.style?.paddingBottom?.value! +
+      node.cssRules[0]?.style?.paddingBottom?.unit!,
   };
 }
 

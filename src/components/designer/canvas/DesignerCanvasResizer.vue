@@ -183,30 +183,41 @@
     <!--padding resizer-->
     <div
       class="pointer-events-auto"
+      :style="{ padding: `${1 / addaSquare.scale}px` }"
       v-show="
         (useGetElementRect(selectToi.selectedBoxData.id)?.width > 100 ||
           useGetElementRect(selectToi.selectedBoxData.id)?.height > 100) &&
         useGetElement(selectToi.selectedBoxData.id)?.children?.length &&
-        !resizeStore.isResizing
+        !resizeStore.isResizing &&
+        !canvasStore.isResizingGap
       "
     >
       <div
         v-show="
-          paddingResize.showPaddingResizer ||
-          (paddingResize.currentResizing && !resizeStore.isResizing)
+          (useGetElementRect(selectToi.selectedBoxData.id)?.width > 100 ||
+            useGetElementRect(selectToi.selectedBoxData.id)?.height > 100) &&
+          selectToi.selectedBoxData &&
+          selectToi.treeHoverId
         "
-        @mouseover.prevent="paddingResize.setShowPaddingResizer"
+        @mouseover.prevent="
+          () => {
+            if (selectToi.selectedBoxData) {
+              selectToi.treeHoverId = selectToi.selectedBoxData.id;
+            }
+          }
+        "
         @mouseout="
           paddingResize.currentResizing
             ? null
             : (paddingResize.showPaddingResizer = false)
         "
-        class="absolute top-0 w-full flex flex-row items-center justify-center pointer-events-none"
+        class="absolute top-0 left-0 right-0 flex flex-row items-center justify-center pointer-events-none"
         :class="{
-          'border-red-500': paddingResize.currentResizing === 'top',
-          'hover:bg-pink-500/50': !paddingResize.currentResizing,
+          'border-[#E93372]': paddingResize.currentResizing === 'top',
+          'hover:bg-[#E93372]/20': !paddingResize.currentResizing,
         }"
         :style="{
+          margin: `${1 / addaSquare.scale}px`,
           height:
             paddingResize.topResizerHeight ||
             paddingResize.topResizerHeight === 0
@@ -214,23 +225,25 @@
               : `${(8 * 1) / addaSquare.scale}px`,
           borderWidth:
             paddingResize.currentResizing === 'top'
-              ? `${1 / addaSquare.scale}px`
+              ? `${1.5 / addaSquare.scale}px`
               : null,
         }"
       >
         <div
           class="flex items-center justify-center flex-none hover:cursor-row-resize pointer-events-auto"
-          @mousedown.stop.prevent="paddingResize.resizePaddingTop($event)"
+          @mousedown.stop.prevent="useResizePaddingTop($event)"
           :style="{
             height: `${18 / addaSquare.scale}px`,
           }"
         >
           <div
-            @mousedown.stop.prevent="paddingResize.resizePaddingTop($event)"
+            v-show="
+              !canvasStore.isResizingPadding && !canvasStore.isResizingGap
+            "
             class="bg-red-500"
             :style="{
-              height: `${2 / addaSquare.scale}px`,
-              width: `${16 / addaSquare.scale}px`,
+              height: `${1.5 / addaSquare.scale}px`,
+              width: `${12 / addaSquare.scale}px`,
               outline: `${1 / addaSquare.scale}px solid white`,
               borderRadius: `${0.5 / addaSquare.scale}px`,
             }"
@@ -239,21 +252,30 @@
       </div>
       <div
         v-show="
-          paddingResize.showPaddingResizer ||
-          (paddingResize.currentResizing && !resizeStore.isResizing)
+          (useGetElementRect(selectToi.selectedBoxData.id)?.width > 100 ||
+            useGetElementRect(selectToi.selectedBoxData.id)?.height > 100) &&
+          selectToi.selectedBoxData &&
+          selectToi.treeHoverId
         "
-        @mouseover.prevent="paddingResize.setShowPaddingResizer"
+        @mouseover.prevent="
+          () => {
+            if (selectToi.selectedBoxData) {
+              selectToi.treeHoverId = selectToi.selectedBoxData.id;
+            }
+          }
+        "
         @mouseout="
           paddingResize.currentResizing
             ? null
             : (paddingResize.showPaddingResizer = false)
         "
-        class="absolute bottom-0 w-full flex flex-row items-center justify-center pointer-events-none"
+        class="absolute bottom-0 left-0 right-0 flex flex-row items-center justify-center pointer-events-none"
         :class="{
-          'border-red-500': paddingResize.currentResizing === 'bottom',
-          'hover:bg-pink-500/50': !paddingResize.currentResizing,
+          'border-[#E93372]': paddingResize.currentResizing === 'bottom',
+          'hover:bg-[#E93372]/20': !paddingResize.currentResizing,
         }"
         :style="{
+          margin: `${1 / addaSquare.scale}px`,
           height:
             paddingResize.bottomResizerHeight ||
             paddingResize.bottomResizerHeight === 0
@@ -261,22 +283,25 @@
               : `${(8 * 1) / addaSquare.scale}px`,
           borderWidth:
             paddingResize.currentResizing === 'bottom'
-              ? `${1 / addaSquare.scale}px`
+              ? `${1.5 / addaSquare.scale}px`
               : null,
         }"
       >
         <div
           class="flex items-center justify-center flex-none hover:cursor-row-resize pointer-events-auto"
-          @mousedown.stop.prevent="paddingResize.resizePaddingBottom($event)"
+          @mousedown.stop.prevent="useResizePaddingBottom($event)"
           :style="{
             height: `${18 / addaSquare.scale}px`,
           }"
         >
           <div
-            class="bg-red-500"
+            v-show="
+              !canvasStore.isResizingPadding && !canvasStore.isResizingGap
+            "
+            class="bg-[#E93372]"
             :style="{
-              height: `${2 / addaSquare.scale}px`,
-              width: `${16 / addaSquare.scale}px`,
+              height: `${1.5 / addaSquare.scale}px`,
+              width: `${12 / addaSquare.scale}px`,
               outline: `${1 / addaSquare.scale}px solid white`,
               borderRadius: `${0.5 / addaSquare.scale}px`,
             }"
@@ -285,21 +310,30 @@
       </div>
       <div
         v-show="
-          paddingResize.showPaddingResizer ||
-          (paddingResize.currentResizing && !resizeStore.isResizing)
+          (useGetElementRect(selectToi.selectedBoxData.id)?.width > 100 ||
+            useGetElementRect(selectToi.selectedBoxData.id)?.height > 100) &&
+          selectToi.selectedBoxData &&
+          selectToi.treeHoverId
         "
-        @mouseover.prevent="paddingResize.setShowPaddingResizer"
+        @mouseover.prevent="
+          () => {
+            if (selectToi.selectedBoxData) {
+              selectToi.treeHoverId = selectToi.selectedBoxData.id;
+            }
+          }
+        "
         @mouseout="
           paddingResize.currentResizing
             ? null
             : (paddingResize.showPaddingResizer = false)
         "
-        class="absolute left-0 h-full flex flex-row items-center justify-center pointer-events-none"
+        class="absolute left-0 top-0 bottom-0 flex flex-row items-center justify-center pointer-events-auto"
         :class="{
-          'border-red-500': paddingResize.currentResizing === 'left',
-          'hover:bg-pink-500/50': !paddingResize.currentResizing,
+          'border-[#E93372]': paddingResize.currentResizing === 'left',
+          'hover:bg-[#E93372]/20': !paddingResize.currentResizing,
         }"
         :style="{
+          margin: `${1 / addaSquare.scale}px`,
           width:
             paddingResize.leftResizerWidth ||
             paddingResize.leftResizerWidth === 0
@@ -307,22 +341,25 @@
               : `${(8 * 1) / addaSquare.scale}px`,
           borderWidth:
             paddingResize.currentResizing === 'left'
-              ? `${1 / addaSquare.scale}px`
+              ? `${1.5 / addaSquare.scale}px`
               : null,
         }"
       >
         <div
-          class="flex items-center justify-center flex-none hover:cursor-col-resize pointer-events-auto"
-          @mousedown.stop.prevent="paddingResize.resizePaddingLeft($event)"
+          class="flex items-center justify-center flex-none hover:cursor-col-resize"
+          @mousedown.stop.prevent="useResizePaddingLeft($event)"
           :style="{
             width: `${18 / addaSquare.scale}px`,
           }"
         >
           <div
-            class="bg-red-500"
+            v-show="
+              !canvasStore.isResizingPadding && !canvasStore.isResizingGap
+            "
+            class="bg-[#E93372] pointer-events-none"
             :style="{
-              width: `${2 / addaSquare.scale}px`,
-              height: `${16 / addaSquare.scale}px`,
+              width: `${1.5 / addaSquare.scale}px`,
+              height: `${12 / addaSquare.scale}px`,
               outline: `${1 / addaSquare.scale}px solid white`,
               borderRadius: `${0.5 / addaSquare.scale}px`,
             }"
@@ -331,21 +368,30 @@
       </div>
       <div
         v-show="
-          paddingResize.showPaddingResizer ||
-          (paddingResize.currentResizing && !resizeStore.isResizing)
+          (useGetElementRect(selectToi.selectedBoxData.id)?.width > 100 ||
+            useGetElementRect(selectToi.selectedBoxData.id)?.height > 100) &&
+          selectToi.selectedBoxData &&
+          selectToi.treeHoverId
         "
-        @mouseover.prevent="paddingResize.setShowPaddingResizer"
+        @mouseover.prevent="
+          () => {
+            if (selectToi.selectedBoxData) {
+              selectToi.treeHoverId = selectToi.selectedBoxData.id;
+            }
+          }
+        "
         @mouseout="
           paddingResize.currentResizing
             ? null
             : (paddingResize.showPaddingResizer = false)
         "
-        class="absolute right-0 h-full flex flex-row items-center justify-center pointer-events-none"
+        class="absolute right-0 top-0 bottom-0 flex flex-row items-center justify-center pointer-events-none"
         :class="{
-          'border-red-500': paddingResize.currentResizing === 'right',
-          'hover:bg-pink-500/50': !paddingResize.currentResizing,
+          'border-[#E93372]': paddingResize.currentResizing === 'right',
+          'hover:bg-[#E93372]/20': !paddingResize.currentResizing,
         }"
         :style="{
+          margin: `${1 / addaSquare.scale}px`,
           width:
             paddingResize.rightResizerWidth ||
             paddingResize.rightResizerWidth === 0
@@ -353,22 +399,25 @@
               : `${(8 * 1) / addaSquare.scale}px`,
           borderWidth:
             paddingResize.currentResizing === 'right'
-              ? `${1 / addaSquare.scale}px`
+              ? `${1.5 / addaSquare.scale}px`
               : null,
         }"
       >
         <div
           class="flex items-center justify-center flex-none hover:cursor-col-resize pointer-events-auto"
-          @mousedown.stop.prevent="paddingResize.resizePaddingRight($event)"
+          @mousedown.stop.prevent="useResizePaddingRight($event)"
           :style="{
             width: `${18 / addaSquare.scale}px`,
           }"
         >
           <div
-            class="bg-red-500"
+            v-show="
+              !canvasStore.isResizingPadding && !canvasStore.isResizingGap
+            "
+            class="bg-[#E93372]"
             :style="{
-              width: `${2 / addaSquare.scale}px`,
-              height: `${16 / addaSquare.scale}px`,
+              width: `${1.5 / addaSquare.scale}px`,
+              height: `${12 / addaSquare.scale}px`,
               outline: `${1 / addaSquare.scale}px solid white`,
               borderRadius: `${0.5 / addaSquare.scale}px`,
             }"
@@ -384,7 +433,8 @@
           useGetElementRect(selectToi.selectedBoxData.id)?.height > 100) &&
         selectToi.selectedBoxData &&
         paddingResize.gap.length &&
-        selectToi.treeHoverId
+        selectToi.treeHoverId &&
+        !canvasStore.isResizingPadding
       "
       class="absolute inset-0 overflow-visible pointer-events-none"
     >

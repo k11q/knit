@@ -55,11 +55,13 @@ import { useResizeStore } from "@/stores/resizeStore";
 import { useSquareStore } from "~~/src/stores/dataSquare";
 import { useCanvasStore } from "@/stores/canvas";
 import { useCounterStore } from "@/stores/counter";
+import { usePaddingResizeStore } from "~~/src/stores/paddingResizeStore";
 
 const resizeStore = useResizeStore();
 const squareStore = useSquareStore();
 const canvasStore = useCanvasStore();
 const selectToi = useCounterStore();
+const paddingResize = usePaddingResizeStore();
 
 const hoverState = ref(false);
 

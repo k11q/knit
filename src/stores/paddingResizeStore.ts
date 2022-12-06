@@ -24,9 +24,6 @@ export const usePaddingResizeStore = defineStore({
     gap: [] as GapPosition[],
   }),
   actions: {
-    setShowPaddingResizer() {
-      this.showPaddingResizer = true;
-    },
     setResizerSize(id: string) {
       const selectToi = useCounterStore();
 
