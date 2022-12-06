@@ -28,93 +28,65 @@ export const useResizeStore = defineStore({
     resizeWidthForward(e: MouseEvent) {
       const squareStore = useSquareStore();
 
-      let unit = "px";
-
       changeWidth(
         Math.round(
           this.prevWidth + (e.clientX - this.prevX) / squareStore.scale
-        ),
-        unit
+        )
       );
     },
     resizeWidthReverse(e: MouseEvent) {
       const squareStore = useSquareStore();
 
-      let unit = "px";
-
       changeWidth(
         Math.round(
           this.prevWidth + (this.prevX - e.clientX) / squareStore.scale
-        ),
-        unit
+        )
       );
     },
     resizeHeightForward(e: MouseEvent) {
       const squareStore = useSquareStore();
 
-      let unit = "px";
-
       changeHeight(
         Math.round(
           this.prevHeight + (e.clientY - this.prevY) / squareStore.scale
-        ),
-        unit
+        )
       );
     },
     resizeHeightReverse(e: MouseEvent) {
       const squareStore = useSquareStore();
 
-      let unit = "px";
-
       changeHeight(
         Math.round(
           this.prevHeight + (this.prevY - e.clientY) / squareStore.scale
-        ),
-        unit
+        )
       );
     },
     resizeLeftForward(e: MouseEvent) {
       const squareStore = useSquareStore();
 
-      let unit = "px";
-
       changeLeft(
-        Math.round(
-          this.prevLeft + (e.clientX - this.prevX) / squareStore.scale
-        ),
-        unit
+        Math.round(this.prevLeft + (e.clientX - this.prevX) / squareStore.scale)
       );
     },
     resizeLeftReverse(e: MouseEvent) {
       const squareStore = useSquareStore();
 
-      let unit = "px";
-
       changeLeft(
-        Math.round(
-          this.prevLeft + (this.prevX - e.clientX) / squareStore.scale
-        ),
-        unit
+        Math.round(this.prevLeft + (this.prevX - e.clientX) / squareStore.scale)
       );
     },
     resizeTopForward(e: MouseEvent) {
       const squareStore = useSquareStore();
 
-      let unit = "px";
-
       changeTop(
-        Math.round(this.prevTop + (e.clientY - this.prevY) / squareStore.scale),
-        unit
+        Math.round(this.prevTop + (e.clientY - this.prevY) / squareStore.scale)
       );
     },
     resizeTopReverse(e: MouseEvent) {
       const squareStore = useSquareStore();
 
-      let unit = "px";
-
       changeTop(
-        Math.round(this.prevTop + (this.prevY - e.clientY) / squareStore.scale),
-        unit
+        Math.round(this.prevTop + (this.prevY - e.clientY) / squareStore.scale)
       );
     },
 
@@ -437,14 +409,14 @@ export const useResizeStore = defineStore({
 
         function mousemove(e: MouseEvent) {
           resizeStore.isResizingTop = true;
-          if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
+          if (Math.abs(e.movementY) <= 5 && Math.abs(e.movementY) <= 5) {
             rulerSnap.on = true;
             rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
             if (!rulerSnap.snapTop && !rulerSnap.snapHeight) {
               resizeStore.resizeHeightReverse(e);
               resizeStore.resizeTopForward(e);
             }
-          } else if (Math.abs(e.movementX) > 5 || Math.abs(e.movementX) > 5) {
+          } else if (Math.abs(e.movementY) > 5 || Math.abs(e.movementY) > 5) {
             rulerSnap.on = false;
             resizeStore.resizeHeightReverse(e);
             resizeStore.resizeTopForward(e);
@@ -481,13 +453,13 @@ export const useResizeStore = defineStore({
 
         function mousemove(e: MouseEvent) {
           resizeStore.isResizingBottom = true;
-          if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
+          if (Math.abs(e.movementY) <= 5 && Math.abs(e.movementY) <= 5) {
             rulerSnap.on = true;
             rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
             if (!rulerSnap.snapHeight) {
               resizeStore.resizeHeightForward(e);
             }
-          } else if (Math.abs(e.movementX) > 5 || Math.abs(e.movementX) > 5) {
+          } else if (Math.abs(e.movementY) > 5 || Math.abs(e.movementY) > 5) {
             rulerSnap.on = false;
             resizeStore.resizeHeightForward(e);
           }
