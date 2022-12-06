@@ -1,6 +1,6 @@
 import { useSelectStore } from "~~/src/stores/selectStore";
 import { useSquareStore } from "~~/src/stores/dataSquare";
-import { useCounterStore } from "~~/src/stores/counter";
+import { Node, useCounterStore } from "~~/src/stores/counter";
 import { useCanvasStore } from "@/stores/canvas";
 
 export function useSetSelect(e: MouseEvent) {
@@ -11,6 +11,14 @@ export function useSetSelect(e: MouseEvent) {
 
   const prevX = (e.clientX - squareStore.offsetLeft) / squareStore.scale;
   const prevY = (e.clientY - squareStore.offsetTop) / squareStore.scale;
+
+  let target = e.target as HTMLElement;
+  let data: Node;
+  if (target.dataset.id && target.dataset.id !== "canvas") {
+    data = useGetElementData(selectToi.data, target.dataset.id);
+    canvasStore.selection = [{ ...data }];
+    useSetMultiElementsResizer();
+  }
 
   selectStore.X = prevX;
   selectStore.Y = prevY;
