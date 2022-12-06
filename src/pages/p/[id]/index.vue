@@ -2,6 +2,11 @@
   <div
     class="flex flex-col h-screen overflow-hidden max-h-screen min-h-screen text-xs text-white"
     :style="{ backgroundColor: selectToi.canvas[0].bgColor }"
+    :class="{
+      '!cursor-row-resize': canvasStore.cursorType === 'row-resize',
+      '!cursor-col-resize': canvasStore.cursorType === 'col-resize',
+      '!cursor-ew-resize': canvasStore.cursorType === 'ew-resize',
+    }"
   >
     <DesignerCanvas />
     <DesignerTopBar />
@@ -19,7 +24,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { useCounterStore } from "@/stores/counter";
 import { useCanvasStore } from "@/stores/canvas";
 

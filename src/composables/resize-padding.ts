@@ -12,6 +12,7 @@ export function useResizePaddingLeft(e: MouseEvent) {
     const selectToi = useCounterStore();
     paddingResize.currentResizing = "left";
     canvasStore.isResizingPadding = true;
+    canvasStore.cursorType = "col-resize";
 
     let prevPaddingLeft: number;
     if (getPaddingLeft()) {
@@ -45,6 +46,7 @@ export function useResizePaddingLeft(e: MouseEvent) {
     function mouseup() {
       paddingResize.isResizing = false;
       canvasStore.isResizingPadding = false;
+      canvasStore.cursorType = "";
       canvasStore.cursorLabel = "";
       paddingResize.currentResizing = "";
       paddingResize.setGap(selectToi.selectedBoxData.id);
@@ -64,6 +66,7 @@ export function useResizePaddingRight(e: MouseEvent) {
     const selectToi = useCounterStore();
     paddingResize.currentResizing = "right";
     canvasStore.isResizingPadding = true;
+    canvasStore.cursorType = "col-resize";
 
     let prevPaddingRight: number;
     if (getPaddingRight()) {
@@ -97,6 +100,7 @@ export function useResizePaddingRight(e: MouseEvent) {
     function mouseup() {
       paddingResize.isResizing = false;
       canvasStore.isResizingPadding = false;
+      canvasStore.cursorType = "";
       canvasStore.cursorLabel = "";
       paddingResize.currentResizing = "";
       paddingResize.setGap(selectToi.selectedBoxData.id);
@@ -116,6 +120,7 @@ export function useResizePaddingTop(e: MouseEvent) {
     const selectToi = useCounterStore();
     paddingResize.currentResizing = "top";
     canvasStore.isResizingPadding = true;
+    canvasStore.cursorType = "row-resize";
 
     let prevPaddingTop: number;
     if (getPaddingTop()) {
@@ -150,6 +155,7 @@ export function useResizePaddingTop(e: MouseEvent) {
     function mouseup() {
       paddingResize.isResizing = false;
       canvasStore.isResizingPadding = false;
+      canvasStore.cursorType = "";
       canvasStore.cursorLabel = "";
       paddingResize.currentResizing = "";
       paddingResize.setGap(selectToi.selectedBoxData.id);
@@ -169,6 +175,7 @@ export function useResizePaddingBottom(e: MouseEvent) {
     const selectToi = useCounterStore();
     paddingResize.currentResizing = "bottom";
     canvasStore.isResizingPadding = true;
+    canvasStore.cursorType = "row-resize";
 
     let prevPaddingBottom: number;
     if (getPaddingBottom()) {
@@ -202,6 +209,7 @@ export function useResizePaddingBottom(e: MouseEvent) {
     function mouseup() {
       paddingResize.isResizing = false;
       canvasStore.isResizingPadding = false;
+      canvasStore.cursorType = "";
       canvasStore.cursorLabel = "";
       paddingResize.currentResizing = "";
       paddingResize.setGap(selectToi.selectedBoxData.id);

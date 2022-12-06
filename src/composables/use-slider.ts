@@ -16,6 +16,7 @@ export const useSlider = (
   const left = () => {
     const prevX = e.clientX;
     const prevLeft = getLeft() as number;
+    canvasStore.cursorType = "ew-resize";
 
     window.addEventListener("mousemove", mousemove);
     window.addEventListener("mouseup", mouseup);
@@ -41,6 +42,7 @@ export const useSlider = (
       useSetOutlineSelector(currElement);
 
       canvasStore.isDragging = false;
+      canvasStore.cursorType = "";
       window.removeEventListener("mousemove", mousemove);
       window.removeEventListener("mouseup", mouseup);
     }
@@ -48,6 +50,7 @@ export const useSlider = (
   const top = () => {
     const prevX = e.clientX;
     const prevTop = getTop() as number;
+    canvasStore.cursorType = "ew-resize";
 
     window.addEventListener("mousemove", mousemove);
     window.addEventListener("mouseup", mouseup);
@@ -71,6 +74,7 @@ export const useSlider = (
       useSetOutlineSelector(currElement);
 
       canvasStore.isDragging = false;
+      canvasStore.cursorType = "";
       window.removeEventListener("mousemove", mousemove);
       window.removeEventListener("mouseup", mouseup);
     }
@@ -78,6 +82,7 @@ export const useSlider = (
   const width = () => {
     const prevX = e.clientX;
     const prevWidth = getWidth() as number;
+    canvasStore.cursorType = "ew-resize";
 
     window.addEventListener("mousemove", mousemove);
     window.addEventListener("mouseup", mouseup);
@@ -103,6 +108,7 @@ export const useSlider = (
       useSetOutlineSelector(currElement);
 
       canvasStore.isDragging = false;
+      canvasStore.cursorType = "";
       window.removeEventListener("mousemove", mousemove);
       window.removeEventListener("mouseup", mouseup);
     }
@@ -110,6 +116,7 @@ export const useSlider = (
   const height = () => {
     const prevX = e.clientX;
     const prevHeight = getHeight() as number;
+    canvasStore.cursorType = "ew-resize";
 
     window.addEventListener("mousemove", mousemove);
     window.addEventListener("mouseup", mouseup);
@@ -135,6 +142,7 @@ export const useSlider = (
       useSetOutlineSelector(currElement);
 
       canvasStore.isDragging = false;
+      canvasStore.cursorType = "";
       window.removeEventListener("mousemove", mousemove);
       window.removeEventListener("mouseup", mouseup);
     }
@@ -142,6 +150,7 @@ export const useSlider = (
   const borderRadius = () => {
     const prevX = e.clientX;
     let prevBorderRadius = getBorderRadius() as number;
+    canvasStore.cursorType = "ew-resize";
 
     window.addEventListener("mousemove", mousemove);
     window.addEventListener("mouseup", mouseup);
@@ -167,6 +176,7 @@ export const useSlider = (
       useSetOutlineSelector(currElement);
 
       canvasStore.isDragging = false;
+      canvasStore.cursorType = "";
       window.removeEventListener("mousemove", mousemove);
       window.removeEventListener("mouseup", mouseup);
     }
@@ -174,6 +184,7 @@ export const useSlider = (
   const gap = () => {
     const prevX = e.clientX;
     let prevGap = getGap() as number;
+    canvasStore.cursorType = "ew-resize";
 
     window.addEventListener("mousemove", mousemove);
     window.addEventListener("mouseup", mouseup);
@@ -195,6 +206,7 @@ export const useSlider = (
       useSetOutlineSelector(currElement);
 
       canvasStore.isDragging = false;
+      canvasStore.cursorType = "";
       window.removeEventListener("mousemove", mousemove);
       window.removeEventListener("mouseup", mouseup);
     }
