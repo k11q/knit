@@ -676,7 +676,7 @@ export const useRulerSnapStore = defineStore({
               e;
             }
             selectedSiblingsCopy.push(i);
-          }
+          } else return;
         });
         if (
           snapLinesCopy.lineTop ||
@@ -984,7 +984,7 @@ export const useRulerSnapStore = defineStore({
                 }
               }
               selectedSiblingsCopy.push(i);
-            }
+            } else return;
           });
 
           if (snapLinesCopy.lineX || snapLinesCopy.lineY) {
