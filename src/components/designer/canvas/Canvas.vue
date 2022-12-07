@@ -214,7 +214,6 @@
     <div
       v-show="
         selectToi.selectedBoxData &&
-        !canvasStore.isDragging &&
         !selectToi.selectedTextEditor &&
         useCheckParent(selectToi.selectedBoxData.id) &&
         !canvasStore.isPinchZoom
