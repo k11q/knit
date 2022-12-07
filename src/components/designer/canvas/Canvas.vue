@@ -269,7 +269,8 @@
                   addaSquare.scale +
                 'px'
             : null,
-          border: `${1.5 / addaSquare.scale}px solid #0191FA`,
+          outline: `${1.5 / addaSquare.scale}px solid #0191FA`,
+          outlineOffset: `${-1.5 / addaSquare.scale}px`,
         }"
       >
         <!--topleft dimensions label-->
