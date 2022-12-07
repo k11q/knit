@@ -281,18 +281,35 @@
           :style="{ marginBottom: `${(4 * 1) / addaSquare.scale}px` }"
         >
           <span
-            class="bg-[#0191FA] cursor-default whitespace-nowrap w-full overflow-hidden overflow-ellipsis"
+            class="bg-[#0191FA] cursor-default whitespace-nowrap w-full overflow-hidden overflow-ellipsis flex justify-start items-center"
             :style="{
               fontSize: `${(11 * 1) / addaSquare.scale}px`,
               lineHeight: 1.1,
               borderRadius: `${(2 * 1) / addaSquare.scale}px`,
+              gap: `${(2 * 1) / addaSquare.scale}px`,
               paddingTop: `${2 * (1 / addaSquare.scale)}px`,
               paddingBottom: `${2 * (1 / addaSquare.scale)}px`,
               paddingRight: `${(4 * 1) / addaSquare.scale}px`,
               paddingLeft: `${(4 * 1) / addaSquare.scale}px`,
             }"
           >
-            {{ selectToi.selectedBoxData.name }}
+            <i
+              ><svg
+                :width="11 / addaSquare.scale"
+                :height="11 / addaSquare.scale"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              </svg>
+            </i>
+            <p class="overflow-hidden overflow-ellipsis">
+              {{ selectToi.selectedBoxData.name }}
+            </p>
           </span>
         </p>
       </div>
@@ -360,18 +377,35 @@
           :style="{ marginBottom: `${(4 * 1) / addaSquare.scale}px` }"
         >
           <span
-            class="bg-[#0191FA] cursor-default whitespace-nowrap w-full overflow-hidden overflow-ellipsis"
+            class="bg-[#0191FA] cursor-default whitespace-nowrap w-full overflow-hidden overflow-ellipsis flex justify-start items-center"
             :style="{
               fontSize: `${(11 * 1) / addaSquare.scale}px`,
               lineHeight: 1.1,
               borderRadius: `${(2 * 1) / addaSquare.scale}px`,
+              gap: `${2 * (1 / addaSquare.scale)}px`,
               paddingTop: `${2 * (1 / addaSquare.scale)}px`,
               paddingBottom: `${2 * (1 / addaSquare.scale)}px`,
               paddingRight: `${(4 * 1) / addaSquare.scale}px`,
               paddingLeft: `${(4 * 1) / addaSquare.scale}px`,
             }"
           >
-            {{ canvasStore.hoverData.name }}
+            <i
+              ><svg
+                :width="11 / addaSquare.scale"
+                :height="11 / addaSquare.scale"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              </svg>
+            </i>
+            <p class="overflow-hidden overflow-ellipsis">
+              {{ canvasStore.hoverData.name }}
+            </p>
           </span>
         </p>
       </div>
