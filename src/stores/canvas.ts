@@ -18,6 +18,7 @@ export const useCanvasStore = defineStore({
   id: "canvasStore",
   state: () => ({
     selection: [] as Node[],
+    hoverData: {} as Node,
     isPinchZoom: false,
     isDragging: false,
     isResizingGap: false,

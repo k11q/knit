@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { useCounterStore } from "~~/src/stores/counter";
+import { Node, useCounterStore } from "~~/src/stores/counter";
 import { useSquareStore } from "~~/src/stores/dataSquare";
 import { usePaddingResizeStore } from "~~/src/stores/paddingResizeStore";
 import { useCanvasStore } from "~~/src/stores/canvas";
@@ -92,6 +92,7 @@ function mousedown(e: MouseEvent, id: string, type: string) {
 function mouseout(id: string, type: string) {
   selectToi.treeHover = false;
   selectToi.treeHoverId = "";
+  canvasStore.hoverData = {} as Node;
   canvasStore.textHover = false;
   if (selectToi.selectedBox === id && type !== "text") {
     paddingResize.showPaddingResizer = false;
@@ -107,6 +108,7 @@ function mouseover(id: string, type: string) {
     !canvasStore.isResizingGap &&
     !canvasStore.isResizingPadding
   ) {
+    canvasStore.hoverData = useGetElementData(selectToi.data, id);
     useSetOutlineHover(id);
   } else if (
     selectToi.selectedBox !== id &&

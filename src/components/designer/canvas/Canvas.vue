@@ -36,7 +36,7 @@
         transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
       }"
     >
-      <!--Hover outline-->
+      <!--Hover outline
       <div
         v-show="
           ((selectToi.treeHover && !selectToi.selectedTextEditor) ||
@@ -58,7 +58,9 @@
             selectToi.treeHoverSize / addaSquare.scale
           }px solid #0191FA`,
         }"
-      ></div>
+      >
+    </div>
+  -->
       <!--Selected outline n resizer n padding resizer-->
       <ClientOnly>
         <DesignerCanvasResizer />
@@ -291,6 +293,85 @@
             }"
           >
             {{ selectToi.selectedBoxData.name }}
+          </span>
+        </p>
+      </div>
+    </div>
+
+    <!--hover outline and label-->
+    <div
+      v-show="canvasStore.hoverData && !canvasStore.isPinchZoom"
+      class="fixed top-0 left-0 overflow-visible pointer-events-none box-border"
+      :style="{
+        transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
+      }"
+    >
+      <div
+        class="absolute"
+        :style="{
+          left: canvasStore.hoverData.cssRules
+            ? canvasStore.hoverData.cssRules[0].style.left &&
+              !useCheckParent(canvasStore.hoverData.id)
+              ? canvasStore.hoverData.cssRules[0].style.left.value + 'px'
+              : Math.round(
+                  useGetElementRect(canvasStore.hoverData.id)?.x -
+                    addaSquare.offsetLeft
+                ) /
+                  addaSquare.scale +
+                'px'
+            : null,
+          top: canvasStore.hoverData.cssRules
+            ? canvasStore.hoverData.cssRules[0].style.top &&
+              !useCheckParent(canvasStore.hoverData.id)
+              ? canvasStore.hoverData.cssRules[0].style.top.value + 'px'
+              : Math.round(
+                  useGetElementRect(canvasStore.hoverData.id)?.y -
+                    addaSquare.offsetTop
+                ) /
+                  addaSquare.scale +
+                'px'
+            : null,
+          height: canvasStore.hoverData.cssRules
+            ? canvasStore.hoverData?.cssRules[0].style?.height?.value !==
+                'fit-content' && !useCheckParent(canvasStore.hoverData.id)
+              ? canvasStore.hoverData.cssRules[0].style.height.value + 'px'
+              : Math.round(
+                  useGetElementRect(canvasStore.hoverData.id)?.height
+                ) /
+                  addaSquare.scale +
+                'px'
+            : null,
+          width: canvasStore.hoverData.cssRules
+            ? canvasStore.hoverData?.cssRules[0]?.style?.width?.value !==
+                'fit-content' && !useCheckParent(canvasStore.hoverData.id)
+              ? canvasStore.hoverData.cssRules[0].style.width.value + 'px'
+              : Math.round(useGetElementRect(canvasStore.hoverData.id)?.width) /
+                  addaSquare.scale +
+                'px'
+            : null,
+          outline: `${1.5 / addaSquare.scale}px solid #0191FA`,
+          outlineOffset: `${-1.5 / addaSquare.scale}px`,
+        }"
+      >
+        <!--topleft dimensions label-->
+        <p
+          v-show="useCheckParent(canvasStore.hoverData.id)"
+          class="absolute left-0 bottom-full flex flex-row justify-start max-w-full"
+          :style="{ marginBottom: `${(4 * 1) / addaSquare.scale}px` }"
+        >
+          <span
+            class="bg-[#0191FA] cursor-default whitespace-nowrap w-full overflow-hidden overflow-ellipsis"
+            :style="{
+              fontSize: `${(11 * 1) / addaSquare.scale}px`,
+              lineHeight: 1.1,
+              borderRadius: `${(2 * 1) / addaSquare.scale}px`,
+              paddingTop: `${2 * (1 / addaSquare.scale)}px`,
+              paddingBottom: `${2 * (1 / addaSquare.scale)}px`,
+              paddingRight: `${(4 * 1) / addaSquare.scale}px`,
+              paddingLeft: `${(4 * 1) / addaSquare.scale}px`,
+            }"
+          >
+            {{ canvasStore.hoverData.name }}
           </span>
         </p>
       </div>
