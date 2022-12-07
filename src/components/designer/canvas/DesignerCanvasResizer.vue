@@ -3,8 +3,7 @@
     v-show="
       selectToi.selectedBoxData &&
       !canvasStore.isDragging &&
-      !selectToi.selectedTextEditor &&
-      !useCheckParent(selectToi.selectedBoxData.id)
+      !selectToi.selectedTextEditor
     "
     class="absolute pointer-events-none border-box"
     :style="{
@@ -185,8 +184,9 @@
     <div
       class="pointer-events-auto"
       v-show="
-        useGetElementRect(selectToi.selectedBoxData.id)?.width > 20 ||
-        useGetElementRect(selectToi.selectedBoxData.id)?.height > 20
+        (useGetElementRect(selectToi.selectedBoxData.id)?.width > 20 ||
+          useGetElementRect(selectToi.selectedBoxData.id)?.height > 20) &&
+        !useCheckParent(selectToi.selectedBoxData.id)
       "
     >
       <!--Bottom dimensions label-->
@@ -333,11 +333,10 @@
         (useGetElementRect(selectToi.selectedBoxData.id)?.width > 100 ||
           useGetElementRect(selectToi.selectedBoxData.id)?.height > 100) &&
         selectToi.selectedBoxData &&
-        paddingResize.gap.length &&
         selectToi.treeHoverId &&
         !canvasStore.isResizingPadding
       "
-      class="absolute inset-0 overflow-visible pointer-events-none"
+      class="pointer-events-none"
     >
       <DesignerCanvasGapResizer :gaps="paddingResize.gap" />
     </div>

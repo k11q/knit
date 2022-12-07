@@ -1,7 +1,7 @@
 <template>
   <template
     v-for="gap in gaps"
-    class="overflow-visible flex items-center justify-center text-center relative"
+    class="overflow-visible flex items-center justify-center text-center"
   >
     <div
       @mouseenter="
@@ -20,7 +20,11 @@
       :style="{
         left: gap.left + 'px',
         height: gap.height + 'px',
-        top: gap.top + 'px',
+        top: !useCheckParent(selectToi.selectedBoxData.id)
+          ? gap.top + 'px'
+          : gap.top -
+            useGetElement(selectToi.selectedBoxData.id).offsetTop +
+            'px',
         right: gap.right ? gap.right + 'px' : `${1 / squareStore.scale}px`,
         border: canvasStore.isResizingGap
           ? `${1.5 / squareStore.scale}px solid #E93372`

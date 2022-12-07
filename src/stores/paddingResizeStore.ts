@@ -40,6 +40,7 @@ export const usePaddingResizeStore = defineStore({
     },
     setGap(id: string) {
       let element = useGetElement(id) as HTMLElement;
+      let elementRect = useGetElementRect(id) as DOMRect;
       if (element.children) {
         let children = [...element.children] as HTMLElement[];
         let staticChildren = children.filter(
