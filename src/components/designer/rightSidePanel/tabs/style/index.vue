@@ -524,7 +524,10 @@
             class="h-[24px] aspect-square items-center flex flex-none justify-center -ml-[3px] hover:bg-[#2E2E2E] rounded-sm hover:opacity-100"
             @click="
               selectToi.selectedBoxData.cssRules[0].style.height.value =
-                'fit-content'
+                'fit-content';
+              selectToi.selectedBoxData.cssRules[0].style.height.type =
+                'keyword';
+              delete selectToi.selectedBoxData.cssRules[0].style.height.unit;
             "
             :class="{
               'opacity-100':
