@@ -210,6 +210,91 @@
       </ClientOnly>
     </div>
 
+    <!--child outline and label-->
+    <div
+      v-show="
+        selectToi.selectedBoxData &&
+        !canvasStore.isDragging &&
+        !selectToi.selectedTextEditor &&
+        useCheckParent(selectToi.selectedBoxData.id) &&
+        !canvasStore.isPinchZoom
+      "
+      class="fixed top-0 left-0 overflow-visible pointer-events-none box-border"
+      :style="{
+        transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
+      }"
+    >
+      <div
+        class="absolute"
+        :style="{
+          left: selectToi.selectedBoxData.cssRules
+            ? selectToi.selectedBoxData.cssRules[0].style.left &&
+              !useCheckParent(selectToi.selectedBoxData.id)
+              ? selectToi.selectedBoxData.cssRules[0].style.left.value + 'px'
+              : Math.round(
+                  useGetElementRect(selectToi.selectedBoxData.id)?.x -
+                    addaSquare.offsetLeft
+                ) /
+                  addaSquare.scale +
+                'px'
+            : null,
+          top: selectToi.selectedBoxData.cssRules
+            ? selectToi.selectedBoxData.cssRules[0].style.top &&
+              !useCheckParent(selectToi.selectedBoxData.id)
+              ? selectToi.selectedBoxData.cssRules[0].style.top.value + 'px'
+              : Math.round(
+                  useGetElementRect(selectToi.selectedBoxData.id)?.y -
+                    addaSquare.offsetTop
+                ) /
+                  addaSquare.scale +
+                'px'
+            : null,
+          height: selectToi.selectedBoxData.cssRules
+            ? selectToi.selectedBoxData?.cssRules[0].style?.height?.value !==
+                'fit-content' && !useCheckParent(selectToi.selectedBoxData.id)
+              ? selectToi.selectedBoxData.cssRules[0].style.height.value + 'px'
+              : Math.round(
+                  useGetElementRect(selectToi.selectedBoxData.id)?.height
+                ) /
+                  addaSquare.scale +
+                'px'
+            : null,
+          width: selectToi.selectedBoxData.cssRules
+            ? selectToi.selectedBoxData?.cssRules[0]?.style?.width?.value !==
+                'fit-content' && !useCheckParent(selectToi.selectedBoxData.id)
+              ? selectToi.selectedBoxData.cssRules[0].style.width.value + 'px'
+              : Math.round(
+                  useGetElementRect(selectToi.selectedBoxData.id)?.width
+                ) /
+                  addaSquare.scale +
+                'px'
+            : null,
+          border: `${1.5 / addaSquare.scale}px solid #0191FA`,
+        }"
+      >
+        <!--topleft dimensions label-->
+        <p
+          class="absolute left-0 bottom-full flex flex-row justify-start max-w-full"
+          :style="{ marginBottom: `${(4 * 1) / addaSquare.scale}px` }"
+        >
+          <span
+            class="bg-[#0191FA] cursor-default whitespace-nowrap w-full overflow-hidden overflow-ellipsis"
+            :style="{
+              fontSize: `${(11 * 1) / addaSquare.scale}px`,
+              lineHeight: 1.1,
+              borderRadius: `${(2 * 1) / addaSquare.scale}px`,
+              paddingTop: `${2 * (1 / addaSquare.scale)}px`,
+              paddingBottom: `${2 * (1 / addaSquare.scale)}px`,
+              paddingRight: `${(4 * 1) / addaSquare.scale}px`,
+              paddingLeft: `${(4 * 1) / addaSquare.scale}px`,
+            }"
+          >
+            {{ selectToi.selectedBoxData.name }}
+          </span>
+        </p>
+      </div>
+    </div>
+
     <!--NEW Ruler element-->
     <div
       v-show="rulerSnap.show && rulerSnap.on && !canvasStore.isPinchZoom"

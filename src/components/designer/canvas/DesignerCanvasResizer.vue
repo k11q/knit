@@ -1,9 +1,10 @@
 <template>
   <div
     v-show="
-      selectToi.selectedBox &&
+      selectToi.selectedBoxData &&
       !canvasStore.isDragging &&
-      !selectToi.selectedTextEditor
+      !selectToi.selectedTextEditor &&
+      !useCheckParent(selectToi.selectedBoxData.id)
     "
     class="absolute pointer-events-none border-box"
     :style="{
@@ -194,7 +195,7 @@
         :style="{ marginTop: `${(8 * 1) / addaSquare.scale}px` }"
       >
         <span
-          class="bg-[#0191FA] cursor-default whitespace-nowrap"
+          class="bg-[#0191FA] cursor-default whitespace-nowrap font-medium"
           :style="{
             fontSize: `${(11 * 1) / addaSquare.scale}px`,
             lineHeight: 1.1,
