@@ -16,8 +16,8 @@
     </div>
     <div
       v-show="canvasStore.cursorLabel"
-      :style="{ left: `${x + 10}px`, top: `${y - 25}px`, lineHeight: 1 }"
-      class="bg-red-600 absolute pointer-events-none px-1 rounded-sm py-0.5"
+      :style="{ left: `${x + 10}px`, top: `${y - 25}px`, lineHeight: 1.1 }"
+      class="bg-[#E93372] absolute pointer-events-none px-1 rounded-sm py-0.5 text-[11px]"
     >
       {{ canvasStore.cursorLabel }}
     </div>
