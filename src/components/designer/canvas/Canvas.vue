@@ -123,7 +123,7 @@
           outline: `${1.5 / addaSquare.scale}px dotted #0191FA`,
         }"
       ></div>
-      <!--solid outline when dnd with parent-->
+      <!--solid outline when dnd with parent
       <div
         v-show="canvasStore.showSolidOutline"
         class="absolute pointer-events-none"
@@ -147,6 +147,7 @@
           outline: `${1.5 / addaSquare.scale}px solid #0191FA`,
         }"
       ></div>
+    -->
       <!--Select show-->
       <div
         v-show="selectStore.showSelect"
