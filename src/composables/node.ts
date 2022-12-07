@@ -1,4 +1,4 @@
-import { useCounterStore } from "~~/src/stores/counter";
+import { CSSRuleDetails, Node, useCounterStore } from "~~/src/stores/counter";
 
 //getters
 export function getLeft(): number | string | null {
@@ -140,6 +140,17 @@ export function getColor(): number | string | null {
   } else {
     return selectToi.selectedBoxData.cssRules[0].style.color.value;
   }
+}
+export function getFlexDirection(): number | string | null {
+  const selectToi = useCounterStore();
+
+  if (selectToi.selectedBoxData && selectToi.selectedBoxData.cssRules) {
+    if (!selectToi.selectedBoxData.cssRules[0].style.flexDirection) {
+      return null;
+    } else {
+      return selectToi.selectedBoxData.cssRules[0].style.flexDirection.value;
+    }
+  } else return null;
 }
 export function getAlign(): number | string | null {
   const selectToi = useCounterStore();
@@ -305,6 +316,23 @@ export function changePaddingBottom(value: number, unit: string = "px") {
   }
   if (selectToi.selectedBoxData.cssRules[0].style.paddingBottom) {
     selectToi.selectedBoxData.cssRules[0].style.paddingBottom.value = value;
+  }
+}
+export function changeFlexDirection(value: string) {
+  const selectToi = useCounterStore();
+
+  if (selectToi.selectedBoxData && selectToi.selectedBoxData.cssRules) {
+    if (!getFlexDirection()) {
+      selectToi.selectedBoxData.cssRules[0].style.flexDirection = {
+        type: "keyword",
+        value: value,
+      };
+    }
+    if (getFlexDirection()) {
+      let flexDirection = selectToi.selectedBoxData.cssRules[0].style
+        .flexDirection as CSSRuleDetails;
+      flexDirection.value = value;
+    }
   }
 }
 export function changeAlign(value: string) {

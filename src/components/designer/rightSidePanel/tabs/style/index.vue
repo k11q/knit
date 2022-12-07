@@ -704,52 +704,30 @@
             <div class="flex flex-row gap-2 items-center h-8">
               <div
                 class="h-[24px] aspect-square items-center flex flex-none justify-center -ml-[3px] hover:bg-[#2E2E2E] rounded-sm hover:opacity-100"
-                @click="
-                  selectToi.selectedBoxData.cssRules[0].style.flexDirection.value =
-                    'column'
-                "
+                @click="changeFlexDirection('column')"
                 :class="{
                   'opacity-100':
-                    useCheckCSSRules() &&
-                    selectToi.selectedBoxData.cssRules[0].style.flexDirection &&
-                    selectToi.selectedBoxData.cssRules[0].style.flexDirection
-                      .value === 'column',
+                    getFlexDirection() && getFlexDirection() === 'column',
                   'opacity-60':
-                    useCheckCSSRules() &&
-                    selectToi.selectedBoxData.cssRules[0].style.flexDirection &&
-                    selectToi.selectedBoxData.cssRules[0].style.flexDirection
-                      .value !== 'column',
+                    getFlexDirection() && getFlexDirection() !== 'column',
                   'bg-[#2E2E2E]':
-                    useCheckCSSRules() &&
-                    selectToi.selectedBoxData.cssRules[0].style.flexDirection &&
-                    selectToi.selectedBoxData.cssRules[0].style.flexDirection
-                      .value === 'column',
+                    getFlexDirection() && getFlexDirection() === 'column',
                 }"
               >
                 <UIIcon name="arrow-down" :size="18" />
               </div>
               <div
                 class="h-[24px] aspect-square items-center flex flex-none justify-center -ml-[3px] hover:bg-[#2E2E2E] rounded-sm hover:opacity-100"
-                @click="
-                  selectToi.selectedBoxData.cssRules[0].style.flexDirection.value =
-                    'row'
-                "
+                @click="changeFlexDirection('row')"
                 :class="{
                   'opacity-100':
-                    useCheckCSSRules() &&
-                    selectToi.selectedBoxData.cssRules[0].style.flexDirection &&
-                    selectToi.selectedBoxData.cssRules[0].style.flexDirection
-                      .value === 'row',
+                    (getFlexDirection() && getFlexDirection() === 'row') ||
+                    !getFlexDirection(),
                   'opacity-60':
-                    useCheckCSSRules() &&
-                    selectToi.selectedBoxData.cssRules[0].style.flexDirection &&
-                    selectToi.selectedBoxData.cssRules[0].style.flexDirection
-                      .value !== 'row',
+                    getFlexDirection() && getFlexDirection() !== 'row',
                   'bg-[#2E2E2E]':
-                    useCheckCSSRules() &&
-                    selectToi.selectedBoxData.cssRules[0].style.flexDirection &&
-                    selectToi.selectedBoxData.cssRules[0].style.flexDirection
-                      .value === 'row',
+                    (getFlexDirection() && getFlexDirection() === 'row') ||
+                    !getFlexDirection(),
                 }"
               >
                 <UIIcon name="arrow-right" :size="18" />
@@ -862,11 +840,7 @@
           </div>
           <div class="flex flex-col w-1/2">
             <div
-              v-if="
-                useCheckCSSRules() &&
-                selectToi.selectedBoxData.cssRules[0].style.flexDirection
-                  ?.value === 'column'
-              "
+              v-if="getFlexDirection() && getFlexDirection() === 'column'"
               class="h-16 w-16 border rounded-sm border-[#3E3E3E] bg-[#222222] aspect-square grid grid-cols-3 flex-none items-start"
             >
               <div
@@ -1340,9 +1314,8 @@
             </div>
             <div
               v-if="
-                useCheckCSSRules() &&
-                selectToi.selectedBoxData.cssRules[0].style.flexDirection
-                  ?.value === 'row'
+                (getFlexDirection() && getFlexDirection() === 'row') ||
+                !getFlexDirection()
               "
               class="h-16 w-16 border rounded-sm border-[#3E3E3E] bg-[#222222] aspect-square grid grid-cols-3 flex-none items-start"
             >
