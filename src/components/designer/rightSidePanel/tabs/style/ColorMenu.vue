@@ -183,24 +183,27 @@ watch(
   (currentValue, oldValue) => {
     if (selectToi.selectedBoxData) {
       let hexColor = getBackgroundColor() as string;
-      let hex = useHexToRGB(hexColor);
-      if (hex) {
-        selectedRed.value = hex.r;
-        selectedGreen.value = hex.g;
-        selectedBlue.value = hex.b;
-      }
-      getColor();
-      console.log(getColor());
-      if (getColor()) {
-        let returnedColor = getColor()!;
+      if (hexColor) {
+        let hex = useHexToRGB(hexColor);
 
-        posX.value = returnedColor.posX;
-        posY.value = returnedColor.posY;
+        if (hex) {
+          selectedRed.value = hex.r;
+          selectedGreen.value = hex.g;
+          selectedBlue.value = hex.b;
 
-        if (getColor().r || getColor().g || getColor().b) {
-          hexRed.value = returnedColor.r;
-          hexGreen.value = returnedColor.g;
-          hexBlue.value = returnedColor.b;
+          getColor();
+          if (getColor()) {
+            let returnedColor = getColor();
+
+            posX.value = returnedColor.posX;
+            posY.value = returnedColor.posY;
+
+            if (getColor().r || getColor().g || getColor().b) {
+              hexRed.value = returnedColor.r;
+              hexGreen.value = returnedColor.g;
+              hexBlue.value = returnedColor.b;
+            }
+          }
         }
       }
     }
@@ -237,7 +240,7 @@ function getColor(): GetColor | undefined {
     let hexColor = getBackgroundColor() as string;
     let color = useHexToRGB(hexColor);
 
-    if (color) {
+    if (hexColor) {
       let target = document.querySelector("#colorHex")!;
       let rect = target.getBoundingClientRect();
 
