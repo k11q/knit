@@ -182,13 +182,27 @@ watch(
   () => selectToi.selectedBoxData,
   (currentValue, oldValue) => {
     if (selectToi.selectedBoxData) {
-      let hex = useHexToRGB(getBackgroundColor());
+      let hexColor = getBackgroundColor() as string;
+      let hex = useHexToRGB(hexColor);
       if (hex) {
         selectedRed.value = hex.r;
         selectedGreen.value = hex.g;
         selectedBlue.value = hex.b;
       }
       getColor();
+      console.log(getColor());
+      if (getColor()) {
+        let returnedColor = getColor()!;
+
+        posX.value = returnedColor.posX;
+        posY.value = returnedColor.posY;
+
+        if (getColor().r || getColor().g || getColor().b) {
+          hexRed.value = returnedColor.r;
+          hexGreen.value = returnedColor.g;
+          hexBlue.value = returnedColor.b;
+        }
+      }
     }
   }
 );
@@ -210,35 +224,168 @@ const opacitySliderColor = computed(
     `linear-gradient(to right, rgb(255,255,255),rgb(${selectedRed.value},${selectedGreen.value},${selectedBlue.value}))`
 );
 
+type GetColor = {
+  posX: number;
+  posY: number;
+  r?: number;
+  g?: number;
+  b?: number;
+};
 //get color
-function getColor() {
+function getColor(): GetColor | undefined {
   if (selectToi.selectedBoxData) {
-    let color = useHexToRGB(getBackgroundColor());
+    let hexColor = getBackgroundColor() as string;
+    let color = useHexToRGB(hexColor);
 
     if (color) {
-      let r = color.r;
-      let g = color.g;
-      let b = color.b;
+      let target = document.querySelector("#colorHex")!;
+      let rect = target.getBoundingClientRect();
 
-      console.log(r, g, b);
+      let red = color.r;
+      let green = color.g;
+      let blue = color.b;
 
-      let max = Math.max(r, g, b),
-        min = Math.min(r, g, b);
+      let max = Math.max(red, green, blue);
+      let min = Math.min(red, green, blue);
 
       // all greyscale colors have hue of 0deg
       if (max - min == 0) {
-        return 0;
+        let posY = ((255 - red) / 255) * rect.height;
+        return { posX: 0, posY: posY };
       }
 
-      if (max == r) {
-        // if red is the predominent color
-      } else if (max == g) {
-        // if green is the predominent color
-      } else if (max == b) {
-        // if blue is the predominent color
+      // if red is the predominent color
+      else if (max === red && green === blue) {
+        let posX = ((red - blue) / red) * rect.width;
+        let posY = ((255 - red) / 255) * rect.height;
+        return { posX: posX, posY: posY, r: 255, g: 0, b: 0 };
       }
-    }
-  }
+
+      // if red is the only predominent color and min is blue and green is not equal to blue
+      else if (max === red && min === blue && red !== green) {
+        let posY = ((255 - red) / 255) * rect.height;
+        let posX = ((red - blue) / red) * rect.width;
+
+        let lightness = (rect.height - posY) / rect.height;
+        let saturationGreen = Math.round(green / lightness);
+
+        let hueGreen = Math.round(
+          (saturationGreen - ((rect.width - posX) / rect.width) * 255) /
+            (posX / rect.width)
+        );
+
+        return { posX: posX, posY: posY, r: 255, g: hueGreen, b: 0 };
+      }
+      //if red and green predominent
+      else if (max === red && min === blue && red === green) {
+        let posY = ((255 - red) / 255) * rect.height;
+        let posX = ((red - blue) / red) * rect.width;
+
+        return { posX: posX, posY: posY, r: 255, g: 255, b: 0 };
+      }
+      // if green is the predominent color and blue is min
+      else if (max === green && min === blue && green !== red && blue !== red) {
+        let posY = ((255 - green) / 255) * rect.height;
+        let posX = ((green - blue) / green) * rect.width;
+
+        let lightness = (rect.height - posY) / rect.height;
+        let saturationRed = Math.round(red / lightness);
+
+        let hueRed = Math.round(
+          (saturationRed - ((rect.width - posX) / rect.width) * 255) /
+            (posX / rect.width)
+        );
+
+        return { posX: posX, posY: posY, r: hueRed, g: 255, b: 0 };
+      }
+      // if green is predominant and blue and red same and min
+      else if (max === green && blue === red) {
+        let posY = ((255 - green) / 255) * rect.height;
+        let posX = ((green - blue) / green) * rect.width;
+
+        return { posX: posX, posY: posY, r: 0, g: 255, b: 0 };
+      }
+      // if green is predominant and red is min
+      else if (max === green && min === red && blue !== red && green !== red) {
+        let posY = ((255 - green) / 255) * rect.height;
+        let posX = ((green - red) / green) * rect.width;
+
+        let lightness = (rect.height - posY) / rect.height;
+        let saturationBlue = Math.round(blue / lightness);
+
+        let hueBlue = Math.round(
+          (saturationBlue - ((rect.width - posX) / rect.width) * 255) /
+            (posX / rect.width)
+        );
+
+        return { posX: posX, posY: posY, r: 0, g: 255, b: hueBlue };
+      }
+      // if green and blue is predominant
+      else if (max === green && green === blue && green !== red) {
+        let posY = ((255 - green) / 255) * rect.height;
+        let posX = ((green - red) / green) * rect.width;
+
+        return { posX: posX, posY: posY, r: 0, g: 255, b: 255 };
+      } else if (max === blue && min === red && green !== red) {
+        let posY = ((255 - blue) / 255) * rect.height;
+        let posX = ((blue - red) / blue) * rect.width;
+
+        let lightness = (rect.height - posY) / rect.height;
+        let saturationGreen = Math.round(green / lightness);
+
+        let hueGreen = Math.round(
+          (saturationGreen - ((rect.width - posX) / rect.width) * 255) /
+            (posX / rect.width)
+        );
+
+        return { posX: posX, posY: posY, r: 0, g: hueGreen, b: 255 };
+      }
+      // if blue is predominant and green and red same and min
+      else if (max === blue && green === red) {
+        let posY = ((255 - blue) / 255) * rect.height;
+        let posX = ((blue - red) / blue) * rect.width;
+
+        return { posX: posX, posY: posY, r: 0, g: 0, b: 255 };
+      }
+      //blue is predominant green is min
+      else if (max === blue && min === green && green !== red) {
+        let posY = ((255 - blue) / 255) * rect.height;
+        let posX = ((blue - red) / blue) * rect.width;
+
+        let lightness = (rect.height - posY) / rect.height;
+        let saturationRed = Math.round(red / lightness);
+
+        let hueRed = Math.round(
+          (saturationRed - ((rect.width - posX) / rect.width) * 255) /
+            (posX / rect.width)
+        );
+
+        return { posX: posX, posY: posY, r: hueRed, g: 0, b: 255 };
+      }
+      // if green and blue is predominant
+      else if (max === blue && blue === red && green !== red) {
+        let posY = ((255 - blue) / 255) * rect.height;
+        let posX = ((blue - red) / blue) * rect.width;
+
+        return { posX: posX, posY: posY, r: 255, g: 0, b: 255 };
+      }
+      //red is predominant green is min
+      else if (max === red && min === green && green !== blue) {
+        let posY = ((255 - red) / 255) * rect.height;
+        let posX = ((red - green) / red) * rect.width;
+
+        let lightness = (rect.height - posY) / rect.height;
+        let saturationBlue = Math.round(blue / lightness);
+
+        let hueBlue = Math.round(
+          (saturationBlue - ((rect.width - posX) / rect.width) * 255) /
+            (posX / rect.width)
+        );
+
+        return { posX: posX, posY: posY, r: 255, g: 0, b: hueBlue };
+      }
+    } else return undefined;
+  } else return undefined;
 }
 
 function setColor() {
