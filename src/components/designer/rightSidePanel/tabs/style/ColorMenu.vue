@@ -182,7 +182,7 @@ watch(
   () => selectToi.selectedBoxData,
   (currentValue, oldValue) => {
     if (selectToi.selectedBoxData) {
-      let hexColor = getBackgroundColor() as string;
+      let hexColor = getBackgroundColor();
       if (hexColor) {
         let hex = useHexToRGB(hexColor);
 
@@ -191,19 +191,24 @@ watch(
           selectedGreen.value = hex.g;
           selectedBlue.value = hex.b;
 
-          getColor();
-          if (getColor()) {
-            let returnedColor = getColor();
+          Promise.resolve()
+            .then(() => {
+              getColor();
+            })
+            .then(() => {
+              if (getColor()) {
+                let returnedColor = getColor();
 
-            posX.value = returnedColor.posX;
-            posY.value = returnedColor.posY;
+                posX.value = returnedColor.posX;
+                posY.value = returnedColor.posY;
 
-            if (getColor().r || getColor().g || getColor().b) {
-              hexRed.value = returnedColor.r;
-              hexGreen.value = returnedColor.g;
-              hexBlue.value = returnedColor.b;
-            }
-          }
+                if (getColor().r || getColor().g || getColor().b) {
+                  hexRed.value = returnedColor.r;
+                  hexGreen.value = returnedColor.g;
+                  hexBlue.value = returnedColor.b;
+                }
+              }
+            });
         }
       }
     }
@@ -243,6 +248,8 @@ function getColor(): GetColor | undefined {
     if (hexColor) {
       let target = document.querySelector("#colorHex")!;
       let rect = target.getBoundingClientRect();
+      let slider = document.querySelector("#hexSlider")!;
+      let sliderRect = slider.getBoundingClientRect();
 
       let red = color.r;
       let green = color.g;
@@ -261,6 +268,7 @@ function getColor(): GetColor | undefined {
       else if (max === red && green === blue) {
         let posX = ((red - blue) / red) * rect.width;
         let posY = ((255 - red) / 255) * rect.height;
+        hexSliderX.value = 0;
         return { posX: posX, posY: posY, r: 255, g: 0, b: 0 };
       }
 
@@ -277,6 +285,7 @@ function getColor(): GetColor | undefined {
             (posX / rect.width)
         );
 
+        hexSliderX.value = ((hueGreen / 255) * sliderRect.width) / 6;
         return { posX: posX, posY: posY, r: 255, g: hueGreen, b: 0 };
       }
       //if red and green predominent
@@ -284,6 +293,7 @@ function getColor(): GetColor | undefined {
         let posY = ((255 - red) / 255) * rect.height;
         let posX = ((red - blue) / red) * rect.width;
 
+        hexSliderX.value = sliderRect.width / 6;
         return { posX: posX, posY: posY, r: 255, g: 255, b: 0 };
       }
       // if green is the predominent color and blue is min
@@ -299,6 +309,8 @@ function getColor(): GetColor | undefined {
             (posX / rect.width)
         );
 
+        hexSliderX.value =
+          sliderRect.width / 6 + ((sliderRect.width / 6) * hueRed) / 255;
         return { posX: posX, posY: posY, r: hueRed, g: 255, b: 0 };
       }
       // if green is predominant and blue and red same and min
@@ -306,6 +318,7 @@ function getColor(): GetColor | undefined {
         let posY = ((255 - green) / 255) * rect.height;
         let posX = ((green - blue) / green) * rect.width;
 
+        hexSliderX.value = (sliderRect.width * 2) / 6;
         return { posX: posX, posY: posY, r: 0, g: 255, b: 0 };
       }
       // if green is predominant and red is min
@@ -321,6 +334,8 @@ function getColor(): GetColor | undefined {
             (posX / rect.width)
         );
 
+        hexSliderX.value =
+          (sliderRect.width * 2) / 6 + ((sliderRect.width / 6) * hueBlue) / 255;
         return { posX: posX, posY: posY, r: 0, g: 255, b: hueBlue };
       }
       // if green and blue is predominant
@@ -328,6 +343,7 @@ function getColor(): GetColor | undefined {
         let posY = ((255 - green) / 255) * rect.height;
         let posX = ((green - red) / green) * rect.width;
 
+        hexSliderX.value = (sliderRect.width * 3) / 6;
         return { posX: posX, posY: posY, r: 0, g: 255, b: 255 };
       } else if (max === blue && min === red && green !== red) {
         let posY = ((255 - blue) / 255) * rect.height;
@@ -341,6 +357,9 @@ function getColor(): GetColor | undefined {
             (posX / rect.width)
         );
 
+        hexSliderX.value =
+          (sliderRect.width * 3) / 6 +
+          ((sliderRect.width / 6) * hueGreen) / 255;
         return { posX: posX, posY: posY, r: 0, g: hueGreen, b: 255 };
       }
       // if blue is predominant and green and red same and min
@@ -348,12 +367,13 @@ function getColor(): GetColor | undefined {
         let posY = ((255 - blue) / 255) * rect.height;
         let posX = ((blue - red) / blue) * rect.width;
 
+        hexSliderX.value = (sliderRect.width * 4) / 6;
         return { posX: posX, posY: posY, r: 0, g: 0, b: 255 };
       }
       //blue is predominant green is min
       else if (max === blue && min === green && green !== red) {
         let posY = ((255 - blue) / 255) * rect.height;
-        let posX = ((blue - red) / blue) * rect.width;
+        let posX = ((blue - green) / blue) * rect.width;
 
         let lightness = (rect.height - posY) / rect.height;
         let saturationRed = Math.round(red / lightness);
@@ -363,6 +383,8 @@ function getColor(): GetColor | undefined {
             (posX / rect.width)
         );
 
+        hexSliderX.value =
+          (sliderRect.width * 4) / 6 + ((sliderRect.width / 6) * hueRed) / 255;
         return { posX: posX, posY: posY, r: hueRed, g: 0, b: 255 };
       }
       // if green and blue is predominant
@@ -370,6 +392,7 @@ function getColor(): GetColor | undefined {
         let posY = ((255 - blue) / 255) * rect.height;
         let posX = ((blue - red) / blue) * rect.width;
 
+        hexSliderX.value = (sliderRect.width * 5) / 6;
         return { posX: posX, posY: posY, r: 255, g: 0, b: 255 };
       }
       //red is predominant green is min
@@ -385,6 +408,8 @@ function getColor(): GetColor | undefined {
             (posX / rect.width)
         );
 
+        hexSliderX.value =
+          (sliderRect.width * 5) / 6 + ((sliderRect.width / 6) * hueBlue) / 255;
         return { posX: posX, posY: posY, r: 255, g: 0, b: hueBlue };
       }
     } else return undefined;
