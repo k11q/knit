@@ -2144,13 +2144,13 @@
           <input
             type="text"
             @keyup="$event.stopImmediatePropagation()"
-            :value="getBackgroundColor()"
+            :value="getBackgroundColor().replace(/#(?=\S)/g, '')"
             @input="
               (event) => {
                 changeBackgroundColor(event.target.value);
               }
             "
-            class="w-full px-2 bg-transparent"
+            class="w-full pl-2 bg-transparent"
           />
           <input type="text" value="100%" class="w-full px-2 bg-transparent" />
         </div>
