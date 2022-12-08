@@ -2103,7 +2103,7 @@
       "
       class="flex flex-col border-b pt-2 pb-3 border-[#3A3A3A] relative overflow-visible"
     >
-      <DesignerRightSidePanelTabsStyleColorMenu />
+      <DesignerRightSidePanelTabsStyleColorMenu v-show="expandColorMenu" />
       <div class="flex flex-row justify-between items-center h-8 pl-4 pr-2">
         <p class="font-medium">Fill</p>
         <div
@@ -2137,18 +2137,17 @@
           <div
             class="h-[14px] aspect-square items-center flex flex-none"
             :style="{
-              'background-color':
-                selectToi.selectedBoxData.attr?.style.backgroundColor,
+              'background-color': getBackgroundColor(),
             }"
+            @click="expandColorMenu = !expandColorMenu"
           ></div>
           <input
             type="text"
             @keyup="$event.stopImmediatePropagation()"
-            :value="selectToi.selectedBoxData.attr?.style.backgroundColor"
+            :value="getBackgroundColor()"
             @input="
               (event) => {
-                selectToi.selectedBoxData.cssRules[0].style.backgroundColor =
-                  event.target.value;
+                changeBackgroundColor(event.target.value);
               }
             "
             class="w-full px-2 bg-transparent"
@@ -3088,6 +3087,7 @@ import { useEditorStore } from "@/stores/editor";
 const selectToi = useCounterStore();
 const editorStore = useEditorStore();
 const customCSS = ref(false);
+const expandColorMenu = ref(false);
 
 const text = ref("");
 </script>
