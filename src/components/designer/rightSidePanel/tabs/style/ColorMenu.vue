@@ -101,7 +101,9 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-row px-3 pb-[10px] border-b border-inherit gap-1">
+    <div
+      class="flex flex-row px-3 pb-[10px] border-b border-inherit gap-1 justify-between"
+    >
       <select name="" id="" class="bg-transparent focus:outline-none w-16">
         <option value="">RGB</option>
         <option value="">HSL</option>
@@ -112,22 +114,22 @@
         <input
           type="number"
           :value="selectedRed"
-          class="w-10 px-2 py-[6px] bg-transparent m-0 leading-[10px] focus:outline-none"
+          class="w-9 pl-[6px] py-[6px] bg-transparent m-0 leading-[10px] focus:outline-none"
         />
         <input
           type="number"
           :value="selectedGreen"
-          class="w-10 px-2 py-[6px] bg-transparent m-0 leading-[10px] focus:outline-none"
+          class="w-9 pl-[6px] py-[6px] bg-transparent m-0 leading-[10px] focus:outline-none"
         />
         <input
           type="number"
           :value="selectedBlue"
-          class="w-10 px-2 py-[6px] bg-transparent m-0 leading-[10px] focus:outline-none"
+          class="w-9 pl-[6px] py-[6px] bg-transparent m-0 leading-[10px] focus:outline-none"
         />
         <input
-          type="number"
-          :value="selectedOpacity"
-          class="w-10 px-2 py-[6px] bg-transparent m-0 leading-[10px] focus:outline-none"
+          type="text"
+          :value="selectedOpacity + '%'"
+          class="w-11 pl-[6px] py-[6px] bg-transparent m-0 leading-[10px] focus:outline-none"
         />
       </div>
     </div>
@@ -186,11 +188,12 @@ watch(
         selectedGreen.value = hex.g;
         selectedBlue.value = hex.b;
       }
+      getColor();
     }
   }
 );
 
-//styling for color picker
+//styling for hue slider
 const RGBColor = computed(
   () =>
     `linear-gradient(to right, rgb(255,255,255),rgb(${hexRed.value},${hexGreen.value},${hexBlue.value}))`
@@ -201,10 +204,42 @@ watch(RGBColor, () => {
   setColor();
 });
 
+//styling for opacity slider
 const opacitySliderColor = computed(
   () =>
     `linear-gradient(to right, rgb(255,255,255),rgb(${selectedRed.value},${selectedGreen.value},${selectedBlue.value}))`
 );
+
+//get color
+function getColor() {
+  if (selectToi.selectedBoxData) {
+    let color = useHexToRGB(getBackgroundColor());
+
+    if (color) {
+      let r = color.r;
+      let g = color.g;
+      let b = color.b;
+
+      console.log(r, g, b);
+
+      let max = Math.max(r, g, b),
+        min = Math.min(r, g, b);
+
+      // all greyscale colors have hue of 0deg
+      if (max - min == 0) {
+        return 0;
+      }
+
+      if (max == r) {
+        // if red is the predominent color
+      } else if (max == g) {
+        // if green is the predominent color
+      } else if (max == b) {
+        // if blue is the predominent color
+      }
+    }
+  }
+}
 
 function setColor() {
   let target = document.querySelector("#colorHex")!;
