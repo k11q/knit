@@ -154,8 +154,10 @@
 
 <script setup lang="ts">
 import { useCounterStore } from "~~/src/stores/counter";
+import { useCanvasStore } from "@/stores/canvas";
 
 const selectToi = useCounterStore();
+const canvasStore = useCanvasStore();
 
 const posX = ref(0);
 const posY = ref(0);
@@ -178,38 +180,44 @@ const selectedGreen = ref(0);
 const selectedBlue = ref(0);
 const selectedOpacity = ref(100);
 
+type RGB = {
+  r: number;
+  g: number;
+  b: number;
+};
+// watch selection change to change initial color
 watch(
   () => selectToi.selectedBoxData,
-  (currentValue, oldValue) => {
-    if (selectToi.selectedBoxData) {
+  () => {
+    if (!selectToi.selectedBoxData && canvasStore.showColorMenu) {
+      canvasStore.showColorMenu = false;
+    }
+    if (selectToi.selectedBoxData && canvasStore.showColorMenu) {
       let hexColor = getBackgroundColor();
+      let hex: RGB;
       if (hexColor) {
-        let hex = useHexToRGB(hexColor);
+        Promise.resolve()
+          .then(() => {
+            hex = useHexToRGB(hexColor) as RGB;
 
-        if (hex) {
-          selectedRed.value = hex.r;
-          selectedGreen.value = hex.g;
-          selectedBlue.value = hex.b;
+            selectedRed.value = hex.r;
+            selectedGreen.value = hex.g;
+            selectedBlue.value = hex.b;
+          })
+          .then(() => {
+            let color = getColor(hex);
 
-          Promise.resolve()
-            .then(() => {
-              getColor();
-            })
-            .then(() => {
-              if (getColor()) {
-                let returnedColor = getColor();
+            if (color) {
+              posX.value = color.posX;
+              posY.value = color.posY;
 
-                posX.value = returnedColor.posX;
-                posY.value = returnedColor.posY;
-
-                if (getColor().r || getColor().g || getColor().b) {
-                  hexRed.value = returnedColor.r;
-                  hexGreen.value = returnedColor.g;
-                  hexBlue.value = returnedColor.b;
-                }
+              if (color.r || color.g || color.b) {
+                hexRed.value = color.r;
+                hexGreen.value = color.g;
+                hexBlue.value = color.b;
               }
-            });
-        }
+            }
+          });
       }
     }
   }
@@ -240,179 +248,174 @@ type GetColor = {
   b?: number;
 };
 //get color
-function getColor(): GetColor | undefined {
-  if (selectToi.selectedBoxData) {
-    let hexColor = getBackgroundColor() as string;
-    let color = useHexToRGB(hexColor);
+function getColor(hex: RGB): GetColor | undefined {
+  if (hex) {
+    let color = hex;
+    let target = document.querySelector("#colorHex")!;
+    let rect = target.getBoundingClientRect();
+    let slider = document.querySelector("#hexSlider")!;
+    let sliderRect = slider.getBoundingClientRect();
 
-    if (hexColor) {
-      let target = document.querySelector("#colorHex")!;
-      let rect = target.getBoundingClientRect();
-      let slider = document.querySelector("#hexSlider")!;
-      let sliderRect = slider.getBoundingClientRect();
+    let red = color.r;
+    let green = color.g;
+    let blue = color.b;
 
-      let red = color.r;
-      let green = color.g;
-      let blue = color.b;
+    let max = Math.max(red, green, blue);
+    let min = Math.min(red, green, blue);
 
-      let max = Math.max(red, green, blue);
-      let min = Math.min(red, green, blue);
+    // all greyscale colors have hue of 0deg
+    if (max - min == 0) {
+      let posY = ((255 - red) / 255) * rect.height;
+      return { posX: 0, posY: posY };
+    }
 
-      // all greyscale colors have hue of 0deg
-      if (max - min == 0) {
-        let posY = ((255 - red) / 255) * rect.height;
-        return { posX: 0, posY: posY };
-      }
+    // if red is the predominent color
+    else if (max === red && green === blue) {
+      let posX = ((red - blue) / red) * rect.width;
+      let posY = ((255 - red) / 255) * rect.height;
+      hexSliderX.value = 0;
+      return { posX: posX, posY: posY, r: 255, g: 0, b: 0 };
+    }
 
-      // if red is the predominent color
-      else if (max === red && green === blue) {
-        let posX = ((red - blue) / red) * rect.width;
-        let posY = ((255 - red) / 255) * rect.height;
-        hexSliderX.value = 0;
-        return { posX: posX, posY: posY, r: 255, g: 0, b: 0 };
-      }
+    // if red is the only predominent color and min is blue and green is not equal to blue
+    else if (max === red && min === blue && red !== green) {
+      let posY = ((255 - red) / 255) * rect.height;
+      let posX = ((red - blue) / red) * rect.width;
 
-      // if red is the only predominent color and min is blue and green is not equal to blue
-      else if (max === red && min === blue && red !== green) {
-        let posY = ((255 - red) / 255) * rect.height;
-        let posX = ((red - blue) / red) * rect.width;
+      let lightness = (rect.height - posY) / rect.height;
+      let saturationGreen = Math.round(green / lightness);
 
-        let lightness = (rect.height - posY) / rect.height;
-        let saturationGreen = Math.round(green / lightness);
+      let hueGreen = Math.round(
+        (saturationGreen - ((rect.width - posX) / rect.width) * 255) /
+          (posX / rect.width)
+      );
 
-        let hueGreen = Math.round(
-          (saturationGreen - ((rect.width - posX) / rect.width) * 255) /
-            (posX / rect.width)
-        );
+      hexSliderX.value = ((hueGreen / 255) * sliderRect.width) / 6;
+      return { posX: posX, posY: posY, r: 255, g: hueGreen, b: 0 };
+    }
+    //if red and green predominent
+    else if (max === red && min === blue && red === green) {
+      let posY = ((255 - red) / 255) * rect.height;
+      let posX = ((red - blue) / red) * rect.width;
 
-        hexSliderX.value = ((hueGreen / 255) * sliderRect.width) / 6;
-        return { posX: posX, posY: posY, r: 255, g: hueGreen, b: 0 };
-      }
-      //if red and green predominent
-      else if (max === red && min === blue && red === green) {
-        let posY = ((255 - red) / 255) * rect.height;
-        let posX = ((red - blue) / red) * rect.width;
+      hexSliderX.value = sliderRect.width / 6;
+      return { posX: posX, posY: posY, r: 255, g: 255, b: 0 };
+    }
+    // if green is the predominent color and blue is min
+    else if (max === green && min === blue && green !== red && blue !== red) {
+      let posY = ((255 - green) / 255) * rect.height;
+      let posX = ((green - blue) / green) * rect.width;
 
-        hexSliderX.value = sliderRect.width / 6;
-        return { posX: posX, posY: posY, r: 255, g: 255, b: 0 };
-      }
-      // if green is the predominent color and blue is min
-      else if (max === green && min === blue && green !== red && blue !== red) {
-        let posY = ((255 - green) / 255) * rect.height;
-        let posX = ((green - blue) / green) * rect.width;
+      let lightness = (rect.height - posY) / rect.height;
+      let saturationRed = Math.round(red / lightness);
 
-        let lightness = (rect.height - posY) / rect.height;
-        let saturationRed = Math.round(red / lightness);
+      let hueRed = Math.round(
+        (saturationRed - ((rect.width - posX) / rect.width) * 255) /
+          (posX / rect.width)
+      );
 
-        let hueRed = Math.round(
-          (saturationRed - ((rect.width - posX) / rect.width) * 255) /
-            (posX / rect.width)
-        );
+      hexSliderX.value =
+        sliderRect.width / 6 + ((sliderRect.width / 6) * hueRed) / 255;
+      return { posX: posX, posY: posY, r: hueRed, g: 255, b: 0 };
+    }
+    // if green is predominant and blue and red same and min
+    else if (max === green && blue === red) {
+      let posY = ((255 - green) / 255) * rect.height;
+      let posX = ((green - blue) / green) * rect.width;
 
-        hexSliderX.value =
-          sliderRect.width / 6 + ((sliderRect.width / 6) * hueRed) / 255;
-        return { posX: posX, posY: posY, r: hueRed, g: 255, b: 0 };
-      }
-      // if green is predominant and blue and red same and min
-      else if (max === green && blue === red) {
-        let posY = ((255 - green) / 255) * rect.height;
-        let posX = ((green - blue) / green) * rect.width;
+      hexSliderX.value = (sliderRect.width * 2) / 6;
+      return { posX: posX, posY: posY, r: 0, g: 255, b: 0 };
+    }
+    // if green is predominant and red is min
+    else if (max === green && min === red && blue !== red && green !== red) {
+      let posY = ((255 - green) / 255) * rect.height;
+      let posX = ((green - red) / green) * rect.width;
 
-        hexSliderX.value = (sliderRect.width * 2) / 6;
-        return { posX: posX, posY: posY, r: 0, g: 255, b: 0 };
-      }
-      // if green is predominant and red is min
-      else if (max === green && min === red && blue !== red && green !== red) {
-        let posY = ((255 - green) / 255) * rect.height;
-        let posX = ((green - red) / green) * rect.width;
+      let lightness = (rect.height - posY) / rect.height;
+      let saturationBlue = Math.round(blue / lightness);
 
-        let lightness = (rect.height - posY) / rect.height;
-        let saturationBlue = Math.round(blue / lightness);
+      let hueBlue = Math.round(
+        (saturationBlue - ((rect.width - posX) / rect.width) * 255) /
+          (posX / rect.width)
+      );
 
-        let hueBlue = Math.round(
-          (saturationBlue - ((rect.width - posX) / rect.width) * 255) /
-            (posX / rect.width)
-        );
+      hexSliderX.value =
+        (sliderRect.width * 2) / 6 + ((sliderRect.width / 6) * hueBlue) / 255;
+      return { posX: posX, posY: posY, r: 0, g: 255, b: hueBlue };
+    }
+    // if green and blue is predominant
+    else if (max === green && green === blue && green !== red) {
+      let posY = ((255 - green) / 255) * rect.height;
+      let posX = ((green - red) / green) * rect.width;
 
-        hexSliderX.value =
-          (sliderRect.width * 2) / 6 + ((sliderRect.width / 6) * hueBlue) / 255;
-        return { posX: posX, posY: posY, r: 0, g: 255, b: hueBlue };
-      }
-      // if green and blue is predominant
-      else if (max === green && green === blue && green !== red) {
-        let posY = ((255 - green) / 255) * rect.height;
-        let posX = ((green - red) / green) * rect.width;
+      hexSliderX.value = (sliderRect.width * 3) / 6;
+      return { posX: posX, posY: posY, r: 0, g: 255, b: 255 };
+    } else if (max === blue && min === red && green !== red) {
+      let posY = ((255 - blue) / 255) * rect.height;
+      let posX = ((blue - red) / blue) * rect.width;
 
-        hexSliderX.value = (sliderRect.width * 3) / 6;
-        return { posX: posX, posY: posY, r: 0, g: 255, b: 255 };
-      } else if (max === blue && min === red && green !== red) {
-        let posY = ((255 - blue) / 255) * rect.height;
-        let posX = ((blue - red) / blue) * rect.width;
+      let lightness = (rect.height - posY) / rect.height;
+      let saturationGreen = Math.round(green / lightness);
 
-        let lightness = (rect.height - posY) / rect.height;
-        let saturationGreen = Math.round(green / lightness);
+      let hueGreen = Math.round(
+        (saturationGreen - ((rect.width - posX) / rect.width) * 255) /
+          (posX / rect.width)
+      );
 
-        let hueGreen = Math.round(
-          (saturationGreen - ((rect.width - posX) / rect.width) * 255) /
-            (posX / rect.width)
-        );
+      hexSliderX.value =
+        (sliderRect.width * 3) / 6 + ((sliderRect.width / 6) * hueGreen) / 255;
+      return { posX: posX, posY: posY, r: 0, g: hueGreen, b: 255 };
+    }
+    // if blue is predominant and green and red same and min
+    else if (max === blue && green === red) {
+      let posY = ((255 - blue) / 255) * rect.height;
+      let posX = ((blue - red) / blue) * rect.width;
 
-        hexSliderX.value =
-          (sliderRect.width * 3) / 6 +
-          ((sliderRect.width / 6) * hueGreen) / 255;
-        return { posX: posX, posY: posY, r: 0, g: hueGreen, b: 255 };
-      }
-      // if blue is predominant and green and red same and min
-      else if (max === blue && green === red) {
-        let posY = ((255 - blue) / 255) * rect.height;
-        let posX = ((blue - red) / blue) * rect.width;
+      hexSliderX.value = (sliderRect.width * 4) / 6;
+      return { posX: posX, posY: posY, r: 0, g: 0, b: 255 };
+    }
+    //blue is predominant green is min
+    else if (max === blue && min === green && green !== red) {
+      let posY = ((255 - blue) / 255) * rect.height;
+      let posX = ((blue - green) / blue) * rect.width;
 
-        hexSliderX.value = (sliderRect.width * 4) / 6;
-        return { posX: posX, posY: posY, r: 0, g: 0, b: 255 };
-      }
-      //blue is predominant green is min
-      else if (max === blue && min === green && green !== red) {
-        let posY = ((255 - blue) / 255) * rect.height;
-        let posX = ((blue - green) / blue) * rect.width;
+      let lightness = (rect.height - posY) / rect.height;
+      let saturationRed = Math.round(red / lightness);
 
-        let lightness = (rect.height - posY) / rect.height;
-        let saturationRed = Math.round(red / lightness);
+      let hueRed = Math.round(
+        (saturationRed - ((rect.width - posX) / rect.width) * 255) /
+          (posX / rect.width)
+      );
 
-        let hueRed = Math.round(
-          (saturationRed - ((rect.width - posX) / rect.width) * 255) /
-            (posX / rect.width)
-        );
+      hexSliderX.value =
+        (sliderRect.width * 4) / 6 + ((sliderRect.width / 6) * hueRed) / 255;
+      return { posX: posX, posY: posY, r: hueRed, g: 0, b: 255 };
+    }
+    // if green and blue is predominant
+    else if (max === blue && blue === red && green !== red) {
+      let posY = ((255 - blue) / 255) * rect.height;
+      let posX = ((blue - red) / blue) * rect.width;
 
-        hexSliderX.value =
-          (sliderRect.width * 4) / 6 + ((sliderRect.width / 6) * hueRed) / 255;
-        return { posX: posX, posY: posY, r: hueRed, g: 0, b: 255 };
-      }
-      // if green and blue is predominant
-      else if (max === blue && blue === red && green !== red) {
-        let posY = ((255 - blue) / 255) * rect.height;
-        let posX = ((blue - red) / blue) * rect.width;
+      hexSliderX.value = (sliderRect.width * 5) / 6;
+      return { posX: posX, posY: posY, r: 255, g: 0, b: 255 };
+    }
+    //red is predominant green is min
+    else if (max === red && min === green && green !== blue) {
+      let posY = ((255 - red) / 255) * rect.height;
+      let posX = ((red - green) / red) * rect.width;
 
-        hexSliderX.value = (sliderRect.width * 5) / 6;
-        return { posX: posX, posY: posY, r: 255, g: 0, b: 255 };
-      }
-      //red is predominant green is min
-      else if (max === red && min === green && green !== blue) {
-        let posY = ((255 - red) / 255) * rect.height;
-        let posX = ((red - green) / red) * rect.width;
+      let lightness = (rect.height - posY) / rect.height;
+      let saturationBlue = Math.round(blue / lightness);
 
-        let lightness = (rect.height - posY) / rect.height;
-        let saturationBlue = Math.round(blue / lightness);
+      let hueBlue = Math.round(
+        (saturationBlue - ((rect.width - posX) / rect.width) * 255) /
+          (posX / rect.width)
+      );
 
-        let hueBlue = Math.round(
-          (saturationBlue - ((rect.width - posX) / rect.width) * 255) /
-            (posX / rect.width)
-        );
-
-        hexSliderX.value =
-          (sliderRect.width * 5) / 6 + ((sliderRect.width / 6) * hueBlue) / 255;
-        return { posX: posX, posY: posY, r: 255, g: 0, b: hueBlue };
-      }
-    } else return undefined;
+      hexSliderX.value =
+        (sliderRect.width * 5) / 6 + ((sliderRect.width / 6) * hueBlue) / 255;
+      return { posX: posX, posY: posY, r: 255, g: 0, b: hueBlue };
+    }
   } else return undefined;
 }
 

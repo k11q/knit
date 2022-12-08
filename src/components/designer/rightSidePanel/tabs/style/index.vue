@@ -2103,7 +2103,9 @@
       "
       class="flex flex-col border-b pt-2 pb-3 border-[#3A3A3A] relative overflow-visible"
     >
-      <DesignerRightSidePanelTabsStyleColorMenu v-show="expandColorMenu" />
+      <DesignerRightSidePanelTabsStyleColorMenu
+        v-show="canvasStore.showColorMenu"
+      />
       <div class="flex flex-row justify-between items-center h-8 pl-4 pr-2">
         <p class="font-medium">Fill</p>
         <div
@@ -2139,12 +2141,12 @@
             :style="{
               'background-color': getBackgroundColor(),
             }"
-            @click="expandColorMenu = !expandColorMenu"
+            @click="canvasStore.showColorMenu = !canvasStore.showColorMenu"
           ></div>
           <input
             type="text"
             @keyup="$event.stopImmediatePropagation()"
-            :value="getBackgroundColor().replace(/#(?=\S)/g, '')"
+            :value="getBackgroundColor()?.replace(/#(?=\S)/g, '')"
             @input="
               (event) => {
                 changeBackgroundColor(event.target.value);
@@ -3083,9 +3085,11 @@
 <script setup>
 import { useCounterStore } from "~~/src/stores/counter";
 import { useEditorStore } from "@/stores/editor";
+import { useCanvasStore } from "@/stores/canvas";
 
 const selectToi = useCounterStore();
 const editorStore = useEditorStore();
+const canvasStore = useCanvasStore();
 const customCSS = ref(false);
 const expandColorMenu = ref(false);
 

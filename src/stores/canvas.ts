@@ -23,6 +23,7 @@ export const useCanvasStore = defineStore({
     isDragging: false,
     isResizingGap: false,
     isResizingPadding: false,
+    showColorMenu: false,
     cursorType: "",
     cursorLabel: "",
     hoverId: "",

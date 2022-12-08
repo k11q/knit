@@ -133,25 +133,29 @@ export function getPaddingBottom(): number | string | null {
     }
   } else return null;
 }
-export function getBackgroundColor(): number | string | null {
+export function getBackgroundColor(): string | null {
   const selectToi = useCounterStore();
 
   if (selectToi.selectedBoxData && selectToi.selectedBoxData.cssRules) {
     if (!selectToi.selectedBoxData.cssRules[0].style.backgroundColor) {
       return null;
     } else {
-      return selectToi.selectedBoxData.cssRules[0].style.backgroundColor.value;
+      let backgroundColor = selectToi.selectedBoxData.cssRules[0].style
+        .backgroundColor.value as string;
+      return backgroundColor;
     }
   } else return null;
 }
-export function getColor(): number | string | null {
+export function getColor(): string | null {
   const selectToi = useCounterStore();
 
   if (selectToi.selectedBoxData && selectToi.selectedBoxData.cssRules) {
     if (!selectToi.selectedBoxData.cssRules[0].style.color) {
       return null;
     } else {
-      return selectToi.selectedBoxData.cssRules[0].style.color.value;
+      let color = selectToi.selectedBoxData.cssRules[0].style.color
+        .value as string;
+      return color;
     }
   } else return null;
 }
