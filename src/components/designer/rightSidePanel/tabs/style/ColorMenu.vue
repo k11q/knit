@@ -56,7 +56,7 @@
         :style="{ left: posX + 'px', top: posY + 'px' }"
       ></div>
     </div>
-    <div class="flex flex-row justify-evenly gap-3 py-4 px-3 w-full">
+    <div class="flex flex-row justify-evenly gap-3 py-4 pl-3 pr-4 w-full">
       <div
         class="aspect-square h-8 flex flex-col justify-center items-center hover:bg-[#2E2E2E] rounded"
       >
@@ -78,7 +78,7 @@
           ></path>
         </svg>
       </div>
-      <div class="flex flex-col gap-3 w-full">
+      <div class="flex flex-col gap-4 w-full">
         <div
           id="hexSlider"
           class="w-full h-3 rounded-full relative color-saturation-slider"
@@ -151,6 +151,10 @@
 </template>
 
 <script setup lang="ts">
+import { useCounterStore } from "~~/src/stores/counter";
+
+const selectToi = useCounterStore();
+
 const posX = ref(0);
 const posY = ref(0);
 
@@ -172,16 +176,59 @@ const selectedGreen = ref(0);
 const selectedBlue = ref(0);
 const selectedOpacity = ref(100);
 
+watch(
+  () => selectToi.selectedBoxData,
+  (currentValue, oldValue) => {
+    if (selectToi.selectedBoxData) {
+      let hex = useHexToRGB(getBackgroundColor());
+      if (hex) {
+        selectedRed.value = hex.r;
+        selectedGreen.value = hex.g;
+        selectedBlue.value = hex.b;
+      }
+    }
+  }
+);
+
 //styling for color picker
 const RGBColor = computed(
   () =>
     `linear-gradient(to right, rgb(255,255,255),rgb(${hexRed.value},${hexGreen.value},${hexBlue.value}))`
 );
 
+//watch hue change and change color
+watch(RGBColor, () => {
+  setColor();
+});
+
 const opacitySliderColor = computed(
   () =>
-    `linear-gradient(to right, rgb(255,255,255),rgb(${hexRed.value},${hexGreen.value},${hexBlue.value}))`
+    `linear-gradient(to right, rgb(255,255,255),rgb(${selectedRed.value},${selectedGreen.value},${selectedBlue.value}))`
 );
+
+function setColor() {
+  let target = document.querySelector("#colorHex")!;
+  let rect = target.getBoundingClientRect();
+
+  let lightness = (rect.height - posY.value) / rect.height;
+  let saturationRed =
+    ((rect.width - posX.value) / rect.width) * 255 +
+    (posX.value / rect.width) * hexRed.value;
+  let saturationGreen =
+    ((rect.width - posX.value) / rect.width) * 255 +
+    (posX.value / rect.width) * hexGreen.value;
+  let saturationBlue =
+    ((rect.width - posX.value) / rect.width) * 255 +
+    (posX.value / rect.width) * hexBlue.value;
+
+  selectedRed.value = Math.round(saturationRed * lightness);
+  selectedGreen.value = Math.round(saturationGreen * lightness);
+  selectedBlue.value = Math.round(saturationBlue * lightness);
+
+  changeBackgroundColor(
+    useRGBToHex(selectedRed.value, selectedGreen.value, selectedBlue.value)
+  );
+}
 
 function pickColor(e: MouseEvent) {
   let target = document.querySelector("#colorHex")!;
@@ -190,29 +237,7 @@ function pickColor(e: MouseEvent) {
   posX.value = (e.clientX - rect.left) as number;
   posY.value = (e.clientY - rect.top - 5) as number;
 
-  setColor(e);
-
-  function setColor(e: MouseEvent) {
-    let lightness = (rect.height - posY.value) / rect.height;
-    let saturationRed =
-      ((rect.width - posX.value) / rect.width) * 255 +
-      (posX.value / rect.width) * hexRed.value;
-    let saturationGreen =
-      ((rect.width - posX.value) / rect.width) * 255 +
-      (posX.value / rect.width) * hexGreen.value;
-    let saturationBlue =
-      ((rect.width - posX.value) / rect.width) * 255 +
-      (posX.value / rect.width) * hexBlue.value;
-    selectedOpacity.value = lightness;
-
-    selectedRed.value = Math.round(saturationRed * lightness);
-    selectedGreen.value = Math.round(saturationGreen * lightness);
-    selectedBlue.value = Math.round(saturationBlue * lightness);
-
-    changeBackgroundColor(
-      useRGBToHex(selectedRed.value, selectedGreen.value, selectedBlue.value)
-    );
-  }
+  setColor();
 
   window.addEventListener("mousemove", mousemove);
   window.addEventListener("mouseup", mouseup);
@@ -237,7 +262,7 @@ function pickColor(e: MouseEvent) {
       posY.value = 0;
     }
 
-    setColor(e);
+    setColor();
   }
 
   function mouseup() {
@@ -363,9 +388,21 @@ function pickOpacity(e: MouseEvent) {
     }
     if (opacitySliderX.value > rect.width - 12) {
       opacitySliderX.value = rect.width - 12;
+      selectedOpacity.value = 100;
     }
     if (e.clientX - rect.left - 6 < 0) {
       opacitySliderX.value = 0;
+    }
+    if (e.clientX - rect.left >= 0 && e.clientX - rect.left <= rect.width) {
+      selectedOpacity.value = Math.round(
+        ((e.clientX - rect.left) / rect.width) * 100
+      );
+    }
+    if (e.clientX - rect.left < 0) {
+      selectedOpacity.value = 0;
+    }
+    if (opacitySliderX.value > rect.width) {
+      selectedOpacity.value = 100;
     }
   }
 
