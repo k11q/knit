@@ -82,7 +82,7 @@
         <div
           id="hexSlider"
           class="w-full h-3 rounded-full relative color-saturation-slider"
-          @mousedown.stop.prevent="pickHex"
+          @mousedown.stop.prevent="pickHue"
         >
           <div
             class="h-3 aspect-square rounded-full -outline-offset-2 outline-none outline-white absolute"
@@ -101,7 +101,7 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-row px-3 pb-2 border-b border-inherit gap-1">
+    <div class="flex flex-row px-3 pb-[10px] border-b border-inherit gap-1">
       <select name="" id="" class="bg-transparent focus:outline-none w-16">
         <option value="">RGB</option>
         <option value="">HSL</option>
@@ -271,7 +271,7 @@ function pickColor(e: MouseEvent) {
   }
 }
 
-function pickHex(e: MouseEvent) {
+function pickHue(e: MouseEvent) {
   let target = document.querySelector("#hexSlider")!;
   let rect = target.getBoundingClientRect();
 
@@ -370,11 +370,29 @@ function pickHex(e: MouseEvent) {
   }
 }
 
+function setOpacity(e: MouseEvent) {
+  let target = document.querySelector("#opacitySlider")!;
+  let rect = target.getBoundingClientRect();
+
+  if (e.clientX - rect.left >= 0 && e.clientX - rect.left <= rect.width) {
+    selectedOpacity.value = Math.round(
+      ((e.clientX - rect.left) / rect.width) * 100
+    );
+  }
+  if (e.clientX - rect.left < 0) {
+    selectedOpacity.value = 0;
+  }
+  if (opacitySliderX.value > rect.width) {
+    selectedOpacity.value = 100;
+  }
+}
 function pickOpacity(e: MouseEvent) {
   let target = document.querySelector("#opacitySlider")!;
   let rect = target.getBoundingClientRect();
 
   opacitySliderX.value = (e.clientX - rect.left - 6) as number;
+
+  setOpacity(e);
 
   window.addEventListener("mousemove", mousemove);
   window.addEventListener("mouseup", mouseup);
@@ -393,17 +411,7 @@ function pickOpacity(e: MouseEvent) {
     if (e.clientX - rect.left - 6 < 0) {
       opacitySliderX.value = 0;
     }
-    if (e.clientX - rect.left >= 0 && e.clientX - rect.left <= rect.width) {
-      selectedOpacity.value = Math.round(
-        ((e.clientX - rect.left) / rect.width) * 100
-      );
-    }
-    if (e.clientX - rect.left < 0) {
-      selectedOpacity.value = 0;
-    }
-    if (opacitySliderX.value > rect.width) {
-      selectedOpacity.value = 100;
-    }
+    setOpacity(e);
   }
 
   function mouseup() {
