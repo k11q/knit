@@ -32,3 +32,10 @@ const selectToi = useCounterStore();
 const canvasStore = useCanvasStore();
 const { x, y } = useMouse();
 </script>
+
+<style>
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  display: none;
+}
+</style>

@@ -678,7 +678,9 @@
     <!-- Layout section! -->
     <div
       v-show="
-        selectToi.selectedBoxData.type !== 'text' && selectToi.selectedBox
+        selectToi.selectedBoxData.type !== 'text' &&
+        selectToi.selectedBoxData.type !== 'box' &&
+        selectToi.selectedBox
       "
       class="flex flex-col pt-2 pb-3 border-[#3A3A3A] border-t"
     >
@@ -2099,8 +2101,9 @@
       v-show="
         selectToi.selectedBoxData.type !== 'text' && selectToi.selectedBox
       "
-      class="flex flex-col border-b pt-2 pb-3 border-[#3A3A3A]"
+      class="flex flex-col border-b pt-2 pb-3 border-[#3A3A3A] relative overflow-visible"
     >
+      <DesignerRightSidePanelTabsStyleColorMenu />
       <div class="flex flex-row justify-between items-center h-8 pl-4 pr-2">
         <p class="font-medium">Fill</p>
         <div
