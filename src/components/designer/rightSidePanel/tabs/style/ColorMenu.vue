@@ -210,7 +210,7 @@ function pickColor(e: MouseEvent) {
     selectedBlue.value = Math.round(saturationBlue * lightness);
 
     changeBackgroundColor(
-      `rgb(${selectedRed.value},${selectedGreen.value},${selectedBlue.value})`
+      useRGBToHex(selectedRed.value, selectedGreen.value, selectedBlue.value)
     );
   }
 
