@@ -49,10 +49,10 @@
     <div
       id="colorHex"
       class="w-full aspect-square flex-none relative color-hex"
-      @mousedown.prevent="pickColor"
+      @mousedown.stop.prevent="pickColor"
     >
       <div
-        class="h-3 aspect-square rounded-full -outline-offset-2 outline-none outline-white absolute"
+        class="h-3 -ml-[6px] -mt-[6px] aspect-square rounded-full -outline-offset-2 outline-none outline-white absolute"
         :style="{ left: posX + 'px', top: posY + 'px' }"
       ></div>
     </div>
@@ -82,7 +82,7 @@
         <div
           id="hexSlider"
           class="w-full h-3 rounded-full relative color-saturation-slider"
-          @mousedown.prevent="pickHex"
+          @mousedown.stop.prevent="pickHex"
         >
           <div
             class="h-3 aspect-square rounded-full -outline-offset-2 outline-none outline-white absolute"
@@ -92,7 +92,7 @@
         <div
           id="opacitySlider"
           class="w-full h-3 rounded-full relative color-opacity-slider"
-          @mousedown.prevent="pickOpacity"
+          @mousedown.stop.prevent="pickOpacity"
         >
           <div
             class="h-3 aspect-square rounded-full -outline-offset-2 outline-none outline-white absolute"
@@ -111,22 +111,22 @@
       >
         <input
           type="number"
-          :value="hexRed"
+          :value="selectedRed"
           class="w-10 px-2 py-[6px] bg-transparent m-0 leading-[10px] focus:outline-none"
         />
         <input
           type="number"
-          :value="hexGreen"
+          :value="selectedGreen"
           class="w-10 px-2 py-[6px] bg-transparent m-0 leading-[10px] focus:outline-none"
         />
         <input
           type="number"
-          :value="hexBlue"
+          :value="selectedBlue"
           class="w-10 px-2 py-[6px] bg-transparent m-0 leading-[10px] focus:outline-none"
         />
         <input
           type="number"
-          value="273"
+          :value="selectedOpacity"
           class="w-10 px-2 py-[6px] bg-transparent m-0 leading-[10px] focus:outline-none"
         />
       </div>
@@ -170,8 +170,15 @@ const hexBlue = ref(0);
 const selectedRed = ref(0);
 const selectedGreen = ref(0);
 const selectedBlue = ref(0);
+const selectedOpacity = ref(100);
 
+//styling for color picker
 const RGBColor = computed(
+  () =>
+    `linear-gradient(to right, rgb(255,255,255),rgb(${hexRed.value},${hexGreen.value},${hexBlue.value}))`
+);
+
+const opacitySliderColor = computed(
   () =>
     `linear-gradient(to right, rgb(255,255,255),rgb(${hexRed.value},${hexGreen.value},${hexBlue.value}))`
 );
@@ -180,31 +187,57 @@ function pickColor(e: MouseEvent) {
   let target = document.querySelector("#colorHex")!;
   let rect = target.getBoundingClientRect();
 
-  posX.value = (e.clientX - rect.left - 6) as number;
-  posY.value = (e.clientY - rect.top - 11) as number;
+  posX.value = (e.clientX - rect.left) as number;
+  posY.value = (e.clientY - rect.top - 5) as number;
+
+  setColor(e);
+
+  function setColor(e: MouseEvent) {
+    let lightness = (rect.height - posY.value) / rect.height;
+    let saturationRed =
+      ((rect.width - posX.value) / rect.width) * 255 +
+      (posX.value / rect.width) * hexRed.value;
+    let saturationGreen =
+      ((rect.width - posX.value) / rect.width) * 255 +
+      (posX.value / rect.width) * hexGreen.value;
+    let saturationBlue =
+      ((rect.width - posX.value) / rect.width) * 255 +
+      (posX.value / rect.width) * hexBlue.value;
+    selectedOpacity.value = lightness;
+
+    selectedRed.value = Math.round(saturationRed * lightness);
+    selectedGreen.value = Math.round(saturationGreen * lightness);
+    selectedBlue.value = Math.round(saturationBlue * lightness);
+
+    changeBackgroundColor(
+      `rgb(${selectedRed.value},${selectedGreen.value},${selectedBlue.value})`
+    );
+  }
 
   window.addEventListener("mousemove", mousemove);
   window.addEventListener("mouseup", mouseup);
 
   function mousemove(e: MouseEvent) {
-    if (posX.value <= rect.width - 12 && e.clientX - rect.left - 6 >= 0) {
-      posX.value = (e.clientX - rect.left - 6) as number;
+    if (posX.value <= rect.width && e.clientX - rect.left >= 0) {
+      posX.value = (e.clientX - rect.left) as number;
     }
-    if (posY.value <= rect.height - 12 && e.clientY - rect.top - 11 >= 0) {
-      posY.value = (e.clientY - rect.top - 11) as number;
+    if (posY.value <= rect.height && e.clientY - rect.top - 5 >= 0) {
+      posY.value = (e.clientY - rect.top - 5) as number;
     }
-    if (posX.value > rect.width - 12) {
-      posX.value = rect.width - 12;
+    if (posX.value > rect.width) {
+      posX.value = rect.width;
     }
-    if (posY.value > rect.height - 12) {
-      posY.value = rect.height - 12;
+    if (posY.value > rect.height) {
+      posY.value = rect.height;
     }
-    if (e.clientX - rect.left - 6 < 0) {
+    if (e.clientX - rect.left < 0) {
       posX.value = 0;
     }
-    if (e.clientY - rect.top - 11 < 0) {
+    if (e.clientY - rect.top - 5 < 0) {
       posY.value = 0;
     }
+
+    setColor(e);
   }
 
   function mouseup() {
@@ -370,10 +403,6 @@ function pickOpacity(e: MouseEvent) {
 }
 
 .color-opacity-slider {
-  background-image: linear-gradient(
-    to right,
-    rgba(255, 0, 0, 0),
-    rgba(0, 0, 0, 1)
-  );
+  background-image: v-bind("opacitySliderColor");
 }
 </style>
