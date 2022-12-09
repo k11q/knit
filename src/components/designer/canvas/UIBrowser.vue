@@ -42,7 +42,7 @@
         draggable="false"
       ></div>
       <DesignerCanvasUIBrowser
-        v-if="node.children && (node.type === 'div' || node.type === 'box')"
+        v-else-if="node.children"
         :key="node.id"
         :nodes="node.children"
         :depth="depth + 1"

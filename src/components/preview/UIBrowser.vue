@@ -4,21 +4,19 @@
       :is="node.type === 'text' || node.type === 'box' ? 'div' : node.type"
       :style="{
         ...styleProps(node),
-        width: depth === 1 ? '100%' : styleProps(node).width,
-        overflowX: 'hidden',
+        position: depth === 1 ? '' : styleProps(node).position,
+        width: depth === 1 ? '' : styleProps(node).width,
         left: depth === 1 ? '' : styleProps(node).left,
         top: depth === 1 ? '' : styleProps(node).top,
       }"
     >
-      <template v-if="node.type === 'text'">
-        <div v-html="node.textContent"></div>
-      </template>
       <PreviewUIBrowser
-        v-if="(node.children && node.type === 'div') || node.type === 'box'"
+        v-if="node.children && (node.type === 'div' || node.type === 'box')"
         :key="node.id"
         :nodes="node.children"
         :depth="depth + 1"
       />
+      <div v-else-if="node.type === 'text'" v-html="node.textContent"></div>
     </component>
   </template>
 </template>
