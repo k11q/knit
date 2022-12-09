@@ -6,6 +6,15 @@
       spellcheck="false"
       :style="{
         outline: `${1 / squareStore.scale}px solid #0191FA`,
+        height: getHeight()
+          ? getHeight() === 'fit-content' || getHeight() === 'auto'
+            ? Math.round(
+                useGetElementRect(selectToi.selectedBoxData.id)?.height
+              ) /
+                squareStore.scale +
+              'px'
+            : getHeight() + 'px'
+          : '',
       }"
     />
   </ClientOnly>
@@ -15,9 +24,11 @@
 import { useEditor, EditorContent } from "@tiptap/vue-3";
 import { useSquareStore } from "~~/src/stores/dataSquare";
 import { useEditorStore } from "@/stores/editor";
+import { useCounterStore } from "../stores/counter";
 import StarterKit from "@tiptap/starter-kit";
 import HardBreak from "@tiptap/extension-hard-break";
 
+const selectToi = useCounterStore();
 const squareStore = useSquareStore();
 const editorStore = useEditorStore();
 
