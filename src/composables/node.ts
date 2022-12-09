@@ -193,6 +193,20 @@ export function getJustify(): number | string | null {
   } else return null;
 }
 
+export function getFontSize(): number | string | null {
+  const selectToi = useCounterStore();
+
+  if (selectToi.selectedBoxData && selectToi.selectedBoxData.cssRules) {
+    if (!selectToi.selectedBoxData.cssRules[0].style.fontSize) {
+      return null;
+    } else {
+      let fontSize = selectToi.selectedBoxData.cssRules[0].style.fontSize.value;
+      let unit = selectToi.selectedBoxData.cssRules[0].style.fontSize.unit;
+      return fontSize + unit;
+    }
+  } else return null;
+}
+
 //functions
 export function changeLeft(value: number, unit: string = "px") {
   const selectToi = useCounterStore();

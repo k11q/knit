@@ -36,6 +36,7 @@ export function createText(e: MouseEvent) {
   };
 
   let rootData = selectToi.data;
+  let startDragging = false;
 
   const prevX = Math.round(
     (e.clientX - squareStore.offsetLeft) / squareStore.scale
@@ -57,6 +58,7 @@ export function createText(e: MouseEvent) {
   window.addEventListener("mouseup", mouseup);
 
   function mousemove(e: MouseEvent) {
+    startDragging = true;
     let positionX = Math.round(
       (e.clientX - squareStore.offsetLeft) / squareStore.scale
     );
@@ -147,6 +149,11 @@ export function createText(e: MouseEvent) {
           */
   }
   function mouseup(e: MouseEvent) {
+    if (startDragging) {
+    }
+    if (!startDragging) {
+      console.log("not dragging");
+    }
     squareStore.turnOnNormalPointer();
     documentStore.textCount += 1;
     resizeStore.isResizing = false;

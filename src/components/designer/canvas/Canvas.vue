@@ -438,8 +438,8 @@
               addaSquare.scale +
             'px',
 
-          fontSize: selectToi.selectedBoxData?.attr?.style?.fontSize,
-          color: selectToi.selectedBoxData?.attr?.style?.color,
+          fontSize: getFontSize(),
+          color: getColor(),
         }"
         class="absolute pointer-events-none"
       >
