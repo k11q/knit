@@ -334,7 +334,8 @@
           useGetElementRect(selectToi.selectedBoxData.id)?.height > 100) &&
         selectToi.selectedBoxData &&
         selectToi.treeHoverId &&
-        !canvasStore.isResizingPadding
+        !canvasStore.isResizingPadding &&
+        selectToi.selectedBoxData.type !== 'text'
       "
       class="pointer-events-none"
     >
@@ -350,7 +351,8 @@
           useGetElementRect(selectToi.selectedBoxData.id)?.height > 100) &&
         useGetElement(selectToi.selectedBoxData.id)?.children?.length &&
         !resizeStore.isResizing &&
-        !canvasStore.isResizingGap
+        !canvasStore.isResizingGap &&
+        selectToi.selectedBoxData.type !== 'text'
       "
     >
       <div

@@ -201,7 +201,8 @@ export function getFontSize(): number | string | null {
       return null;
     } else {
       let fontSize = selectToi.selectedBoxData.cssRules[0].style.fontSize.value;
-      let unit = selectToi.selectedBoxData.cssRules[0].style.fontSize.unit;
+      let unit = selectToi.selectedBoxData.cssRules[0].style.fontSize
+        .unit as string;
       return fontSize + unit;
     }
   } else return null;
@@ -214,7 +215,7 @@ export function changeLeft(value: number, unit: string = "px") {
   if (selectToi.selectedBoxData && selectToi.selectedBoxData.cssRules) {
     if (
       !selectToi.selectedBoxData.cssRules[0].style.left &&
-      selectToi.selectedBoxData.cssRules[0].style.position.value === "absolute"
+      selectToi.selectedBoxData.cssRules[0].style.position?.value === "absolute"
     ) {
       selectToi.selectedBoxData.cssRules[0].style.left = {
         type: "unit",
@@ -233,7 +234,7 @@ export function changeTop(value: number, unit: string = "px") {
   if (selectToi.selectedBoxData && selectToi.selectedBoxData.cssRules) {
     if (
       !selectToi.selectedBoxData.cssRules[0].style.top &&
-      selectToi.selectedBoxData.cssRules[0].style.position.value === "absolute"
+      selectToi.selectedBoxData.cssRules[0].style.position?.value === "absolute"
     ) {
       selectToi.selectedBoxData.cssRules[0].style.top = {
         type: "unit",
