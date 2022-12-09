@@ -97,8 +97,7 @@ export const useResizeStore = defineStore({
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
-        this.prevLeft = selectToi.selectedBoxData.cssRules[0].style.left
-          ?.value as number;
+        this.prevLeft = getLeft() as number;
         this.prevTop = selectToi.selectedBoxData.cssRules[0].style.top
           ?.value as number;
         this.prevWidth = selectToi.selectedBoxData.cssRules[0].style.width

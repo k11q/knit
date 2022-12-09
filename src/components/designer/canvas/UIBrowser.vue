@@ -56,7 +56,6 @@ import { Node, useCounterStore } from "~~/src/stores/counter";
 import { useSquareStore } from "~~/src/stores/dataSquare";
 import { usePaddingResizeStore } from "~~/src/stores/paddingResizeStore";
 import { useCanvasStore } from "~~/src/stores/canvas";
-import { Node as knitNode } from "~~/src/stores/counter";
 
 const selectToi = useCounterStore();
 const squareStore = useSquareStore();
@@ -124,14 +123,14 @@ function mouseover(id: string, type: string) {
 }
 
 const props = defineProps({
-  nodes: Array<knitNode>,
+  nodes: Array<Node>,
   depth: {
     type: Number,
     default: 0,
   },
 });
 
-function styleProps(node: knitNode) {
+function styleProps(node: Node) {
   return {
     display: node.cssRules[0]?.style?.display?.value,
     flexDirection: node.cssRules[0]?.style?.flexDirection?.value,
