@@ -7,9 +7,10 @@
     "
     class="absolute pointer-events-none border-box"
     :style="{
-      left: getLeft()
-        ? getLeft() && !useCheckParent(selectToi.selectedBoxData.id)
-          ? getLeft() + 'px'
+      left: selectToi.selectedBoxData.cssRules
+        ? selectToi.selectedBoxData.cssRules[0].style.left &&
+          !useCheckParent(selectToi.selectedBoxData.id)
+          ? selectToi.selectedBoxData.cssRules[0].style.left.value + 'px'
           : Math.round(
               useGetElementRect(selectToi.selectedBoxData.id)?.x -
                 addaSquare.offsetLeft
@@ -17,9 +18,10 @@
               addaSquare.scale +
             'px'
         : null,
-      top: getTop()
-        ? getTop() && !useCheckParent(selectToi.selectedBoxData.id)
-          ? getTop() + 'px'
+      top: selectToi.selectedBoxData.cssRules
+        ? selectToi.selectedBoxData.cssRules[0].style.top &&
+          !useCheckParent(selectToi.selectedBoxData.id)
+          ? selectToi.selectedBoxData.cssRules[0].style.top.value + 'px'
           : Math.round(
               useGetElementRect(selectToi.selectedBoxData.id)?.y -
                 addaSquare.offsetTop

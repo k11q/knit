@@ -68,6 +68,10 @@ export function createText(e: MouseEvent) {
 
     if (rootData.findIndex((i) => i.id === textNode.id) === -1) {
       textNode.name = "text" + documentStore.textCount;
+      textNode.cssRules[0].style.width.type = "unit";
+      textNode.cssRules[0].style.width.unit = "px";
+      textNode.cssRules[0].style.height.type = "unit";
+      textNode.cssRules[0].style.height.unit = "px";
       Promise.resolve()
         .then(() => {
           rootData.push(textNode);
