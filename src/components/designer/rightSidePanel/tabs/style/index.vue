@@ -2104,7 +2104,7 @@
       class="flex flex-col border-b pt-2 pb-3 border-[#3A3A3A] relative overflow-visible"
     >
       <DesignerRightSidePanelTabsStyleColorMenu
-        v-show="canvasStore.showColorMenu"
+        v-if="selectToi.selectedBoxData && canvasStore.showColorMenu"
       />
       <div class="flex flex-row justify-between items-center h-8 pl-4 pr-2">
         <p class="font-medium">Fill</p>
