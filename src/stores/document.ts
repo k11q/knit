@@ -3,6 +3,7 @@ import { defineStore } from "pinia";
 type RootState = {
   frameCount: number;
   rectangleCount: number;
+  textCount: number;
 };
 
 export const useDocumentStore = defineStore({
@@ -11,6 +12,7 @@ export const useDocumentStore = defineStore({
     ({
       frameCount: 1,
       rectangleCount: 1,
+      textCount: 1,
     } as RootState),
   actions: {},
 });

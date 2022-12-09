@@ -15,6 +15,7 @@ export function useSetDeselect() {
     selectToi.selectedBox = "";
     selectToi.selectedBoxData = {} as Node;
     canvasStore.selection = [];
+    canvasStore.showColorMenu = false;
     canvasStore.multiSelectResizerRect = {
       left: "",
       top: "",

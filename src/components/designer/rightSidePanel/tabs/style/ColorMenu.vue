@@ -186,42 +186,39 @@ type RGB = {
   b: number;
 };
 // watch selection change to change initial color
-watch(
-  () => selectToi.selectedBoxData,
-  () => {
-    if (!selectToi.selectedBoxData && canvasStore.showColorMenu) {
-      canvasStore.showColorMenu = false;
-    }
-    if (selectToi.selectedBoxData && canvasStore.showColorMenu) {
-      let hexColor = getBackgroundColor();
-      let hex: RGB;
-      if (hexColor) {
-        Promise.resolve()
-          .then(() => {
-            hex = useHexToRGB(hexColor) as RGB;
+watchEffect(() => {
+  if (!selectToi.selectedBoxData && canvasStore.showColorMenu) {
+    canvasStore.showColorMenu = false;
+  }
+  if (selectToi.selectedBoxData && canvasStore.showColorMenu) {
+    let hexColor = getBackgroundColor();
+    let hex: RGB;
+    if (hexColor) {
+      Promise.resolve()
+        .then(() => {
+          hex = useHexToRGB(hexColor) as RGB;
 
-            selectedRed.value = hex.r;
-            selectedGreen.value = hex.g;
-            selectedBlue.value = hex.b;
-          })
-          .then(() => {
-            let color = getColor(hex);
+          selectedRed.value = hex.r;
+          selectedGreen.value = hex.g;
+          selectedBlue.value = hex.b;
+        })
+        .then(() => {
+          let color = getColor(hex);
 
-            if (color) {
-              posX.value = color.posX;
-              posY.value = color.posY;
+          if (color) {
+            posX.value = color.posX;
+            posY.value = color.posY;
 
-              if (color.r || color.g || color.b) {
-                hexRed.value = color.r;
-                hexGreen.value = color.g;
-                hexBlue.value = color.b;
-              }
+            if (color.r || color.g || color.b) {
+              hexRed.value = color.r;
+              hexGreen.value = color.g;
+              hexBlue.value = color.b;
             }
-          });
-      }
+          }
+        });
     }
   }
-);
+});
 
 //styling for hue slider
 const RGBColor = computed(

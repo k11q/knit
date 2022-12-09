@@ -7,8 +7,8 @@ export interface CSSRuleDetails {
 }
 
 export interface CSSRule {
-  display: CSSRuleDetails;
-  position: CSSRuleDetails;
+  display?: CSSRuleDetails;
+  position?: CSSRuleDetails;
   left?: CSSRuleDetails;
   top?: CSSRuleDetails;
   height?: CSSRuleDetails;
@@ -52,7 +52,7 @@ export interface Node {
   display?: "hide" | "show";
   expandTree?: boolean;
   cssRules: Array<Breakpoint>;
-  children: Array<Node>;
+  children?: Array<Node>;
 }
 
 export type Document = Array<Node>;

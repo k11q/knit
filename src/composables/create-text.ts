@@ -1,4 +1,4 @@
-import { useCounterStore } from "../stores/counter";
+import { Node, useCounterStore } from "../stores/counter";
 import { useSquareStore } from "../stores/dataSquare";
 import { useRulerSnapStore } from "../stores/rulerSnap";
 import { useResizeStore } from "../stores/resizeStore";
@@ -15,16 +15,15 @@ export function createText(e: MouseEvent) {
       /\./g,
       ""
     );
-  let frameNode = {
+  let textNode: Node = {
     id: "",
     name: "",
     type: "text",
     textContent: "text here",
     cssRules: [
       {
-        breakpoint: 1,
+        id: 1,
         style: {
-          display: { type: "keyword", value: "flex" },
           color: { type: "keyword", value: "black" },
           position: { type: "keyword", value: "absolute" },
           left: { type: "unit", value: 0, unit: "px" },
@@ -34,7 +33,6 @@ export function createText(e: MouseEvent) {
         },
       },
     ],
-    children: [],
   };
 
   let rootData = selectToi.data;
@@ -46,9 +44,11 @@ export function createText(e: MouseEvent) {
     (e.clientY - squareStore.offsetTop) / squareStore.scale
   );
 
-  frameNode.id = useGetRandomLetter() + uid();
-  frameNode.cssRules[0].style.left.value = prevX;
-  frameNode.cssRules[0].style.top.value = prevY;
+  textNode.id = useGetRandomLetter() + uid();
+  let left = textNode.cssRules[0].style.left;
+  let top = textNode.cssRules[0].style.top;
+  left.value = prevX;
+  top.value = prevY;
 
   resizeStore.prevLeft = prevX;
   resizeStore.prevTop = prevY;
@@ -64,36 +64,36 @@ export function createText(e: MouseEvent) {
       (e.clientY - squareStore.offsetTop) / squareStore.scale
     );
 
-    if (rootData.findIndex((i) => i.id === frameNode.id) === -1) {
-      frameNode.name = "frame" + documentStore.frameCount;
+    if (rootData.findIndex((i) => i.id === textNode.id) === -1) {
+      textNode.name = "text" + documentStore.textCount;
       Promise.resolve()
         .then(() => {
-          rootData.push(frameNode);
+          rootData.push(textNode);
         })
         .then(() => {
-          useSetSelectSingle(e, frameNode.id);
+          useSetSelectSingle(e, textNode.id);
         });
     }
-    if (rootData.findIndex((i) => i.id === frameNode.id) !== -1) {
+    if (rootData.findIndex((i) => i.id === textNode.id) !== -1) {
       resizeStore.isResizing = true;
       resizeStore.isResizingBottomRight = true;
       if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
         rulerSnap.on = true;
         rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
         if (!rulerSnap.snapWidth) {
-          selectToi.selectedBoxData.cssRules[0].style.width.value =
-            positionX - prevX;
+          let width = selectToi.selectedBoxData.cssRules[0].style.width;
+          width.value = positionX - prevX;
         }
         if (!rulerSnap.snapHeight) {
-          selectToi.selectedBoxData.cssRules[0].style.height.value =
-            positionY - prevY;
+          let height = selectToi.selectedBoxData.cssRules[0].style.height;
+          height.value = positionY - prevY;
         }
       } else if (Math.abs(e.movementX) > 5 || Math.abs(e.movementX) > 5) {
         rulerSnap.on = false;
-        selectToi.selectedBoxData.cssRules[0].style.width.value =
-          positionX - prevX;
-        selectToi.selectedBoxData.cssRules[0].style.height.value =
-          positionY - prevY;
+        let width = selectToi.selectedBoxData.cssRules[0].style.width;
+        let height = selectToi.selectedBoxData.cssRules[0].style.height;
+        width.value = positionX - prevX;
+        height.value = positionY - prevY;
       }
     }
     /*
@@ -148,7 +148,7 @@ export function createText(e: MouseEvent) {
   }
   function mouseup(e: MouseEvent) {
     squareStore.turnOnNormalPointer();
-    documentStore.frameCount += 1;
+    documentStore.textCount += 1;
     resizeStore.isResizing = false;
     resizeStore.isResizingBottomRight = false;
     rulerSnap.show = false;
