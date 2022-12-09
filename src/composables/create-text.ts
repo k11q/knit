@@ -28,11 +28,12 @@ export function createText(e: MouseEvent) {
           position: { type: "keyword", value: "absolute" },
           left: { type: "unit", value: 0, unit: "px" },
           top: { type: "unit", value: 0, unit: "px" },
-          height: { type: "unit", value: 1, unit: "px" },
-          width: { type: "unit", value: 1, unit: "px" },
+          height: { type: "keyword", value: "auto" },
+          width: { type: "keyword", value: "auto" },
         },
       },
     ],
+    children: [],
   };
 
   let rootData = selectToi.data;
@@ -45,11 +46,10 @@ export function createText(e: MouseEvent) {
     (e.clientY - squareStore.offsetTop) / squareStore.scale
   );
 
-  textNode.id = useGetRandomLetter() + uid();
-  let left = textNode.cssRules[0].style.left;
-  let top = textNode.cssRules[0].style.top;
-  left.value = prevX;
-  top.value = prevY;
+  textNode.id = useCreateId();
+  textNode.name = "text" + documentStore.textCount;
+  textNode.cssRules[0].style.left.value = prevX;
+  textNode.cssRules[0].style.top.value = prevY;
 
   resizeStore.prevLeft = prevX;
   resizeStore.prevTop = prevY;
@@ -150,9 +150,17 @@ export function createText(e: MouseEvent) {
   }
   function mouseup(e: MouseEvent) {
     if (startDragging) {
-    }
-    if (!startDragging) {
-      console.log("not dragging");
+      startDragging = false;
+    } else if (!startDragging) {
+      Promise.resolve()
+        .then(() => {
+          selectToi.data.push(textNode);
+        })
+        .then(() => {
+          useSetSelectSingle(e, textNode.id);
+          selectToi.selectedTextEditor = textNode.id;
+          useSetOutlineSelector("");
+        });
     }
     squareStore.turnOnNormalPointer();
     documentStore.textCount += 1;

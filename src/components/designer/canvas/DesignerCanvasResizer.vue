@@ -7,10 +7,9 @@
     "
     class="absolute pointer-events-none border-box"
     :style="{
-      left: selectToi.selectedBoxData.cssRules
-        ? selectToi.selectedBoxData.cssRules[0].style.left &&
-          !useCheckParent(selectToi.selectedBoxData.id)
-          ? selectToi.selectedBoxData.cssRules[0].style.left.value + 'px'
+      left: getLeft()
+        ? getLeft() && !useCheckParent(selectToi.selectedBoxData.id)
+          ? getLeft() + 'px'
           : Math.round(
               useGetElementRect(selectToi.selectedBoxData.id)?.x -
                 addaSquare.offsetLeft
@@ -18,10 +17,9 @@
               addaSquare.scale +
             'px'
         : null,
-      top: selectToi.selectedBoxData.cssRules
-        ? selectToi.selectedBoxData.cssRules[0].style.top &&
-          !useCheckParent(selectToi.selectedBoxData.id)
-          ? selectToi.selectedBoxData.cssRules[0].style.top.value + 'px'
+      top: getTop()
+        ? getTop() && !useCheckParent(selectToi.selectedBoxData.id)
+          ? getTop() + 'px'
           : Math.round(
               useGetElementRect(selectToi.selectedBoxData.id)?.y -
                 addaSquare.offsetTop
@@ -29,24 +27,22 @@
               addaSquare.scale +
             'px'
         : null,
-      height: selectToi.selectedBoxData.cssRules
-        ? selectToi.selectedBoxData?.cssRules[0].style?.height?.value !==
-            'fit-content' && !useCheckParent(selectToi.selectedBoxData.id)
-          ? selectToi.selectedBoxData.cssRules[0].style.height.value + 'px'
-          : Math.round(
+      height: getHeight()
+        ? getHeight() === 'fit-content' || getHeight() === 'auto'
+          ? Math.round(
               useGetElementRect(selectToi.selectedBoxData.id)?.height
             ) /
               addaSquare.scale +
             'px'
-        : null,
-      width: selectToi.selectedBoxData.cssRules
-        ? selectToi.selectedBoxData?.cssRules[0]?.style?.width?.value !==
-            'fit-content' && !useCheckParent(selectToi.selectedBoxData.id)
-          ? selectToi.selectedBoxData.cssRules[0].style.width.value + 'px'
-          : Math.round(useGetElementRect(selectToi.selectedBoxData.id)?.width) /
+          : getHeight() + 'px'
+        : '',
+      width: getWidth()
+        ? getWidth() === 'fit-content' || getHeight() === 'auto'
+          ? Math.round(useGetElementRect(selectToi.selectedBoxData.id)?.width) /
               addaSquare.scale +
             'px'
-        : null,
+          : getWidth() + 'px'
+        : '',
     }"
   >
     <!--(ON HOLD)radius resizer controller

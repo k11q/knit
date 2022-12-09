@@ -437,6 +437,24 @@
               addaSquare.offsetTop) /
               addaSquare.scale +
             'px',
+          height: getHeight()
+            ? getHeight() === 'fit-content' || getHeight() === 'auto'
+              ? Math.round(
+                  useGetElementRect(selectToi.selectedBoxData.id)?.height
+                ) /
+                  addaSquare.scale +
+                'px'
+              : getHeight() + 'px'
+            : '',
+          width: getWidth()
+            ? getWidth() === 'fit-content' || getHeight() === 'auto'
+              ? Math.round(
+                  useGetElementRect(selectToi.selectedBoxData.id)?.width
+                ) /
+                  addaSquare.scale +
+                'px'
+              : getWidth() + 'px'
+            : '',
 
           fontSize: getFontSize(),
           color: getColor(),

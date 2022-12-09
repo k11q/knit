@@ -26,7 +26,7 @@
       <div
         v-if="node.type === 'text'"
         v-html="node.textContent"
-        class="cursor-default"
+        class="cursor-default whitespace-pre"
         :class="{
           'underline decoration-[#0191FA]':
             selectToi.selectedBox === node.id && !canvasStore.isDragging,
