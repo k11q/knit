@@ -201,9 +201,20 @@ export function getFontSize(): number | string | null {
       return null;
     } else {
       let fontSize = selectToi.selectedBoxData.cssRules[0].style.fontSize.value;
-      let unit = selectToi.selectedBoxData.cssRules[0].style.fontSize
-        .unit as string;
-      return fontSize + unit;
+      return fontSize;
+    }
+  } else return null;
+}
+export function getLineHeight(): number | string | null {
+  const selectToi = useCounterStore();
+
+  if (selectToi.selectedBoxData && selectToi.selectedBoxData.cssRules) {
+    if (!selectToi.selectedBoxData.cssRules[0].style.lineHeight) {
+      return null;
+    } else {
+      let lineHeight =
+        selectToi.selectedBoxData.cssRules[0].style.lineHeight.value;
+      return lineHeight;
     }
   } else return null;
 }
@@ -446,6 +457,40 @@ export function changeColor(value: string) {
     }
     if (selectToi.selectedBoxData.cssRules[0].style.color) {
       selectToi.selectedBoxData.cssRules[0].style.color.value = value;
+    }
+  }
+}
+
+export function changeFontSize(value: number, unit: string = "px") {
+  const selectToi = useCounterStore();
+
+  if (selectToi.selectedBoxData && selectToi.selectedBoxData.cssRules) {
+    if (!selectToi.selectedBoxData.cssRules[0].style.fontSize) {
+      selectToi.selectedBoxData.cssRules[0].style.fontSize = {
+        type: "unit",
+        value: value,
+        unit: unit,
+      };
+    }
+    if (selectToi.selectedBoxData.cssRules[0].style.fontSize) {
+      selectToi.selectedBoxData.cssRules[0].style.fontSize.value = value;
+    }
+  }
+}
+
+export function changeLineHeight(value: number, unit: string = "px") {
+  const selectToi = useCounterStore();
+
+  if (selectToi.selectedBoxData && selectToi.selectedBoxData.cssRules) {
+    if (!selectToi.selectedBoxData.cssRules[0].style.lineHeight) {
+      selectToi.selectedBoxData.cssRules[0].style.lineHeight = {
+        type: "unit",
+        value: value,
+        unit: unit,
+      };
+    }
+    if (selectToi.selectedBoxData.cssRules[0].style.lineHeight) {
+      selectToi.selectedBoxData.cssRules[0].style.lineHeight.value = value;
     }
   }
 }

@@ -26,11 +26,10 @@
         <div class="aspect-square h-full flex-none"></div>
         <input
           type="number"
-          :value="parseInt(selectToi.selectedBoxData.attr?.style.fontSize, 10)"
+          :value="getFontSize()"
           @input="
             (event) => {
-              selectToi.selectedBoxData.attr.style.fontSize =
-                event.target.value + 'px';
+              changeFontSize(event.target.value);
             }
           "
           class="w-full px-2 bg-transparent"
@@ -47,11 +46,10 @@
         </div>
         <input
           type="text"
-          :value="selectToi.selectedBoxData.attr?.style.lineHeight"
+          :value="getLineHeight()"
           @input="
             (event) => {
-              selectToi.selectedBoxData.attr.style.lineHeight =
-                event.target.value;
+              changeLineHeight(event.target.value, '');
             }
           "
           placeholder="Auto"

@@ -2703,6 +2703,7 @@
         </div>
       </div>
     </div>
+    <!--Text section-->
     <DesignerRightSidePanelTabsStyleText />
     <!-- text color section! -->
     <div

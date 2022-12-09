@@ -456,7 +456,8 @@
               : getWidth() + 'px'
             : '',
 
-          fontSize: getFontSize(),
+          fontSize: getFontSize() + 'px',
+          lineHeight: getLineHeight(),
           color: getColor(),
         }"
         class="absolute pointer-events-none"
