@@ -1,9 +1,12 @@
 import { useCounterStore } from "../stores/counter";
 import { usePaddingResizeStore } from "../stores/paddingResizeStore";
 import { useCanvasStore } from "../stores/canvas";
+import { useSquareStore } from "../stores/dataSquare";
 
 export function useResizeGap(e: MouseEvent) {
   const selectToi = useCounterStore();
+  const squareStore = useSquareStore();
+
   if (selectToi.selectedBoxData) {
     const paddingResize = usePaddingResizeStore();
     const canvasStore = useCanvasStore();
@@ -22,7 +25,9 @@ export function useResizeGap(e: MouseEvent) {
     function mousemove(e: MouseEvent) {
       function update() {
         if (!getGap() || getGap()! >= 0) {
-          changeGap(prevGap + (e.clientY - prevY));
+          changeGap(
+            Math.round(prevGap + (e.clientY - prevY) / squareStore.scale)
+          );
         }
         if (getGap() && getGap()! <= 0) {
           changeGap(0);
