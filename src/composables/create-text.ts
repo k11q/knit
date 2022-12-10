@@ -72,6 +72,7 @@ export function createText(e: MouseEvent) {
       textNode.cssRules[0].style.width.unit = "px";
       textNode.cssRules[0].style.height.type = "unit";
       textNode.cssRules[0].style.height.unit = "px";
+
       Promise.resolve()
         .then(() => {
           rootData.push(textNode);

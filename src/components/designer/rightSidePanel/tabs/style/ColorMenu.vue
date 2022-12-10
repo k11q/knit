@@ -168,9 +168,9 @@ const opacitySliderX = ref(0);
 //opacity store
 
 //color hex store
-const hexRed = ref(255);
-const hexGreen = ref(0);
-const hexBlue = ref(0);
+const hueRed = ref(255);
+const hueGreen = ref(0);
+const hueBlue = ref(0);
 
 //RGB store
 
@@ -210,9 +210,9 @@ watchEffect(() => {
             posY.value = color.posY;
 
             if (color.r || color.g || color.b) {
-              hexRed.value = color.r;
-              hexGreen.value = color.g;
-              hexBlue.value = color.b;
+              hueRed.value = color.r;
+              hueGreen.value = color.g;
+              hueBlue.value = color.b;
             }
           }
         });
@@ -223,7 +223,7 @@ watchEffect(() => {
 //styling for hue slider
 const RGBColor = computed(
   () =>
-    `linear-gradient(to right, rgb(255,255,255),rgb(${hexRed.value},${hexGreen.value},${hexBlue.value}))`
+    `linear-gradient(to right, rgb(255,255,255),rgb(${hueRed.value},${hueGreen.value},${hueBlue.value}))`
 );
 
 //watch hue change and change color
@@ -312,7 +312,7 @@ function getColor(hex: RGB): GetColor | undefined {
       );
 
       hexSliderX.value =
-        sliderRect.width / 6 + ((sliderRect.width / 6) * hueRed) / 255;
+        sliderRect.width / 6 + ((sliderRect.width / 6) * (255 - hueRed)) / 255;
       return { posX: posX, posY: posY, r: hueRed, g: 255, b: 0 };
     }
     // if green is predominant and blue and red same and min
@@ -360,7 +360,8 @@ function getColor(hex: RGB): GetColor | undefined {
       );
 
       hexSliderX.value =
-        (sliderRect.width * 3) / 6 + ((sliderRect.width / 6) * hueGreen) / 255;
+        (sliderRect.width * 3) / 6 +
+        ((sliderRect.width / 6) * (255 - hueGreen)) / 255;
       return { posX: posX, posY: posY, r: 0, g: hueGreen, b: 255 };
     }
     // if blue is predominant and green and red same and min
@@ -410,26 +411,27 @@ function getColor(hex: RGB): GetColor | undefined {
       );
 
       hexSliderX.value =
-        (sliderRect.width * 5) / 6 + ((sliderRect.width / 6) * hueBlue) / 255;
+        (sliderRect.width * 5) / 6 +
+        ((sliderRect.width / 6) * (255 - hueBlue)) / 255;
       return { posX: posX, posY: posY, r: 255, g: 0, b: hueBlue };
     }
   } else return undefined;
 }
 
 function setColor() {
-  let target = document.querySelector("#colorHex")!;
+  let target = document.querySelector("#colorHex");
   let rect = target.getBoundingClientRect();
 
   let lightness = (rect.height - posY.value) / rect.height;
   let saturationRed =
     ((rect.width - posX.value) / rect.width) * 255 +
-    (posX.value / rect.width) * hexRed.value;
+    (posX.value / rect.width) * hueRed.value;
   let saturationGreen =
     ((rect.width - posX.value) / rect.width) * 255 +
-    (posX.value / rect.width) * hexGreen.value;
+    (posX.value / rect.width) * hueGreen.value;
   let saturationBlue =
     ((rect.width - posX.value) / rect.width) * 255 +
-    (posX.value / rect.width) * hexBlue.value;
+    (posX.value / rect.width) * hueBlue.value;
 
   selectedRed.value = Math.round(saturationRed * lightness);
   selectedGreen.value = Math.round(saturationGreen * lightness);
@@ -491,29 +493,29 @@ function pickHue(e: MouseEvent) {
 
   function setHexColor(e: MouseEvent) {
     if (hexSliderX.value <= rect.width / 6) {
-      hexRed.value = 255;
-      hexGreen.value = Math.round((hexSliderX.value / (rect.width / 6)) * 255);
-      hexBlue.value = 0;
+      hueRed.value = 255;
+      hueGreen.value = Math.round((hexSliderX.value / (rect.width / 6)) * 255);
+      hueBlue.value = 0;
     }
     if (
       hexSliderX.value <= (rect.width * 2) / 6 &&
       hexSliderX.value > (rect.width * 1) / 6
     ) {
-      hexRed.value = Math.round(
+      hueRed.value = Math.round(
         ((rect.width / 6 - (hexSliderX.value - rect.width / 6)) /
           (rect.width / 6)) *
           255
       );
-      hexGreen.value = 255;
-      hexBlue.value = 0;
+      hueGreen.value = 255;
+      hueBlue.value = 0;
     }
     if (
       hexSliderX.value <= (rect.width * 3) / 6 &&
       hexSliderX.value > (rect.width * 2) / 6
     ) {
-      hexRed.value = 0;
-      hexGreen.value = 255;
-      hexBlue.value = Math.round(
+      hueRed.value = 0;
+      hueGreen.value = 255;
+      hueBlue.value = Math.round(
         ((hexSliderX.value - (rect.width * 2) / 6) / (rect.width / 6)) * 255
       );
     }
@@ -521,40 +523,40 @@ function pickHue(e: MouseEvent) {
       hexSliderX.value <= (rect.width * 4) / 6 &&
       hexSliderX.value > (rect.width * 3) / 6
     ) {
-      hexRed.value = 0;
-      hexGreen.value = Math.round(
+      hueRed.value = 0;
+      hueGreen.value = Math.round(
         ((rect.width / 6 - (hexSliderX.value - (rect.width * 3) / 6)) /
           (rect.width / 6)) *
           255
       );
-      hexBlue.value = 255;
+      hueBlue.value = 255;
     }
     if (
       hexSliderX.value <= (rect.width * 5) / 6 &&
       hexSliderX.value > (rect.width * 4) / 6
     ) {
-      hexRed.value = Math.round(
+      hueRed.value = Math.round(
         ((hexSliderX.value - (rect.width * 4) / 6) / (rect.width / 6)) * 255
       );
-      hexGreen.value = 0;
-      hexBlue.value = 255;
+      hueGreen.value = 0;
+      hueBlue.value = 255;
     }
     if (
       hexSliderX.value <= rect.width &&
       hexSliderX.value > (rect.width * 5) / 6
     ) {
-      hexRed.value = 255;
-      hexGreen.value = 0;
-      hexBlue.value = Math.round(
-        ((rect.width / 6 - (e.clientX - rect.left - (rect.width * 5) / 6)) /
+      hueRed.value = 255;
+      hueGreen.value = 0;
+      hueBlue.value = Math.round(
+        ((rect.width / 6 - (e.clientX - rect.left - 6 - (rect.width * 5) / 6)) /
           (rect.width / 6)) *
           255
       );
     }
     if (e.clientX - rect.left > rect.width) {
-      hexRed.value = 255;
-      hexGreen.value = 0;
-      hexBlue.value = 0;
+      hueRed.value = 255;
+      hueGreen.value = 0;
+      hueBlue.value = 0;
     }
   }
 
