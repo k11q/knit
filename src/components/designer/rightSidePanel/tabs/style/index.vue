@@ -276,7 +276,7 @@
           </div>
           <input
             type="number"
-            :value="getWidth()"
+            :value="getHeight()"
             @input="
               (event) => {
                 selectToi.selectedBoxData.cssRules[0].style.height.value =
