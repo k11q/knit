@@ -87,7 +87,7 @@ export function useResizePaddingRight(e: MouseEvent) {
       if (!getPaddingRight() || getPaddingRight()! >= 0) {
         paddingResize.rightResizerWidth = Math.round(
           prevPaddingRight / 2 +
-            (prevPaddingRight / 2 + (prevX - e.clientX) / squareStore.scale)
+            (prevPaddingRight / 2 + (e.clientX - prevX) / squareStore.scale)
         );
         changePaddingRight(paddingResize.rightResizerWidth);
       }
@@ -196,7 +196,7 @@ export function useResizePaddingBottom(e: MouseEvent) {
       if (!getPaddingBottom() || getPaddingBottom()! >= 0) {
         paddingResize.bottomResizerHeight = Math.round(
           prevPaddingBottom / 2 +
-            (prevPaddingBottom / 2 + (prevY - e.clientY) / squareStore.scale)
+            (prevPaddingBottom / 2 + (e.clientY - prevY) / squareStore.scale)
         );
         changePaddingBottom(paddingResize.bottomResizerHeight);
       }
