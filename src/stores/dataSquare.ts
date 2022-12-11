@@ -6,9 +6,6 @@ export const useSquareStore = defineStore({
   id: "square",
 
   state: () => ({
-    /*
-    countBox: 13,
-    */
     addSquareActivated: false,
     addTextActivated: false,
     addBoxActivated: false,
@@ -19,27 +16,6 @@ export const useSquareStore = defineStore({
     offsetLeft: NaN,
     offsetTop: NaN,
     scale: 1,
-    /*
-    dataText: {
-      name: "",
-      id: "",
-      type: "text",
-      textContent: "Text here",
-      attr: {
-        style: {
-          color: "black",
-          fontSize: "14px",
-          position: "absolute",
-          lineHeight: 1.2,
-          width: "fit-content",
-          height: "fit-content",
-          whiteSpace: "pre",
-        },
-      },
-      parent: "",
-      children: [],
-    },
-    */
   }),
   actions: {
     addSquare(event: MouseEvent) {
@@ -90,31 +66,6 @@ export const useSquareStore = defineStore({
       if (this.addTextActivated === true) {
         canvasStore.selection = [];
         createText(event);
-        /*
-        this.dataText.name = "text" + this.countBox;
-        this.dataText.id = useGetRandomLetter() + uid();
-        this.dataText.attr.style.left =
-          Math.round((event.clientX - this.offsetLeft) / this.scale - 7.75) +
-          "px";
-        this.dataText.attr.style.top =
-          Math.round((event.clientY - this.offsetTop) / this.scale - 7.75) +
-          "px";
-        this.dataText.children = [];
-        let clonedDataText = { ...this.dataText };
-        clonedDataText.attr = { ...this.dataText.attr };
-        clonedDataText.attr.style = { ...this.dataText.attr.style };
-
-        Promise.resolve()
-          .then(() => {
-            dataPushed.push({ ...clonedDataText });
-            useSetSelectSingle(event, clonedDataText);
-          })
-          .then(() => {
-            useSetOutlineSelector(clonedDataText.id);
-          });
-        this.turnOnNormalPointer();
-        this.countBox = this.countBox + 1;
-        */
       }
       if (this.addFrameActivated === true) {
         canvasStore.selection = [];

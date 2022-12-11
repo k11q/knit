@@ -18,14 +18,22 @@
         }
       "
       :style="{
-        left: gap.left + 'px',
-        height: gap.height + 'px',
-        top: !useCheckParent(selectToi.selectedBoxData.id)
-          ? gap.top + 'px'
-          : gap.top -
-            useGetElement(selectToi.selectedBoxData.id).offsetTop +
-            'px',
-        right: gap.right ? gap.right + 'px' : `${1 / squareStore.scale}px`,
+        left: useCheckParent(selectToi.selectedBoxData.id)
+          ? getFlexDirection() && getFlexDirection() === 'column'
+            ? gap.left + 'px'
+            : gap.left -
+              useGetElement(selectToi.selectedBoxData.id)?.offsetLeft +
+              'px'
+          : gap.left + 'px',
+        top: useCheckParent(selectToi.selectedBoxData.id)
+          ? getFlexDirection() && getFlexDirection() === 'column'
+            ? gap.top -
+              useGetElement(selectToi.selectedBoxData.id)?.offsetTop +
+              'px'
+            : gap.top + 'px'
+          : gap.top + 'px',
+        height: gap.height ? gap.height + 'px' : '0px',
+        width: gap.width ? gap.width + 'px' : '0px',
         border: canvasStore.isResizingGap
           ? `${1.5 / squareStore.scale}px solid #E93372`
           : '',
@@ -45,7 +53,13 @@
         @mouseleave="
           canvasStore.isResizingGap ? '' : (canvasStore.cursorLabel = '')
         "
-        class="flex items-center justify-center flex-none hover:cursor-row-resize"
+        class="flex items-center justify-center flex-none"
+        :class="{
+          'hover:cursor-row-resize':
+            getFlexDirection() && getFlexDirection() === 'column',
+          'hover:cursor-col-resize':
+            !getFlexDirection() || getFlexDirection() === 'row',
+        }"
         :style="{
           height: `${18 / squareStore.scale}px`,
         }"
@@ -54,8 +68,16 @@
           v-show="!canvasStore.isResizingGap"
           class="bg-[#E93372] pointer-events-none"
           :style="{
-            height: `${1.5 / squareStore.scale}px`,
-            width: `${12 / squareStore.scale}px`,
+            height: `${
+              getFlexDirection() && getFlexDirection() === 'column'
+                ? 1.5 / squareStore.scale
+                : 12 / squareStore.scale
+            }px`,
+            width: `${
+              getFlexDirection() && getFlexDirection() === 'column'
+                ? 12 / squareStore.scale
+                : 1.5 / squareStore.scale
+            }px`,
             outline: `${1 / squareStore.scale}px solid white`,
             borderRadius: `${0.5 / squareStore.scale}px`,
           }"

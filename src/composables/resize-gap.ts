@@ -11,9 +11,13 @@ export function useResizeGap(e: MouseEvent) {
     const paddingResize = usePaddingResizeStore();
     const canvasStore = useCanvasStore();
     canvasStore.isResizingGap = true;
-    canvasStore.cursorType = "row-resize";
+    canvasStore.cursorType =
+      getFlexDirection() && getFlexDirection() === "column"
+        ? "row-resize"
+        : "col-resize";
 
     let prevY = e.clientY;
+    let prevX = e.clientX;
     let prevGap: number;
     if (getGap()) {
       prevGap = getGap() as number;
@@ -25,9 +29,15 @@ export function useResizeGap(e: MouseEvent) {
     function mousemove(e: MouseEvent) {
       function update() {
         if (!getGap() || getGap()! >= 0) {
-          changeGap(
-            Math.round(prevGap + (e.clientY - prevY) / squareStore.scale)
-          );
+          if (getFlexDirection() && getFlexDirection() === "column") {
+            changeGap(
+              Math.round(prevGap + (e.clientY - prevY) / squareStore.scale)
+            );
+          } else {
+            changeGap(
+              Math.round(prevGap + (e.clientX - prevX) / squareStore.scale)
+            );
+          }
         }
         if (getGap() && getGap()! <= 0) {
           changeGap(0);

@@ -3,11 +3,9 @@ import { useSquareStore } from "./dataSquare";
 import { useCounterStore } from "./counter";
 
 export type GapPosition = {
-  top: number;
-  bottom?: number;
+  top?: number;
   height?: number;
-  left: number;
-  right: number;
+  left?: number;
   width?: number;
 };
 
@@ -47,7 +45,10 @@ export const usePaddingResizeStore = defineStore({
       }
     },
     setGap(id: string) {
+      const squareStore = useSquareStore();
+
       let element = useGetElement(id) as HTMLElement;
+      let elementRect = element.getBoundingClientRect();
       if (element?.children) {
         let children = [...element.children] as HTMLElement[];
         let staticChildren = children.filter(
@@ -56,6 +57,8 @@ export const usePaddingResizeStore = defineStore({
 
         let paddingLeft: number;
         let paddingRight: number;
+        let paddingTop: number;
+        let paddingBottom: number;
         let gap: number;
 
         if (element.style.paddingLeft) {
@@ -64,6 +67,13 @@ export const usePaddingResizeStore = defineStore({
         if (element.style.paddingRight) {
           paddingRight = parseInt(element.style.paddingRight);
         } else paddingRight = 0;
+        if (element.style.paddingTop) {
+          paddingTop = parseInt(element.style.paddingTop);
+        } else paddingTop = 0;
+        if (element.style.paddingBottom) {
+          paddingBottom = parseInt(element.style.paddingBottom);
+        } else paddingBottom = 0;
+
         if (getGap()) {
           gap = getGap() as number;
         } else gap = 0;
@@ -72,20 +82,46 @@ export const usePaddingResizeStore = defineStore({
         this.gap = [] as GapPosition[];
 
         if (staticChildren.length) {
-          staticChildren.forEach((i, index) => {
-            if (index !== staticChildren.length - 1) {
-              let rect = i.getBoundingClientRect();
-              let bottom = i.offsetTop + i.offsetHeight;
+          if (element.style.flexDirection === "column") {
+            staticChildren.forEach((i, index) => {
+              if (index !== staticChildren.length - 1) {
+                let rect = i.getBoundingClientRect();
+                let bottom = i.offsetTop + i.offsetHeight;
 
-              gapsClone.push({
-                top: bottom,
-                left: paddingLeft,
-                right: paddingRight,
-                height: gap,
-              });
-            }
-          });
-          this.gap = [...gapsClone];
+                gapsClone.push({
+                  top: bottom,
+                  left: paddingLeft,
+                  width:
+                    elementRect.width / squareStore.scale -
+                    paddingLeft -
+                    paddingRight,
+                  height: gap,
+                });
+              }
+            });
+            this.gap = [...gapsClone];
+          } else if (
+            !element.style.flexDirection ||
+            element.style.flexDirection === "row"
+          ) {
+            staticChildren.forEach((i, index) => {
+              if (index !== staticChildren.length - 1) {
+                let rect = i.getBoundingClientRect();
+                let right = i.offsetLeft + i.offsetWidth;
+
+                gapsClone.push({
+                  top: paddingTop,
+                  left: right,
+                  width: gap,
+                  height:
+                    elementRect.height / squareStore.scale -
+                    paddingTop -
+                    paddingBottom,
+                });
+              }
+            });
+            this.gap = [...gapsClone];
+          }
         }
       }
     },

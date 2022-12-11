@@ -115,7 +115,9 @@
             :placeholder="
               getLeft()
                 ? getLeft()
-                : useGetElementRect(selectToi.selectedBoxData.id)?.left
+                : Math.round(
+                    useGetElementRect(selectToi.selectedBoxData.id)?.left
+                  )
             "
             @input="
               (event) => {
@@ -140,7 +142,9 @@
             :placeholder="
               getTop()
                 ? getTop()
-                : useGetElementRect(selectToi.selectedBoxData.id)?.top
+                : Math.round(
+                    useGetElementRect(selectToi.selectedBoxData.id)?.top
+                  )
             "
             @input="
               (event) => {
