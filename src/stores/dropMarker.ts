@@ -123,7 +123,7 @@ export const useDropMarker = defineStore({
               "px";
           }
         }
-        this.markerHeight = 4 / squareStore.scale + "px";
+        this.markerHeight = 3 / squareStore.scale + "px";
         this.markerWidth = currDragRect.width / squareStore.scale + "px";
       }
       if (drop.style.flexDirection === "row" || !drop.style.flexDirection) {
@@ -221,7 +221,7 @@ export const useDropMarker = defineStore({
           }
         }
         this.markerHeight = currDragRect.height / squareStore.scale + "px";
-        this.markerWidth = 4 / squareStore.scale + "px";
+        this.markerWidth = 3 / squareStore.scale + "px";
       }
     },
   },
