@@ -256,73 +256,77 @@ export const useCanvasStore = defineStore({
           requestAnimationFrame(update);
         }
         function mouseup() {
-          if (isDragging) {
-            Promise.resolve()
-              .then(function () {
-                if (
-                  closest &&
-                  selectToi.selectedBox !== closestTarget &&
-                  canvasDnd.dragzone &&
-                  !canvasDnd.dropzone
-                ) {
-                  //append after
-
-                  delete selectToi.selectedBoxData.cssRules[0].style.left;
-                  delete selectToi.selectedBoxData.cssRules[0].style.top;
-                  useTransferData().removeChild(selectToi.data, currDrag);
-                  selectToi.selectedBoxData.cssRules[0].style.position.value =
-                    "static";
-                  useTransferData().appendBefore(
-                    selectToi.data,
-                    canvasDnd.dragzone,
-                    selectToi.selectedBoxData,
-                    closestTarget
-                  );
-                  canvasStore.showMarker = false;
-                  currDragElement.style.opacity = prevOpacity;
-                  canvasDnd.dragzone = "";
-                }
-                if (
-                  (closest &&
+          function update() {
+            if (isDragging) {
+              Promise.resolve()
+                .then(function () {
+                  if (
+                    closest &&
                     selectToi.selectedBox !== closestTarget &&
-                    !canvasDnd.dragzone &&
-                    canvasDnd.dropzone) ||
-                  !closest.children?.length
-                ) {
-                  //append bottom/push
-                  delete selectToi.selectedBoxData.cssRules[0].style.left;
-                  delete selectToi.selectedBoxData.cssRules[0].style.top;
-                  useTransferData().removeChild(selectToi.data, currDrag);
-                  selectToi.selectedBoxData.cssRules[0].style.position.value =
-                    "static";
-                  useTransferData().appendChild(
-                    selectToi.data,
-                    selectToi.selectedBoxData,
-                    closestTarget
-                  );
-                  canvasStore.showMarker = false;
-                  currDragElement.style.opacity = prevOpacity;
-                }
-              })
-              .then(function () {
-                useSetOutlineSelector(currDrag);
-                paddingResize.setResizerSize(currDrag);
-              });
-            useSetOutlineSelector(currDrag);
-            paddingResize.setResizerSize(currDrag);
-          }
-          selectToi.treeHoverSize = 1;
-          isDragging = false;
-          useGetElement(currDrag)!.style.willChange = "";
-          window.removeEventListener("mousemove", mousemove);
-          window.removeEventListener("mouseup", mouseup);
-          //reselect
-          setTimeout(() => {
-            canvasStore.isDragging = false;
-          }, 0);
+                    canvasDnd.dragzone &&
+                    !canvasDnd.dropzone
+                  ) {
+                    //append after
 
-          rulerSnap.show = false;
-          canvasDnd.isDragging = false;
+                    delete selectToi.selectedBoxData.cssRules[0].style.left;
+                    delete selectToi.selectedBoxData.cssRules[0].style.top;
+                    useTransferData().removeChild(selectToi.data, currDrag);
+                    selectToi.selectedBoxData.cssRules[0].style.position.value =
+                      "static";
+                    useTransferData().appendBefore(
+                      selectToi.data,
+                      canvasDnd.dragzone,
+                      selectToi.selectedBoxData,
+                      closestTarget
+                    );
+                    canvasStore.showMarker = false;
+                    currDragElement.style.opacity = prevOpacity;
+                    canvasDnd.dragzone = "";
+                  }
+                  if (
+                    (closest &&
+                      selectToi.selectedBox !== closestTarget &&
+                      !canvasDnd.dragzone &&
+                      canvasDnd.dropzone) ||
+                    !closest.children?.length
+                  ) {
+                    //append bottom/push
+                    delete selectToi.selectedBoxData.cssRules[0].style.left;
+                    delete selectToi.selectedBoxData.cssRules[0].style.top;
+                    useTransferData().removeChild(selectToi.data, currDrag);
+                    selectToi.selectedBoxData.cssRules[0].style.position.value =
+                      "static";
+                    useTransferData().appendChild(
+                      selectToi.data,
+                      selectToi.selectedBoxData,
+                      closestTarget
+                    );
+                    canvasStore.showMarker = false;
+                    currDragElement.style.opacity = prevOpacity;
+                  }
+                })
+                .then(function () {
+                  useSetOutlineSelector(currDrag);
+                  paddingResize.setResizerSize(currDrag);
+                });
+              useSetOutlineSelector(currDrag);
+              paddingResize.setResizerSize(currDrag);
+            }
+            selectToi.treeHoverSize = 1;
+            isDragging = false;
+            useGetElement(currDrag)!.style.willChange = "";
+            //reselect
+            setTimeout(() => {
+              canvasStore.isDragging = false;
+              rulerSnap.show = false;
+            }, 0);
+
+            rulerSnap.show = false;
+            canvasDnd.isDragging = false;
+            window.removeEventListener("mousemove", mousemove);
+            window.removeEventListener("mouseup", mouseup);
+          }
+          requestAnimationFrame(update);
         }
       }
     },
@@ -629,82 +633,85 @@ export const useCanvasStore = defineStore({
       }
 
       function mouseup() {
-        if (
-          isDragging &&
-          closest &&
-          closest.dataset.id !== parentId &&
-          closest.dataset.id !== currDrag
-        ) {
-          Promise.resolve()
-            .then(function () {
-              if (
-                closest &&
-                selectToi.selectedBox !== closestTarget &&
-                canvasDnd.dragzone &&
-                !canvasDnd.dropzone
-              ) {
-                //append after
-
-                delete selectToi.selectedBoxData.cssRules[0].style.left;
-                delete selectToi.selectedBoxData.cssRules[0].style.top;
-                useTransferData().removeChild(selectToi.data, currDrag);
-                selectToi.selectedBoxData.cssRules[0].style.position.value =
-                  "static";
-                useTransferData().appendBefore(
-                  selectToi.data,
-                  canvasDnd.dragzone,
-                  selectToi.selectedBoxData,
-                  closestTarget
-                );
-                canvasStore.showMarker = false;
-                currDragElement.style.opacity = prevOpacity;
-                canvasDnd.dragzone = "";
-              }
-              if (
-                (closest &&
+        function update() {
+          if (
+            isDragging &&
+            closest &&
+            closest.dataset.id !== parentId &&
+            closest.dataset.id !== currDrag
+          ) {
+            Promise.resolve()
+              .then(function () {
+                if (
+                  closest &&
                   selectToi.selectedBox !== closestTarget &&
-                  !canvasDnd.dragzone &&
-                  canvasDnd.dropzone) ||
-                !closest.children?.length
-              ) {
-                //append bottom/push
-                delete selectToi.selectedBoxData.cssRules[0].style.left;
-                delete selectToi.selectedBoxData.cssRules[0].style.top;
-                useTransferData().removeChild(selectToi.data, currDrag);
+                  canvasDnd.dragzone &&
+                  !canvasDnd.dropzone
+                ) {
+                  //append after
 
-                selectToi.selectedBoxData.cssRules[0].style.position.value =
-                  "static";
-                useTransferData().appendChild(
-                  selectToi.data,
-                  selectToi.selectedBoxData,
-                  closestTarget
-                );
-                canvasStore.showMarker = false;
-                currDragElement.style.opacity = prevOpacity;
-              }
-            })
-            .then(function () {
-              useSetOutlineSelector(currDrag);
-              paddingResize.setResizerSize(currDrag);
-            });
-          useSetOutlineSelector(currDrag);
-          paddingResize.setResizerSize(currDrag);
+                  delete selectToi.selectedBoxData.cssRules[0].style.left;
+                  delete selectToi.selectedBoxData.cssRules[0].style.top;
+                  useTransferData().removeChild(selectToi.data, currDrag);
+                  selectToi.selectedBoxData.cssRules[0].style.position.value =
+                    "static";
+                  useTransferData().appendBefore(
+                    selectToi.data,
+                    canvasDnd.dragzone,
+                    selectToi.selectedBoxData,
+                    closestTarget
+                  );
+                  canvasStore.showMarker = false;
+                  currDragElement.style.opacity = prevOpacity;
+                  canvasDnd.dragzone = "";
+                }
+                if (
+                  (closest &&
+                    selectToi.selectedBox !== closestTarget &&
+                    !canvasDnd.dragzone &&
+                    canvasDnd.dropzone) ||
+                  !closest.children?.length
+                ) {
+                  //append bottom/push
+                  delete selectToi.selectedBoxData.cssRules[0].style.left;
+                  delete selectToi.selectedBoxData.cssRules[0].style.top;
+                  useTransferData().removeChild(selectToi.data, currDrag);
+
+                  selectToi.selectedBoxData.cssRules[0].style.position.value =
+                    "static";
+                  useTransferData().appendChild(
+                    selectToi.data,
+                    selectToi.selectedBoxData,
+                    closestTarget
+                  );
+                  canvasStore.showMarker = false;
+                  currDragElement.style.opacity = prevOpacity;
+                }
+              })
+              .then(function () {
+                useSetOutlineSelector(currDrag);
+                paddingResize.setResizerSize(currDrag);
+              });
+            useSetOutlineSelector(currDrag);
+            paddingResize.setResizerSize(currDrag);
+          }
+          selectToi.treeHoverSize = 1;
+
+          isDragging = false;
+
+          canvasStore.showGhostOutline = false;
+          canvasStore.showSolidOutline = false;
+          rulerSnap.show = false;
+          currDragElement.style.willChange = "";
+          window.removeEventListener("mousemove", mousemove);
+          window.removeEventListener("mouseup", mouseup);
+
+          setTimeout(() => {
+            canvasStore.isDragging = false;
+          }, 0);
         }
-        selectToi.treeHoverSize = 1;
-
-        isDragging = false;
-
-        canvasStore.showGhostOutline = false;
-        canvasStore.showSolidOutline = false;
-        rulerSnap.show = false;
-        currDragElement.style.willChange = "";
-        window.removeEventListener("mousemove", mousemove);
-        window.removeEventListener("mouseup", mouseup);
-
-        setTimeout(() => {
-          canvasStore.isDragging = false;
-        }, 0);
       }
+      requestAnimationFrame(update);
     },
   },
 });

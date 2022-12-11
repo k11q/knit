@@ -37,15 +37,18 @@ export function useResizeGap(e: MouseEvent) {
         } else canvasStore.cursorLabel = "";
         paddingResize.setGap(selectToi.selectedBoxData.id);
       }
-      window.requestAnimationFrame(update);
+      requestAnimationFrame(update);
     }
 
     function mouseup() {
-      canvasStore.isResizingGap = false;
-      canvasStore.cursorLabel = "";
-      canvasStore.cursorType = "";
-      document.removeEventListener("mousemove", mousemove);
-      document.removeEventListener("mouseup", mouseup);
+      function update() {
+        canvasStore.isResizingGap = false;
+        canvasStore.cursorLabel = "";
+        canvasStore.cursorType = "";
+        document.removeEventListener("mousemove", mousemove);
+        document.removeEventListener("mouseup", mouseup);
+      }
+      requestAnimationFrame(update);
     }
   }
 }
