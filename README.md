@@ -10,6 +10,12 @@ Step 3: Fix all bugs and cleanup codespace
 
 Step 4: Beta
 
+## Guide
+
+[Semantic commit messages](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716)
+
+[Airbnb javascript style guide](https://github.com/airbnb/javascript)
+
 ## Setup
 
 Make sure to install the dependencies:
@@ -18,11 +24,6 @@ Make sure to install the dependencies:
 # yarn
 yarn install
 
-# npm
-npm install
-
-# pnpm
-pnpm install --shamefully-hoist
 ```
 
 ## Development Server
@@ -46,5 +47,3 @@ Locally preview production build:
 ```bash
 npm run preview
 ```
-
-Checkout the [deployment documentation](https://v3.nuxtjs.org/guide/deploy/presets) for more information.
