@@ -27,13 +27,12 @@ export function usePinchZoom(event: WheelEvent) {
       addaSquare.offsetLeft += -event.deltaX * 0.7;
       addaSquare.offsetTop += -event.deltaY * 0.7;
     }
+    function endPinchZoom() {
+      setTimeout(() => {
+        canvasStore.isPinchZoom = false;
+      }, "400");
+    }
+    endPinchZoom();
   }
-  window.requestAnimationFrame(update);
-
-  function endPinchZoom() {
-    setTimeout(() => {
-      canvasStore.isPinchZoom = false;
-    }, "400");
-  }
-  endPinchZoom();
+  requestAnimationFrame(update);
 }

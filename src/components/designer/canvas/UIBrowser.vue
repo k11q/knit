@@ -8,8 +8,10 @@
       :data-id="node.id"
       :data-component="node.type"
       @mousedown.stop="mousedown($event, node.id, node.type)"
-      @mouseout="mouseout(node.id, node.type)"
-      @mouseover.stop="mouseover(node.id, node.type)"
+      @mouseout="!canvasStore.isPinchZoom ? mouseout(node.id, node.type) : ''"
+      @mouseover.stop="
+        !canvasStore.isPinchZoom ? mouseover(node.id, node.type) : ''
+      "
       @dblclick.prevent="dblclick(node.id, node.type)"
       :class="{
         'pointer-events-none':

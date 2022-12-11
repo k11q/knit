@@ -37,11 +37,18 @@
         border: canvasStore.isResizingGap
           ? `${1.5 / squareStore.scale}px solid #E93372`
           : '',
+        backgroundImage:
+          hoverState === true && !canvasStore.isResizingGap
+            ? `repeating-linear-gradient(-45deg, #E9337266 ${
+                8 / squareStore.scale
+              }px, #E9337266 ${9 / squareStore.scale}px, transparent ${
+                10 / squareStore.scale
+              }px, transparent ${13 / squareStore.scale}px)`
+            : '',
+        backgroundColor:
+          hoverState === true && !canvasStore.isResizingGap ? '#E933720D' : '',
       }"
       class="absolute pointer-events-auto overflow-visible flex items-center justify-center"
-      :class="{
-        'bg-[#E93372]/20': hoverState === true && !canvasStore.isResizingGap,
-      }"
     >
       <div
         @mousedown.stop.prevent="useResizeGap($event)"

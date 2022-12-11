@@ -364,18 +364,21 @@
           () => {
             if (selectToi.selectedBoxData) {
               selectToi.treeHoverId = selectToi.selectedBoxData.id;
+              currentHover = 'top';
             }
           }
         "
         @mouseout="
-          paddingResize.currentResizing
-            ? null
-            : (paddingResize.showPaddingResizer = false)
+          () => {
+            if (!paddingResize.currentResizing) {
+              paddingResize.showPaddingResizer = false;
+              currentHover = '';
+            }
+          }
         "
         class="absolute top-0 left-0 right-0 flex flex-row items-center justify-center pointer-events-none"
         :class="{
           'border-[#E93372]': paddingResize.currentResizing === 'top',
-          'hover:bg-[#E93372]/20': !paddingResize.currentResizing,
         }"
         :style="{
           margin: `${1 / addaSquare.scale}px`,
@@ -388,6 +391,22 @@
             paddingResize.currentResizing === 'top'
               ? `${1.5 / addaSquare.scale}px`
               : null,
+          backgroundImage:
+            currentHover === 'top' &&
+            !canvasStore.isResizingGap &&
+            !paddingResize.currentResizing
+              ? `repeating-linear-gradient(-45deg, #E9337266 ${
+                  8 / addaSquare.scale
+                }px, #E9337266 ${9 / addaSquare.scale}px, transparent ${
+                  10 / addaSquare.scale
+                }px, transparent ${13 / addaSquare.scale}px)`
+              : '',
+          backgroundColor:
+            currentHover === 'top' &&
+            !canvasStore.isResizingGap &&
+            !paddingResize.currentResizing
+              ? '#E933720D'
+              : '',
         }"
       >
         <div
@@ -430,18 +449,21 @@
           () => {
             if (selectToi.selectedBoxData) {
               selectToi.treeHoverId = selectToi.selectedBoxData.id;
+              currentHover = 'bottom';
             }
           }
         "
         @mouseout="
-          paddingResize.currentResizing
-            ? null
-            : (paddingResize.showPaddingResizer = false)
+          () => {
+            if (!paddingResize.currentResizing) {
+              paddingResize.showPaddingResizer = false;
+              currentHover = '';
+            }
+          }
         "
         class="absolute bottom-0 left-0 right-0 flex flex-row items-center justify-center pointer-events-none"
         :class="{
           'border-[#E93372]': paddingResize.currentResizing === 'bottom',
-          'hover:bg-[#E93372]/20': !paddingResize.currentResizing,
         }"
         :style="{
           margin: `${1 / addaSquare.scale}px`,
@@ -454,6 +476,22 @@
             paddingResize.currentResizing === 'bottom'
               ? `${1.5 / addaSquare.scale}px`
               : null,
+          backgroundImage:
+            currentHover === 'bottom' &&
+            !canvasStore.isResizingGap &&
+            !paddingResize.currentResizing
+              ? `repeating-linear-gradient(-45deg, #E9337266 ${
+                  8 / addaSquare.scale
+                }px, #E9337266 ${9 / addaSquare.scale}px, transparent ${
+                  10 / addaSquare.scale
+                }px, transparent ${13 / addaSquare.scale}px)`
+              : '',
+          backgroundColor:
+            currentHover === 'bottom' &&
+            !canvasStore.isResizingGap &&
+            !paddingResize.currentResizing
+              ? '#E933720D'
+              : '',
         }"
       >
         <div
@@ -496,18 +534,21 @@
           () => {
             if (selectToi.selectedBoxData) {
               selectToi.treeHoverId = selectToi.selectedBoxData.id;
+              currentHover = 'left';
             }
           }
         "
         @mouseout="
-          paddingResize.currentResizing
-            ? null
-            : (paddingResize.showPaddingResizer = false)
+          () => {
+            if (!paddingResize.currentResizing) {
+              paddingResize.showPaddingResizer = false;
+              currentHover = '';
+            }
+          }
         "
         class="absolute left-0 top-0 bottom-0 flex flex-row items-center justify-center pointer-events-auto"
         :class="{
           'border-[#E93372]': paddingResize.currentResizing === 'left',
-          'hover:bg-[#E93372]/20': !paddingResize.currentResizing,
         }"
         :style="{
           margin: `${1 / addaSquare.scale}px`,
@@ -520,6 +561,22 @@
             paddingResize.currentResizing === 'left'
               ? `${1.5 / addaSquare.scale}px`
               : null,
+          backgroundImage:
+            currentHover === 'left' &&
+            !canvasStore.isResizingGap &&
+            !paddingResize.currentResizing
+              ? `repeating-linear-gradient(-45deg, #E9337266 ${
+                  8 / addaSquare.scale
+                }px, #E9337266 ${9 / addaSquare.scale}px, transparent ${
+                  10 / addaSquare.scale
+                }px, transparent ${13 / addaSquare.scale}px)`
+              : '',
+          backgroundColor:
+            currentHover === 'left' &&
+            !canvasStore.isResizingGap &&
+            !paddingResize.currentResizing
+              ? '#E933720D'
+              : '',
         }"
       >
         <div
@@ -562,18 +619,21 @@
           () => {
             if (selectToi.selectedBoxData) {
               selectToi.treeHoverId = selectToi.selectedBoxData.id;
+              currentHover = 'right';
             }
           }
         "
         @mouseout="
-          paddingResize.currentResizing
-            ? null
-            : (paddingResize.showPaddingResizer = false)
+          () => {
+            if (!paddingResize.currentResizing) {
+              paddingResize.showPaddingResizer = false;
+              currentHover = '';
+            }
+          }
         "
         class="absolute right-0 top-0 bottom-0 flex flex-row items-center justify-center pointer-events-none"
         :class="{
           'border-[#E93372]': paddingResize.currentResizing === 'right',
-          'hover:bg-[#E93372]/20': !paddingResize.currentResizing,
         }"
         :style="{
           margin: `${1 / addaSquare.scale}px`,
@@ -586,6 +646,22 @@
             paddingResize.currentResizing === 'right'
               ? `${1.5 / addaSquare.scale}px`
               : null,
+          backgroundImage:
+            currentHover === 'right' &&
+            !canvasStore.isResizingGap &&
+            !paddingResize.currentResizing
+              ? `repeating-linear-gradient(-45deg, #E9337266 ${
+                  8 / addaSquare.scale
+                }px, #E9337266 ${9 / addaSquare.scale}px, transparent ${
+                  10 / addaSquare.scale
+                }px, transparent ${13 / addaSquare.scale}px)`
+              : '',
+          backgroundColor:
+            currentHover === 'right' &&
+            !canvasStore.isResizingGap &&
+            !paddingResize.currentResizing
+              ? '#E933720D'
+              : '',
         }"
       >
         <div
@@ -633,4 +709,6 @@ const addaSquare = useSquareStore();
 const canvasStore = useCanvasStore();
 const resizeStore = useResizeStore();
 const paddingResize = usePaddingResizeStore();
+
+const currentHover = ref("");
 </script>
