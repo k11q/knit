@@ -45,8 +45,7 @@
         }"
         :style="{
           maxWidth: frame.cssRules[0].style.width
-          ? Math.round((frame.cssRules[0].style.width.value as number / squareStore.scale) *
-              squareStore.scale) +
+          ? Math.round(frame.cssRules[0].style.width.value as number * squareStore.scale) +
             'px'
           : useGetElementRect(frame.id)?.width + 'px',
         }"
