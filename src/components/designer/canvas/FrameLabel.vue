@@ -44,7 +44,11 @@
             selectToi.treeHoverId !== frame.id,
         }"
         :style="{
-          maxWidth: useGetElementRect(frame.id)?.width + 'px',
+          maxWidth: frame.cssRules[0].style.width
+          ? Math.round((frame.cssRules[0].style.width.value as number / squareStore.scale) *
+              squareStore.scale) +
+            'px'
+          : useGetElementRect(frame.id)?.width + 'px',
         }"
       >
         {{ frame.name }}
