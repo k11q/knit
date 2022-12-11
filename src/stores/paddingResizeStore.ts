@@ -11,18 +11,26 @@ export type GapPosition = {
   width?: number;
 };
 
+type PaddingResize = {
+  showPaddingResizer: boolean;
+  isResizing: boolean;
+  currentResizing: string;
+  topResizerHeight: number;
+  bottomResizerHeight: number;
+  leftResizerWidth: number;
+  rightResizerWidth: number;
+  gap: GapPosition[];
+};
+
 export const usePaddingResizeStore = defineStore({
   id: "paddingResize",
-  state: () => ({
-    showPaddingResizer: false,
-    isResizing: false,
-    currentResizing: "",
-    topResizerHeight: NaN,
-    bottomResizerHeight: NaN,
-    leftResizerWidth: NaN,
-    rightResizerWidth: NaN,
-    gap: [] as GapPosition[],
-  }),
+  state: () =>
+    ({
+      showPaddingResizer: false,
+      isResizing: false,
+      currentResizing: "",
+      gap: [] as GapPosition[],
+    } as PaddingResize),
   actions: {
     setResizerSize(id: string) {
       const selectToi = useCounterStore();
@@ -40,7 +48,6 @@ export const usePaddingResizeStore = defineStore({
     },
     setGap(id: string) {
       let element = useGetElement(id) as HTMLElement;
-      let elementRect = useGetElementRect(id) as DOMRect;
       if (element?.children) {
         let children = [...element.children] as HTMLElement[];
         let staticChildren = children.filter(
