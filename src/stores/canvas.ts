@@ -288,7 +288,7 @@ export const useCanvasStore = defineStore({
                       selectToi.selectedBox !== closestTarget &&
                       !canvasDnd.dragzone &&
                       canvasDnd.dropzone) ||
-                    !closest.children?.length
+                    (closest && !closest.children?.length)
                   ) {
                     //append bottom/push
                     delete selectToi.selectedBoxData.cssRules[0].style.left;
@@ -670,7 +670,7 @@ export const useCanvasStore = defineStore({
                     selectToi.selectedBox !== closestTarget &&
                     !canvasDnd.dragzone &&
                     canvasDnd.dropzone) ||
-                  !closest.children?.length
+                  (closest && !closest.children?.length)
                 ) {
                   //append bottom/push
                   delete selectToi.selectedBoxData.cssRules[0].style.left;

@@ -28,6 +28,11 @@ type Line = {
   lineMiddle?: number;
 };
 
+type LineResize = {
+  lineX: number;
+  lineY: number;
+};
+
 export const useRulerSnapStore = defineStore({
   id: "rulerSnap",
   state: () => ({
@@ -41,12 +46,7 @@ export const useRulerSnapStore = defineStore({
     displayedPoints: {},
     lines: {},
     snapLines: {} as Line,
-    rulerPosition: {
-      top: NaN,
-      bottom: NaN,
-      left: NaN,
-      right: NaN,
-    },
+    rulerPosition: {} as RulerPosition,
     snapPoints: [] as Points,
     siblings: [] as HTMLElement[],
     selectedSiblings: [] as HTMLElement[],
@@ -354,15 +354,7 @@ export const useRulerSnapStore = defineStore({
       const currDragMiddleX = e.clientX - prevX + elementRect.width / 2;
       const currDragRight = e.clientX - prevX + elementRect.width;
 
-      let snapLinesCopy = {
-        lineTop: NaN,
-        lineMiddleY: NaN,
-        lineBottom: NaN,
-        lineLeft: NaN,
-        lineMiddleX: NaN,
-        lineRight: NaN,
-        lineMiddle: NaN,
-      };
+      let snapLinesCopy = {} as Line;
 
       let selectedSiblingsCopy = [] as HTMLElement[];
 
@@ -692,12 +684,12 @@ export const useRulerSnapStore = defineStore({
               Math.abs(snapLinesCopy.lineTop - currDragTop) >
               Math.abs(snapLinesCopy.lineBottom - currDragBottom)
             ) {
-              snapLinesCopy.lineTop = NaN;
+              snapLinesCopy.lineTop = undefined;
             } else if (
               Math.abs(snapLinesCopy.lineTop - currDragTop) <
               Math.abs(snapLinesCopy.lineBottom - currDragBottom)
             ) {
-              snapLinesCopy.lineBottom = NaN;
+              snapLinesCopy.lineBottom = undefined;
             }
           }
           if (snapLinesCopy.lineTop && snapLinesCopy.lineMiddleY) {
@@ -705,12 +697,12 @@ export const useRulerSnapStore = defineStore({
               Math.abs(snapLinesCopy.lineTop - currDragTop) >
               Math.abs(snapLinesCopy.lineMiddleY - currDragMiddleY)
             ) {
-              snapLinesCopy.lineTop = NaN;
+              snapLinesCopy.lineTop = undefined;
             } else if (
               Math.abs(snapLinesCopy.lineTop - currDragTop) <
               Math.abs(snapLinesCopy.lineMiddleY - currDragMiddleY)
             ) {
-              snapLinesCopy.lineMiddleY = NaN;
+              snapLinesCopy.lineMiddleY = undefined;
             }
           }
           if (snapLinesCopy.lineBottom && snapLinesCopy.lineMiddleY) {
@@ -718,12 +710,12 @@ export const useRulerSnapStore = defineStore({
               Math.abs(snapLinesCopy.lineBottom - currDragBottom) >
               Math.abs(snapLinesCopy.lineMiddleY - currDragMiddleY)
             ) {
-              snapLinesCopy.lineBottom = NaN;
+              snapLinesCopy.lineBottom = undefined;
             } else if (
               Math.abs(snapLinesCopy.lineBottom - currDragBottom) <
               Math.abs(snapLinesCopy.lineMiddleY - currDragMiddleY)
             ) {
-              snapLinesCopy.lineMiddleY = NaN;
+              snapLinesCopy.lineMiddleY = undefined;
             }
           }
 
@@ -732,12 +724,12 @@ export const useRulerSnapStore = defineStore({
               Math.abs(snapLinesCopy.lineLeft - currDragLeft) >
               Math.abs(snapLinesCopy.lineRight - currDragRight)
             ) {
-              snapLinesCopy.lineLeft = NaN;
+              snapLinesCopy.lineLeft = undefined;
             } else if (
               Math.abs(snapLinesCopy.lineLeft - currDragLeft) <
               Math.abs(snapLinesCopy.lineRight - currDragRight)
             ) {
-              snapLinesCopy.lineRight = NaN;
+              snapLinesCopy.lineRight = undefined;
             }
           }
           if (snapLinesCopy.lineLeft && snapLinesCopy.lineMiddleX) {
@@ -745,12 +737,12 @@ export const useRulerSnapStore = defineStore({
               Math.abs(snapLinesCopy.lineLeft - currDragLeft) >
               Math.abs(snapLinesCopy.lineMiddleX - currDragMiddleX)
             ) {
-              snapLinesCopy.lineLeft = NaN;
+              snapLinesCopy.lineLeft = undefined;
             } else if (
               Math.abs(snapLinesCopy.lineLeft - currDragLeft) <
               Math.abs(snapLinesCopy.lineMiddleX - currDragMiddleX)
             ) {
-              snapLinesCopy.lineMiddleX = NaN;
+              snapLinesCopy.lineMiddleX = undefined;
             }
           }
           if (snapLinesCopy.lineRight && snapLinesCopy.lineMiddleX) {
@@ -758,12 +750,12 @@ export const useRulerSnapStore = defineStore({
               Math.abs(snapLinesCopy.lineRight - currDragRight) >
               Math.abs(snapLinesCopy.lineMiddleX - currDragMiddleX)
             ) {
-              snapLinesCopy.lineRight = NaN;
+              snapLinesCopy.lineRight = undefined;
             } else if (
               Math.abs(snapLinesCopy.lineRight - currDragRight) <
               Math.abs(snapLinesCopy.lineMiddleX - currDragMiddleX)
             ) {
-              snapLinesCopy.lineMiddleX = NaN;
+              snapLinesCopy.lineMiddleX = undefined;
             }
           }
           //snap /notsnap where there is/isnt line
@@ -876,10 +868,7 @@ export const useRulerSnapStore = defineStore({
 
       let unit = "px";
 
-      let snapLinesCopy = {
-        lineX: NaN,
-        lineY: NaN,
-      };
+      let snapLinesCopy = {} as LineResize;
 
       if (!useCheckParent(id)) {
         if (this.on) {
