@@ -710,8 +710,8 @@ export const useCanvasStore = defineStore({
             canvasStore.isDragging = false;
           }, 0);
         }
+        requestAnimationFrame(update);
       }
-      requestAnimationFrame(update);
     },
   },
 });
