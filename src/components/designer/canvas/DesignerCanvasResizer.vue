@@ -372,11 +372,11 @@
           () => {
             if (!paddingResize.currentResizing) {
               paddingResize.showPaddingResizer = false;
-              currentHover = '';
             }
+            currentHover = '';
           }
         "
-        class="absolute top-0 left-0 right-0 flex flex-row items-center justify-center pointer-events-none"
+        class="absolute top-0 left-0 right-0 flex flex-row items-center justify-center pointer-events-auto"
         :class="{
           'border-[#E93372]': paddingResize.currentResizing === 'top',
         }"
@@ -410,7 +410,7 @@
         }"
       >
         <div
-          class="flex items-center justify-center flex-none hover:cursor-row-resize pointer-events-auto"
+          class="flex items-center justify-center flex-none hover:cursor-row-resize"
           @mousedown.stop.prevent="useResizePaddingTop($event)"
           @mouseenter="
             getPaddingTop()
@@ -457,11 +457,11 @@
           () => {
             if (!paddingResize.currentResizing) {
               paddingResize.showPaddingResizer = false;
-              currentHover = '';
             }
+            currentHover = '';
           }
         "
-        class="absolute bottom-0 left-0 right-0 flex flex-row items-center justify-center pointer-events-none"
+        class="absolute bottom-0 left-0 right-0 flex flex-row items-center justify-center pointer-events-auto"
         :class="{
           'border-[#E93372]': paddingResize.currentResizing === 'bottom',
         }"
@@ -495,7 +495,7 @@
         }"
       >
         <div
-          class="flex items-center justify-center flex-none hover:cursor-row-resize pointer-events-auto"
+          class="flex items-center justify-center flex-none hover:cursor-row-resize"
           @mousedown.stop.prevent="useResizePaddingBottom($event)"
           @mouseenter="
             getPaddingBottom()
@@ -542,8 +542,8 @@
           () => {
             if (!paddingResize.currentResizing) {
               paddingResize.showPaddingResizer = false;
-              currentHover = '';
             }
+            currentHover = '';
           }
         "
         class="absolute left-0 top-0 bottom-0 flex flex-row items-center justify-center pointer-events-auto"
@@ -627,11 +627,11 @@
           () => {
             if (!paddingResize.currentResizing) {
               paddingResize.showPaddingResizer = false;
-              currentHover = '';
             }
+            currentHover = '';
           }
         "
-        class="absolute right-0 top-0 bottom-0 flex flex-row items-center justify-center pointer-events-none"
+        class="absolute right-0 top-0 bottom-0 flex flex-row items-center justify-center pointer-events-auto"
         :class="{
           'border-[#E93372]': paddingResize.currentResizing === 'right',
         }"
@@ -665,7 +665,7 @@
         }"
       >
         <div
-          class="flex items-center justify-center flex-none hover:cursor-col-resize pointer-events-auto"
+          class="flex items-center justify-center flex-none hover:cursor-col-resize"
           @mousedown.stop.prevent="useResizePaddingRight($event)"
           @mouseenter="
             getPaddingRight()
