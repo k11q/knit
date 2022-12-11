@@ -255,12 +255,7 @@
             :placeholder="
               Math.round(useGetElementRect(selectToi.selectedBoxData.id)?.width)
             "
-            :value="
-              useCheckCSSRules() &&
-              selectToi.selectedBoxData.cssRules[0].style.width
-                ? selectToi.selectedBoxData.cssRules[0].style.width.value
-                : null
-            "
+            :value="getWidth()"
             @input="
               (event) => {
                 selectToi.selectedBoxData.cssRules[0].style.width.value =
@@ -281,12 +276,7 @@
           </div>
           <input
             type="number"
-            :value="
-              useCheckCSSRules() &&
-              selectToi.selectedBoxData.cssRules[0].style.height
-                ? selectToi.selectedBoxData.cssRules[0].style.height.value
-                : null
-            "
+            :value="getWidth()"
             @input="
               (event) => {
                 selectToi.selectedBoxData.cssRules[0].style.height.value =
@@ -655,12 +645,7 @@
           </div>
           <input
             type="number"
-            :value="
-              useCheckCSSRules() &&
-              selectToi.selectedBoxData.cssRules[0].style.borderRadius
-                ? selectToi.selectedBoxData.cssRules[0].style.borderRadius.value
-                : null
-            "
+            :value="getBorderRadius()"
             @input="
               (event) => {
                 selectToi.selectedBoxData.cssRules[0].style.borderRadius.value =
@@ -777,12 +762,7 @@
               </div>
               <input
                 type="number"
-                :value="
-                  useCheckCSSRules() &&
-                  selectToi.selectedBoxData.cssRules[0].style.gap
-                    ? selectToi.selectedBoxData.cssRules[0].style.gap.value
-                    : null
-                "
+                :value="getGap()"
                 @change="
                   (event) => {
                     if (!selectToi.selectedBoxData.cssRules[0].style.gap) {
