@@ -119,7 +119,6 @@ function mouseover(id: string, type: string) {
   if (!canvasStore.isDragging) {
     selectToi.treeHoverId = id;
   }
-  console.log("overid" + selectToi.treeHoverId);
 }
 
 const props = defineProps({

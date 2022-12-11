@@ -14,16 +14,23 @@
               squareStore.scale +
             'px'
           : useGetElementRect(frame.id)?.y + 'px',
+        pointerEvents: selectToi.selectedBox === frame.id &&
+          canvasStore.isDragging &&
+          (frame.type !== 'text' ||
+            (frame.type === 'text' &&
+              canvasStore.isDragging &&
+              selectToi.selectedTextEditor !== frame.id)) ? 'none' : 'auto'
       }"
-      class="absolute overflow-x-hidden -mt-5 pointer-events-auto cursor-default overflow-ellipsis"
+      class="absolute overflow-x-hidden -mt-5 cursor-default overflow-ellipsis"
     >
       <p
         @mousedown.stop="canvasStore.dndWithoutParent($event, frame.id)"
-        @mouseover.stop="
+        @mouseenter="
           () => {
             if (!canvasStore.isDragging) {
               useSetOutlineHover(frame.id);
             }
+            canvasStore.hoverData = useGetElementData(selectToi.data, frame.id);
             selectToi.treeHoverId = frame.id;
           }
         "
@@ -31,10 +38,11 @@
           () => {
             selectToi.treeHover = false;
             selectToi.treeHoverId = '';
+            canvasStore.hoverData = {} as Node;
           }
         "
         @click="useSetSelectSingle($event, frame.id)"
-        class="fixed pointer-events-auto cursor-default hover:text-[#6EB0E0] hover:opacity-100 overflow-hidden overflow-ellipsis"
+        class="fixed cursor-default hover:text-[#6EB0E0] hover:opacity-100 overflow-hidden overflow-ellipsis"
         :class="{
           'text-[#6EB0E0] opacity-100':
             selectToi.selectedBox === frame.id ||
@@ -60,13 +68,13 @@
 import { useCounterStore } from "~~/src/stores/counter";
 import { useSquareStore } from "~~/src/stores/dataSquare";
 import { useCanvasStore } from "~~/src/stores/canvas";
-import { Node as knitNode } from "@/stores/counter";
+import { Node } from "@/stores/counter";
 
 const selectToi = useCounterStore();
 const squareStore = useSquareStore();
 const canvasStore = useCanvasStore();
 
 const props = defineProps({
-  frames: Array<knitNode>,
+  frames: Array<Node>,
 });
 </script>
