@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col h-screen overflow-hidden max-h-screen min-h-screen text-xs text-white"
+    class="flex flex-col h-screen overflow-hidden max-h-screen min-h-screen text-[11px] text-white"
     :style="{ backgroundColor: selectToi.canvas[0].bgColor }"
     :class="{
       '!cursor-row-resize': canvasStore.cursorType === 'row-resize',
