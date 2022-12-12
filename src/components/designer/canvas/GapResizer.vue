@@ -42,8 +42,8 @@
             ? `repeating-linear-gradient(-45deg, #E9337266 ${
                 8 / squareStore.scale
               }px, #E9337266 ${9 / squareStore.scale}px, transparent ${
-                10 / squareStore.scale
-              }px, transparent ${13 / squareStore.scale}px)`
+                9.5 / squareStore.scale
+              }px, transparent ${12.5 / squareStore.scale}px)`
             : '',
         backgroundColor:
           hoverState === true && !canvasStore.isResizingGap ? '#E933720D' : '',

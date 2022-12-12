@@ -396,8 +396,8 @@
               ? `repeating-linear-gradient(-45deg, #E9337266 ${
                   8 / addaSquare.scale
                 }px, #E9337266 ${9 / addaSquare.scale}px, transparent ${
-                  10 / addaSquare.scale
-                }px, transparent ${13 / addaSquare.scale}px)`
+                  9.5 / addaSquare.scale
+                }px, transparent ${12.5 / addaSquare.scale}px)`
               : '',
           backgroundColor:
             currentHover === 'top' &&
@@ -479,8 +479,8 @@
               ? `repeating-linear-gradient(-45deg, #E9337266 ${
                   8 / addaSquare.scale
                 }px, #E9337266 ${9 / addaSquare.scale}px, transparent ${
-                  10 / addaSquare.scale
-                }px, transparent ${13 / addaSquare.scale}px)`
+                  9.5 / addaSquare.scale
+                }px, transparent ${12.5 / addaSquare.scale}px)`
               : '',
           backgroundColor:
             currentHover === 'bottom' &&
@@ -562,8 +562,8 @@
               ? `repeating-linear-gradient(-45deg, #E9337266 ${
                   8 / addaSquare.scale
                 }px, #E9337266 ${9 / addaSquare.scale}px, transparent ${
-                  10 / addaSquare.scale
-                }px, transparent ${13 / addaSquare.scale}px)`
+                  9.5 / addaSquare.scale
+                }px, transparent ${12.5 / addaSquare.scale}px)`
               : '',
           backgroundColor:
             currentHover === 'left' &&
@@ -645,8 +645,8 @@
               ? `repeating-linear-gradient(-45deg, #E9337266 ${
                   8 / addaSquare.scale
                 }px, #E9337266 ${9 / addaSquare.scale}px, transparent ${
-                  10 / addaSquare.scale
-                }px, transparent ${13 / addaSquare.scale}px)`
+                  9.5 / addaSquare.scale
+                }px, transparent ${12.5 / addaSquare.scale}px)`
               : '',
           backgroundColor:
             currentHover === 'right' &&
