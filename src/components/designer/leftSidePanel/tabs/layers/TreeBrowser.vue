@@ -6,15 +6,14 @@
       :data-state="state"
       :data-parentIsSelected="parentIsSelected"
       :style="{ 'padding-left': depth === 1 ? '20px' : depth * 20 + 'px' }"
-      class="flex flex-row gap-2 py-2 border border-transparent box-border cursor-default items-center relative justify-between"
+      class="flex flex-row gap-2 py-2 h-8 box-border cursor-default items-center relative justify-between"
       :class="{
-        'bg-[#2E2E2E] border-[#232323] hover:border-[#232323]':
-          selectToi.selectedBox === node.id,
-        'bg-[#242424]': parentIsSelected === true,
+        'bg-[#0191FA4D]': selectToi.selectedBox === node.id,
+        'bg-[#0191FA26]': parentIsSelected === true,
         'opacity-30': selectToi.dragDisplay === node.id,
-        'hover:border-[#0191FA]':
+        'hover:outline-[#0191FA] hover:outline -outline-offset-1':
           !treeDnd.isDragging && selectToi.selectedBox !== node.id,
-        '!border-[#0191FA]':
+        'outline-[#0191FA] outline -outline-offset-1':
           (treeDnd.currDropPosition === 'middle' &&
             treeDnd.currDrop === node.id &&
             selectToi.selectedBox !== node.id) ||

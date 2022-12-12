@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-col h-full overflow-y-scroll">
     <!-- selector section! -->
     <div
       v-show="selectToi.selectedBox"
@@ -102,8 +102,8 @@
         v-if="selectToi.selectedBoxData.type === 'div'"
       >
         <p class="font-medium">Frame</p>
-        <div
-          class="aspect-square h-8 flex flex-col justify-center items-center hover:bg-[#2E2E2E] rounded"
+        <button
+          class="aspect-square h-8 flex flex-col justify-center items-center hover:bg-[#333333] rounded focus:outline-[#0191FA] focus:-outline-offset-1 focus:outline outline-none"
           @click="
             () => {
               selectToi.selectedBoxData.cssRules[0].style.width.value =
@@ -135,7 +135,7 @@
             <path d="M15 4.2V9m0 0h4.8M15 9l6-6"></path>
             <path d="M9 4.2V9m0 0H4.2M9 9 3 3"></path>
           </svg>
-        </div>
+        </button>
       </div>
       <div class="flex flex-row h-8 gap-2 pl-4 pr-2 items-center">
         <DesignerInput

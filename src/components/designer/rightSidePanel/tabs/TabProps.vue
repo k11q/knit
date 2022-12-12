@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-col h-full overflow-y-scroll">
     <!-- Stroke section! -->
     <div
       v-show="
