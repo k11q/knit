@@ -382,11 +382,9 @@
         }"
         :style="{
           margin: `${1 / addaSquare.scale}px`,
-          height:
-            paddingResize.topResizerHeight ||
-            paddingResize.topResizerHeight === 0
-              ? `${paddingResize.topResizerHeight}px`
-              : `${(8 * 1) / addaSquare.scale}px`,
+          height: paddingResize.topResizerHeight
+            ? `${paddingResize.topResizerHeight}px`
+            : '0px',
           borderWidth:
             paddingResize.currentResizing === 'top'
               ? `${1.5 / addaSquare.scale}px`
@@ -467,11 +465,9 @@
         }"
         :style="{
           margin: `${1 / addaSquare.scale}px`,
-          height:
-            paddingResize.bottomResizerHeight ||
-            paddingResize.bottomResizerHeight === 0
-              ? `${paddingResize.bottomResizerHeight}px`
-              : `${(8 * 1) / addaSquare.scale}px`,
+          height: paddingResize.bottomResizerHeight
+            ? `${paddingResize.bottomResizerHeight}px`
+            : '0px',
           borderWidth:
             paddingResize.currentResizing === 'bottom'
               ? `${1.5 / addaSquare.scale}px`
@@ -552,11 +548,9 @@
         }"
         :style="{
           margin: `${1 / addaSquare.scale}px`,
-          width:
-            paddingResize.leftResizerWidth ||
-            paddingResize.leftResizerWidth === 0
-              ? `${paddingResize.leftResizerWidth}px`
-              : `${(8 * 1) / addaSquare.scale}px`,
+          width: paddingResize.leftResizerWidth
+            ? `${paddingResize.leftResizerWidth}px`
+            : '0px',
           borderWidth:
             paddingResize.currentResizing === 'left'
               ? `${1.5 / addaSquare.scale}px`
@@ -637,11 +631,9 @@
         }"
         :style="{
           margin: `${1 / addaSquare.scale}px`,
-          width:
-            paddingResize.rightResizerWidth ||
-            paddingResize.rightResizerWidth === 0
-              ? `${paddingResize.rightResizerWidth}px`
-              : `${(8 * 1) / addaSquare.scale}px`,
+          width: paddingResize.rightResizerWidth
+            ? `${paddingResize.rightResizerWidth}px`
+            : '0px',
           borderWidth:
             paddingResize.currentResizing === 'right'
               ? `${1.5 / addaSquare.scale}px`

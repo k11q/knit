@@ -99,6 +99,40 @@
     >
       <div class="h-8 flex flex-row justify-between items-center pl-4 pr-2">
         <p class="font-medium">Dimensions</p>
+        <div
+          class="aspect-square h-8 flex flex-col justify-center items-center hover:bg-[#2E2E2E] rounded"
+          @click="
+            () => {
+              selectToi.selectedBoxData.cssRules[0].style.width.value =
+                'fit-content';
+              selectToi.selectedBoxData.cssRules[0].style.width.type =
+                'keyword';
+              delete selectToi.selectedBoxData.cssRules[0].style.width.unit;
+              selectToi.selectedBoxData.cssRules[0].style.height.value =
+                'fit-content';
+              selectToi.selectedBoxData.cssRules[0].style.height.type =
+                'keyword';
+              delete selectToi.selectedBoxData.cssRules[0].style.height.unit;
+            }
+          "
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="m15 15 6 6m-6-6v4.8m0-4.8h4.8"></path>
+            <path d="M9 19.8V15m0 0H4.2M9 15l-6 6"></path>
+            <path d="M15 4.2V9m0 0h4.8M15 9l6-6"></path>
+            <path d="M9 4.2V9m0 0H4.2M9 9 3 3"></path>
+          </svg>
+        </div>
       </div>
       <div class="flex flex-row h-8 gap-2 pl-4 pr-2">
         <div class="flex flex-row justify-start items-center w-1/2">
