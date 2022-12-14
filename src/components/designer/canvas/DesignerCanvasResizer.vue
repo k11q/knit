@@ -235,53 +235,49 @@
         @mousedown.stop.prevent="resizeStore.resizeTop"
         class="absolute top-0 w-full hover:cursor-ns-resize flex items-center justify-center"
         :style="{
-          height: `${(8 * 1) / addaSquare.scale}px`,
-          marginTop: `${-4 / addaSquare.scale}px`,
+          height: `8px`,
+          marginTop: `-4px`,
+          transform: `scaleY( ${1 / addaSquare.scale})`,
+          willChange: 'transform',
         }"
       >
-        <div
-          class="bg-[#0191FA] w-full"
-          :style="{ height: `${(1.5 * 1) / addaSquare.scale}px` }"
-        />
+        <div class="bg-[#0191FA] w-full" :style="{ height: `1.5px` }" />
       </div>
       <div
         @mousedown.stop.prevent="resizeStore.resizeBottom"
         class="absolute bottom-0 w-full hover:cursor-ns-resize flex items-center justify-center"
         :style="{
-          height: `${(8 * 1) / addaSquare.scale}px`,
-          marginBottom: `${-4 / addaSquare.scale}px`,
+          height: `8px`,
+          marginBottom: `-4px`,
+          transform: `scaleY( ${1 / addaSquare.scale})`,
+          willChange: 'transform',
         }"
       >
-        <div
-          class="bg-[#0191FA] w-full"
-          :style="{ height: `${(1.5 * 1) / addaSquare.scale}px` }"
-        />
+        <div class="bg-[#0191FA] w-full" :style="{ height: `1.5px` }" />
       </div>
       <div
         @mousedown.stop.prevent="resizeStore.resizeLeft"
         class="absolute left-0 h-full hover:cursor-ew-resize flex items-center justify-center"
         :style="{
-          width: `${(8 * 1) / addaSquare.scale}px`,
-          marginLeft: `${-4 / addaSquare.scale}px`,
+          width: `8px`,
+          marginLeft: `-4px`,
+          transform: `scaleX( ${1 / addaSquare.scale})`,
+          willChange: 'transform',
         }"
       >
-        <div
-          class="bg-[#0191FA] h-full"
-          :style="{ width: `${(1.5 * 1) / addaSquare.scale}px` }"
-        />
+        <div class="bg-[#0191FA] h-full" :style="{ width: `1.5px` }" />
       </div>
       <div
         @mousedown.stop.prevent="resizeStore.resizeRight"
         class="absolute right-0 h-full hover:cursor-ew-resize flex items-center justify-center"
         :style="{
-          width: `${(8 * 1) / addaSquare.scale}px`,
-          marginRight: `${-4 / addaSquare.scale}px`,
+          width: `8px`,
+          marginRight: `-4px`,
+          transform: `scaleX( ${1 / addaSquare.scale})`,
+          willChange: 'transform',
         }"
       >
-        <div
-          class="bg-[#0191FA] h-full"
-          :style="{ width: `${(1.5 * 1) / addaSquare.scale}px` }"
-        />
+        <div class="bg-[#0191FA] h-full" :style="{ width: `1.5px` }" />
       </div>
       <div
         @mousedown.stop.prevent="resizeStore.resizeTopLeft"
