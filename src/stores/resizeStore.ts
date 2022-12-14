@@ -241,6 +241,7 @@ export const useResizeStore = defineStore({
       const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
       const rulerSnap = useRulerSnapStore();
+
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
@@ -262,6 +263,7 @@ export const useResizeStore = defineStore({
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
             rulerSnap.on = true;
             rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
+
             if (!rulerSnap.snapTop && !rulerSnap.snapHeight) {
               resizeStore.resizeTopForward(e);
               resizeStore.resizeHeightReverse(e);
@@ -290,6 +292,7 @@ export const useResizeStore = defineStore({
       const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
       const rulerSnap = useRulerSnapStore();
+
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
@@ -305,9 +308,11 @@ export const useResizeStore = defineStore({
 
         function mousemove(e: MouseEvent) {
           resizeStore.isResizingRight = true;
+
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
             rulerSnap.on = true;
             rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
+
             if (!rulerSnap.snapWidth) {
               resizeStore.resizeWidthForward(e);
             }

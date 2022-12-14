@@ -663,5 +663,19 @@ function pickOpacity(e: MouseEvent) {
 
 .color-opacity-slider {
   background-image: v-bind("opacitySliderColor");
+  position: relative;
+}
+
+.color-opacity-slider::before {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(45deg, #0000000f 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #0000000f 75%),
+    linear-gradient(45deg, transparent 75%, #0000000f 75%),
+    linear-gradient(45deg, #0000000f 25%, transparent 25%);
+  background-size: 6px 6px;
+  background-position: 0 0, 0 0, -3px -3px, 3px 3px;
+  mix-blend-mode: multiply;
+  content: "";
 }
 </style>
