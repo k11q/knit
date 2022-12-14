@@ -275,7 +275,7 @@ function getColor(hex: RGB): GetColor | undefined {
       return { posX: posX, posY: posY, r: 255, g: 0, b: 0 };
     }
 
-    // if red is the only predominent color and min is blue and green is not equal to blue
+    // if red is the only predominent color and min is blue
     else if (max === red && min === blue && red !== green) {
       let posY = ((255 - red) / 255) * rect.height;
       let posX = ((red - blue) / red) * rect.width;
