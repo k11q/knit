@@ -818,7 +818,7 @@ export const useRulerSnapStore = defineStore({
                     originRect.bottom > measuredRect.bottom &&
                     originRect.top < measuredRect.top
                   ) {
-                    line.top = originRect.top + originRect.height / 2;
+                    line.top = measuredRect.top + measuredRect.height / 2;
                   } else if (
                     originRect.bottom > measuredRect.top &&
                     originRect.bottom < measuredRect.bottom
