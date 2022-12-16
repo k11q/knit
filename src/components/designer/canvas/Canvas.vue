@@ -317,98 +317,67 @@
 
     <!--hover outline and label-->
     <div
-      v-show="canvasStore.hoverData && !canvasStore.isPinchZoom"
-      class="fixed top-0 left-0 overflow-visible pointer-events-none box-border"
+      v-if="
+        canvasStore.hoverData &&
+        selectToi.treeHoverId &&
+        !canvasStore.isPinchZoom
+      "
       :style="{
-        transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
+        position: 'absolute',
+        pointerEvents: 'none',
+        left: canvasStore.hoverData
+          ? useGetElementRect(canvasStore.hoverData.id)?.left + 'px'
+          : '',
+        top: canvasStore.hoverData
+          ? useGetElementRect(canvasStore.hoverData.id)?.top + 'px'
+          : '',
+        width: canvasStore.hoverData
+          ? useGetElementRect(canvasStore.hoverData.id)?.width + 'px'
+          : '',
+        height: canvasStore.hoverData
+          ? useGetElementRect(canvasStore.hoverData.id)?.height + 'px'
+          : '',
+        outline: canvasStore.hoverData ? `2px solid #0191FA` : '',
+        outlineOffset: `-2px`,
       }"
     >
-      <div
-        class="absolute"
-        :style="{
-          left: canvasStore.hoverData.cssRules
-            ? canvasStore.hoverData.cssRules[0].style.left &&
-              !useCheckParent(canvasStore.hoverData.id)
-              ? canvasStore.hoverData.cssRules[0].style.left.value + 'px'
-              : Math.round(
-                  useGetElementRect(canvasStore.hoverData.id)?.x -
-                    addaSquare.offsetLeft
-                ) /
-                  addaSquare.scale +
-                'px'
-            : null,
-          top: canvasStore.hoverData.cssRules
-            ? canvasStore.hoverData.cssRules[0].style.top &&
-              !useCheckParent(canvasStore.hoverData.id)
-              ? canvasStore.hoverData.cssRules[0].style.top.value + 'px'
-              : Math.round(
-                  useGetElementRect(canvasStore.hoverData.id)?.y -
-                    addaSquare.offsetTop
-                ) /
-                  addaSquare.scale +
-                'px'
-            : null,
-          height: canvasStore.hoverData.cssRules
-            ? canvasStore.hoverData?.cssRules[0].style?.height?.value !==
-                'fit-content' && !useCheckParent(canvasStore.hoverData.id)
-              ? canvasStore.hoverData.cssRules[0].style.height.value + 'px'
-              : Math.round(
-                  useGetElementRect(canvasStore.hoverData.id)?.height
-                ) /
-                  addaSquare.scale +
-                'px'
-            : null,
-          width: canvasStore.hoverData.cssRules
-            ? canvasStore.hoverData?.cssRules[0]?.style?.width?.value !==
-                'fit-content' && !useCheckParent(canvasStore.hoverData.id)
-              ? canvasStore.hoverData.cssRules[0].style.width.value + 'px'
-              : Math.round(useGetElementRect(canvasStore.hoverData.id)?.width) /
-                  addaSquare.scale +
-                'px'
-            : null,
-          outline: `${2 / addaSquare.scale}px solid #0191FA`,
-          outlineOffset: `${-2 / addaSquare.scale}px`,
-        }"
+      <!--topleft dimensions label-->
+      <p
+        v-show="useCheckParent(canvasStore.hoverData.id)"
+        class="absolute left-0 bottom-full flex flex-row justify-start max-w-full"
+        :style="{ marginBottom: `4px` }"
       >
-        <!--topleft dimensions label-->
-        <p
-          v-show="useCheckParent(canvasStore.hoverData.id)"
-          class="absolute left-0 bottom-full flex flex-row justify-start max-w-full"
-          :style="{ marginBottom: `${(4 * 1) / addaSquare.scale}px` }"
+        <span
+          class="bg-[#0191FA] cursor-default whitespace-nowrap w-full overflow-hidden overflow-ellipsis flex justify-start items-center"
+          :style="{
+            lineHeight: 1.1,
+            borderRadius: `2px`,
+            gap: `2px`,
+            paddingTop: `2px`,
+            paddingBottom: `2px`,
+            paddingRight: `4px`,
+            paddingLeft: `4px`,
+          }"
         >
-          <span
-            class="bg-[#0191FA] cursor-default whitespace-nowrap w-full overflow-hidden overflow-ellipsis flex justify-start items-center"
-            :style="{
-              fontSize: `${(11 * 1) / addaSquare.scale}px`,
-              lineHeight: 1.1,
-              borderRadius: `${(2 * 1) / addaSquare.scale}px`,
-              gap: `${2 * (1 / addaSquare.scale)}px`,
-              paddingTop: `${2 * (1 / addaSquare.scale)}px`,
-              paddingBottom: `${2 * (1 / addaSquare.scale)}px`,
-              paddingRight: `${(4 * 1) / addaSquare.scale}px`,
-              paddingLeft: `${(4 * 1) / addaSquare.scale}px`,
-            }"
-          >
-            <i
-              ><svg
-                :width="11 / addaSquare.scale"
-                :height="11 / addaSquare.scale"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-              </svg>
-            </i>
-            <p class="overflow-hidden overflow-ellipsis">
-              {{ canvasStore.hoverData.name }}
-            </p>
-          </span>
-        </p>
-      </div>
+          <i
+            ><svg
+              width="11"
+              height="11"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            </svg>
+          </i>
+          <p class="overflow-hidden overflow-ellipsis">
+            {{ canvasStore.hoverData.name }}
+          </p>
+        </span>
+      </p>
     </div>
     <!--Measureline-->
     <DesignerCanvasMeasureLine

@@ -1,5 +1,6 @@
 import { useSquareStore } from "~~/src/stores/dataSquare";
 import { useCanvasStore } from "@/stores/canvas";
+import { Node } from "../stores/counter";
 
 export function usePinchZoom(event: WheelEvent) {
   const addaSquare = useSquareStore();

@@ -103,27 +103,26 @@ function mouseout(id: string, type: string) {
 
 function mouseover(id: string, type: string) {
   if (
-    selectToi.selectedBox !== id &&
+    selectToi.selectedBoxData?.id !== id &&
     type !== "text" &&
     (type !== "box" || (type === "box" && !canvasStore.isDragging)) &&
     canvasStore.selection.findIndex((i) => i.id === id) === -1 &&
     !canvasStore.isResizingGap &&
-    !canvasStore.isResizingPadding
+    !canvasStore.isResizingPadding &&
+    !canvasStore.isDragging &&
+    !canvasStore.isPinchZoom
   ) {
     canvasStore.hoverData = useGetElementData(selectToi.data, id);
-    useSetOutlineHover(id);
+    selectToi.treeHoverId = id;
+    if (event.altKey) {
+      calculateDistance(selectToi.selectedBoxData.id, selectToi.treeHoverId);
+    }
   } else if (
     selectToi.selectedBox !== id &&
     type === "text" &&
     !canvasStore.isDragging
   ) {
     canvasStore.textHover = true;
-  }
-  if (!canvasStore.isDragging) {
-    selectToi.treeHoverId = id;
-    if (event.altKey) {
-      calculateDistance(selectToi.selectedBoxData.id, selectToi.treeHoverId);
-    }
   }
 }
 
