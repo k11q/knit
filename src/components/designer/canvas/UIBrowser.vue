@@ -120,6 +120,34 @@ function mouseover(id: string, type: string) {
   }
   if (!canvasStore.isDragging) {
     selectToi.treeHoverId = id;
+    window.removeEventListener("keydown", keydown);
+    window.removeEventListener("keyup", keyup);
+    window.addEventListener("keydown", keydown);
+    window.addEventListener("keyup", keyup);
+    function keydown(e: KeyboardEvent) {
+      if (
+        selectToi.selectedBoxData &&
+        selectToi.treeHoverId &&
+        e.altKey &&
+        selectToi.treeHoverId !== selectToi.selectedBoxData.id
+      ) {
+        e.stopImmediatePropagation();
+        e.preventDefault();
+        calculateDistance(selectToi.selectedBoxData.id, selectToi.treeHoverId);
+        console.log(selectToi.treeHoverId);
+      } else return;
+    }
+    function keyup(e: KeyboardEvent) {
+      if (
+        selectToi.selectedBoxData &&
+        selectToi.treeHoverId &&
+        selectToi.treeHoverId !== selectToi.selectedBoxData.id
+      ) {
+        e.stopImmediatePropagation();
+        e.preventDefault();
+        console.log("remove");
+      } else return;
+    }
   }
 }
 
