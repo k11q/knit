@@ -36,31 +36,6 @@
         transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
       }"
     >
-      <!--Hover outline
-      <div
-        v-show="
-          ((selectToi.treeHover && !selectToi.selectedTextEditor) ||
-            (useGetElementRect(selectToi.selectedBoxData.id)?.width <= 20 &&
-              useGetElementRect(selectToi.selectedBoxData.id)?.height <= 20)) &&
-          !resizeStore.isResizing
-        "
-        class="absolute pointer-events-none"
-        :style="{
-          willChange: 'left, top, height, width',
-          left: selectToi.treeHoverHTMLX + 'px',
-          top: selectToi.treeHoverHTMLY + 'px',
-          height: selectToi.treeHoverHTMLHeight + 'px',
-          width: selectToi.treeHoverHTMLWidth + 'px',
-          border: `${
-            selectToi.treeHoverSize / addaSquare.scale
-          }px solid #0191FA`,
-          outline: `${
-            selectToi.treeHoverSize / addaSquare.scale
-          }px solid #0191FA`,
-        }"
-      >
-    </div>
-  -->
       <!--Selected outline n resizer n padding resizer-->
       <ClientOnly>
         <DesignerCanvasResizer />

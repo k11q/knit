@@ -140,8 +140,7 @@ export const useCanvasStore = defineStore({
       const rulerSnap = useRulerSnapStore();
       const canvasStore = useCanvasStore();
 
-      canvasDnd.isDragging = true;
-      canvasDnd.currDrag = currDrag;
+      canvasStore.isDragging = true;
       let isDragging = false;
       let currDragElement = document.querySelector(
         `[data-id=${currDrag}]`
@@ -187,7 +186,7 @@ export const useCanvasStore = defineStore({
         paddingResize.setResizerSize(currDrag);
       }, 0);
 
-      if (canvasDnd.isDragging == true) {
+      if (canvasStore.isDragging == true) {
         window.addEventListener("mousemove", mousemove);
         window.addEventListener("mouseup", mouseup);
 
@@ -247,7 +246,11 @@ export const useCanvasStore = defineStore({
                 dropMarker.setMarker(e, currDragElement);
                 currDragElement.style.opacity = "0";
 
-                useSetOutlineHover(closestTarget);
+                canvasStore.hoverData = useGetElementData(
+                  selectToi.data,
+                  closestTarget
+                );
+                selectToi.treeHoverId = closestTarget;
               }
               selectToi.treeHoverSize = 0.5;
             }
@@ -322,7 +325,7 @@ export const useCanvasStore = defineStore({
             }, 0);
 
             rulerSnap.show = false;
-            canvasDnd.isDragging = false;
+            canvasStore.isDragging = false;
             window.removeEventListener("mousemove", mousemove);
             window.removeEventListener("mouseup", mouseup);
           }
@@ -623,7 +626,11 @@ export const useCanvasStore = defineStore({
             dropMarker.setMarker(e, currDragElement);
             currDragElement.style.opacity = "0";
 
-            useSetOutlineHover(closestTarget);
+            canvasStore.hoverData = useGetElementData(
+              selectToi.data,
+              closestTarget
+            );
+            selectToi.treeHoverId = closestTarget;
 
             selectToi.treeHoverSize = 0.5;
           }

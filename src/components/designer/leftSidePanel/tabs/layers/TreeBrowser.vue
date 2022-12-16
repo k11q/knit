@@ -25,7 +25,12 @@
           (node.display && node.display === 'hide'),
       }"
       @mousedown="dragAndDrop($event, node.id)"
-      @mouseover="useSetOutlineHover(node.id)"
+      @mouseover="
+        () => {
+          canvasStore.hoverData = useGetElementData(selectToi.data, node.id);
+          selectToi.treeHoverId = node.id;
+        }
+      "
       @mouseout="
         () => {
           selectToi.treeHover = false;
@@ -243,10 +248,12 @@
 import { useCounterStore } from "~~/src/stores/counter";
 import { useTreeDndStore } from "~~/src/stores/treeDnd";
 import { useSquareStore } from "~~/src/stores/dataSquare";
+import { useCanvasStore } from "@/stores/canvas";
 
 const selectToi = useCounterStore();
 const treeDnd = useTreeDndStore();
 const squareStore = useSquareStore();
+const canvasStore = useCanvasStore();
 const props = defineProps({
   modelValue: String,
   nodes: Array,

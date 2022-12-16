@@ -29,7 +29,6 @@
 
 <script setup>
 import { useCounterStore } from "~~/src/stores/counter";
-import { useCanvasDndStore } from "~~/src/stores/canvasDnd";
 import { useSquareStore } from "~~/src/stores/dataSquare";
 
 const selectToi = useCounterStore();

@@ -1,12 +1,10 @@
 import { useCanvasStore } from "../stores/canvas";
 import { useCounterStore } from "../stores/counter";
-import { useCanvasDndStore } from "../stores/canvasDnd";
 import { Node } from "../stores/counter";
 
 export function useSetDeselect() {
   const canvasStore = useCanvasStore();
   const selectToi = useCounterStore();
-  const canvasDnd = useCanvasDndStore();
 
   if (selectToi.selectedTextEditor) {
     useSetOutlineSelector(selectToi.selectedTextEditor);
@@ -22,7 +20,5 @@ export function useSetDeselect() {
       height: "",
       width: "",
     };
-    canvasDnd.currDrag = "";
-    canvasDnd.currDragValue = "";
   }
 }

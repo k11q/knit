@@ -27,9 +27,6 @@
         @mousedown.stop="canvasStore.dndWithoutParent($event, frame.id)"
         @mouseenter="
           () => {
-            if (!canvasStore.isDragging) {
-              useSetOutlineHover(frame.id);
-            }
             canvasStore.hoverData = useGetElementData(selectToi.data, frame.id);
             selectToi.treeHoverId = frame.id;
           }
