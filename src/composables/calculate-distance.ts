@@ -176,7 +176,7 @@ export function calculateDistance(originId: string, measuredId: string) {
       let lineX = {
         top: originMidY,
         left: originRight,
-        width: differenceX,
+        width: measuredLeft - originRight,
         type: "solid",
       } as MeasuredLine;
 
@@ -196,7 +196,9 @@ export function calculateDistance(originId: string, measuredId: string) {
           type: "dashed",
         } as MeasuredLine;
         measuredLines().value = [lineX, lineY];
-      } else measuredLines().value = [lineX];
+      } else {
+        measuredLines().value = [lineX];
+      }
     }
     //top
     else if (
@@ -228,7 +230,9 @@ export function calculateDistance(originId: string, measuredId: string) {
           type: "dashed",
         } as MeasuredLine;
         measuredLines().value = [lineX, lineY];
-      } else measuredLines().value = [lineY];
+      } else {
+        measuredLines().value = [lineY];
+      }
     }
     //right
     else if (
@@ -259,7 +263,9 @@ export function calculateDistance(originId: string, measuredId: string) {
           type: "dashed",
         } as MeasuredLine;
         measuredLines().value = [lineX, lineY];
-      } else measuredLines().value = [lineX];
+      } else {
+        measuredLines().value = [lineX];
+      }
     }
     //bottom
     else if (
@@ -267,7 +273,6 @@ export function calculateDistance(originId: string, measuredId: string) {
       ((originRight >= measuredLeft && originRight <= measuredRight) ||
         (originLeft >= measuredLeft && originLeft <= measuredRight))
     ) {
-      let differenceY = measuredBottom - originTop;
       let lineY = {
         top: measuredBottom,
         left: originMidX,
@@ -293,7 +298,9 @@ export function calculateDistance(originId: string, measuredId: string) {
         } as MeasuredLine;
 
         measuredLines().value = [lineX, lineY];
-      } else measuredLines().value = [lineY];
+      } else {
+        measuredLines().value = [lineY];
+      }
     } else return;
   } else return;
 }
