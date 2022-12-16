@@ -32,6 +32,7 @@ export function usePinchZoom(event: WheelEvent) {
         canvasStore.isPinchZoom = false;
       }, "400");
     }
+    measuredLines().value = [];
     endPinchZoom();
   }
   requestAnimationFrame(update);

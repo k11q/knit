@@ -410,6 +410,11 @@
         </p>
       </div>
     </div>
+    <!--Measureline-->
+    <DesignerCanvasMeasureLine
+      :lines="measuredLines().value"
+      v-if="measuredLines().value"
+    />
 
     <!--NEW Ruler element-->
     <div
@@ -495,6 +500,28 @@ const rulerSnap = useRulerSnapStore();
 const canvasStore = useCanvasStore();
 const paddingResize = usePaddingResizeStore();
 
+function keydown(e: KeyboardEvent) {
+  if (
+    selectToi.selectedBoxData &&
+    selectToi.treeHoverId &&
+    e.altKey &&
+    selectToi.treeHoverId !== selectToi.selectedBoxData.id &&
+    !canvasStore.isPinchZoom
+  ) {
+    e.stopImmediatePropagation();
+    e.preventDefault();
+    calculateDistance(selectToi.selectedBoxData.id, selectToi.treeHoverId);
+  } else return;
+}
+
+function keyup(e: KeyboardEvent) {
+  if (measuredLines().value.length && !e.altKey) {
+    e.stopImmediatePropagation();
+    e.preventDefault();
+    measuredLines().value = [];
+  }
+}
+
 onMounted(() => {
   useAddKeyupShortcuts();
 
@@ -516,5 +543,8 @@ onMounted(() => {
     );
     return (percent * w) / 100;
   }
+
+  window.addEventListener("keydown", keydown);
+  window.addEventListener("keyup", keyup);
 });
 </script>

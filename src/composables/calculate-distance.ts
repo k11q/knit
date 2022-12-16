@@ -1,5 +1,17 @@
+export type MeasuredLine = {
+  top: number;
+  left: number;
+  height?: number;
+  width?: number;
+  type?: "solid" | "dashed";
+};
+
+export const measuredLines = () => useState<MeasuredLine[]>("lines", () => []);
+
 export function calculateDistance(originId: string, measuredId: string) {
-  function calcDist() {
+  let lines = [] as MeasuredLine[];
+
+  if (originId && measuredId) {
     const originElement = useGetElement(originId) as HTMLElement;
     const measuredElement = useGetElement(measuredId) as HTMLElement;
 
@@ -10,61 +22,228 @@ export function calculateDistance(originId: string, measuredId: string) {
     const originRight = originElementRect.left + originElementRect.width;
     const originTop = originElementRect.top;
     const originBottom = originElementRect.top + originElementRect.height;
+    const originWidth = originElementRect.width;
+    const originHeight = originElementRect.height;
 
     const measuredLeft = measuredElementRect.left;
     const measuredRight = measuredElementRect.left + measuredElementRect.width;
     const measuredTop = measuredElementRect.top;
     const measuredBottom = measuredElementRect.top + measuredElementRect.height;
+    const measuredWidth = measuredElementRect.width;
+    const measuredHeight = measuredElementRect.height;
 
     //topleft
     if (originRight < measuredLeft && originBottom < measuredTop) {
       console.log("topleft");
+      let differenceX = measuredLeft - originRight;
+      let differenceY = measuredTop - originBottom;
+      lines = [
+        {
+          top: originTop + originElementRect.height / 2,
+          left: originRight,
+          width: differenceX,
+          type: "solid",
+        },
+        {
+          top: originBottom,
+          left: originLeft + originElementRect.width / 2,
+          height: differenceY,
+          type: "solid",
+        },
+        {
+          top: originTop + originHeight + differenceY,
+          left: originRight - originWidth / 2,
+          width: differenceX + originWidth / 2,
+          type: "dashed",
+        },
+        {
+          top: originBottom - originHeight / 2,
+          left: originLeft + originWidth + differenceX,
+          height: differenceY + originHeight / 2,
+          type: "dashed",
+        },
+      ];
+      measuredLines().value = lines;
     }
     //topright
-    if (originLeft > measuredRight && originBottom < measuredTop) {
+    else if (originLeft > measuredRight && originBottom < measuredTop) {
       console.log("topright");
+      let differenceX = originLeft - measuredRight;
+      let differenceY = measuredTop - originBottom;
+      lines = [
+        {
+          top: originTop + originElementRect.height / 2,
+          left: measuredRight,
+          width: differenceX,
+          type: "solid",
+        },
+        {
+          top: originBottom,
+          left: originLeft + originElementRect.width / 2,
+          height: differenceY,
+          type: "solid",
+        },
+        {
+          top: originTop + originHeight + differenceY,
+          left: measuredRight,
+          width: differenceX + originWidth / 2,
+          type: "dashed",
+        },
+        {
+          top: originBottom - originHeight / 2,
+          left: measuredRight,
+          height: differenceY + originHeight / 2,
+          type: "dashed",
+        },
+      ];
+      measuredLines().value = lines;
     }
     //bottomright
-    if (originLeft > measuredRight && originTop > measuredBottom) {
+    else if (originLeft > measuredRight && originTop > measuredBottom) {
       console.log("bottomright");
+      let differenceX = originLeft - measuredRight;
+      let differenceY = originTop - measuredBottom;
+      lines = [
+        {
+          top: originTop + originElementRect.height / 2,
+          left: measuredRight,
+          width: differenceX,
+          type: "solid",
+        },
+        {
+          top: measuredBottom,
+          left: originLeft + originElementRect.width / 2,
+          height: originTop - measuredBottom,
+          type: "solid",
+        },
+        {
+          top: measuredBottom,
+          left: measuredRight,
+          width: differenceX + originWidth / 2,
+          type: "dashed",
+        },
+        {
+          top: measuredBottom,
+          left: measuredRight,
+          height: differenceY + originHeight / 2,
+          type: "dashed",
+        },
+      ];
+      measuredLines().value = lines;
     }
     //bottomleft
-    if (originRight < measuredLeft && originTop > measuredBottom) {
+    else if (originRight < measuredLeft && originTop > measuredBottom) {
       console.log("bottomleft");
+      let differenceX = measuredLeft - originRight;
+      let differenceY = originTop - measuredBottom;
+      lines = [
+        {
+          top: originTop + originElementRect.height / 2,
+          left: originRight,
+          width: differenceX,
+          type: "solid",
+        },
+        {
+          top: measuredBottom,
+          left: originLeft + originElementRect.width / 2,
+          height: originTop - measuredBottom,
+          type: "solid",
+        },
+        {
+          top: measuredBottom,
+          left: originRight - originWidth / 2,
+          width: differenceX + originWidth / 2,
+          type: "dashed",
+        },
+        {
+          top: measuredBottom,
+          left: measuredLeft,
+          height: differenceY + originHeight / 2,
+          type: "dashed",
+        },
+      ];
+      measuredLines().value = lines;
     }
     //left
-    if (
+    else if (
       originRight < measuredLeft &&
       ((originTop >= measuredTop && originTop <= measuredBottom) ||
         (originBottom >= measuredTop && originBottom <= measuredBottom))
     ) {
-      console.log("left");
+      let differenceX = measuredLeft - originRight;
+      let lineX = {
+        top: originTop + originHeight / 2,
+        left: originRight,
+        width: differenceX,
+        type: "solid",
+      } as MeasuredLine;
+
+      if (originTop + originHeight / 2 > measuredBottom) {
+        let lineY = {
+          top: measuredBottom,
+          left: originRight + differenceX,
+          height: originTop + originHeight / 2 - measuredBottom,
+          type: "dashed",
+        } as MeasuredLine;
+        measuredLines().value = [lineX, lineY];
+      } else if (originBottom - originHeight / 2 < measuredTop) {
+        let lineY = {
+          top: originBottom - originHeight / 2,
+          left: originRight + differenceX,
+          height: measuredTop - originBottom - originHeight / 2,
+          type: "dashed",
+        } as MeasuredLine;
+        console.log("top");
+        measuredLines().value = [lineX, lineY];
+      } else measuredLines().value = [lineX];
     }
     //top
-    if (
+    else if (
       originBottom < measuredTop &&
       ((originRight >= measuredLeft && originRight <= measuredRight) ||
         (originLeft >= measuredLeft && originLeft <= measuredRight))
     ) {
-      console.log("top");
+      lines = [
+        {
+          top: originBottom,
+          left: originLeft + originElementRect.width / 2,
+          height: measuredTop - originBottom,
+          type: "solid",
+        },
+      ];
+      measuredLines().value = lines;
     }
     //right
-    if (
+    else if (
       originLeft > measuredRight &&
       ((originTop >= measuredTop && originTop <= measuredBottom) ||
         (originBottom >= measuredTop && originBottom <= measuredBottom))
     ) {
-      console.log("right");
+      lines = [
+        {
+          top: originTop + originElementRect.height / 2,
+          left: measuredRight,
+          width: originLeft - measuredRight,
+          type: "solid",
+        },
+      ];
+      measuredLines().value = lines;
     }
-    //top
-    if (
+    //bottom
+    else if (
       originTop > measuredBottom &&
       ((originRight >= measuredLeft && originRight <= measuredRight) ||
         (originLeft >= measuredLeft && originLeft <= measuredRight))
     ) {
-      console.log("bottom");
-    }
-  }
-  calcDist();
-  function setRuler() {}
+      lines = [
+        {
+          top: measuredBottom,
+          left: originLeft + originElementRect.width / 2,
+          height: originTop - measuredBottom,
+          type: "solid",
+        },
+      ];
+      measuredLines().value = lines;
+    } else return;
+  } else return;
 }
