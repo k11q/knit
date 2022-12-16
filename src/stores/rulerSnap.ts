@@ -934,7 +934,7 @@ export const useRulerSnapStore = defineStore({
 
           Promise.resolve()
             .then(() => {
-              this.siblings
+              siblings
                 .filter((el) => el.dataset.id !== closestLeftId)
                 .forEach((i) => {
                   let siblingId = i.dataset.id as string;
@@ -946,13 +946,14 @@ export const useRulerSnapStore = defineStore({
                     (siblingBottom > currDragTop &&
                       siblingBottom < currDragBottom) ||
                     (siblingTop < currDragBottom && siblingTop > currDragTop) ||
-                    (siblingTop < currDragTop && siblingBottom > currDragBottom)
+                    (siblingTop <= currDragTop &&
+                      siblingBottom >= currDragBottom)
                   ) {
                     arrayLineLeft.push({ line: siblingRight, id: siblingId });
                   }
                 });
 
-              this.siblings.forEach((i) => {
+              siblings.forEach((i) => {
                 let siblingId = i.dataset.id as string;
                 let siblingRect = i.getBoundingClientRect();
                 let siblingTop = siblingRect.y;
@@ -963,7 +964,7 @@ export const useRulerSnapStore = defineStore({
                   (siblingBottom > currDragTop &&
                     siblingBottom < currDragBottom) ||
                   (siblingTop < currDragBottom && siblingTop > currDragTop) ||
-                  (siblingTop < currDragTop && siblingBottom > currDragBottom)
+                  (siblingTop <= currDragTop && siblingBottom >= currDragBottom)
                 ) {
                   arrayLineLeft.forEach((i) => {
                     if (
@@ -992,7 +993,7 @@ export const useRulerSnapStore = defineStore({
                   let line = {
                     top: 0,
                     left: originRect.right,
-                    width: snapDistance,
+                    width: snapDistance ? snapDistance : distanceToLeft,
                     type: "solid",
                   } as MeasuredLine;
 

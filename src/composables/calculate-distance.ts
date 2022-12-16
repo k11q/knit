@@ -167,7 +167,6 @@ export function calculateDistance(originId: string, measuredId: string) {
         (originBottom >= measuredTop && originBottom <= measuredBottom) ||
         (originTop <= measuredTop && originBottom >= measuredBottom))
     ) {
-      console.log("left1");
       let differenceX = measuredLeft - originRight;
       let lineX = {
         top: originMidY,
@@ -193,7 +192,6 @@ export function calculateDistance(originId: string, measuredId: string) {
         } as MeasuredLine;
         measuredLines().value = [lineX, lineY];
       } else {
-        console.log("left2");
         measuredLines().value = [lineX];
       }
     }

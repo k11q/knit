@@ -20,7 +20,7 @@
     >
       <div
         class="absolute mx-auto w-full mt-2 flex justify-center items-center"
-        v-if="line.width && line.type === 'solid'"
+        v-if="line.width && line.type === 'solid' && line.width > 0"
       >
         <div class="bg-[#E93372] px-1 rounded-sm py-0.5 leading-[1.1]">
           {{ Math.round(line.width / squareStore.scale) }}
@@ -28,7 +28,7 @@
       </div>
       <div
         class="absolute my-auto h-full ml-2 flex justify-center items-center"
-        v-if="line.height && line.type === 'solid'"
+        v-if="line.height && line.type === 'solid' && line.height > 0"
       >
         <div class="bg-[#E93372] px-1 rounded-sm py-0.5 leading-[1.1]">
           {{ Math.round(line.height / squareStore.scale) }}
