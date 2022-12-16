@@ -361,7 +361,11 @@
     />
     <!--Measure outline-->
     <div
-      v-if="measuredLines().value.length && selectToi.treeHoverId"
+      v-if="
+        measuredLines().value.length &&
+        selectToi.treeHoverId &&
+        !canvasStore.isDragging
+      "
       :style="{
         position: 'absolute',
         pointerEvents: 'none',
@@ -374,7 +378,11 @@
       }"
     ></div>
     <div
-      v-if="measuredLines().value.length && selectToi.selectedBoxData.id"
+      v-if="
+        measuredLines().value.length &&
+        selectToi.selectedBoxData.id &&
+        !canvasStore.isDragging
+      "
       :style="{
         position: 'absolute',
         pointerEvents: 'none',

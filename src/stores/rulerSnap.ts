@@ -34,6 +34,16 @@ type LineResize = {
   lineY: number;
 };
 
+type LineAndId = {
+  line: number;
+  id: string;
+};
+
+type OriginAndMeasuredId = {
+  originId: string;
+  measuredId: string;
+};
+
 export const useRulerSnapStore = defineStore({
   id: "rulerSnap",
   state: () => ({
@@ -732,18 +742,22 @@ export const useRulerSnapStore = defineStore({
           } else return;
         });
 
-        if (closestLeftId) {
-          let closestLeftRect = useGetElementRect(closestLeftId) as DOMRect;
-          let distanceToLeft = currDragLeft - closestLeftRect.right;
+        if (closestLeftId || closestRightId) {
+          let closestLeftRect: DOMRect;
+          let closestRightRect: DOMRect;
+          let distanceToLeft: number;
+          let distanceToRight: number;
+
+          if (closestLeftId) {
+            closestLeftRect = useGetElementRect(closestLeftId) as DOMRect;
+            distanceToLeft = currDragLeft - closestLeftRect.right;
+          } else {
+            closestRightRect = useGetElementRect(closestRightId) as DOMRect;
+            distanceToRight = closestRightRect.left - currDragRight;
+          }
+
           let snapDistance = 0;
-          type LineAndId = {
-            line: number;
-            id: string;
-          };
-          type OriginAndMeasuredId = {
-            originId: string;
-            measuredId: string;
-          };
+
           let arrayLineLeft: LineAndId[] = [];
           let arrayId: OriginAndMeasuredId[] = [];
 
@@ -751,24 +765,33 @@ export const useRulerSnapStore = defineStore({
 
           Promise.resolve()
             .then(() => {
-              siblings
-                .filter((el) => el.dataset.id !== closestLeftId)
-                .forEach((i) => {
-                  let siblingId = i.dataset.id as string;
-                  let siblingRect = i.getBoundingClientRect();
-                  let siblingTop = siblingRect.y;
-                  let siblingBottom = siblingRect.y + siblingRect.height;
-                  let siblingRight = siblingRect.x + siblingRect.width;
-                  if (
-                    (siblingBottom > currDragTop &&
-                      siblingBottom < currDragBottom) ||
-                    (siblingTop < currDragBottom && siblingTop > currDragTop) ||
-                    (siblingTop <= currDragTop &&
-                      siblingBottom >= currDragBottom)
-                  ) {
-                    arrayLineLeft.push({ line: siblingRight, id: siblingId });
-                  }
-                });
+              let filteredSiblings: HTMLElement[];
+              if (closestLeftId) {
+                filteredSiblings = siblings.filter(
+                  (el) => el.dataset.id !== closestLeftId
+                );
+              } else {
+                filteredSiblings = siblings.filter(
+                  (el) => el.dataset.id !== id
+                );
+              }
+
+              filteredSiblings.forEach((i) => {
+                let siblingId = i.dataset.id as string;
+                let siblingRect = i.getBoundingClientRect();
+                let siblingTop = siblingRect.y;
+                let siblingBottom = siblingRect.y + siblingRect.height;
+                let siblingRight = siblingRect.x + siblingRect.width;
+
+                if (
+                  (siblingBottom > currDragTop &&
+                    siblingBottom < currDragBottom) ||
+                  (siblingTop < currDragBottom && siblingTop > currDragTop) ||
+                  (siblingTop <= currDragTop && siblingBottom >= currDragBottom)
+                ) {
+                  arrayLineLeft.push({ line: siblingRight, id: siblingId });
+                }
+              });
 
               siblings.forEach((i) => {
                 let siblingId = i.dataset.id as string;
@@ -842,12 +865,23 @@ export const useRulerSnapStore = defineStore({
               }
             })
             .then(() => {
-              let lineX = {
-                top: closestLeftRect.top + closestLeftRect.height / 2,
-                left: closestLeftRect.right,
-                width: snapDistance ? snapDistance : distanceToLeft,
-                type: "solid",
-              } as MeasuredLine;
+              let lineX: MeasuredLine;
+
+              if (closestLeftId) {
+                lineX = {
+                  top: closestLeftRect.top + closestLeftRect.height / 2,
+                  left: closestLeftRect.right,
+                  width: snapDistance ? snapDistance : distanceToLeft,
+                  type: "solid",
+                } as MeasuredLine;
+              } else {
+                lineX = {
+                  top: elementRect.top + elementRect.height / 2,
+                  left: elementRect.right,
+                  width: snapDistance ? snapDistance : distanceToRight,
+                  type: "solid",
+                } as MeasuredLine;
+              }
 
               measuredLines().value = [lineX, ...otherLines];
             });
