@@ -12,9 +12,9 @@
           line.type === 'solid'
             ? '#E93372'
             : line.width
-            ? 'repeating-linear-gradient( to right, #E93372, #E93372 10px, transparent 10px, transparent 15px'
+            ? 'repeating-linear-gradient( to right, #E93372, #E93372 5px, transparent 4px, transparent 8px, #E93372 8px, #E93372 12px'
             : line.height
-            ? 'repeating-linear-gradient( to bottom, #E93372, #E93372 10px, transparent 10px, transparent 15px'
+            ? 'repeating-linear-gradient( to bottom, #E93372, #E93372 5px, transparent 4px, transparent 8px, #E93372 8px, #E93372 12px'
             : '',
       }"
     >

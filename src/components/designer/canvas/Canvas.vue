@@ -413,8 +413,35 @@
     <!--Measureline-->
     <DesignerCanvasMeasureLine
       :lines="measuredLines().value"
-      v-if="measuredLines().value"
+      v-if="measuredLines().value.length"
     />
+    <!--Measure outline-->
+    <div
+      v-if="measuredLines().value.length && selectToi.treeHoverId"
+      :style="{
+        position: 'absolute',
+        pointerEvents: 'none',
+        left: useGetElementRect(selectToi.treeHoverId)?.left + 'px',
+        top: useGetElementRect(selectToi.treeHoverId)?.top + 'px',
+        width: useGetElementRect(selectToi.treeHoverId)?.width + 'px',
+        height: useGetElementRect(selectToi.treeHoverId)?.height + 'px',
+        outline: `1px solid #E93372`,
+        outlineOffset: `-1.5px`,
+      }"
+    ></div>
+    <div
+      v-if="measuredLines().value.length && selectToi.selectedBoxData.id"
+      :style="{
+        position: 'absolute',
+        pointerEvents: 'none',
+        left: useGetElementRect(selectToi.selectedBoxData.id)?.left + 'px',
+        top: useGetElementRect(selectToi.selectedBoxData.id)?.top + 'px',
+        width: useGetElementRect(selectToi.selectedBoxData.id)?.width + 'px',
+        height: useGetElementRect(selectToi.selectedBoxData.id)?.height + 'px',
+        outline: `1px solid #E93372`,
+        outlineOffset: `-1.5px`,
+      }"
+    ></div>
 
     <!--NEW Ruler element-->
     <div
