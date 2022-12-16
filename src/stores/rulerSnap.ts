@@ -3,6 +3,7 @@ import { useCounterStore } from "./counter";
 import { useSquareStore } from "./dataSquare";
 import { useResizeStore } from "./resizeStore";
 import { useCanvasStore } from "./canvas";
+import { MeasuredLine } from "../composables/calculate-distance";
 
 export type Point = {
   x: number;
@@ -364,7 +365,18 @@ export const useRulerSnapStore = defineStore({
       this.siblings = siblings.filter((el) => el.dataset.id !== id);
 
       if (this.on) {
+        let closestLeftLine = 0;
+        let closestRightLine = 0;
+        let closestTopLine = 0;
+        let closestBottomLine = 0;
+
+        let closestLeftId = "";
+        let closestRightId = "";
+        let closestTopId = "";
+        let closestBottomId = "";
+
         this.siblings.forEach((i) => {
+          let siblingId = i.dataset.id as string;
           let siblingRect = i.getBoundingClientRect();
           let siblingTop = siblingRect.y;
           let siblingMiddleY = siblingRect.y + siblingRect.height / 2;
@@ -668,8 +680,57 @@ export const useRulerSnapStore = defineStore({
               e;
             }
             selectedSiblingsCopy.push(i);
+          }
+          if (
+            (!closestLeftLine ||
+              (closestLeftLine &&
+                siblingRight > closestLeftLine &&
+                siblingRight < currDragLeft)) &&
+            ((siblingBottom > currDragTop && siblingBottom < currDragBottom) ||
+              (siblingTop < currDragBottom && siblingTop > currDragTop) ||
+              (siblingTop < currDragTop && siblingBottom > currDragBottom))
+          ) {
+            closestLeftLine = siblingRight;
+            closestLeftId = siblingId;
+          }
+          if (
+            (!closestRightLine ||
+              (closestRightLine &&
+                siblingLeft < closestRightLine &&
+                siblingLeft > currDragRight)) &&
+            ((siblingBottom > currDragTop && siblingBottom < currDragBottom) ||
+              (siblingTop < currDragBottom && siblingTop > currDragTop) ||
+              (siblingTop < currDragTop && siblingBottom > currDragBottom))
+          ) {
+            closestRightLine = siblingLeft;
+            closestRightId = siblingId;
+          }
+          if (
+            (!closestTopLine ||
+              (closestTopLine &&
+                siblingBottom > closestTopLine &&
+                siblingBottom < currDragTop)) &&
+            ((siblingRight > currDragLeft && siblingRight < currDragRight) ||
+              (siblingLeft < currDragRight && siblingLeft > currDragLeft) ||
+              (siblingLeft < currDragLeft && siblingRight > currDragRight))
+          ) {
+            closestTopLine = siblingBottom;
+            closestTopId = siblingId;
+          }
+          if (
+            (!closestBottomLine ||
+              (closestBottomLine &&
+                siblingTop < closestBottomLine &&
+                siblingTop > currDragBottom)) &&
+            ((siblingRight > currDragLeft && siblingRight < currDragRight) ||
+              (siblingLeft < currDragRight && siblingLeft > currDragLeft) ||
+              (siblingLeft < currDragLeft && siblingRight > currDragRight))
+          ) {
+            closestBottomLine = siblingTop;
+            closestBottomId = siblingId;
           } else return;
         });
+
         if (
           snapLinesCopy.lineTop ||
           snapLinesCopy.lineMiddleY ||
@@ -853,6 +914,88 @@ export const useRulerSnapStore = defineStore({
           this.show = false;
           this.snapTop = false;
           this.snapLeft = false;
+        }
+        if (closestLeftId) {
+          let closestLeftRect = useGetElementRect(closestLeftId) as DOMRect;
+          let distanceToLeft = currDragLeft - closestLeftRect.right;
+          type LineAndId = {
+            line: number;
+            id: string;
+          };
+          let arrayLineLeft: LineAndId[] = [];
+          let arrayId: string[] = [];
+
+          let lineX = {
+            top: closestLeftRect.top + closestLeftRect.height / 2,
+            left: closestLeftRect.right,
+            width: distanceToLeft,
+            type: "solid",
+          } as MeasuredLine;
+
+          let otherLines: MeasuredLine[] = [];
+
+          Promise.resolve()
+            .then(() => {
+              this.siblings
+                .filter((el) => el.dataset.id !== closestLeftId)
+                .forEach((i) => {
+                  let siblingId = i.dataset.id as string;
+                  let siblingRect = i.getBoundingClientRect();
+                  let siblingTop = siblingRect.y;
+                  let siblingBottom = siblingRect.y + siblingRect.height;
+                  let siblingRight = siblingRect.x + siblingRect.width;
+                  if (
+                    (siblingBottom > currDragTop &&
+                      siblingBottom < currDragBottom) ||
+                    (siblingTop < currDragBottom && siblingTop > currDragTop) ||
+                    (siblingTop < currDragTop && siblingBottom > currDragBottom)
+                  ) {
+                    arrayLineLeft.push({ line: siblingRight, id: siblingId });
+                  }
+                });
+
+              this.siblings.forEach((i) => {
+                let siblingId = i.dataset.id as string;
+                let siblingRect = i.getBoundingClientRect();
+                let siblingTop = siblingRect.y;
+                let siblingBottom = siblingRect.y + siblingRect.height;
+                let siblingLeft = siblingRect.x;
+
+                if (
+                  (siblingBottom > currDragTop &&
+                    siblingBottom < currDragBottom) ||
+                  (siblingTop < currDragBottom && siblingTop > currDragTop) ||
+                  (siblingTop < currDragTop && siblingBottom > currDragBottom)
+                ) {
+                  arrayLineLeft.forEach((i) => {
+                    if (
+                      siblingLeft - i.line <= distanceToLeft + 5 &&
+                      siblingLeft - i.line >= distanceToLeft - 5
+                    ) {
+                      arrayId.push(i.id);
+                    }
+                  });
+                }
+              });
+              if (arrayId) {
+                arrayId.forEach((i) => {
+                  console.log("gotchu");
+                  let sameDistRect = useGetElementRect(i) as DOMRect;
+
+                  let line = {
+                    top: sameDistRect.top + sameDistRect.height / 2,
+                    left: sameDistRect.right,
+                    width: distanceToLeft,
+                    type: "solid",
+                  } as MeasuredLine;
+
+                  otherLines.push(line);
+                });
+              }
+            })
+            .then(() => {
+              measuredLines().value = [lineX, ...otherLines];
+            });
         }
       } else if (!this.on) {
         this.snapTop = false;
