@@ -918,19 +918,17 @@ export const useRulerSnapStore = defineStore({
         if (closestLeftId) {
           let closestLeftRect = useGetElementRect(closestLeftId) as DOMRect;
           let distanceToLeft = currDragLeft - closestLeftRect.right;
+          let snapDistance = 0;
           type LineAndId = {
             line: number;
             id: string;
           };
+          type OriginAndMeasuredId = {
+            originId: string;
+            measuredId: string;
+          };
           let arrayLineLeft: LineAndId[] = [];
-          let arrayId: string[] = [];
-
-          let lineX = {
-            top: closestLeftRect.top + closestLeftRect.height / 2,
-            left: closestLeftRect.right,
-            width: distanceToLeft,
-            type: "solid",
-          } as MeasuredLine;
+          let arrayId: OriginAndMeasuredId[] = [];
 
           let otherLines: MeasuredLine[] = [];
 
@@ -972,28 +970,67 @@ export const useRulerSnapStore = defineStore({
                       siblingLeft - i.line <= distanceToLeft + 5 &&
                       siblingLeft - i.line >= distanceToLeft - 5
                     ) {
-                      arrayId.push(i.id);
+                      snapDistance = siblingLeft - i.line;
+                      this.snapLeft = true;
+                      changeLeft(
+                        (closestLeftRect.right +
+                          siblingLeft -
+                          i.line -
+                          squareStore.offsetLeft) /
+                          squareStore.scale
+                      );
+                      arrayId.push({ originId: i.id, measuredId: siblingId });
                     }
                   });
                 }
               });
               if (arrayId) {
                 arrayId.forEach((i) => {
-                  console.log("gotchu");
-                  let sameDistRect = useGetElementRect(i) as DOMRect;
+                  let originRect = useGetElementRect(i.originId) as DOMRect;
+                  let measuredRect = useGetElementRect(i.measuredId) as DOMRect;
 
                   let line = {
-                    top: sameDistRect.top + sameDistRect.height / 2,
-                    left: sameDistRect.right,
-                    width: distanceToLeft,
+                    top: 0,
+                    left: originRect.right,
+                    width: snapDistance,
                     type: "solid",
                   } as MeasuredLine;
 
+                  if (
+                    originRect.bottom > measuredRect.bottom &&
+                    originRect.top < measuredRect.top
+                  ) {
+                    line.top = originRect.top + originRect.height / 2;
+                  } else if (
+                    originRect.bottom > measuredRect.top &&
+                    originRect.bottom < measuredRect.bottom
+                  ) {
+                    line.top =
+                      (originRect.bottom - measuredRect.top) / 2 +
+                      measuredRect.top;
+                  } else if (
+                    originRect.top < measuredRect.bottom &&
+                    originRect.top > measuredRect.top
+                  ) {
+                    line.top =
+                      (measuredRect.bottom - originRect.top) / 2 +
+                      originRect.top;
+                  }
+
                   otherLines.push(line);
                 });
+              } else {
+                this.snapLeft = false;
               }
             })
             .then(() => {
+              let lineX = {
+                top: closestLeftRect.top + closestLeftRect.height / 2,
+                left: closestLeftRect.right,
+                width: snapDistance ? snapDistance : distanceToLeft,
+                type: "solid",
+              } as MeasuredLine;
+
               measuredLines().value = [lineX, ...otherLines];
             });
         }
