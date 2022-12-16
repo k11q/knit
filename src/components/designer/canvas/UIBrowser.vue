@@ -124,6 +124,10 @@ function mouseover(id: string, type: string) {
   ) {
     canvasStore.textHover = true;
   }
+  selectToi.treeHoverId = id;
+  if (event.altKey) {
+    calculateDistance(selectToi.selectedBoxData.id, selectToi.treeHoverId);
+  }
 }
 
 const props = defineProps({

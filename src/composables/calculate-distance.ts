@@ -165,7 +165,7 @@ export function calculateDistance(originId: string, measuredId: string) {
       originRight < measuredLeft &&
       ((originTop >= measuredTop && originTop <= measuredBottom) ||
         (originBottom >= measuredTop && originBottom <= measuredBottom) ||
-        (originTop >= measuredTop && originBottom <= measuredBottom))
+        (originTop <= measuredTop && originBottom >= measuredBottom))
     ) {
       console.log("left1");
       let differenceX = measuredLeft - originRight;
@@ -202,7 +202,7 @@ export function calculateDistance(originId: string, measuredId: string) {
       originBottom < measuredTop &&
       ((originRight >= measuredLeft && originRight <= measuredRight) ||
         (originLeft >= measuredLeft && originLeft <= measuredRight) ||
-        (originLeft >= measuredLeft && originRight <= measuredRight))
+        (originLeft <= measuredLeft && originRight >= measuredRight))
     ) {
       let differenceY = measuredTop - originBottom;
       let lineY = {
@@ -237,7 +237,7 @@ export function calculateDistance(originId: string, measuredId: string) {
       originLeft > measuredRight &&
       ((originTop >= measuredTop && originTop <= measuredBottom) ||
         (originBottom >= measuredTop && originBottom <= measuredBottom) ||
-        (originTop >= measuredTop && originBottom <= measuredBottom))
+        (originTop <= measuredTop && originBottom >= measuredBottom))
     ) {
       let lineX = {
         top: originMidY,
@@ -271,7 +271,7 @@ export function calculateDistance(originId: string, measuredId: string) {
       originTop > measuredBottom &&
       ((originRight >= measuredLeft && originRight <= measuredRight) ||
         (originLeft >= measuredLeft && originLeft <= measuredRight) ||
-        (originLeft >= measuredLeft && originRight <= measuredRight))
+        (originLeft <= measuredLeft && originRight >= measuredRight))
     ) {
       let lineY = {
         top: measuredBottom,
