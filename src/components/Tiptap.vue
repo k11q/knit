@@ -23,14 +23,14 @@
 <script lang="ts" setup>
 import { useEditor, EditorContent } from "@tiptap/vue-3";
 import { useSquareStore } from "~~/src/stores/dataSquare";
-import { useEditorStore } from "@/stores/editor";
 import { useCounterStore } from "../stores/counter";
+import { useCanvasStore } from "@/stores/canvas";
 import StarterKit from "@tiptap/starter-kit";
 import HardBreak from "@tiptap/extension-hard-break";
 
 const selectToi = useCounterStore();
 const squareStore = useSquareStore();
-const editorStore = useEditorStore();
+const canvasStore = useCanvasStore();
 
 const props = defineProps({
   modelValue: {
@@ -71,7 +71,7 @@ watch(
   }
 );
 
-editorStore.editor = editor;
+canvasStore.textEditor = editor;
 </script>
 
 <style>

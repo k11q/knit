@@ -12,7 +12,7 @@
       @mouseover.stop="
         !canvasStore.isPinchZoom ? mouseover(node.id, node.type) : ''
       "
-      @dblclick.prevent="dblclick(node.id, node.type)"
+      @dblclick.stop="dblclick(node.id, node.type)"
       :class="{
         'pointer-events-none':
           selectToi.selectedBox === node.id &&
@@ -67,11 +67,13 @@ const canvasStore = useCanvasStore();
 function dblclick(id: string, type: string) {
   if (type === "text") {
     makeEditable(id);
+    console.log("text");
   }
   function makeEditable(id: string) {
     selectToi.selectedTextEditor = id;
     useSetOutlineSelector("");
   }
+  console.log("dblclick");
 }
 
 function mousedown(e: MouseEvent, id: string, type: string) {
@@ -87,7 +89,7 @@ function mousedown(e: MouseEvent, id: string, type: string) {
         canvasStore.setPositionMultiElement(e);
       }
     }
-  }
+  } else return;
 }
 
 function mouseout(id: string, type: string) {
@@ -114,11 +116,6 @@ function mouseover(id: string, type: string) {
     !canvasStore.isPinchZoom
   ) {
     canvasStore.hoverData = useGetElementData(selectToi.data, id);
-    selectToi.treeHoverId = id;
-
-    if (event.altKey) {
-      calculateDistance(selectToi.selectedBoxData.id, selectToi.treeHoverId);
-    }
   } else if (
     selectToi.selectedBox !== id &&
     type === "text" &&

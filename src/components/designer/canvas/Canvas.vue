@@ -297,9 +297,9 @@
         selectToi.treeHoverId &&
         !canvasStore.isPinchZoom
       "
+      class="pointer-events-none"
       :style="{
         position: 'absolute',
-        pointerEvents: 'none',
         left: canvasStore.hoverData
           ? useGetElementRect(canvasStore.hoverData.id)?.left + 'px'
           : '',

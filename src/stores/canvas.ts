@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 import { useSquareStore } from "./dataSquare";
 import { useCounterStore } from "./counter";
-import { useCanvasDndStore } from "~~/src/stores/canvasDnd";
 import { useDropMarker } from "~~/src/stores/dropMarker";
 import { usePaddingResizeStore } from "~~/src/stores/paddingResizeStore";
 import { useRulerSnapStore } from "~~/src/stores/rulerSnap";
@@ -43,6 +42,9 @@ export const useCanvasStore = defineStore({
       height: "",
       width: "",
     },
+    textEditor: undefined,
+    dragzone: "",
+    dropzone: "",
   }),
   actions: {
     setLeftPosition(e: MouseEvent) {
@@ -134,13 +136,11 @@ export const useCanvasStore = defineStore({
     },
     dndWithoutParent(e: MouseEvent, currDrag: string) {
       const selectToi = useCounterStore();
-      const canvasDnd = useCanvasDndStore();
       const dropMarker = useDropMarker();
       const paddingResize = usePaddingResizeStore();
       const rulerSnap = useRulerSnapStore();
       const canvasStore = useCanvasStore();
 
-      canvasStore.isDragging = true;
       let isDragging = false;
       let currDragElement = document.querySelector(
         `[data-id=${currDrag}]`
@@ -186,151 +186,150 @@ export const useCanvasStore = defineStore({
         paddingResize.setResizerSize(currDrag);
       }, 0);
 
-      if (canvasStore.isDragging == true) {
-        window.addEventListener("mousemove", mousemove);
-        window.addEventListener("mouseup", mouseup);
+      window.addEventListener("mousemove", mousemove);
+      window.addEventListener("mouseup", mouseup);
 
-        function mousemove(e: MouseEvent) {
-          e.preventDefault();
-          e.stopPropagation();
+      function mousemove(e: MouseEvent) {
+        e.preventDefault();
+        e.stopPropagation();
 
-          useGetElement(currDrag)!.style.willChange =
-            "left, top, height, width";
-          function update() {
-            if (e.altKey) {
-              if (!findOne(selectToi.data, cloneId)) {
-                appendBefore(selectToi.data, currDrag, clonedData);
-              }
+        canvasStore.isDragging = true;
+
+        useGetElement(currDrag)!.style.willChange = "left, top, height, width";
+        function update() {
+          if (e.altKey) {
+            if (!findOne(selectToi.data, cloneId)) {
+              appendBefore(selectToi.data, currDrag, clonedData);
             }
-            if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
-              rulerSnap.on = true;
-              rulerSnap.setRulerSnap(e, currDrag);
-              if (!rulerSnap.snapLeft) {
-                canvasStore.setLeftPosition(e);
-              }
-              if (!rulerSnap.snapTop) {
-                canvasStore.setTopPosition(e);
-              }
-            } else if (Math.abs(e.movementX) > 5 || Math.abs(e.movementX) > 5) {
-              rulerSnap.on = false;
+          }
+          if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
+            rulerSnap.on = true;
+            rulerSnap.setRulerSnap(e, currDrag);
+            if (!rulerSnap.snapLeft) {
               canvasStore.setLeftPosition(e);
+            }
+            if (!rulerSnap.snapTop) {
               canvasStore.setTopPosition(e);
             }
-            canvasStore.isDragging = true;
-            isDragging = true;
+          } else if (Math.abs(e.movementX) > 5 || Math.abs(e.movementX) > 5) {
+            rulerSnap.on = false;
+            canvasStore.setLeftPosition(e);
+            canvasStore.setTopPosition(e);
+          }
+          canvasStore.isDragging = true;
+          isDragging = true;
 
-            let target = useGetElementFromPoint(e);
-            closest = useGetClosestElement(e);
+          let target = useGetElementFromPoint(e);
+          closest = useGetClosestElement(e);
 
-            if (closest) {
-              closestTarget = useGetClosestDroppableId(e)!;
-            }
-
-            if (!closest) {
-              canvasStore.showMarker = false;
-              currDragElement.style.opacity = prevOpacity;
-              selectToi.treeHoverSize = 1;
-            } else if (target && closest) {
-              if (
-                selectToi.selectedBox === closestTarget ||
-                currDragElement.parentElement === closest
-              ) {
-                if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
-                  rulerSnap.on = true;
-                }
-                selectToi.treeHover = false;
-                currDragElement.style.opacity = prevOpacity;
-              } else {
-                rulerSnap.on = false;
-                canvasStore.showMarker = true;
-                dropMarker.setMarker(e, currDragElement);
-                currDragElement.style.opacity = "0";
-
-                canvasStore.hoverData = useGetElementData(
-                  selectToi.data,
-                  closestTarget
-                );
-                selectToi.treeHoverId = closestTarget;
-              }
-              selectToi.treeHoverSize = 0.5;
-            }
+          if (closest) {
+            closestTarget = useGetClosestDroppableId(e)!;
           }
 
-          requestAnimationFrame(update);
-        }
-        function mouseup() {
-          function update() {
-            if (isDragging) {
-              Promise.resolve()
-                .then(function () {
-                  if (
-                    closest &&
-                    selectToi.selectedBox !== closestTarget &&
-                    canvasDnd.dragzone &&
-                    !canvasDnd.dropzone
-                  ) {
-                    //append after
-
-                    delete selectToi.selectedBoxData.cssRules[0].style.left;
-                    delete selectToi.selectedBoxData.cssRules[0].style.top;
-                    useTransferData().removeChild(selectToi.data, currDrag);
-                    selectToi.selectedBoxData.cssRules[0].style.position.value =
-                      "static";
-                    useTransferData().appendBefore(
-                      selectToi.data,
-                      canvasDnd.dragzone,
-                      selectToi.selectedBoxData,
-                      closestTarget
-                    );
-                    canvasStore.showMarker = false;
-                    currDragElement.style.opacity = prevOpacity;
-                    canvasDnd.dragzone = "";
-                  }
-                  if (
-                    (closest &&
-                      selectToi.selectedBox !== closestTarget &&
-                      !canvasDnd.dragzone &&
-                      canvasDnd.dropzone) ||
-                    (closest && !closest.children?.length)
-                  ) {
-                    //append bottom/push
-                    delete selectToi.selectedBoxData.cssRules[0].style.left;
-                    delete selectToi.selectedBoxData.cssRules[0].style.top;
-                    useTransferData().removeChild(selectToi.data, currDrag);
-                    selectToi.selectedBoxData.cssRules[0].style.position.value =
-                      "static";
-                    useTransferData().appendChild(
-                      selectToi.data,
-                      selectToi.selectedBoxData,
-                      closestTarget
-                    );
-                    canvasStore.showMarker = false;
-                    currDragElement.style.opacity = prevOpacity;
-                  }
-                })
-                .then(function () {
-                  useSetOutlineSelector(currDrag);
-                  paddingResize.setResizerSize(currDrag);
-                });
-              useSetOutlineSelector(currDrag);
-              paddingResize.setResizerSize(currDrag);
-            }
+          if (!closest) {
+            canvasStore.showMarker = false;
+            currDragElement.style.opacity = prevOpacity;
             selectToi.treeHoverSize = 1;
-            isDragging = false;
-            useGetElement(currDrag)!.style.willChange = "";
-            //reselect
-            setTimeout(() => {
-              canvasStore.isDragging = false;
-              rulerSnap.show = false;
-            }, 0);
+          } else if (target && closest) {
+            if (
+              selectToi.selectedBox === closestTarget ||
+              currDragElement.parentElement === closest
+            ) {
+              if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
+                rulerSnap.on = true;
+              }
+              selectToi.treeHover = false;
+              currDragElement.style.opacity = prevOpacity;
+            } else {
+              rulerSnap.on = false;
+              canvasStore.showMarker = true;
+              dropMarker.setMarker(e, currDragElement);
+              currDragElement.style.opacity = "0";
 
-            rulerSnap.show = false;
-            canvasStore.isDragging = false;
-            window.removeEventListener("mousemove", mousemove);
-            window.removeEventListener("mouseup", mouseup);
+              canvasStore.hoverData = useGetElementData(
+                selectToi.data,
+                closestTarget
+              );
+              selectToi.treeHoverId = closestTarget;
+            }
+            selectToi.treeHoverSize = 0.5;
           }
-          requestAnimationFrame(update);
         }
+
+        requestAnimationFrame(update);
+      }
+      function mouseup() {
+        function update() {
+          if (isDragging) {
+            Promise.resolve()
+              .then(function () {
+                if (
+                  closest &&
+                  selectToi.selectedBox !== closestTarget &&
+                  canvasStore.dragzone &&
+                  !canvasStore.dropzone
+                ) {
+                  //append after
+
+                  delete selectToi.selectedBoxData.cssRules[0].style.left;
+                  delete selectToi.selectedBoxData.cssRules[0].style.top;
+                  useTransferData().removeChild(selectToi.data, currDrag);
+                  selectToi.selectedBoxData.cssRules[0].style.position.value =
+                    "static";
+                  useTransferData().appendBefore(
+                    selectToi.data,
+                    canvasStore.dragzone,
+                    selectToi.selectedBoxData,
+                    closestTarget
+                  );
+                  canvasStore.showMarker = false;
+                  currDragElement.style.opacity = prevOpacity;
+                  canvasStore.dragzone = "";
+                }
+                if (
+                  (closest &&
+                    selectToi.selectedBox !== closestTarget &&
+                    !canvasStore.dragzone &&
+                    canvasStore.dropzone) ||
+                  (closest && !closest.children?.length)
+                ) {
+                  //append bottom/push
+                  delete selectToi.selectedBoxData.cssRules[0].style.left;
+                  delete selectToi.selectedBoxData.cssRules[0].style.top;
+                  useTransferData().removeChild(selectToi.data, currDrag);
+                  selectToi.selectedBoxData.cssRules[0].style.position.value =
+                    "static";
+                  useTransferData().appendChild(
+                    selectToi.data,
+                    selectToi.selectedBoxData,
+                    closestTarget
+                  );
+                  canvasStore.showMarker = false;
+                  currDragElement.style.opacity = prevOpacity;
+                }
+              })
+              .then(function () {
+                useSetOutlineSelector(currDrag);
+                paddingResize.setResizerSize(currDrag);
+              });
+            useSetOutlineSelector(currDrag);
+            paddingResize.setResizerSize(currDrag);
+          }
+          selectToi.treeHoverSize = 1;
+          isDragging = false;
+          useGetElement(currDrag)!.style.willChange = "";
+          //reselect
+          setTimeout(() => {
+            canvasStore.isDragging = false;
+            rulerSnap.show = false;
+          }, 0);
+
+          rulerSnap.show = false;
+          canvasStore.isDragging = false;
+          window.removeEventListener("mousemove", mousemove);
+          window.removeEventListener("mouseup", mouseup);
+        }
+        requestAnimationFrame(update);
       }
     },
     dndWithParent(e: MouseEvent, currDrag: string) {
@@ -338,7 +337,6 @@ export const useCanvasStore = defineStore({
       const canvasStore = useCanvasStore();
       const rulerSnap = useRulerSnapStore();
       const dropMarker = useDropMarker();
-      const canvasDnd = useCanvasDndStore();
       const paddingResize = usePaddingResizeStore();
       const squareStore = useSquareStore();
       let isDragging = false;
@@ -652,8 +650,8 @@ export const useCanvasStore = defineStore({
                 if (
                   closest &&
                   selectToi.selectedBox !== closestTarget &&
-                  canvasDnd.dragzone &&
-                  !canvasDnd.dropzone
+                  canvasStore.dragzone &&
+                  !canvasStore.dropzone
                 ) {
                   //append after
 
@@ -664,19 +662,19 @@ export const useCanvasStore = defineStore({
                     "static";
                   useTransferData().appendBefore(
                     selectToi.data,
-                    canvasDnd.dragzone,
+                    canvasStore.dragzone,
                     selectToi.selectedBoxData,
                     closestTarget
                   );
                   canvasStore.showMarker = false;
                   currDragElement.style.opacity = prevOpacity;
-                  canvasDnd.dragzone = "";
+                  canvasStore.dragzone = "";
                 }
                 if (
                   (closest &&
                     selectToi.selectedBox !== closestTarget &&
-                    !canvasDnd.dragzone &&
-                    canvasDnd.dropzone) ||
+                    !canvasStore.dragzone &&
+                    canvasStore.dropzone) ||
                   (closest && !closest.children?.length)
                 ) {
                   //append bottom/push

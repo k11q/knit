@@ -3038,11 +3038,9 @@
 
 <script setup>
 import { useCounterStore } from "~~/src/stores/counter";
-import { useEditorStore } from "@/stores/editor";
 import { useCanvasStore } from "@/stores/canvas";
 
 const selectToi = useCounterStore();
-const editorStore = useEditorStore();
 const canvasStore = useCanvasStore();
 const customCSS = ref(false);
 const expandColorMenu = ref(false);
