@@ -687,13 +687,12 @@ function setRuler() {
   }
 }
 
-watchEffect(() => {
-  setRuler();
-});
-
-onMounted(() => {
-  setRuler();
-});
+watchEffect(
+  () => {
+    setRuler();
+  },
+  { flush: "post" }
+);
 </script>
 
 <style scoped>
