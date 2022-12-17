@@ -4,7 +4,7 @@
   >
     <div
       id="rulerHorizontal"
-      class="w-full h-[1.375rem] border-b border-[#3A3A3A] bg-[#262626] flex flex-row relative"
+      class="w-full h-[1.375rem] border-b border-[#3A3A3A] bg-[#262626] relative"
     >
       <div class="w-[1.375rem] border-r border-inherit"></div>
       <template v-for="i in numberOfMarkers">
@@ -21,17 +21,21 @@
     </div>
     <div
       id="rulerVertical"
-      class="h-full w-[1.375rem] border-r border-[#3A3A3A] bg-[#262626]"
+      class="h-full w-[1.375rem] border-r border-[#3A3A3A] bg-[#262626] relative"
     >
       <template v-for="i in verticalMarkers">
         <div
-          class="w-8 flex flex-col items-center gap-0.5 absolute left-0 right-0"
+          class="h-8 flex flex-row items-center gap-0.5 absolute left-0 right-0"
           :style="{
             top: i.position - 16 + 'px',
           }"
         >
-          <span>{{ i.value }}</span>
-          <div class="flex-grow w-[0.0625rem] bg-[#777777]"></div>
+          <span
+            class="w-[14px] rotate-180"
+            :style="{ writingMode: 'vertical-rl', textOrientation: 'mixed' }"
+            >{{ i.value }}</span
+          >
+          <div class="flex-grow h-[0.0625rem] bg-[#777777]"></div>
         </div>
       </template>
     </div>
@@ -41,24 +45,42 @@
 <script setup lang="ts">
 import { useSquareStore } from "@/stores/dataSquare";
 
+type MarkerPosition = {
+  position: number;
+  value: number;
+};
+
 const squareStore = useSquareStore();
 
-const numberOfMarkers = ref([]);
-const verticalMarkers = ref([]);
+const numberOfMarkers = ref([] as MarkerPosition[]);
+const verticalMarkers = ref([] as MarkerPosition[]);
 
 watchEffect(() => {
   const rulerHorizontal = document.getElementById("rulerHorizontal");
   const rulerVertical = document.getElementById("rulerVertical");
+
   const rulerHorizontalRect = rulerHorizontal?.getBoundingClientRect();
   const rulerVerticalRect = rulerVertical?.getBoundingClientRect();
-  const height = rulerVerticalRect?.height;
-  const length = rulerHorizontalRect?.width;
-  let array = [];
-  let arrayVertical = [];
-  const left =
-    (rulerHorizontalRect?.left - squareStore.offsetLeft) / squareStore.scale;
-  const right =
-    (rulerHorizontalRect?.right - squareStore.offsetLeft) / squareStore.scale;
+
+  const height = rulerVerticalRect ? rulerVerticalRect.height : 0;
+  const length = rulerHorizontalRect ? rulerHorizontalRect.width : 0;
+
+  const rulerVerticalTop = rulerVerticalRect
+    ? (rulerVerticalRect.top - squareStore.offsetTop) / squareStore.scale
+    : 0;
+  const rulerVerticalBottom = rulerVerticalRect
+    ? (rulerVerticalRect.bottom - squareStore.offsetTop) / squareStore.scale
+    : 0;
+  const left = rulerHorizontalRect
+    ? (rulerHorizontalRect.left - squareStore.offsetLeft) / squareStore.scale
+    : 0;
+  const right = rulerHorizontalRect
+    ? (rulerHorizontalRect.right - squareStore.offsetLeft) / squareStore.scale
+    : 0;
+
+  const array: MarkerPosition[] = [];
+  const arrayVertical: MarkerPosition[] = [];
+
   if (squareStore.scale < 0.025) {
     Promise.resolve()
       .then(() => {
@@ -80,9 +102,34 @@ watchEffect(() => {
             });
           } else continue;
         }
+        for (let i = 0; i < rulerVerticalBottom; i = i + 5000) {
+          if (i > rulerVerticalTop) {
+            let positionMarker = i;
+            arrayVertical.push({
+              position:
+                ((-rulerVerticalTop + positionMarker) /
+                  (rulerVerticalBottom - rulerVerticalTop)) *
+                height,
+              value: i,
+            });
+          } else continue;
+        }
+        for (let i = -5000; i > rulerVerticalTop; i = i - 5000) {
+          if (i < rulerVerticalBottom) {
+            let positionMarker = i;
+            arrayVertical.push({
+              position:
+                ((-rulerVerticalTop + positionMarker) /
+                  (rulerVerticalBottom - rulerVerticalTop)) *
+                height,
+              value: i,
+            });
+          } else continue;
+        }
       })
       .then(() => {
         numberOfMarkers.value = [...array];
+        verticalMarkers.value = [...arrayVertical];
       });
   } else if (squareStore.scale < 0.05 && squareStore.scale >= 0.025) {
     Promise.resolve()
@@ -105,9 +152,34 @@ watchEffect(() => {
             });
           } else continue;
         }
+        for (let i = 0; i < rulerVerticalBottom; i = i + 2500) {
+          if (i > rulerVerticalTop) {
+            let positionMarker = i;
+            arrayVertical.push({
+              position:
+                ((-rulerVerticalTop + positionMarker) /
+                  (rulerVerticalBottom - rulerVerticalTop)) *
+                height,
+              value: i,
+            });
+          } else continue;
+        }
+        for (let i = -2500; i > rulerVerticalTop; i = i - 2500) {
+          if (i < rulerVerticalBottom) {
+            let positionMarker = i;
+            arrayVertical.push({
+              position:
+                ((-rulerVerticalTop + positionMarker) /
+                  (rulerVerticalBottom - rulerVerticalTop)) *
+                height,
+              value: i,
+            });
+          } else continue;
+        }
       })
       .then(() => {
         numberOfMarkers.value = [...array];
+        verticalMarkers.value = [...arrayVertical];
       });
   } else if (squareStore.scale < 0.1 && squareStore.scale >= 0.05) {
     Promise.resolve()
@@ -130,9 +202,34 @@ watchEffect(() => {
             });
           } else continue;
         }
+        for (let i = 0; i < rulerVerticalBottom; i = i + 1000) {
+          if (i > rulerVerticalTop) {
+            let positionMarker = i;
+            arrayVertical.push({
+              position:
+                ((-rulerVerticalTop + positionMarker) /
+                  (rulerVerticalBottom - rulerVerticalTop)) *
+                height,
+              value: i,
+            });
+          } else continue;
+        }
+        for (let i = -1000; i > rulerVerticalTop; i = i - 1000) {
+          if (i < rulerVerticalBottom) {
+            let positionMarker = i;
+            arrayVertical.push({
+              position:
+                ((-rulerVerticalTop + positionMarker) /
+                  (rulerVerticalBottom - rulerVerticalTop)) *
+                height,
+              value: i,
+            });
+          } else continue;
+        }
       })
       .then(() => {
         numberOfMarkers.value = [...array];
+        verticalMarkers.value = [...arrayVertical];
       });
   } else if (squareStore.scale < 0.2 && squareStore.scale >= 0.1) {
     Promise.resolve()
@@ -155,9 +252,34 @@ watchEffect(() => {
             });
           } else continue;
         }
+        for (let i = 0; i < rulerVerticalBottom; i = i + 500) {
+          if (i > rulerVerticalTop) {
+            let positionMarker = i;
+            arrayVertical.push({
+              position:
+                ((-rulerVerticalTop + positionMarker) /
+                  (rulerVerticalBottom - rulerVerticalTop)) *
+                height,
+              value: i,
+            });
+          } else continue;
+        }
+        for (let i = -500; i > rulerVerticalTop; i = i - 500) {
+          if (i < rulerVerticalBottom) {
+            let positionMarker = i;
+            arrayVertical.push({
+              position:
+                ((-rulerVerticalTop + positionMarker) /
+                  (rulerVerticalBottom - rulerVerticalTop)) *
+                height,
+              value: i,
+            });
+          } else continue;
+        }
       })
       .then(() => {
         numberOfMarkers.value = [...array];
+        verticalMarkers.value = [...arrayVertical];
       });
   } else if (squareStore.scale < 0.5 && squareStore.scale >= 0.2) {
     Promise.resolve()
@@ -180,9 +302,34 @@ watchEffect(() => {
             });
           } else continue;
         }
+        for (let i = 0; i < rulerVerticalBottom; i = i + 250) {
+          if (i > rulerVerticalTop) {
+            let positionMarker = i;
+            arrayVertical.push({
+              position:
+                ((-rulerVerticalTop + positionMarker) /
+                  (rulerVerticalBottom - rulerVerticalTop)) *
+                height,
+              value: i,
+            });
+          } else continue;
+        }
+        for (let i = -250; i > rulerVerticalTop; i = i - 250) {
+          if (i < rulerVerticalBottom) {
+            let positionMarker = i;
+            arrayVertical.push({
+              position:
+                ((-rulerVerticalTop + positionMarker) /
+                  (rulerVerticalBottom - rulerVerticalTop)) *
+                height,
+              value: i,
+            });
+          } else continue;
+        }
       })
       .then(() => {
         numberOfMarkers.value = [...array];
+        verticalMarkers.value = [...arrayVertical];
       });
   } else if (squareStore.scale < 1 && squareStore.scale >= 0.5) {
     Promise.resolve()
@@ -205,9 +352,34 @@ watchEffect(() => {
             });
           } else continue;
         }
+        for (let i = 0; i < rulerVerticalBottom; i = i + 100) {
+          if (i > rulerVerticalTop) {
+            let positionMarker = i;
+            arrayVertical.push({
+              position:
+                ((-rulerVerticalTop + positionMarker) /
+                  (rulerVerticalBottom - rulerVerticalTop)) *
+                height,
+              value: i,
+            });
+          } else continue;
+        }
+        for (let i = -100; i > rulerVerticalTop; i = i - 100) {
+          if (i < rulerVerticalBottom) {
+            let positionMarker = i;
+            arrayVertical.push({
+              position:
+                ((-rulerVerticalTop + positionMarker) /
+                  (rulerVerticalBottom - rulerVerticalTop)) *
+                height,
+              value: i,
+            });
+          } else continue;
+        }
       })
       .then(() => {
         numberOfMarkers.value = [...array];
+        verticalMarkers.value = [...arrayVertical];
       });
   } else if (squareStore.scale < 2 && squareStore.scale >= 1) {
     Promise.resolve()
@@ -230,9 +402,34 @@ watchEffect(() => {
             });
           } else continue;
         }
+        for (let i = 0; i < rulerVerticalBottom; i = i + 50) {
+          if (i > rulerVerticalTop) {
+            let positionMarker = i;
+            arrayVertical.push({
+              position:
+                ((-rulerVerticalTop + positionMarker) /
+                  (rulerVerticalBottom - rulerVerticalTop)) *
+                height,
+              value: i,
+            });
+          } else continue;
+        }
+        for (let i = -50; i > rulerVerticalTop; i = i - 50) {
+          if (i < rulerVerticalBottom) {
+            let positionMarker = i;
+            arrayVertical.push({
+              position:
+                ((-rulerVerticalTop + positionMarker) /
+                  (rulerVerticalBottom - rulerVerticalTop)) *
+                height,
+              value: i,
+            });
+          } else continue;
+        }
       })
       .then(() => {
         numberOfMarkers.value = [...array];
+        verticalMarkers.value = [...arrayVertical];
       });
   } else if (squareStore.scale < 5 && squareStore.scale >= 2) {
     Promise.resolve()
@@ -255,9 +452,34 @@ watchEffect(() => {
             });
           } else continue;
         }
+        for (let i = 0; i < rulerVerticalBottom; i = i + 25) {
+          if (i > rulerVerticalTop) {
+            let positionMarker = i;
+            arrayVertical.push({
+              position:
+                ((-rulerVerticalTop + positionMarker) /
+                  (rulerVerticalBottom - rulerVerticalTop)) *
+                height,
+              value: i,
+            });
+          } else continue;
+        }
+        for (let i = -25; i > rulerVerticalTop; i = i - 25) {
+          if (i < rulerVerticalBottom) {
+            let positionMarker = i;
+            arrayVertical.push({
+              position:
+                ((-rulerVerticalTop + positionMarker) /
+                  (rulerVerticalBottom - rulerVerticalTop)) *
+                height,
+              value: i,
+            });
+          } else continue;
+        }
       })
       .then(() => {
         numberOfMarkers.value = [...array];
+        verticalMarkers.value = [...arrayVertical];
       });
   } else if (squareStore.scale < 10 && squareStore.scale >= 5) {
     Promise.resolve()
@@ -280,9 +502,34 @@ watchEffect(() => {
             });
           } else continue;
         }
+        for (let i = 0; i < rulerVerticalBottom; i = i + 10) {
+          if (i > rulerVerticalTop) {
+            let positionMarker = i;
+            arrayVertical.push({
+              position:
+                ((-rulerVerticalTop + positionMarker) /
+                  (rulerVerticalBottom - rulerVerticalTop)) *
+                height,
+              value: i,
+            });
+          } else continue;
+        }
+        for (let i = -10; i > rulerVerticalTop; i = i - 10) {
+          if (i < rulerVerticalBottom) {
+            let positionMarker = i;
+            arrayVertical.push({
+              position:
+                ((-rulerVerticalTop + positionMarker) /
+                  (rulerVerticalBottom - rulerVerticalTop)) *
+                height,
+              value: i,
+            });
+          } else continue;
+        }
       })
       .then(() => {
         numberOfMarkers.value = [...array];
+        verticalMarkers.value = [...arrayVertical];
       });
   } else if (squareStore.scale < 30 && squareStore.scale >= 10) {
     Promise.resolve()
@@ -305,9 +552,34 @@ watchEffect(() => {
             });
           } else continue;
         }
+        for (let i = 0; i < rulerVerticalBottom; i = i + 5) {
+          if (i > rulerVerticalTop) {
+            let positionMarker = i;
+            arrayVertical.push({
+              position:
+                ((-rulerVerticalTop + positionMarker) /
+                  (rulerVerticalBottom - rulerVerticalTop)) *
+                height,
+              value: i,
+            });
+          } else continue;
+        }
+        for (let i = -5; i > rulerVerticalTop; i = i - 5) {
+          if (i < rulerVerticalBottom) {
+            let positionMarker = i;
+            arrayVertical.push({
+              position:
+                ((-rulerVerticalTop + positionMarker) /
+                  (rulerVerticalBottom - rulerVerticalTop)) *
+                height,
+              value: i,
+            });
+          } else continue;
+        }
       })
       .then(() => {
         numberOfMarkers.value = [...array];
+        verticalMarkers.value = [...arrayVertical];
       });
   } else if (squareStore.scale < 50 && squareStore.scale >= 30) {
     Promise.resolve()
@@ -330,9 +602,34 @@ watchEffect(() => {
             });
           } else continue;
         }
+        for (let i = 0; i < rulerVerticalBottom; i = i + 2) {
+          if (i > rulerVerticalTop) {
+            let positionMarker = i;
+            arrayVertical.push({
+              position:
+                ((-rulerVerticalTop + positionMarker) /
+                  (rulerVerticalBottom - rulerVerticalTop)) *
+                height,
+              value: i,
+            });
+          } else continue;
+        }
+        for (let i = -2; i > rulerVerticalTop; i = i - 2) {
+          if (i < rulerVerticalBottom) {
+            let positionMarker = i;
+            arrayVertical.push({
+              position:
+                ((-rulerVerticalTop + positionMarker) /
+                  (rulerVerticalBottom - rulerVerticalTop)) *
+                height,
+              value: i,
+            });
+          } else continue;
+        }
       })
       .then(() => {
         numberOfMarkers.value = [...array];
+        verticalMarkers.value = [...arrayVertical];
       });
   } else if (squareStore.scale >= 50) {
     Promise.resolve()
@@ -355,9 +652,34 @@ watchEffect(() => {
             });
           } else continue;
         }
+        for (let i = 0; i < rulerVerticalBottom; i = i + 1) {
+          if (i > rulerVerticalTop) {
+            let positionMarker = i;
+            arrayVertical.push({
+              position:
+                ((-rulerVerticalTop + positionMarker) /
+                  (rulerVerticalBottom - rulerVerticalTop)) *
+                height,
+              value: i,
+            });
+          } else continue;
+        }
+        for (let i = -1; i > rulerVerticalTop; i = i - 1) {
+          if (i < rulerVerticalBottom) {
+            let positionMarker = i;
+            arrayVertical.push({
+              position:
+                ((-rulerVerticalTop + positionMarker) /
+                  (rulerVerticalBottom - rulerVerticalTop)) *
+                height,
+              value: i,
+            });
+          } else continue;
+        }
       })
       .then(() => {
         numberOfMarkers.value = [...array];
+        verticalMarkers.value = [...arrayVertical];
       });
   }
 });
