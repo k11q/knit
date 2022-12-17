@@ -807,71 +807,70 @@ export const useRulerSnapStore = defineStore({
                 ) {
                   arrayLineLeft.forEach((i) => {
                     if (
-                      closestLeftId &&
-                      closestRightId &&
-                      currDragLeft <=
-                        closestLeftRect.right +
-                          (closestRightRect.left - closestLeftRect.right) / 2 -
-                          elementRect.width / 2 +
-                          5 &&
-                      currDragLeft >=
-                        closestLeftRect.right +
-                          (closestRightRect.left - closestLeftRect.right) / 2 -
-                          elementRect.width / 2 -
-                          5
+                      !arrayId.find((obj) => obj.originId === i.id) ||
+                      !arrayId.find((obj) => obj.measuredId === i.id)
                     ) {
-                      snapDistance = Math.round(siblingLeft - i.line);
+                      if (
+                        closestLeftId &&
+                        closestRightId &&
+                        siblingLeft - i.line <= distanceToLeft + 5 &&
+                        siblingLeft - i.line >= distanceToLeft - 5 &&
+                        siblingLeft - i.line <= distanceToRight + 5 &&
+                        siblingLeft - i.line >= distanceToRight - 5
+                      ) {
+                        snapDistance = Math.round(siblingLeft - i.line);
 
-                      this.snapLeft = true;
+                        this.snapLeft = true;
 
-                      changeLeft(
-                        Math.round(
-                          (closestLeftRect.right +
-                            (closestRightRect.left - closestLeftRect.right) /
-                              2 -
-                            elementRect.width / 2 -
-                            squareStore.offsetLeft) /
-                            squareStore.scale
-                        )
-                      );
-                      arrayId.push({ originId: i.id, measuredId: siblingId });
-                    } else if (
-                      closestLeftId &&
-                      siblingLeft - i.line <= distanceToLeft + 5 &&
-                      siblingLeft - i.line >= distanceToLeft - 5
-                    ) {
-                      snapDistance = Math.round(siblingLeft - i.line);
+                        changeLeft(
+                          Math.round(
+                            (closestLeftRect.right +
+                              (closestRightRect.left - closestLeftRect.right) /
+                                2 -
+                              elementRect.width / 2 -
+                              squareStore.offsetLeft) /
+                              squareStore.scale
+                          )
+                        );
+                        arrayId.push({ originId: i.id, measuredId: siblingId });
+                      } else if (
+                        closestLeftId &&
+                        siblingLeft - i.line <= distanceToLeft + 5 &&
+                        siblingLeft - i.line >= distanceToLeft - 5
+                      ) {
+                        snapDistance = Math.round(siblingLeft - i.line);
 
-                      this.snapLeft = true;
+                        this.snapLeft = true;
 
-                      changeLeft(
-                        Math.round(
-                          (closestLeftRect.right +
-                            snapDistance -
-                            squareStore.offsetLeft) /
-                            squareStore.scale
-                        )
-                      );
-                      arrayId.push({ originId: i.id, measuredId: siblingId });
-                    } else if (
-                      !closestLeftId &&
-                      siblingLeft - i.line <= distanceToRight + 5 &&
-                      siblingLeft - i.line >= distanceToRight - 5
-                    ) {
-                      snapDistance = Math.round(siblingLeft - i.line);
+                        changeLeft(
+                          Math.round(
+                            (closestLeftRect.right +
+                              snapDistance -
+                              squareStore.offsetLeft) /
+                              squareStore.scale
+                          )
+                        );
+                        arrayId.push({ originId: i.id, measuredId: siblingId });
+                      } else if (
+                        !closestLeftId &&
+                        siblingLeft - i.line <= distanceToRight + 5 &&
+                        siblingLeft - i.line >= distanceToRight - 5
+                      ) {
+                        snapDistance = Math.round(siblingLeft - i.line);
 
-                      this.snapLeft = true;
+                        this.snapLeft = true;
 
-                      changeLeft(
-                        Math.round(
-                          (closestRightRect.left -
-                            elementRect.width -
-                            snapDistance -
-                            squareStore.offsetLeft) /
-                            squareStore.scale
-                        )
-                      );
-                      arrayId.push({ originId: i.id, measuredId: siblingId });
+                        changeLeft(
+                          Math.round(
+                            (closestRightRect.left -
+                              elementRect.width -
+                              snapDistance -
+                              squareStore.offsetLeft) /
+                              squareStore.scale
+                          )
+                        );
+                        arrayId.push({ originId: i.id, measuredId: siblingId });
+                      }
                     }
                   });
                 }
@@ -889,7 +888,8 @@ export const useRulerSnapStore = defineStore({
                   } as MeasuredLine;
 
                   if (closestLeftId) {
-                    line.width = snapDistance ? snapDistance : distanceToLeft;
+                    line.width =
+                      snapDistance > 0 ? snapDistance : distanceToLeft;
                   } else {
                     line.width =
                       snapDistance > 0 ? snapDistance : distanceToRight;
