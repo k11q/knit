@@ -94,11 +94,12 @@ function setRuler() {
   const arrayVertical: MarkerPosition[] = [];
 
   if (squareStore.scale > 4) {
-    backgroundPosition.value = `${(-left / (right - left)) * length}px, ${
+    backgroundPosition.value = `${Math.round(
       (-left / (right - left)) * length
-    }px ${
-      (-rulerVerticalTop / (rulerVerticalBottom - rulerVerticalTop)) * height +
-      22
+    )}px, ${Math.round((-left / (right - left)) * length)}px ${
+      Math.round(
+        (-rulerVerticalTop / (rulerVerticalBottom - rulerVerticalTop)) * height
+      ) + 22
     }px`;
   } else {
     backgroundPosition.value = "";
