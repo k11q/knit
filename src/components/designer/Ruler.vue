@@ -61,7 +61,7 @@ const verticalMarkers = ref([] as MarkerPosition[]);
 
 const backgroundBoxSize = computed(() => {
   if (squareStore.scale > 4) {
-    return `${1 * squareStore.scale}px ${1 * squareStore.scale}px`;
+    return `${squareStore.scale}px ${squareStore.scale}px`;
   } else return undefined;
 });
 
@@ -93,17 +93,14 @@ function setRuler() {
   const array: MarkerPosition[] = [];
   const arrayVertical: MarkerPosition[] = [];
 
-  if (squareStore.scale > 4) {
-    backgroundPosition.value = `${Math.round(
-      (-left / (right - left)) * length
-    )}px, ${Math.round((-left / (right - left)) * length)}px ${
-      Math.round(
-        (-rulerVerticalTop / (rulerVerticalBottom - rulerVerticalTop)) * height
-      ) + 22
-    }px`;
-  } else {
-    backgroundPosition.value = "";
-  }
+  let positionLeft = (-left / (right - left)) * length;
+  let positionTop =
+    (-rulerVerticalTop / (rulerVerticalBottom - rulerVerticalTop)) * height +
+    22;
+  backgroundPosition.value =
+    squareStore.scale > 4
+      ? `${positionLeft}px ${positionTop}px, ${positionLeft}px ${positionTop}px`
+      : "";
 
   if (squareStore.scale < 0.025) {
     Promise.resolve()
@@ -753,11 +750,20 @@ watchEffect(
 #rulerWrapper {
   background-image: linear-gradient(
       to right,
-      transparent calc(100% - 0.7px),
-      #d6d6d624 0.7px
+      transparent,
+      transparent calc(100% - 0.6px),
+      #97979740 0.6px,
+      #97979740
     ),
-    linear-gradient(to bottom, transparent calc(100% - 0.7px), #d6d6d624 0.7px);
+    linear-gradient(
+      to bottom,
+      transparent,
+      transparent calc(100% - 0.6px),
+      #97979740 0.6px,
+      #97979740
+    );
   background-size: v-bind(backgroundBoxSize);
   background-position: v-bind(backgroundPosition);
+  mix-blend-mode: initial;
 }
 </style>
