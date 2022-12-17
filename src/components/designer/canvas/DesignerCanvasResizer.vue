@@ -190,19 +190,12 @@
       <!--Bottom dimensions label-->
       <p
         class="absolute left-0 right-0 top-full flex flex-row justify-center pointer-events-none"
-        :style="{ marginTop: `${(8 * 1) / addaSquare.scale}px` }"
+        :style="{
+          transform: `scale(${1 / addaSquare.scale})`,
+        }"
       >
         <span
-          class="bg-[#0191FA] cursor-default whitespace-nowrap font-medium"
-          :style="{
-            fontSize: `${(11 * 1) / addaSquare.scale}px`,
-            lineHeight: 1.1,
-            borderRadius: `${(2 * 1) / addaSquare.scale}px`,
-            paddingTop: `${2 * (1 / addaSquare.scale)}px`,
-            paddingBottom: `${2 * (1 / addaSquare.scale)}px`,
-            paddingRight: `${(4 * 1) / addaSquare.scale}px`,
-            paddingLeft: `${(4 * 1) / addaSquare.scale}px`,
-          }"
+          class="bg-[#0191FA] cursor-default whitespace-nowrap font-medium rounded-sm py-0.5 px-1 leading-[1.1] top-2 absolute"
         >
           {{
             selectToi.selectedBoxData.cssRules
