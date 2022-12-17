@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex-grow flex flex-col justify-start text-[#777777] text-[0.625rem] leading-[1.4] z-[999] pointer-events-none"
+    class="flex-grow flex flex-col justify-start text-[#7f7f7f] text-[0.625rem] leading-[1.4] z-[999] pointer-events-none"
   >
     <div
       id="rulerHorizontal"

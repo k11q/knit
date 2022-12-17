@@ -944,7 +944,8 @@ export const useRulerSnapStore = defineStore({
                   lineX.width =
                     snapDistance > 0 ? snapDistance : distanceToLeft;
                 } else {
-                  lineX.top = elementRect.top + elementRect.height / 2;
+                  lineX.top =
+                    closestRightRect.top + closestRightRect.height / 2;
                   lineX.left = elementRect.right;
                   lineX.width =
                     snapDistance > 0 ? snapDistance : distanceToRight;
