@@ -739,6 +739,8 @@ export const useRulerSnapStore = defineStore({
           let distanceToLeft = 0;
           let distanceToRight = 0;
 
+          let snapBetween = false;
+
           if (closestLeftId) {
             closestLeftRect = useGetElementRect(closestLeftId) as DOMRect;
             distanceToLeft = currDragLeft - closestLeftRect.right;
@@ -819,6 +821,7 @@ export const useRulerSnapStore = defineStore({
                         siblingLeft - i.line >= distanceToRight - 5
                       ) {
                         snapDistance = Math.round(siblingLeft - i.line);
+                        snapBetween = true;
 
                         this.snapLeft = true;
 
@@ -914,6 +917,9 @@ export const useRulerSnapStore = defineStore({
                     line.top =
                       (measuredRect.bottom - originRect.top) / 2 +
                       originRect.top;
+                  }
+                  if (snapBetween && i.originId === id) {
+                    line.top = closestLeftRect.top + closestLeftRect.height / 2;
                   }
 
                   otherLines.push(line);
