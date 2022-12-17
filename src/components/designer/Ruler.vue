@@ -1,5 +1,6 @@
 <template>
   <div
+    id="rulerWrapper"
     class="flex-grow flex flex-col justify-start text-[#7f7f7f] text-[0.625rem] leading-[1.4] z-[999] pointer-events-none"
   >
     <div
@@ -58,6 +59,14 @@ const squareStore = useSquareStore();
 const numberOfMarkers = ref([] as MarkerPosition[]);
 const verticalMarkers = ref([] as MarkerPosition[]);
 
+const backgroundBoxSize = computed(() => {
+  if (squareStore.scale > 4) {
+    return `${1 * squareStore.scale}px ${1 * squareStore.scale}px`;
+  } else return undefined;
+});
+
+const backgroundPosition = ref("");
+
 function setRuler() {
   const rulerHorizontal = document.getElementById("rulerHorizontal");
   const rulerVertical = document.getElementById("rulerVertical");
@@ -83,6 +92,17 @@ function setRuler() {
 
   const array: MarkerPosition[] = [];
   const arrayVertical: MarkerPosition[] = [];
+
+  if (squareStore.scale > 4) {
+    backgroundPosition.value = `${(-left / (right - left)) * length}px, ${
+      (-left / (right - left)) * length
+    }px ${
+      (-rulerVerticalTop / (rulerVerticalBottom - rulerVerticalTop)) * height +
+      22
+    }px`;
+  } else {
+    backgroundPosition.value = "";
+  }
 
   if (squareStore.scale < 0.025) {
     Promise.resolve()
@@ -727,5 +747,16 @@ watchEffect(
   content: "";
   position: absolute;
   top: 0;
+}
+
+#rulerWrapper {
+  background-image: linear-gradient(
+      to right,
+      transparent calc(100% - 0.7px),
+      #d6d6d624 0.7px
+    ),
+    linear-gradient(to bottom, transparent calc(100% - 0.7px), #d6d6d624 0.7px);
+  background-size: v-bind(backgroundBoxSize);
+  background-position: v-bind(backgroundPosition);
 }
 </style>
