@@ -6,7 +6,9 @@
       id="rulerHorizontal"
       class="w-full h-[1.375rem] border-b border-[#3A3A3A] bg-[#262626] relative"
     >
-      <div class="w-[1.375rem] border-r border-inherit"></div>
+      <div
+        class="w-[1.375rem] border-r border-inherit absolute left-0 h-full"
+      ></div>
       <template v-for="i in numberOfMarkers">
         <div
           class="w-8 flex flex-col items-center gap-0.5 absolute top-0 bottom-0"
@@ -55,7 +57,7 @@ const squareStore = useSquareStore();
 const numberOfMarkers = ref([] as MarkerPosition[]);
 const verticalMarkers = ref([] as MarkerPosition[]);
 
-watchEffect(() => {
+function setRuler() {
   const rulerHorizontal = document.getElementById("rulerHorizontal");
   const rulerVertical = document.getElementById("rulerVertical");
 
@@ -682,5 +684,13 @@ watchEffect(() => {
         verticalMarkers.value = [...arrayVertical];
       });
   }
+}
+
+watchEffect(() => {
+  setRuler();
+});
+
+onMounted(() => {
+  setRuler();
 });
 </script>
