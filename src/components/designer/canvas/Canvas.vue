@@ -357,7 +357,10 @@
     <!--Measureline-->
     <DesignerCanvasMeasureLine
       :lines="measuredLines().value"
-      v-if="measuredLines().value.length && canvasStore.isDragging"
+      v-if="
+        (measuredLines().value.length && canvasStore.isDragging) ||
+        (measuredLines().value.length && selectToi.treeHoverId)
+      "
     />
     <!--Measure outline-->
     <div
