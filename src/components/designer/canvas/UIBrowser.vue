@@ -96,6 +96,7 @@ function mouseout(id: string, type: string) {
   canvasStore.hoverData = {} as Node;
   canvasStore.textHover = false;
   measuredLines().value = [];
+
   if (selectToi.selectedBox === id && type !== "text") {
     paddingResize.showPaddingResizer = false;
   }
@@ -114,6 +115,7 @@ function mouseover(id: string, type: string) {
   ) {
     canvasStore.hoverData = useGetElementData(selectToi.data, id);
     selectToi.treeHoverId = id;
+
     if (event.altKey) {
       calculateDistance(selectToi.selectedBoxData.id, selectToi.treeHoverId);
     }
@@ -125,6 +127,7 @@ function mouseover(id: string, type: string) {
     canvasStore.textHover = true;
   }
   selectToi.treeHoverId = id;
+
   if (event.altKey) {
     calculateDistance(selectToi.selectedBoxData.id, selectToi.treeHoverId);
   }

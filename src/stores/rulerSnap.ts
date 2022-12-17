@@ -789,13 +789,12 @@ export const useRulerSnapStore = defineStore({
                       siblingLeft - i.line <= distanceToLeft + 5 &&
                       siblingLeft - i.line >= distanceToLeft - 5
                     ) {
-                      snapDistance = siblingLeft - i.line;
+                      snapDistance = Math.round(siblingLeft - i.line);
                       this.snapLeft = true;
                       changeLeft(
                         Math.round(
                           (closestLeftRect.right +
-                            siblingLeft -
-                            i.line -
+                            snapDistance -
                             squareStore.offsetLeft) /
                             squareStore.scale
                         )

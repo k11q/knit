@@ -182,6 +182,7 @@ export function calculateDistance(originId: string, measuredId: string) {
           height: originMidY - measuredBottom,
           type: "dashed",
         } as MeasuredLine;
+
         measuredLines().value = [lineX, lineY];
       } else if (originMidY < measuredTop) {
         let lineY = {

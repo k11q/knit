@@ -208,6 +208,7 @@ export const useResizeStore = defineStore({
 
         function mousemove(e: MouseEvent) {
           resizeStore.isResizingTopLeft = true;
+
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
             rulerSnap.on = true;
             rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
@@ -260,6 +261,7 @@ export const useResizeStore = defineStore({
 
         function mousemove(e: MouseEvent) {
           resizeStore.isResizingTopRight = true;
+
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
             rulerSnap.on = true;
             rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
@@ -283,6 +285,7 @@ export const useResizeStore = defineStore({
           resizeStore.isResizing = false;
           resizeStore.isResizingTopRight = false;
           rulerSnap.show = false;
+
           window.removeEventListener("mousemove", mousemove);
           window.removeEventListener("mouseup", mouseup);
         }
@@ -326,6 +329,7 @@ export const useResizeStore = defineStore({
           resizeStore.isResizing = false;
           resizeStore.isResizingRight = false;
           rulerSnap.show = false;
+
           window.removeEventListener("mousemove", mousemove);
           window.removeEventListener("mouseup", mouseup);
         }
@@ -335,6 +339,7 @@ export const useResizeStore = defineStore({
       const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
       const rulerSnap = useRulerSnapStore();
+
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
@@ -350,9 +355,11 @@ export const useResizeStore = defineStore({
 
         function mousemove(e: MouseEvent) {
           resizeStore.isResizingLeft = true;
+
           if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
             rulerSnap.on = true;
             rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
+
             if (!rulerSnap.snapLeft && !rulerSnap.snapWidth) {
               resizeStore.resizeWidthReverse(e);
               resizeStore.resizeLeftForward(e);
@@ -368,6 +375,7 @@ export const useResizeStore = defineStore({
           resizeStore.isResizing = false;
           resizeStore.isResizingLeft = false;
           rulerSnap.show = false;
+
           window.removeEventListener("mousemove", mousemove);
           window.removeEventListener("mouseup", mouseup);
         }
@@ -377,6 +385,7 @@ export const useResizeStore = defineStore({
       const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
       const rulerSnap = useRulerSnapStore();
+
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
@@ -392,9 +401,11 @@ export const useResizeStore = defineStore({
 
         function mousemove(e: MouseEvent) {
           resizeStore.isResizingTop = true;
+
           if (Math.abs(e.movementY) <= 5 && Math.abs(e.movementY) <= 5) {
             rulerSnap.on = true;
             rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
+
             if (!rulerSnap.snapTop && !rulerSnap.snapHeight) {
               resizeStore.resizeHeightReverse(e);
               resizeStore.resizeTopForward(e);
@@ -419,6 +430,7 @@ export const useResizeStore = defineStore({
       const resizeStore = useResizeStore();
       const squareStore = useSquareStore();
       const rulerSnap = useRulerSnapStore();
+
       if (!squareStore.dragPointer && !squareStore.draggingPointer) {
         const selectToi = useCounterStore();
 
@@ -434,6 +446,7 @@ export const useResizeStore = defineStore({
 
         function mousemove(e: MouseEvent) {
           resizeStore.isResizingBottom = true;
+
           if (Math.abs(e.movementY) <= 5 && Math.abs(e.movementY) <= 5) {
             rulerSnap.on = true;
             rulerSnap.setResizeSnap(e, selectToi.selectedBoxData?.id);
@@ -450,6 +463,7 @@ export const useResizeStore = defineStore({
           resizeStore.isResizing = false;
           resizeStore.isResizingBottom = false;
           rulerSnap.show = false;
+
           window.removeEventListener("mousemove", mousemove);
           window.removeEventListener("mouseup", mouseup);
         }
