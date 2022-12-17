@@ -12,6 +12,9 @@
     <DesignerTopBar />
     <div class="flex flex-row justify-between">
       <DesignerLeftSidePanel />
+      <ClientOnly>
+        <DesignerRuler />
+      </ClientOnly>
       <DesignerRightSidePanel />
     </div>
     <div
