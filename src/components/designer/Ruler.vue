@@ -4,11 +4,8 @@
   >
     <div
       id="rulerHorizontal"
-      class="w-full h-[1.375rem] border-b border-[#3A3A3A] bg-[#262626] relative"
+      class="w-full h-[1.375rem] border-b border-[#3A3A3A] bg-[#262626] relative overflow-hidden"
     >
-      <div
-        class="w-[1.375rem] border-r border-inherit absolute left-0 h-full"
-      ></div>
       <template v-for="i in numberOfMarkers">
         <div
           class="w-8 flex flex-col items-center gap-0.5 absolute top-0 bottom-0"
@@ -20,10 +17,14 @@
           <div class="flex-grow w-[0.0625rem] bg-[#777777]"></div>
         </div>
       </template>
+      <div
+        id="rulerHorizontalEdge"
+        class="w-[1.375rem] border-r border-inherit left-0 h-full relative bg-[#262626]"
+      ></div>
     </div>
     <div
       id="rulerVertical"
-      class="h-full w-[1.375rem] border-r border-[#3A3A3A] bg-[#262626] relative"
+      class="h-full w-[1.375rem] border-r border-[#3A3A3A] bg-[#262626] relative overflow-hidden"
     >
       <template v-for="i in verticalMarkers">
         <div
@@ -694,3 +695,38 @@ onMounted(() => {
   setRuler();
 });
 </script>
+
+<style scoped>
+#rulerHorizontalEdge::after {
+  width: 50px;
+  height: 100%;
+  background-image: linear-gradient(
+    to right,
+    #262626,
+    #26262680 30%,
+    transparent
+  );
+  mix-blend-mode: darken;
+  display: inline-block;
+  content: "";
+  position: absolute;
+  left: 100%;
+  margin-left: 1px;
+}
+
+#rulerVertical::after {
+  width: 100%;
+  height: 50px;
+  background-image: linear-gradient(
+    to bottom,
+    #262626,
+    #26262680 30%,
+    transparent
+  );
+  mix-blend-mode: darken;
+  display: inline-block;
+  content: "";
+  position: absolute;
+  top: 0;
+}
+</style>
