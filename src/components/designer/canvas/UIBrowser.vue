@@ -23,7 +23,7 @@
               selectToi.selectedTextEditor !== node.id)),
         '!hidden': node.display && node.display === 'hide',
       }"
-      :style="styleProps(node)"
+      :style="styleProps(node, depth)"
     >
       <div
         v-if="node.type === 'text'"
@@ -138,7 +138,7 @@ const props = defineProps({
   },
 });
 
-function styleProps(node: Node) {
+function styleProps(node: Node, depth: number) {
   return {
     display: node.cssRules[0]?.style?.display?.value,
     flexDirection: node.cssRules[0]?.style?.flexDirection?.value,
@@ -152,11 +152,15 @@ function styleProps(node: Node) {
       node.cssRules[0]?.style?.borderRadius?.unit!,
     position: node.cssRules[0]?.style?.position?.value,
     left:
-      node.cssRules[0]?.style?.left?.value! +
-      node.cssRules[0]?.style?.left?.unit!,
+      depth !== 0
+        ? node.cssRules[0]?.style?.left?.value! +
+          node.cssRules[0]?.style?.left?.unit!
+        : "",
     top:
-      node.cssRules[0]?.style?.top?.value! +
-      node.cssRules[0]?.style?.top?.unit!,
+      depth !== 0
+        ? node.cssRules[0]?.style?.top?.value! +
+          node.cssRules[0]?.style?.top?.unit!
+        : "",
     right:
       node.cssRules[0]?.style?.right?.value! +
       node.cssRules[0]?.style?.right?.unit!,
@@ -193,6 +197,10 @@ function styleProps(node: Node) {
     paddingBottom:
       node.cssRules[0]?.style?.paddingBottom?.value! +
       node.cssRules[0]?.style?.paddingBottom?.unit!,
+    transform:
+      depth === 0
+        ? `translate(${node.cssRules[0]?.style?.left?.value}px, ${node.cssRules[0]?.style?.top?.value}px)`
+        : "",
   };
 }
 
