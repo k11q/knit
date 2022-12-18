@@ -19,6 +19,7 @@
       :style="{
         willChange: 'transform',
         isolation: 'isolate',
+        transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
       }"
     >
       <ClientOnly>
@@ -507,9 +508,6 @@ onMounted(() => {
 
   addaSquare.offsetLeft = vw(50);
   addaSquare.offsetTop = vh(50);
-
-  let canvas = document.querySelector(`[data-id="canvas"]`) as HTMLElement;
-  canvas.style.transform = `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`;
 
   function vh(percent: number) {
     var h = Math.max(
