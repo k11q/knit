@@ -55,7 +55,7 @@ export function usePinchZoom(event: WheelEvent) {
       canvas.style.willChange = "";
 
       startPinchZoom = false;
-    }, "800");
+    }, "400");
   }
 
   var endPinchZoom;
