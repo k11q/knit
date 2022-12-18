@@ -32,11 +32,14 @@ export function usePinchZoom(event: WheelEvent) {
       addaSquare.offsetLeft += -event.deltaX * 0.7;
       addaSquare.offsetTop += -event.deltaY * 0.7;
     }
-    document.querySelector(`[data-id="canvas"]`).style.willChange = "transform";
+    let canvas = document.querySelector(`[data-id="canvas"]`) as HTMLElement;
+    canvas.style.willChange = "transform";
+    canvas.style.transform = `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`;
+
     function endPinchZoom() {
       setTimeout(() => {
         canvasStore.isPinchZoom = false;
-        document.querySelector(`[data-id="canvas"]`).style.willChange = "";
+        canvas.style.willChange = "";
       }, "400");
     }
     measuredLines().value = [];
