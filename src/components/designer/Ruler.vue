@@ -13,6 +13,7 @@
           :style="{
             transform: `translateX(${i.position - 16}px)`,
             willChange: 'transform',
+            transition: 'transform 0s linear',
           }"
         >
           <span>{{ i.value }}</span>
@@ -34,6 +35,7 @@
           :style="{
             transform: `translateY(${i.position - 16}px)`,
             willChange: 'transform',
+            transition: 'transform 0s linear',
           }"
         >
           <span
@@ -774,6 +776,8 @@ watchEffect(
     );
   background-size: v-bind(backgroundBoxSize);
   background-position: v-bind(backgroundPosition);
+  transition: background-position 0s linear;
+  -webkit-transition: background-position 0s linear;
   mix-blend-mode: initial;
 }
 </style>
