@@ -2,26 +2,18 @@
   <template v-for="frame in frames">
     <div
       :style="{
-        left: frame.cssRules[0].style.left
-          ? (frame.cssRules[0].style.left.value as number +
-              squareStore.offsetLeft / squareStore.scale) *
-              squareStore.scale +
-            'px'
-          : useGetElementRect(frame.id)?.x + 'px',
-        top: frame.cssRules[0].style.top
-          ? (frame.cssRules[0].style.top.value as number +
-              squareStore.offsetTop / squareStore.scale) *
-              squareStore.scale +
-            'px'
-          : useGetElementRect(frame.id)?.y + 'px',
-        pointerEvents: selectToi.selectedBox === frame.id &&
+        pointerEvents:
+          selectToi.selectedBox === frame.id &&
           canvasStore.isDragging &&
           (frame.type !== 'text' ||
             (frame.type === 'text' &&
               canvasStore.isDragging &&
-              selectToi.selectedTextEditor !== frame.id)) ? 'none' : 'auto'
+              selectToi.selectedTextEditor !== frame.id))
+            ? 'none'
+            : 'auto',
+        transform: `translate(${left(frame)}, ${top(frame)})`,
       }"
-      class="absolute overflow-x-hidden -mt-5 cursor-default overflow-ellipsis"
+      class="absolute -mt-5 cursor-default overflow-ellipsis"
     >
       <p
         @mousedown.stop="canvasStore.dndWithoutParent($event, frame.id)"
@@ -70,6 +62,24 @@ import { Node } from "@/stores/counter";
 const selectToi = useCounterStore();
 const squareStore = useSquareStore();
 const canvasStore = useCanvasStore();
+
+function left(frame: Node) {
+  return frame.cssRules[0].style.left
+    ? ((frame.cssRules[0].style.left.value as number) +
+        squareStore.offsetLeft / squareStore.scale) *
+        squareStore.scale +
+        "px"
+    : useGetElementRect(frame.id)?.x + "px";
+}
+
+function top(frame: Node) {
+  return frame.cssRules[0].style.top
+    ? ((frame.cssRules[0].style.top.value as number) +
+        squareStore.offsetTop / squareStore.scale) *
+        squareStore.scale +
+        "px"
+    : useGetElementRect(frame.id)?.y + "px";
+}
 
 const props = defineProps({
   frames: Array<Node>,

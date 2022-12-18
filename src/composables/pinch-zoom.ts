@@ -19,6 +19,7 @@ export function usePinchZoom(event: WheelEvent) {
   selectToi.treeHoverId = "";
 
   canvas.style.willChange = "transform";
+
   if (
     event.deltaX === 0 &&
     event.ctrlKey &&
@@ -47,15 +48,11 @@ export function usePinchZoom(event: WheelEvent) {
 
     startPinchZoom = true;
 
-    canvas.style.willChange = "";
-
     measuredLines().value = [];
 
     endPinchZoom = setTimeout(() => {
       canvasStore.isPinchZoom = false;
-      canvas.style.willChange = "transform";
-
-      console.log("hehe2");
+      canvas.style.willChange = "";
 
       startPinchZoom = false;
     }, "800");

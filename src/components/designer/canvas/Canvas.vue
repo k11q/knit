@@ -17,7 +17,6 @@
       data-id="canvas"
       class="w-0 h-0 overflow-visible fixed top-0 left-0"
       :style="{
-        willChange: 'transform',
         isolation: 'isolate',
         transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
         transition: 'transform 0s linear',
@@ -32,6 +31,7 @@
 
     <!--Other elements parent container-->
     <div
+      v-if="selectToi.selectedBoxData && selectToi.selectedBox"
       class="fixed top-0 left-0 w-0 h-0 overflow-visible"
       :style="{
         transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
@@ -50,11 +50,10 @@
         "
         class="absolute pointer-events-none"
         :style="{
-          left: markerLeft().value,
-          top: markerTop().value,
           height: markerHeight().value,
           width: markerWidth().value,
           backgroundColor: '#0191FA',
+          transform: `translate(${markerLeft().value}, ${markerTop().value})`,
         }"
       ></div>
       <!--Selected outline when droppable-->
