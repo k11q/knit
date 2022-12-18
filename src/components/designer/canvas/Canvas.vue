@@ -13,13 +13,7 @@
     }"
   >
     <!--canvas and UI elements-->
-    <div
-      data-id="canvas"
-      class="w-0 h-0 overflow-visible absolute"
-      :style="{
-        transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
-      }"
-    >
+    <div data-id="canvas" class="w-0 h-0 overflow-visible absolute" :style="{}">
       <ClientOnly>
         <KeepAlive>
           <DesignerCanvasUIBrowser :nodes="selectToi.data" />
@@ -506,6 +500,9 @@ onMounted(() => {
 
   addaSquare.offsetLeft = vw(50);
   addaSquare.offsetTop = vh(50);
+
+  let canvas = document.querySelector(`[data-id="canvas"]`) as HTMLElement;
+  canvas.style.transform = `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`;
 
   function vh(percent: number) {
     var h = Math.max(
