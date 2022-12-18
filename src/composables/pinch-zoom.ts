@@ -2,21 +2,25 @@ import { useSquareStore } from "~~/src/stores/dataSquare";
 import { useCanvasStore } from "@/stores/canvas";
 import { useCounterStore, Node } from "../stores/counter";
 
+let endPinchZoom: NodeJS.Timeout;
+
 export function usePinchZoom(event: WheelEvent) {
   const addaSquare = useSquareStore();
   const canvasStore = useCanvasStore();
   const selectToi = useCounterStore();
 
   let canvas = document.querySelector(`[data-id="canvas"]`) as HTMLElement;
-  var endPinchZoom;
 
   event.preventDefault();
-  canvasStore.isPinchZoom = true;
-  canvasStore.hoverData = {} as Node;
-  canvasStore.hoverId = "";
-  selectToi.treeHoverId = "";
-
-  canvas.style.willChange = "transform";
+  if (!canvasStore.isPinchZoom) {
+    canvas.style.willChange = "transform";
+    canvasStore.isPinchZoom = true;
+    canvasStore.hoverData = {} as Node;
+    canvasStore.hoverId = "";
+    selectToi.treeHoverId = "";
+    measuredLines().value = [];
+    console.log("trs");
+  }
 
   if (
     event.deltaX === 0 &&
@@ -34,14 +38,13 @@ export function usePinchZoom(event: WheelEvent) {
     addaSquare.offsetLeft += -event.deltaX * 0.5;
     addaSquare.offsetTop += -event.deltaY * 0.5;
   }
-  canvas.style.transform = `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`;
 
+  console.log("start");
   clearTimeout(endPinchZoom);
-
-  measuredLines().value = [];
 
   endPinchZoom = setTimeout(() => {
     canvasStore.isPinchZoom = false;
+    console.log("end");
     canvas.style.willChange = "";
-  }, "400");
+  }, 200);
 }
