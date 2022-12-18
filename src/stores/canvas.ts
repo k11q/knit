@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 import { useSquareStore } from "./dataSquare";
 import { useCounterStore } from "./counter";
-import { useDropMarker } from "~~/src/stores/dropMarker";
 import { usePaddingResizeStore } from "~~/src/stores/paddingResizeStore";
 import { useRulerSnapStore } from "~~/src/stores/rulerSnap";
 import { changeLeft, changeTop } from "../composables/node";
@@ -136,7 +135,6 @@ export const useCanvasStore = defineStore({
     },
     dndWithoutParent(e: MouseEvent, currDrag: string) {
       const selectToi = useCounterStore();
-      const dropMarker = useDropMarker();
       const paddingResize = usePaddingResizeStore();
       const rulerSnap = useRulerSnapStore();
       const canvasStore = useCanvasStore();
@@ -243,7 +241,7 @@ export const useCanvasStore = defineStore({
             } else {
               rulerSnap.on = false;
               canvasStore.showMarker = true;
-              dropMarker.setMarker(e, currDragElement);
+              setDropMarker(e, currDragElement);
               currDragElement.style.opacity = "0";
 
               canvasStore.hoverData = useGetElementData(
@@ -336,7 +334,6 @@ export const useCanvasStore = defineStore({
       const selectToi = useCounterStore();
       const canvasStore = useCanvasStore();
       const rulerSnap = useRulerSnapStore();
-      const dropMarker = useDropMarker();
       const paddingResize = usePaddingResizeStore();
       const squareStore = useSquareStore();
       let isDragging = false;
@@ -621,7 +618,7 @@ export const useCanvasStore = defineStore({
 
             rulerSnap.on = false;
             canvasStore.showMarker = true;
-            dropMarker.setMarker(e, currDragElement);
+            setDropMarker(e, currDragElement);
             currDragElement.style.opacity = "0";
 
             canvasStore.hoverData = useGetElementData(

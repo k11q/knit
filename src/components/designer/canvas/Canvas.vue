@@ -45,10 +45,10 @@
         v-show="canvasStore.showMarker"
         class="absolute pointer-events-none"
         :style="{
-          left: dropMarker.markerLeft,
-          top: dropMarker.markerTop,
-          height: dropMarker.markerHeight,
-          width: dropMarker.markerWidth,
+          left: markerLeft().value,
+          top: markerTop().value,
+          height: markerHeight().value,
+          width: markerWidth().value,
           backgroundColor: '#0191FA',
         }"
       ></div>
@@ -467,7 +467,6 @@
 import { useCounterStore } from "@/stores/counter";
 import { useSquareStore } from "~~/src/stores/dataSquare";
 import { useResizeStore } from "~~/src/stores/resizeStore";
-import { useDropMarker } from "~~/src/stores/dropMarker";
 import { useSelectStore } from "~~/src/stores/selectStore";
 import { useRulerSnapStore } from "~~/src/stores/rulerSnap";
 import { useCanvasStore } from "~~/src/stores/canvas";
@@ -476,7 +475,6 @@ import { usePaddingResizeStore } from "~~/src/stores/paddingResizeStore";
 const selectToi = useCounterStore();
 const addaSquare = useSquareStore();
 const resizeStore = useResizeStore();
-const dropMarker = useDropMarker();
 const selectStore = useSelectStore();
 const rulerSnap = useRulerSnapStore();
 const canvasStore = useCanvasStore();

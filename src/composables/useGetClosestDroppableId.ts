@@ -1,4 +1,6 @@
 export default function (e: MouseEvent) {
   let closest = useGetClosestElement(e);
-  return closest.dataset.id;
+  if (closest) {
+    return closest.dataset.id;
+  } else return undefined;
 }

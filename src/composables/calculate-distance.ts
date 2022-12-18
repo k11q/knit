@@ -218,6 +218,7 @@ export function calculateDistance(originId: string, measuredId: string) {
           width: measuredLeft - originMidX,
           type: "dashed",
         } as MeasuredLine;
+
         measuredLines().value = [lineX, lineY];
       } else if (originMidX > measuredRight) {
         let lineX = {
