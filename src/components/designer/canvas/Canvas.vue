@@ -17,7 +17,6 @@
       data-id="canvas"
       class="w-0 h-0 overflow-visible absolute"
       :style="{
-        willChange: canvasStore.isPinchZoom ? 'transform' : '',
         transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
       }"
     >

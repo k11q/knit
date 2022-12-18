@@ -32,9 +32,11 @@ export function usePinchZoom(event: WheelEvent) {
       addaSquare.offsetLeft += -event.deltaX * 0.7;
       addaSquare.offsetTop += -event.deltaY * 0.7;
     }
+    document.querySelector(`[data-id="canvas"]`).style.willChange = "transform";
     function endPinchZoom() {
       setTimeout(() => {
         canvasStore.isPinchZoom = false;
+        document.querySelector(`[data-id="canvas"]`).style.willChange = "";
       }, "400");
     }
     measuredLines().value = [];
