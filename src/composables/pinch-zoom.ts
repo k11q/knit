@@ -9,9 +9,10 @@ export function usePinchZoom(event: WheelEvent) {
   const canvasStore = useCanvasStore();
   const selectToi = useCounterStore();
 
-  let canvas = document.querySelector(`[data-id="canvas"]`) as HTMLElement;
+  const canvas = document.querySelector(`[data-id="canvas"]`) as HTMLElement;
 
   event.preventDefault();
+
   if (!canvasStore.isPinchZoom) {
     canvas.style.willChange = "transform";
     canvasStore.isPinchZoom = true;
@@ -19,7 +20,6 @@ export function usePinchZoom(event: WheelEvent) {
     canvasStore.hoverId = "";
     selectToi.treeHoverId = "";
     measuredLines().value = [];
-    console.log("trs");
   }
 
   if (
@@ -39,12 +39,10 @@ export function usePinchZoom(event: WheelEvent) {
     addaSquare.offsetTop += -event.deltaY * 0.5;
   }
 
-  console.log("start");
   clearTimeout(endPinchZoom);
 
   endPinchZoom = setTimeout(() => {
     canvasStore.isPinchZoom = false;
-    console.log("end");
     canvas.style.willChange = "";
   }, 200);
 }

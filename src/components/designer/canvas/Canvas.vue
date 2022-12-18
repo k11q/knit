@@ -156,8 +156,8 @@
     <!--Multiselect elements outline-->
     <div
       v-if="
-        canvasStore.selection.length &&
         !canvasStore.isPinchZoom &&
+        canvasStore.selection.length &&
         !canvasStore.isDragging
       "
       class="fixed top-0 left-0 overflow-visible pointer-events-none"
@@ -170,8 +170,8 @@
     <!--Multiselect elements resizer-->
     <div
       v-if="
-        canvasStore.selection.length &&
         !canvasStore.isPinchZoom &&
+        canvasStore.selection.length &&
         !canvasStore.isDragging
       "
       class="fixed top-0 left-0 overflow-visible pointer-events-none"
@@ -183,14 +183,14 @@
     </div>
     <!--RulerSnap siblings point element-->
     <div
-      v-if="rulerSnap.show && rulerSnap.on && !canvasStore.isPinchZoom"
+      v-if="!canvasStore.isPinchZoom && rulerSnap.show && rulerSnap.on"
       class="absolute inset-0 overflow-visible pointer-events-none"
     >
       <DesignerCanvasRulerPoints :points="rulerSnap.snapPoints" />
     </div>
     <!--frames label-->
     <div
-      v-if="selectToi.data && !canvasStore.isPinchZoom"
+      v-if="!canvasStore.isPinchZoom && selectToi.data"
       class="absolute inset-0 overflow-visible pointer-events-none"
     >
       <ClientOnly>
@@ -203,10 +203,10 @@
     <!--child outline and label-->
     <div
       v-if="
+        !canvasStore.isPinchZoom &&
         selectToi.selectedBoxData &&
         !selectToi.selectedTextEditor &&
-        useCheckParent(selectToi.selectedBoxData.id) &&
-        !canvasStore.isPinchZoom
+        useCheckParent(selectToi.selectedBoxData.id)
       "
       class="fixed top-0 left-0 overflow-visible pointer-events-none box-border"
       :style="{
@@ -305,9 +305,9 @@
     <!--hover outline and label-->
     <div
       v-if="
+        !canvasStore.isPinchZoom &&
         canvasStore.hoverData &&
-        selectToi.treeHoverId &&
-        !canvasStore.isPinchZoom
+        selectToi.treeHoverId
       "
       class="pointer-events-none"
       :style="{
@@ -412,14 +412,14 @@
 
     <!--NEW Ruler element-->
     <div
-      v-if="rulerSnap.show && rulerSnap.on && !canvasStore.isPinchZoom"
+      v-if="!canvasStore.isPinchZoom && rulerSnap.show && rulerSnap.on"
       class="absolute inset-0 overflow-visible pointer-events-none"
     >
       <DesignerCanvasNewRulerSnap />
     </div>
     <!--Tiptap text editor-->
     <div
-      v-if="selectToi.selectedTextEditor"
+      v-if="!canvasStore.isPinchZoom && selectToi.selectedTextEditor"
       class="fixed top-0 left-0 overflow-visible pointer-events-none"
       :style="{
         transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
