@@ -12,6 +12,8 @@ export function usePinchZoom(event: WheelEvent) {
   const canvas = document.querySelector(`[data-id="canvas"]`) as HTMLElement;
 
   event.preventDefault();
+  event.stopPropagation();
+  event.stopImmediatePropagation();
 
   if (!canvasStore.isPinchZoom) {
     canvas.style.willChange = "transform";
