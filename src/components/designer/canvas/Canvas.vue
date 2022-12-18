@@ -32,7 +32,6 @@
 
     <!--Other elements parent container-->
     <div
-      v-show="!canvasStore.isPinchZoom"
       class="fixed top-0 left-0 w-0 h-0 overflow-visible"
       :style="{
         transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
@@ -129,7 +128,7 @@
     -->
       <!--Select show-->
       <div
-        v-show="selectStore.showSelect"
+        v-if="selectStore.showSelect"
         class="absolute pointer-events-none"
         :style="{
           left: selectStore.X + 'px',
@@ -145,7 +144,7 @@
     </div>
     <!--Multiselect elements outline-->
     <div
-      v-show="
+      v-if="
         canvasStore.selection.length &&
         !canvasStore.isPinchZoom &&
         !canvasStore.isDragging
@@ -159,7 +158,7 @@
     </div>
     <!--Multiselect elements resizer-->
     <div
-      v-show="
+      v-if="
         canvasStore.selection.length &&
         !canvasStore.isPinchZoom &&
         !canvasStore.isDragging
@@ -173,14 +172,14 @@
     </div>
     <!--RulerSnap siblings point element-->
     <div
-      v-show="rulerSnap.show && rulerSnap.on && !canvasStore.isPinchZoom"
+      v-if="rulerSnap.show && rulerSnap.on && !canvasStore.isPinchZoom"
       class="absolute inset-0 overflow-visible pointer-events-none"
     >
       <DesignerCanvasRulerPoints :points="rulerSnap.snapPoints" />
     </div>
     <!--frames label-->
     <div
-      v-show="selectToi.data && !canvasStore.isPinchZoom"
+      v-if="selectToi.data && !canvasStore.isPinchZoom"
       class="absolute inset-0 overflow-visible pointer-events-none"
     >
       <ClientOnly>
