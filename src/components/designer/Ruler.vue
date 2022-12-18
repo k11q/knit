@@ -60,12 +60,29 @@ const numberOfMarkers = ref([] as MarkerPosition[]);
 const verticalMarkers = ref([] as MarkerPosition[]);
 
 const backgroundBoxSize = computed(() => {
-  if (squareStore.scale > 4) {
-    return `${squareStore.scale}px ${squareStore.scale}px`;
-  } else return undefined;
+  return squareStore.scale > 4
+    ? `${squareStore.scale}px ${squareStore.scale}px`
+    : "";
 });
 
-const backgroundPosition = ref("");
+const backgroundPosition = computed(() => {
+  let position = "";
+
+  if (
+    squareStore.scale > 4 &&
+    numberOfMarkers.value.length &&
+    verticalMarkers.value.length
+  ) {
+    let positionLeft = numberOfMarkers.value?.[0].position;
+    let positionTop = verticalMarkers.value?.[0].position + 22;
+
+    position = `${positionLeft}px ${positionTop}px, ${positionLeft}px ${positionTop}px`;
+  } else {
+    position = "";
+  }
+
+  return position;
+});
 
 function setRuler() {
   const rulerHorizontal = document.getElementById("rulerHorizontal");
@@ -92,15 +109,6 @@ function setRuler() {
 
   const array: MarkerPosition[] = [];
   const arrayVertical: MarkerPosition[] = [];
-
-  let positionLeft = (-left / (right - left)) * length;
-  let positionTop =
-    (-rulerVerticalTop / (rulerVerticalBottom - rulerVerticalTop)) * height +
-    22;
-  backgroundPosition.value =
-    squareStore.scale > 4
-      ? `${positionLeft}px ${positionTop}px, ${positionLeft}px ${positionTop}px`
-      : "";
 
   if (squareStore.scale < 0.025) {
     Promise.resolve()
