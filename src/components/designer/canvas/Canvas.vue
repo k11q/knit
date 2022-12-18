@@ -15,7 +15,7 @@
     <!--canvas and UI elements-->
     <div
       data-id="canvas"
-      class="w-0 h-0 overflow-visible absolute"
+      class="w-0 h-0 overflow-visible fixed top-0 left-0"
       :style="{
         willChange: 'transform',
         isolation: 'isolate',

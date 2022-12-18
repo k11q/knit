@@ -34,11 +34,13 @@ export function usePinchZoom(event: WheelEvent) {
     }
     let canvas = document.querySelector(`[data-id="canvas"]`) as HTMLElement;
 
+    canvas.style.willChange = "";
     canvas.style.transform = `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`;
 
     function endPinchZoom() {
       setTimeout(() => {
         canvasStore.isPinchZoom = false;
+        canvas.style.willChange = "transform";
       }, "400");
     }
     measuredLines().value = [];
