@@ -111,6 +111,9 @@ function setRuler() {
     ? (rulerHorizontalRect.right - squareStore.offsetLeft) / squareStore.scale
     : 0;
 
+  const widthMeasurement = right - left;
+  const heightMeasurement = rulerVerticalBottom - rulerVerticalTop;
+
   const array: MarkerPosition[] = [];
   const arrayVertical: MarkerPosition[] = [];
 
@@ -121,43 +124,45 @@ function setRuler() {
           if (i > left) {
             let positionMarker = i;
             array.push({
-              position: ((-left + positionMarker) / (right - left)) * length,
+              position: ((-left + positionMarker) / widthMeasurement) * length,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = -5000; i > left; i = i - 5000) {
           if (i < right) {
             let positionMarker = i;
             array.push({
-              position: ((-left + positionMarker) / (right - left)) * length,
+              position: ((-left + positionMarker) / widthMeasurement) * length,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = 0; i < rulerVerticalBottom; i = i + 5000) {
           if (i > rulerVerticalTop) {
             let positionMarker = i;
             arrayVertical.push({
               position:
-                ((-rulerVerticalTop + positionMarker) /
-                  (rulerVerticalBottom - rulerVerticalTop)) *
+                ((-rulerVerticalTop + positionMarker) / heightMeasurement) *
                 height,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = -5000; i > rulerVerticalTop; i = i - 5000) {
           if (i < rulerVerticalBottom) {
             let positionMarker = i;
             arrayVertical.push({
               position:
-                ((-rulerVerticalTop + positionMarker) /
-                  (rulerVerticalBottom - rulerVerticalTop)) *
+                ((-rulerVerticalTop + positionMarker) / heightMeasurement) *
                 height,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
       })
       .then(() => {
@@ -171,43 +176,45 @@ function setRuler() {
           if (i > left) {
             let positionMarker = i;
             array.push({
-              position: ((-left + positionMarker) / (right - left)) * length,
+              position: ((-left + positionMarker) / widthMeasurement) * length,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = -2500; i > left; i = i - 2500) {
           if (i < right) {
             let positionMarker = i;
             array.push({
-              position: ((-left + positionMarker) / (right - left)) * length,
+              position: ((-left + positionMarker) / widthMeasurement) * length,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = 0; i < rulerVerticalBottom; i = i + 2500) {
           if (i > rulerVerticalTop) {
             let positionMarker = i;
             arrayVertical.push({
               position:
-                ((-rulerVerticalTop + positionMarker) /
-                  (rulerVerticalBottom - rulerVerticalTop)) *
+                ((-rulerVerticalTop + positionMarker) / heightMeasurement) *
                 height,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = -2500; i > rulerVerticalTop; i = i - 2500) {
           if (i < rulerVerticalBottom) {
             let positionMarker = i;
             arrayVertical.push({
               position:
-                ((-rulerVerticalTop + positionMarker) /
-                  (rulerVerticalBottom - rulerVerticalTop)) *
+                ((-rulerVerticalTop + positionMarker) / heightMeasurement) *
                 height,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
       })
       .then(() => {
@@ -221,43 +228,45 @@ function setRuler() {
           if (i > left) {
             let positionMarker = i;
             array.push({
-              position: ((-left + positionMarker) / (right - left)) * length,
+              position: ((-left + positionMarker) / widthMeasurement) * length,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = -1000; i > left; i = i - 1000) {
           if (i < right) {
             let positionMarker = i;
             array.push({
-              position: ((-left + positionMarker) / (right - left)) * length,
+              position: ((-left + positionMarker) / widthMeasurement) * length,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = 0; i < rulerVerticalBottom; i = i + 1000) {
           if (i > rulerVerticalTop) {
             let positionMarker = i;
             arrayVertical.push({
               position:
-                ((-rulerVerticalTop + positionMarker) /
-                  (rulerVerticalBottom - rulerVerticalTop)) *
+                ((-rulerVerticalTop + positionMarker) / heightMeasurement) *
                 height,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = -1000; i > rulerVerticalTop; i = i - 1000) {
           if (i < rulerVerticalBottom) {
             let positionMarker = i;
             arrayVertical.push({
               position:
-                ((-rulerVerticalTop + positionMarker) /
-                  (rulerVerticalBottom - rulerVerticalTop)) *
+                ((-rulerVerticalTop + positionMarker) / heightMeasurement) *
                 height,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
       })
       .then(() => {
@@ -271,43 +280,45 @@ function setRuler() {
           if (i > left) {
             let positionMarker = i;
             array.push({
-              position: ((-left + positionMarker) / (right - left)) * length,
+              position: ((-left + positionMarker) / widthMeasurement) * length,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = -500; i > left; i = i - 500) {
           if (i < right) {
             let positionMarker = i;
             array.push({
-              position: ((-left + positionMarker) / (right - left)) * length,
+              position: ((-left + positionMarker) / widthMeasurement) * length,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = 0; i < rulerVerticalBottom; i = i + 500) {
           if (i > rulerVerticalTop) {
             let positionMarker = i;
             arrayVertical.push({
               position:
-                ((-rulerVerticalTop + positionMarker) /
-                  (rulerVerticalBottom - rulerVerticalTop)) *
+                ((-rulerVerticalTop + positionMarker) / heightMeasurement) *
                 height,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = -500; i > rulerVerticalTop; i = i - 500) {
           if (i < rulerVerticalBottom) {
             let positionMarker = i;
             arrayVertical.push({
               position:
-                ((-rulerVerticalTop + positionMarker) /
-                  (rulerVerticalBottom - rulerVerticalTop)) *
+                ((-rulerVerticalTop + positionMarker) / heightMeasurement) *
                 height,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
       })
       .then(() => {
@@ -321,43 +332,45 @@ function setRuler() {
           if (i > left) {
             let positionMarker = i;
             array.push({
-              position: ((-left + positionMarker) / (right - left)) * length,
+              position: ((-left + positionMarker) / widthMeasurement) * length,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = -250; i > left; i = i - 250) {
           if (i < right) {
             let positionMarker = i;
             array.push({
-              position: ((-left + positionMarker) / (right - left)) * length,
+              position: ((-left + positionMarker) / widthMeasurement) * length,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = 0; i < rulerVerticalBottom; i = i + 250) {
           if (i > rulerVerticalTop) {
             let positionMarker = i;
             arrayVertical.push({
               position:
-                ((-rulerVerticalTop + positionMarker) /
-                  (rulerVerticalBottom - rulerVerticalTop)) *
+                ((-rulerVerticalTop + positionMarker) / heightMeasurement) *
                 height,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = -250; i > rulerVerticalTop; i = i - 250) {
           if (i < rulerVerticalBottom) {
             let positionMarker = i;
             arrayVertical.push({
               position:
-                ((-rulerVerticalTop + positionMarker) /
-                  (rulerVerticalBottom - rulerVerticalTop)) *
+                ((-rulerVerticalTop + positionMarker) / heightMeasurement) *
                 height,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
       })
       .then(() => {
@@ -371,43 +384,45 @@ function setRuler() {
           if (i > left) {
             let positionMarker = i;
             array.push({
-              position: ((-left + positionMarker) / (right - left)) * length,
+              position: ((-left + positionMarker) / widthMeasurement) * length,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = -100; i > left; i = i - 100) {
           if (i < right) {
             let positionMarker = i;
             array.push({
-              position: ((-left + positionMarker) / (right - left)) * length,
+              position: ((-left + positionMarker) / widthMeasurement) * length,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = 0; i < rulerVerticalBottom; i = i + 100) {
           if (i > rulerVerticalTop) {
             let positionMarker = i;
             arrayVertical.push({
               position:
-                ((-rulerVerticalTop + positionMarker) /
-                  (rulerVerticalBottom - rulerVerticalTop)) *
+                ((-rulerVerticalTop + positionMarker) / heightMeasurement) *
                 height,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = -100; i > rulerVerticalTop; i = i - 100) {
           if (i < rulerVerticalBottom) {
             let positionMarker = i;
             arrayVertical.push({
               position:
-                ((-rulerVerticalTop + positionMarker) /
-                  (rulerVerticalBottom - rulerVerticalTop)) *
+                ((-rulerVerticalTop + positionMarker) / heightMeasurement) *
                 height,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
       })
       .then(() => {
@@ -421,43 +436,45 @@ function setRuler() {
           if (i > left) {
             let positionMarker = i;
             array.push({
-              position: ((-left + positionMarker) / (right - left)) * length,
+              position: ((-left + positionMarker) / widthMeasurement) * length,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = -50; i > left; i = i - 50) {
           if (i < right) {
             let positionMarker = i;
             array.push({
-              position: ((-left + positionMarker) / (right - left)) * length,
+              position: ((-left + positionMarker) / widthMeasurement) * length,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = 0; i < rulerVerticalBottom; i = i + 50) {
           if (i > rulerVerticalTop) {
             let positionMarker = i;
             arrayVertical.push({
               position:
-                ((-rulerVerticalTop + positionMarker) /
-                  (rulerVerticalBottom - rulerVerticalTop)) *
+                ((-rulerVerticalTop + positionMarker) / heightMeasurement) *
                 height,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = -50; i > rulerVerticalTop; i = i - 50) {
           if (i < rulerVerticalBottom) {
             let positionMarker = i;
             arrayVertical.push({
               position:
-                ((-rulerVerticalTop + positionMarker) /
-                  (rulerVerticalBottom - rulerVerticalTop)) *
+                ((-rulerVerticalTop + positionMarker) / heightMeasurement) *
                 height,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
       })
       .then(() => {
@@ -471,43 +488,45 @@ function setRuler() {
           if (i > left) {
             let positionMarker = i;
             array.push({
-              position: ((-left + positionMarker) / (right - left)) * length,
+              position: ((-left + positionMarker) / widthMeasurement) * length,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = -25; i > left; i = i - 25) {
           if (i < right) {
             let positionMarker = i;
             array.push({
-              position: ((-left + positionMarker) / (right - left)) * length,
+              position: ((-left + positionMarker) / widthMeasurement) * length,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = 0; i < rulerVerticalBottom; i = i + 25) {
           if (i > rulerVerticalTop) {
             let positionMarker = i;
             arrayVertical.push({
               position:
-                ((-rulerVerticalTop + positionMarker) /
-                  (rulerVerticalBottom - rulerVerticalTop)) *
+                ((-rulerVerticalTop + positionMarker) / heightMeasurement) *
                 height,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = -25; i > rulerVerticalTop; i = i - 25) {
           if (i < rulerVerticalBottom) {
             let positionMarker = i;
             arrayVertical.push({
               position:
-                ((-rulerVerticalTop + positionMarker) /
-                  (rulerVerticalBottom - rulerVerticalTop)) *
+                ((-rulerVerticalTop + positionMarker) / heightMeasurement) *
                 height,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
       })
       .then(() => {
@@ -521,43 +540,45 @@ function setRuler() {
           if (i > left) {
             let positionMarker = i;
             array.push({
-              position: ((-left + positionMarker) / (right - left)) * length,
+              position: ((-left + positionMarker) / widthMeasurement) * length,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = -10; i > left; i = i - 10) {
           if (i < right) {
             let positionMarker = i;
             array.push({
-              position: ((-left + positionMarker) / (right - left)) * length,
+              position: ((-left + positionMarker) / widthMeasurement) * length,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = 0; i < rulerVerticalBottom; i = i + 10) {
           if (i > rulerVerticalTop) {
             let positionMarker = i;
             arrayVertical.push({
               position:
-                ((-rulerVerticalTop + positionMarker) /
-                  (rulerVerticalBottom - rulerVerticalTop)) *
+                ((-rulerVerticalTop + positionMarker) / heightMeasurement) *
                 height,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = -10; i > rulerVerticalTop; i = i - 10) {
           if (i < rulerVerticalBottom) {
             let positionMarker = i;
             arrayVertical.push({
               position:
-                ((-rulerVerticalTop + positionMarker) /
-                  (rulerVerticalBottom - rulerVerticalTop)) *
+                ((-rulerVerticalTop + positionMarker) / heightMeasurement) *
                 height,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
       })
       .then(() => {
@@ -571,43 +592,45 @@ function setRuler() {
           if (i > left) {
             let positionMarker = i;
             array.push({
-              position: ((-left + positionMarker) / (right - left)) * length,
+              position: ((-left + positionMarker) / widthMeasurement) * length,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = -5; i > left; i = i - 5) {
           if (i < right) {
             let positionMarker = i;
             array.push({
-              position: ((-left + positionMarker) / (right - left)) * length,
+              position: ((-left + positionMarker) / widthMeasurement) * length,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = 0; i < rulerVerticalBottom; i = i + 5) {
           if (i > rulerVerticalTop) {
             let positionMarker = i;
             arrayVertical.push({
               position:
-                ((-rulerVerticalTop + positionMarker) /
-                  (rulerVerticalBottom - rulerVerticalTop)) *
+                ((-rulerVerticalTop + positionMarker) / heightMeasurement) *
                 height,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = -5; i > rulerVerticalTop; i = i - 5) {
           if (i < rulerVerticalBottom) {
             let positionMarker = i;
             arrayVertical.push({
               position:
-                ((-rulerVerticalTop + positionMarker) /
-                  (rulerVerticalBottom - rulerVerticalTop)) *
+                ((-rulerVerticalTop + positionMarker) / heightMeasurement) *
                 height,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
       })
       .then(() => {
@@ -621,43 +644,45 @@ function setRuler() {
           if (i > left) {
             let positionMarker = i;
             array.push({
-              position: ((-left + positionMarker) / (right - left)) * length,
+              position: ((-left + positionMarker) / widthMeasurement) * length,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = -2; i > left; i = i - 2) {
           if (i < right) {
             let positionMarker = i;
             array.push({
-              position: ((-left + positionMarker) / (right - left)) * length,
+              position: ((-left + positionMarker) / widthMeasurement) * length,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = 0; i < rulerVerticalBottom; i = i + 2) {
           if (i > rulerVerticalTop) {
             let positionMarker = i;
             arrayVertical.push({
               position:
-                ((-rulerVerticalTop + positionMarker) /
-                  (rulerVerticalBottom - rulerVerticalTop)) *
+                ((-rulerVerticalTop + positionMarker) / heightMeasurement) *
                 height,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = -2; i > rulerVerticalTop; i = i - 2) {
           if (i < rulerVerticalBottom) {
             let positionMarker = i;
             arrayVertical.push({
               position:
-                ((-rulerVerticalTop + positionMarker) /
-                  (rulerVerticalBottom - rulerVerticalTop)) *
+                ((-rulerVerticalTop + positionMarker) / heightMeasurement) *
                 height,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
       })
       .then(() => {
@@ -671,43 +696,45 @@ function setRuler() {
           if (i > left) {
             let positionMarker = i;
             array.push({
-              position: ((-left + positionMarker) / (right - left)) * length,
+              position: ((-left + positionMarker) / widthMeasurement) * length,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = -1; i > left; i = i - 1) {
           if (i < right) {
             let positionMarker = i;
             array.push({
-              position: ((-left + positionMarker) / (right - left)) * length,
+              position: ((-left + positionMarker) / widthMeasurement) * length,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = 0; i < rulerVerticalBottom; i = i + 1) {
           if (i > rulerVerticalTop) {
             let positionMarker = i;
             arrayVertical.push({
               position:
-                ((-rulerVerticalTop + positionMarker) /
-                  (rulerVerticalBottom - rulerVerticalTop)) *
+                ((-rulerVerticalTop + positionMarker) / heightMeasurement) *
                 height,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
         for (let i = -1; i > rulerVerticalTop; i = i - 1) {
           if (i < rulerVerticalBottom) {
             let positionMarker = i;
             arrayVertical.push({
               position:
-                ((-rulerVerticalTop + positionMarker) /
-                  (rulerVerticalBottom - rulerVerticalTop)) *
+                ((-rulerVerticalTop + positionMarker) / heightMeasurement) *
                 height,
               value: i,
             });
-          } else continue;
+          }
+          continue;
         }
       })
       .then(() => {
