@@ -32,8 +32,8 @@ export function usePinchZoom(event: WheelEvent) {
     addaSquare.offsetLeft = event.clientX - xs * addaSquare.scale;
     addaSquare.offsetTop = event.clientY - ys * addaSquare.scale;
   } else {
-    addaSquare.offsetLeft += -event.deltaX * 0.7;
-    addaSquare.offsetTop += -event.deltaY * 0.7;
+    addaSquare.offsetLeft += -event.deltaX * 0.5;
+    addaSquare.offsetTop += -event.deltaY * 0.5;
   }
 
   function transformCanvas() {

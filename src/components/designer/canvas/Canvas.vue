@@ -20,6 +20,7 @@
         willChange: 'transform',
         isolation: 'isolate',
         transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
+        transition: 'transform 0s linear',
       }"
     >
       <ClientOnly>
