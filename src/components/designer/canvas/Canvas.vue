@@ -43,7 +43,11 @@
       </ClientOnly>
       <!--Drop marker-->
       <div
-        v-show="canvasStore.showMarker"
+        v-if="
+          !canvasStore.isPinchZoom &&
+          selectToi.selectedBoxData &&
+          canvasStore.showMarker
+        "
         class="absolute pointer-events-none"
         :style="{
           left: markerLeft().value,
@@ -55,7 +59,11 @@
       ></div>
       <!--Selected outline when droppable-->
       <div
-        v-show="canvasStore.showMarker"
+        v-if="
+          !canvasStore.isPinchZoom &&
+          selectToi.selectedBoxData &&
+          canvasStore.showMarker
+        "
         class="absolute pointer-events-none"
         :style="{
           left: selectToi.selectedBoxData.cssRules
@@ -81,7 +89,11 @@
       ></div>
       <!--Ghost outline-->
       <div
-        v-show="canvasStore.showGhostOutline"
+        v-if="
+          !canvasStore.isPinchZoom &&
+          selectToi.selectedBoxData &&
+          canvasStore.showGhostOutline
+        "
         class="absolute pointer-events-none"
         :style="{
           left:
@@ -191,7 +203,7 @@
 
     <!--child outline and label-->
     <div
-      v-show="
+      v-if="
         selectToi.selectedBoxData &&
         !selectToi.selectedTextEditor &&
         useCheckParent(selectToi.selectedBoxData.id) &&
@@ -401,13 +413,14 @@
 
     <!--NEW Ruler element-->
     <div
-      v-show="rulerSnap.show && rulerSnap.on && !canvasStore.isPinchZoom"
+      v-if="rulerSnap.show && rulerSnap.on && !canvasStore.isPinchZoom"
       class="absolute inset-0 overflow-visible pointer-events-none"
     >
       <DesignerCanvasNewRulerSnap />
     </div>
     <!--Tiptap text editor-->
     <div
+      v-if="selectToi.selectedTextEditor"
       class="fixed top-0 left-0 overflow-visible pointer-events-none"
       :style="{
         transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
