@@ -201,6 +201,7 @@ function styleProps(node: Node, depth: number) {
       depth === 0
         ? `translate(${node.cssRules[0]?.style?.left?.value}px, ${node.cssRules[0]?.style?.top?.value}px)`
         : "",
+    willChange: depth === 0 ? "transform" : "",
   };
 }
 
