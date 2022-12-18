@@ -13,7 +13,14 @@
     }"
   >
     <!--canvas and UI elements-->
-    <div data-id="canvas" class="w-0 h-0 overflow-visible absolute" :style="{}">
+    <div
+      data-id="canvas"
+      class="w-0 h-0 overflow-visible absolute"
+      :style="{
+        willChange: 'transform',
+        isolation: 'isolate',
+      }"
+    >
       <ClientOnly>
         <KeepAlive>
           <DesignerCanvasUIBrowser :nodes="selectToi.data" />
