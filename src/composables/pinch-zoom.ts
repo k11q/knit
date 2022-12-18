@@ -36,6 +36,8 @@ export function usePinchZoom(event: WheelEvent) {
     addaSquare.offsetTop += -event.deltaY * 0.7;
   }
 
+  canvas.style.transform = `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`;
+
   function transformCanvas() {
     canvas.style.transform = `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`;
 

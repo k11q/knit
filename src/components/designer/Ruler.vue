@@ -11,7 +11,8 @@
         <div
           class="w-8 flex flex-col items-center gap-0.5 absolute top-0 bottom-0"
           :style="{
-            left: i.position - 16 + 'px',
+            transform: `translateX(${i.position - 16}px)`,
+            willChange: 'transform',
           }"
         >
           <span>{{ i.value }}</span>
@@ -31,7 +32,8 @@
         <div
           class="h-8 flex flex-row items-center gap-0.5 absolute left-0 right-0"
           :style="{
-            top: i.position - 16 + 'px',
+            transform: `translateY(${i.position - 16}px)`,
+            willChange: 'transform',
           }"
         >
           <span
