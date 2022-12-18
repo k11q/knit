@@ -16,35 +16,44 @@
       class="absolute -mt-5 cursor-default overflow-ellipsis"
     >
       <p
-        @mousedown.stop="canvasStore.dndWithoutParent($event, frame.id)"
+        @mousedown.stop="
+          () => {
+            if (mouseenter) {
+              useSetSelectSingle($event, frame.id);
+              canvasStore.dndWithoutParent($event, frame.id);
+            }
+          }
+        "
         @mouseenter="
           () => {
+            mouseenter = true;
             canvasStore.hoverData = useGetElementData(selectToi.data, frame.id);
             selectToi.treeHoverId = frame.id;
           }
         "
         @mouseout="
           () => {
+            if(mouseenter){
             selectToi.treeHover = false;
             selectToi.treeHoverId = '';
             canvasStore.hoverData = {} as Node;
+            mouseenter = false
+            }
           }
         "
-        @click="useSetSelectSingle($event, frame.id)"
         class="fixed cursor-default hover:text-[#6EB0E0] hover:opacity-100 overflow-hidden overflow-ellipsis"
         :class="{
           'text-[#6EB0E0] opacity-100':
+            mouseenter ||
             selectToi.selectedBox === frame.id ||
             selectToi.treeHoverId === frame.id,
           'text-[#FAFAFA] opacity-40':
-            selectToi.selectedBox !== frame.id &&
-            selectToi.treeHoverId !== frame.id,
+            !mouseenter &&
+            selectToi.selectedBox != frame.id &&
+            selectToi.treeHoverId != frame.id,
         }"
         :style="{
-          maxWidth: frame.cssRules[0].style.width
-          ? Math.round(frame.cssRules[0].style.width.value as number * squareStore.scale) +
-            'px'
-          : useGetElementRect(frame.id)?.width + 'px',
+          maxWidth: width(frame),
         }"
       >
         {{ frame.name }}
@@ -63,6 +72,8 @@ const selectToi = useCounterStore();
 const squareStore = useSquareStore();
 const canvasStore = useCanvasStore();
 
+const mouseenter = ref(false);
+
 function left(frame: Node) {
   return frame.cssRules[0].style.left
     ? ((frame.cssRules[0].style.left.value as number) +
@@ -79,6 +90,14 @@ function top(frame: Node) {
         squareStore.scale +
         "px"
     : useGetElementRect(frame.id)?.y + "px";
+}
+
+function width(frame: Node) {
+  return frame.cssRules[0].style.width
+    ? Math.round(
+        (frame.cssRules[0].style.width.value as number) * squareStore.scale
+      ) + "px"
+    : useGetElementRect(frame.id)?.width + "px";
 }
 
 const props = defineProps({
