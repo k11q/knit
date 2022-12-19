@@ -631,9 +631,21 @@ export const useCanvasStore = defineStore({
       const squareStore = useSquareStore();
       const canvasStore = useCanvasStore();
       let prevPositions = [] as Positions[];
+      let clonedSelection = [] as Node[];
 
       canvasStore.selection.forEach((i) => {
         let selectedElementRect = useGetElementRect(i.id) as DOMRect;
+
+        let cloneId = useCreateId();
+        let clonedData = JSON.parse(JSON.stringify(i)) as Node;
+        function changeId(id: string, node: Node) {
+          node.id = id;
+          if (node.children) {
+            node.children.forEach((i) => changeId(useCreateId(), i));
+          }
+        }
+        changeId(cloneId, clonedData);
+        clonedSelection.push(clonedData);
 
         let prevX = e.clientX - selectedElementRect.x;
         let prevY = e.clientY - selectedElementRect.y;
@@ -648,6 +660,18 @@ export const useCanvasStore = defineStore({
         e.preventDefault();
         e.stopPropagation();
         canvasStore.isDragging = true;
+
+        if (
+          e.altKey &&
+          clonedSelection.length &&
+          canvasStore.selection.length
+        ) {
+          if (!findOne(selectToi.data, clonedSelection[0].id)) {
+            clonedSelection.forEach((i, index) => {
+              appendBefore(selectToi.data, canvasStore.selection[index].id, i);
+            });
+          }
+        }
 
         canvasStore.selection.forEach((i, index) => {
           let element = useGetElement(i.id) as HTMLElement;
