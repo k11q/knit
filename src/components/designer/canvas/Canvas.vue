@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed left-[296px] top-14 right-[239px] bottom-0 overflow-clip"
+    class="absolute inset-0 overflow-hidden"
     @wheel.stop.prevent="usePinchZoom($event)"
     @mousedown.stop.prevent="addaSquare.addSquare($event)"
     :class="{
