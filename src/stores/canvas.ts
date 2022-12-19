@@ -195,76 +195,73 @@ export const useCanvasStore = defineStore({
         }
       }
       function mouseup() {
-        function update() {
-          if (isDragging) {
-            Promise.resolve()
-              .then(function () {
-                if (
-                  closest &&
+        if (isDragging) {
+          Promise.resolve()
+            .then(function () {
+              if (
+                closest &&
+                selectToi.selectedBox !== closestTarget &&
+                canvasStore.dragzone &&
+                !canvasStore.dropzone
+              ) {
+                //append after
+
+                delete selectToi.selectedBoxData.cssRules[0].style.left;
+                delete selectToi.selectedBoxData.cssRules[0].style.top;
+                useTransferData().removeChild(selectToi.data, currDrag);
+                selectToi.selectedBoxData.cssRules[0].style.position.value =
+                  "static";
+                useTransferData().appendBefore(
+                  selectToi.data,
+                  canvasStore.dragzone,
+                  selectToi.selectedBoxData,
+                  closestTarget
+                );
+                canvasStore.showMarker = false;
+                currDragElement.style.opacity = prevOpacity;
+                canvasStore.dragzone = "";
+              }
+              if (
+                (closest &&
                   selectToi.selectedBox !== closestTarget &&
-                  canvasStore.dragzone &&
-                  !canvasStore.dropzone
-                ) {
-                  //append after
-
-                  delete selectToi.selectedBoxData.cssRules[0].style.left;
-                  delete selectToi.selectedBoxData.cssRules[0].style.top;
-                  useTransferData().removeChild(selectToi.data, currDrag);
-                  selectToi.selectedBoxData.cssRules[0].style.position.value =
-                    "static";
-                  useTransferData().appendBefore(
-                    selectToi.data,
-                    canvasStore.dragzone,
-                    selectToi.selectedBoxData,
-                    closestTarget
-                  );
-                  canvasStore.showMarker = false;
-                  currDragElement.style.opacity = prevOpacity;
-                  canvasStore.dragzone = "";
-                }
-                if (
-                  (closest &&
-                    selectToi.selectedBox !== closestTarget &&
-                    !canvasStore.dragzone &&
-                    canvasStore.dropzone) ||
-                  (closest && !closest.children?.length)
-                ) {
-                  //append bottom/push
-                  delete selectToi.selectedBoxData.cssRules[0].style.left;
-                  delete selectToi.selectedBoxData.cssRules[0].style.top;
-                  useTransferData().removeChild(selectToi.data, currDrag);
-                  selectToi.selectedBoxData.cssRules[0].style.position.value =
-                    "static";
-                  useTransferData().appendChild(
-                    selectToi.data,
-                    selectToi.selectedBoxData,
-                    closestTarget
-                  );
-                  canvasStore.showMarker = false;
-                  currDragElement.style.opacity = prevOpacity;
-                }
-              })
-              .then(function () {
-                useSetOutlineSelector(currDrag);
-                paddingResize.setResizerSize(currDrag);
-              });
-            useSetOutlineSelector(currDrag);
-            paddingResize.setResizerSize(currDrag);
-          }
-          selectToi.treeHoverSize = 1;
-          isDragging = false;
-          //reselect
-          setTimeout(() => {
-            canvasStore.isDragging = false;
-            rulerSnap.show = false;
-          }, 0);
-
-          rulerSnap.show = false;
-          canvasStore.isDragging = false;
-          window.removeEventListener("mousemove", mousemove);
-          window.removeEventListener("mouseup", mouseup);
+                  !canvasStore.dragzone &&
+                  canvasStore.dropzone) ||
+                (closest && !closest.children?.length)
+              ) {
+                //append bottom/push
+                delete selectToi.selectedBoxData.cssRules[0].style.left;
+                delete selectToi.selectedBoxData.cssRules[0].style.top;
+                useTransferData().removeChild(selectToi.data, currDrag);
+                selectToi.selectedBoxData.cssRules[0].style.position.value =
+                  "static";
+                useTransferData().appendChild(
+                  selectToi.data,
+                  selectToi.selectedBoxData,
+                  closestTarget
+                );
+                canvasStore.showMarker = false;
+                currDragElement.style.opacity = prevOpacity;
+              }
+            })
+            .then(function () {
+              useSetOutlineSelector(currDrag);
+              paddingResize.setResizerSize(currDrag);
+            });
+          useSetOutlineSelector(currDrag);
+          paddingResize.setResizerSize(currDrag);
         }
-        requestAnimationFrame(update);
+        selectToi.treeHoverSize = 1;
+        isDragging = false;
+        //reselect
+        setTimeout(() => {
+          canvasStore.isDragging = false;
+          rulerSnap.show = false;
+        }, 0);
+
+        rulerSnap.show = false;
+        canvasStore.isDragging = false;
+        window.removeEventListener("mousemove", mousemove);
+        window.removeEventListener("mouseup", mouseup);
       }
     },
     dndWithParent(e: MouseEvent, currDrag: string) {
@@ -553,83 +550,80 @@ export const useCanvasStore = defineStore({
       }
 
       function mouseup() {
-        function update() {
-          if (
-            isDragging &&
-            closest &&
-            closest.dataset.id !== parentId &&
-            closest.dataset.id !== currDrag
-          ) {
-            Promise.resolve()
-              .then(function () {
-                if (
-                  closest &&
+        if (
+          isDragging &&
+          closest &&
+          closest.dataset.id !== parentId &&
+          closest.dataset.id !== currDrag
+        ) {
+          Promise.resolve()
+            .then(function () {
+              if (
+                closest &&
+                selectToi.selectedBox !== closestTarget &&
+                canvasStore.dragzone &&
+                !canvasStore.dropzone
+              ) {
+                //append after
+
+                delete selectToi.selectedBoxData.cssRules[0].style.left;
+                delete selectToi.selectedBoxData.cssRules[0].style.top;
+                useTransferData().removeChild(selectToi.data, currDrag);
+                selectToi.selectedBoxData.cssRules[0].style.position.value =
+                  "static";
+                useTransferData().appendBefore(
+                  selectToi.data,
+                  canvasStore.dragzone,
+                  selectToi.selectedBoxData,
+                  closestTarget
+                );
+                canvasStore.showMarker = false;
+                currDragElement.style.opacity = prevOpacity;
+                canvasStore.dragzone = "";
+              }
+              if (
+                (closest &&
                   selectToi.selectedBox !== closestTarget &&
-                  canvasStore.dragzone &&
-                  !canvasStore.dropzone
-                ) {
-                  //append after
+                  !canvasStore.dragzone &&
+                  canvasStore.dropzone) ||
+                (closest && !closest.children?.length)
+              ) {
+                //append bottom/push
+                delete selectToi.selectedBoxData.cssRules[0].style.left;
+                delete selectToi.selectedBoxData.cssRules[0].style.top;
+                useTransferData().removeChild(selectToi.data, currDrag);
 
-                  delete selectToi.selectedBoxData.cssRules[0].style.left;
-                  delete selectToi.selectedBoxData.cssRules[0].style.top;
-                  useTransferData().removeChild(selectToi.data, currDrag);
-                  selectToi.selectedBoxData.cssRules[0].style.position.value =
-                    "static";
-                  useTransferData().appendBefore(
-                    selectToi.data,
-                    canvasStore.dragzone,
-                    selectToi.selectedBoxData,
-                    closestTarget
-                  );
-                  canvasStore.showMarker = false;
-                  currDragElement.style.opacity = prevOpacity;
-                  canvasStore.dragzone = "";
-                }
-                if (
-                  (closest &&
-                    selectToi.selectedBox !== closestTarget &&
-                    !canvasStore.dragzone &&
-                    canvasStore.dropzone) ||
-                  (closest && !closest.children?.length)
-                ) {
-                  //append bottom/push
-                  delete selectToi.selectedBoxData.cssRules[0].style.left;
-                  delete selectToi.selectedBoxData.cssRules[0].style.top;
-                  useTransferData().removeChild(selectToi.data, currDrag);
-
-                  selectToi.selectedBoxData.cssRules[0].style.position.value =
-                    "static";
-                  useTransferData().appendChild(
-                    selectToi.data,
-                    selectToi.selectedBoxData,
-                    closestTarget
-                  );
-                  canvasStore.showMarker = false;
-                  currDragElement.style.opacity = prevOpacity;
-                }
-              })
-              .then(function () {
-                useSetOutlineSelector(currDrag);
-                paddingResize.setResizerSize(currDrag);
-              });
-            useSetOutlineSelector(currDrag);
-            paddingResize.setResizerSize(currDrag);
-          }
-          selectToi.treeHoverSize = 1;
-
-          isDragging = false;
-
-          canvasStore.showGhostOutline = false;
-          canvasStore.showSolidOutline = false;
-          rulerSnap.show = false;
-          window.removeEventListener("mousemove", mousemove);
-          window.removeEventListener("mouseup", mouseup);
-
-          setTimeout(() => {
-            canvasStore.isDragging = false;
-          }, 0);
+                selectToi.selectedBoxData.cssRules[0].style.position.value =
+                  "static";
+                useTransferData().appendChild(
+                  selectToi.data,
+                  selectToi.selectedBoxData,
+                  closestTarget
+                );
+                canvasStore.showMarker = false;
+                currDragElement.style.opacity = prevOpacity;
+              }
+            })
+            .then(function () {
+              useSetOutlineSelector(currDrag);
+              paddingResize.setResizerSize(currDrag);
+            });
+          useSetOutlineSelector(currDrag);
+          paddingResize.setResizerSize(currDrag);
         }
-        requestAnimationFrame(update);
+        selectToi.treeHoverSize = 1;
+
+        isDragging = false;
+
+        canvasStore.showGhostOutline = false;
+        canvasStore.showSolidOutline = false;
+        rulerSnap.show = false;
+        window.removeEventListener("mousemove", mousemove);
+        window.removeEventListener("mouseup", mouseup);
+
+        setTimeout(() => {
+          canvasStore.isDragging = false;
+        }, 0);
       }
     },
     setPositionMultiElement(e: MouseEvent) {

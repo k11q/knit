@@ -34,6 +34,16 @@ type LineResize = {
   lineY: number;
 };
 
+//type for samedistance snap
+type LineAndId = {
+  line: number;
+  id: string;
+};
+type OriginAndMeasuredId = {
+  originId: string;
+  measuredId: string;
+};
+
 export const useRulerSnapStore = defineStore({
   id: "rulerSnap",
   state: () => ({
@@ -682,6 +692,7 @@ export const useRulerSnapStore = defineStore({
             selectedSiblingsCopy.push(i);
           }
           //check same distance
+          //set closest left,right,top, bottom
           if (
             ((!closestLeftLine && siblingRight < currDragLeft) ||
               (closestLeftLine &&
@@ -731,7 +742,7 @@ export const useRulerSnapStore = defineStore({
             closestBottomId = siblingId;
           } else return;
         });
-
+        //snap for horizontal same ditance
         if (closestLeftId || closestRightId) {
           let closestLeftRect: DOMRect;
           let closestRightRect: DOMRect;
@@ -741,6 +752,7 @@ export const useRulerSnapStore = defineStore({
 
           let snapBetween = false;
 
+          //set distance to closest
           if (closestLeftId) {
             closestLeftRect = useGetElementRect(closestLeftId) as DOMRect;
             distanceToLeft = currDragLeft - closestLeftRect.right;
@@ -751,17 +763,8 @@ export const useRulerSnapStore = defineStore({
           }
 
           let snapDistance = 0;
-          type LineAndId = {
-            line: number;
-            id: string;
-          };
-          type OriginAndMeasuredId = {
-            originId: string;
-            measuredId: string;
-          };
           let arrayLineLeft: LineAndId[] = [];
           let arrayId: OriginAndMeasuredId[] = [];
-
           let otherLines: MeasuredLine[] = [];
 
           Promise.resolve()
@@ -777,7 +780,7 @@ export const useRulerSnapStore = defineStore({
                   (el) => el.dataset.id !== id
                 );
               }
-
+              //set all siblings rightline
               filteredSiblings.forEach((i) => {
                 let siblingId = i.dataset.id as string;
                 let siblingRect = i.getBoundingClientRect();
@@ -794,6 +797,7 @@ export const useRulerSnapStore = defineStore({
                 }
               });
 
+              //measure every siblings leftline to every rightline
               siblings.forEach((i) => {
                 let siblingId = i.dataset.id as string;
                 let siblingRect = i.getBoundingClientRect();
@@ -812,6 +816,8 @@ export const useRulerSnapStore = defineStore({
                       !arrayId.find((obj) => obj.originId === i.id) ||
                       !arrayId.find((obj) => obj.measuredId === i.id)
                     ) {
+                      //snap if same distance, sensitivity 5
+                      //snap between
                       if (
                         closestLeftId &&
                         closestRightId &&
@@ -836,10 +842,13 @@ export const useRulerSnapStore = defineStore({
                           )
                         );
                         arrayId.push({ originId: i.id, measuredId: siblingId });
-                      } else if (
+                      }
+                      //snap left
+                      else if (
                         closestLeftId &&
                         siblingLeft - i.line <= distanceToLeft + 5 &&
-                        siblingLeft - i.line >= distanceToLeft - 5
+                        siblingLeft - i.line >= distanceToLeft - 5 &&
+                        siblingId !== id
                       ) {
                         snapDistance = Math.round(siblingLeft - i.line);
 
@@ -854,10 +863,13 @@ export const useRulerSnapStore = defineStore({
                           )
                         );
                         arrayId.push({ originId: i.id, measuredId: siblingId });
-                      } else if (
+                      }
+                      //snap right
+                      else if (
                         !closestLeftId &&
                         siblingLeft - i.line <= distanceToRight + 5 &&
-                        siblingLeft - i.line >= distanceToRight - 5
+                        siblingLeft - i.line >= distanceToRight - 5 &&
+                        i.id !== id
                       ) {
                         snapDistance = Math.round(siblingLeft - i.line);
 
