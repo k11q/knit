@@ -1,7 +1,7 @@
 <template>
   <div
     class="absolute inset-0 overflow-hidden"
-    @wheel="usePinchZoom($event)"
+    @wheel.stop.prevent="usePinchZoom($event)"
     @mousedown.stop.prevent="addaSquare.addSquare($event)"
     :class="{
       'cursor-crosshair':
@@ -136,23 +136,21 @@
           outline: `${1.5 / addaSquare.scale}px solid #0191FA`,
         }"
       ></div>
-    -->
-      <!--Select show-->
-      <div
-        v-if="selectStore.showSelect"
-        class="absolute pointer-events-none"
-        :style="{
-          left: selectStore.X + 'px',
-          top: selectStore.Y + 'px',
-          height: selectStore.height + 'px',
-          width: selectStore.width + 'px',
-          border: `${
-            selectToi.treeHoverSize / addaSquare.scale
-          }px solid #0191FA`,
-          backgroundColor: 'rgba(1, 145, 250, 0.1)',
-        }"
-      ></div>
-    </div>
+    --></div>
+    <!--Select show-->
+    <div
+      v-if="selectStore.showSelect"
+      class="absolute pointer-events-none"
+      :style="{
+        transform: `translate(${selectStore.X}px, ${selectStore.Y}px)`,
+        height: selectStore.height + 'px',
+        width: selectStore.width + 'px',
+        border: `${selectToi.treeHoverSize}px solid #0191FA`,
+        backgroundColor: 'rgba(1, 145, 250, 0.1)',
+        willChange: 'transform, height, width',
+        transition: 'all 0s linear',
+      }"
+    ></div>
     <!--Multiselect elements outline-->
     <div
       v-if="

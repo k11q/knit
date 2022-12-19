@@ -5,15 +5,13 @@ import { useCounterStore, Node } from "../stores/counter";
 let endPinchZoom: NodeJS.Timeout;
 
 export function usePinchZoom(event: WheelEvent) {
+  event.stopImmediatePropagation();
+
   const addaSquare = useSquareStore();
   const canvasStore = useCanvasStore();
   const selectToi = useCounterStore();
 
   const canvas = document.querySelector(`[data-id="canvas"]`) as HTMLElement;
-
-  event.preventDefault();
-  event.stopPropagation();
-  event.stopImmediatePropagation();
 
   if (!canvasStore.isPinchZoom) {
     canvas.style.willChange = "transform";

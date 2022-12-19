@@ -9,8 +9,8 @@ export function useSetSelect(e: MouseEvent) {
   const selectToi = useCounterStore();
   const canvasStore = useCanvasStore();
 
-  const prevX = (e.clientX - squareStore.offsetLeft) / squareStore.scale;
-  const prevY = (e.clientY - squareStore.offsetTop) / squareStore.scale;
+  const prevX = e.clientX;
+  const prevY = e.clientY;
 
   selectStore.X = prevX;
   selectStore.Y = prevY;
@@ -21,8 +21,8 @@ export function useSetSelect(e: MouseEvent) {
   function mousemove(e: MouseEvent) {
     selectStore.showSelect = true;
 
-    let positionX = (e.clientX - squareStore.offsetLeft) / squareStore.scale;
-    let positionY = (e.clientY - squareStore.offsetTop) / squareStore.scale;
+    let positionX = e.clientX;
+    let positionY = e.clientY;
 
     let positiveWidth = positionX - prevX;
     let positiveHeight = positionY - prevY;
@@ -74,20 +74,20 @@ export function useSetSelect(e: MouseEvent) {
       let id = element.dataset.id!;
       let rect = element.getBoundingClientRect();
       let topLeft = {
-        x: (rect.x - squareStore.offsetLeft) / squareStore.scale,
-        y: (rect.y - squareStore.offsetTop) / squareStore.scale,
+        x: rect.x,
+        y: rect.y,
       };
       let topRight = {
-        x: (rect.x + rect.width - squareStore.offsetLeft) / squareStore.scale,
-        y: (rect.y - squareStore.offsetTop) / squareStore.scale,
+        x: rect.x + rect.width,
+        y: rect.y,
       };
       let bottomLeft = {
-        x: (rect.x - squareStore.offsetLeft) / squareStore.scale,
-        y: (rect.y + rect.height - squareStore.offsetTop) / squareStore.scale,
+        x: rect.x,
+        y: rect.y + rect.height,
       };
       let bottomRight = {
-        x: (rect.x + rect.width - squareStore.offsetLeft) / squareStore.scale,
-        y: (rect.y + rect.height - squareStore.offsetTop) / squareStore.scale,
+        x: rect.x + rect.width,
+        y: rect.y + rect.height,
       };
 
       if (
