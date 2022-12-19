@@ -1,8 +1,12 @@
 <template>
   <div
-    id="rulerWrapper"
-    class="flex-grow flex flex-col justify-start text-[#7f7f7f] text-[0.625rem] leading-[1.4] z-[999] pointer-events-none"
+    class="flex-grow flex flex-col justify-start text-[#7f7f7f] text-[0.625rem] leading-[1.4] z-[999] pointer-events-none relative"
   >
+    <div
+      v-if="squareStore.scale > 4"
+      id="rulerWrapper"
+      class="absolute w-full h-full"
+    ></div>
     <div
       id="rulerHorizontal"
       class="w-full h-[1.375rem] border-b border-[#3A3A3A] bg-[#262626] relative overflow-hidden"

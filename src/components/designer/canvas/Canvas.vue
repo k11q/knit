@@ -190,8 +190,8 @@
     </div>
     <!--frames label-->
     <div
-      v-if="!canvasStore.isPinchZoom"
-      class="absolute inset-0 overflow-visible pointer-events-none"
+      v-show="!canvasStore.isPinchZoom"
+      class="fixed left-0 top-0 h-0 w-0 overflow-visible pointer-events-none"
     >
       <ClientOnly>
         <DesignerCanvasFrameLabel
