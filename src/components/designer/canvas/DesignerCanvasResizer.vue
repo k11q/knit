@@ -231,7 +231,6 @@
           height: `8px`,
           marginTop: `-4px`,
           transform: `scaleY( ${1 / addaSquare.scale})`,
-          willChange: 'transform',
         }"
       >
         <div class="bg-[#0191FA] w-full" :style="{ height: `1.5px` }" />
@@ -243,7 +242,6 @@
           height: `8px`,
           marginBottom: `-4px`,
           transform: `scaleY( ${1 / addaSquare.scale})`,
-          willChange: 'transform',
         }"
       >
         <div class="bg-[#0191FA] w-full" :style="{ height: `1.5px` }" />
@@ -255,7 +253,6 @@
           width: `8px`,
           marginLeft: `-4px`,
           transform: `scaleX( ${1 / addaSquare.scale})`,
-          willChange: 'transform',
         }"
       >
         <div class="bg-[#0191FA] h-full" :style="{ width: `1.5px` }" />
@@ -267,7 +264,6 @@
           width: `8px`,
           marginRight: `-4px`,
           transform: `scaleX( ${1 / addaSquare.scale})`,
-          willChange: 'transform',
         }"
       >
         <div class="bg-[#0191FA] h-full" :style="{ width: `1.5px` }" />

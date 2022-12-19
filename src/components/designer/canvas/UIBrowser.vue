@@ -67,13 +67,11 @@ const canvasStore = useCanvasStore();
 function dblclick(id: string, type: string) {
   if (type === "text") {
     makeEditable(id);
-    console.log("text");
   }
   function makeEditable(id: string) {
     selectToi.selectedTextEditor = id;
     useSetOutlineSelector("");
   }
-  console.log("dblclick");
 }
 
 function mousedown(e: MouseEvent, id: string, type: string) {

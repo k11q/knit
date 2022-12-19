@@ -12,6 +12,7 @@
             ? 'none'
             : 'auto',
         transform: `translate(${left(frame)}, ${top(frame)})`,
+        willChange: 'transform',
       }"
       class="absolute -mt-5 cursor-default overflow-ellipsis"
     >

@@ -190,7 +190,7 @@
     </div>
     <!--frames label-->
     <div
-      v-if="!canvasStore.isPinchZoom && selectToi.data"
+      v-if="!canvasStore.isPinchZoom"
       class="absolute inset-0 overflow-visible pointer-events-none"
     >
       <ClientOnly>
