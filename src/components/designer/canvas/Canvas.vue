@@ -304,7 +304,7 @@
 
     <!--hover outline and label-->
     <div
-      v-if="
+      v-show="
         !canvasStore.isPinchZoom &&
         canvasStore.hoverData &&
         selectToi.treeHoverId
@@ -312,12 +312,15 @@
       class="pointer-events-none"
       :style="{
         position: 'absolute',
-        left: canvasStore.hoverData
-          ? useGetElementRect(canvasStore.hoverData.id)?.left + 'px'
-          : '',
-        top: canvasStore.hoverData
-          ? useGetElementRect(canvasStore.hoverData.id)?.top + 'px'
-          : '',
+        transform: `translate(${
+          canvasStore.hoverData
+            ? useGetElementRect(canvasStore.hoverData.id)?.left
+            : ''
+        }px, ${
+          canvasStore.hoverData
+            ? useGetElementRect(canvasStore.hoverData.id)?.top
+            : ''
+        }px)`,
         width: canvasStore.hoverData
           ? useGetElementRect(canvasStore.hoverData.id)?.width + 'px'
           : '',
