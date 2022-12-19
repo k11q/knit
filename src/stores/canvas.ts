@@ -192,7 +192,6 @@ export const useCanvasStore = defineStore({
 
         canvasStore.isDragging = true;
 
-        useGetElement(currDrag)!.style.willChange = "";
         function update() {
           if (e.altKey) {
             if (!findOne(selectToi.data, cloneId)) {
@@ -311,7 +310,6 @@ export const useCanvasStore = defineStore({
           }
           selectToi.treeHoverSize = 1;
           isDragging = false;
-          useGetElement(currDrag)!.style.willChange = "transform";
           //reselect
           setTimeout(() => {
             canvasStore.isDragging = false;
@@ -358,7 +356,6 @@ export const useCanvasStore = defineStore({
       function mousemove(e: MouseEvent) {
         e.preventDefault();
 
-        useGetElement(currDrag)!.style.willChange = "";
         isDragging = true;
         canvasStore.isDragging = true;
 
@@ -697,7 +694,6 @@ export const useCanvasStore = defineStore({
           canvasStore.showGhostOutline = false;
           canvasStore.showSolidOutline = false;
           rulerSnap.show = false;
-          currDragElement.style.willChange = "transform";
           window.removeEventListener("mousemove", mousemove);
           window.removeEventListener("mouseup", mouseup);
 

@@ -14,11 +14,12 @@
   >
     <!--canvas and UI elements-->
     <div
+      id="canvas"
       data-id="canvas"
       class="w-0 h-0 overflow-visible fixed top-0 left-0"
       :style="{
         isolation: 'isolate',
-        transform: `translate(${addaSquare.offsetLeft}px, ${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
+        transform: `translateX(${addaSquare.offsetLeft}px) translateY(${addaSquare.offsetTop}px) scale(${addaSquare.scale})`,
         transition: 'transform 0s linear',
       }"
     >
@@ -525,6 +526,9 @@ function keyup(e: KeyboardEvent) {
 
 onMounted(() => {
   useAddKeyupShortcuts();
+
+  const canvas = document.querySelector(`[data-id="canvas"]`) as HTMLElement;
+  canvas.style.willChange = "transform";
 
   addaSquare.offsetLeft = vw(50);
   addaSquare.offsetTop = vh(50);

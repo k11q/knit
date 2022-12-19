@@ -14,7 +14,7 @@ export function usePinchZoom(event: WheelEvent) {
   const canvas = document.querySelector(`[data-id="canvas"]`) as HTMLElement;
 
   if (!canvasStore.isPinchZoom) {
-    canvas.style.willChange = "transform";
+    canvas.style.willChange = "auto";
     canvasStore.isPinchZoom = true;
     canvasStore.hoverId = "";
     selectToi.treeHoverId = "";
@@ -42,6 +42,6 @@ export function usePinchZoom(event: WheelEvent) {
 
   endPinchZoom = setTimeout(() => {
     canvasStore.isPinchZoom = false;
-    canvas.style.willChange = "";
+    canvas.style.willChange = "transform";
   }, 200);
 }
