@@ -205,7 +205,6 @@ function styleProps(node: Node, depth: number) {
         ? `translate(${node.cssRules[0]?.style?.left?.value}px, ${node.cssRules[0]?.style?.top?.value}px)`
         : "",
     transition: "all 0s linear",
-    willChange: depth === 0 && !canvasStore.isPinchZoom ? "transform" : "",
   };
 }
 
