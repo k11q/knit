@@ -54,63 +54,6 @@ export const useCanvasStore = defineStore({
         )
       );
     },
-    setPositionMultiElement(e: MouseEvent) {
-      const selectToi = useCounterStore();
-      const squareStore = useSquareStore();
-      const canvasStore = useCanvasStore();
-      let prevPositions = [] as Positions[];
-
-      canvasStore.selection.forEach((i) => {
-        let selectedElementRect = useGetElementRect(i.id) as DOMRect;
-
-        let prevX = e.clientX - selectedElementRect.x;
-        let prevY = e.clientY - selectedElementRect.y;
-
-        prevPositions.push({ id: i.id, prevX: prevX, prevY: prevY });
-      });
-
-      window.addEventListener("mousemove", mousemove);
-      window.addEventListener("mouseup", mouseup);
-
-      function mousemove(e: MouseEvent) {
-        e.preventDefault();
-        e.stopPropagation();
-        canvasStore.isDragging = true;
-
-        canvasStore.selection.forEach((i, index) => {
-          let element = useGetElement(i.id) as HTMLElement;
-
-          //change style directly then change json
-          element.style.transform = `translate(${Math.round(
-            (e.clientX - prevPositions[index].prevX - squareStore.offsetLeft) /
-              squareStore.scale
-          )}px, ${Math.round(
-            (e.clientY - prevPositions[index].prevY - squareStore.offsetTop) /
-              squareStore.scale
-          )}px)`;
-
-          i.cssRules[0].style.left!.value = Math.round(
-            (e.clientX - prevPositions[index].prevX - squareStore.offsetLeft) /
-              squareStore.scale
-          );
-
-          i.cssRules[0].style.top!.value = Math.round(
-            (e.clientY - prevPositions[index].prevY - squareStore.offsetTop) /
-              squareStore.scale
-          );
-        });
-      }
-
-      function mouseup(e: MouseEvent) {
-        canvasStore.multiSelectResizerRect.left = "";
-        canvasStore.multiSelectResizerRect.top = "";
-        useSetMultiElementsResizer();
-        canvasStore.isDragging = false;
-
-        window.removeEventListener("mousemove", mousemove);
-        window.removeEventListener("mouseup", mouseup);
-      }
-    },
     setLeftPositionWithParent(e: MouseEvent) {
       const selectToi = useCounterStore();
       const squareStore = useSquareStore();
@@ -204,65 +147,52 @@ export const useCanvasStore = defineStore({
         e.stopPropagation();
 
         canvasStore.isDragging = true;
+        let target = useGetElementFromPoint(e);
+        closest = useGetClosestElement(e);
+        canvasStore.isDragging = true;
+        isDragging = true;
 
-        function update() {
-          if (e.altKey) {
-            if (!findOne(selectToi.data, cloneId)) {
-              appendBefore(selectToi.data, currDrag, clonedData);
-            }
-          }
-          if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
-            rulerSnap.on = true;
-            rulerSnap.setRulerSnap(e, currDrag);
-            if (!rulerSnap.snapLeft) {
-              canvasStore.setLeftPosition(e);
-            }
-            if (!rulerSnap.snapTop) {
-              canvasStore.setTopPosition(e);
-            }
-          } else if (Math.abs(e.movementX) > 5 || Math.abs(e.movementX) > 5) {
-            rulerSnap.on = false;
-            canvasStore.setLeftPosition(e);
-            canvasStore.setTopPosition(e);
-          }
-          canvasStore.isDragging = true;
-          isDragging = true;
-
-          let target = useGetElementFromPoint(e);
-          closest = useGetClosestElement(e);
-
-          if (closest) {
-            closestTarget = useGetClosestDroppableId(e)!;
-          }
-
-          if (!closest) {
-            canvasStore.showMarker = false;
-            currDragElement.style.opacity = prevOpacity;
-            selectToi.treeHoverSize = 1;
-          } else if (target && closest) {
-            if (
-              selectToi.selectedBox === closestTarget ||
-              currDragElement.parentElement === closest
-            ) {
-              if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
-                rulerSnap.on = true;
-              }
-              selectToi.treeHover = false;
-              currDragElement.style.opacity = prevOpacity;
-            } else {
-              rulerSnap.on = false;
-              canvasStore.showMarker = true;
-              setDropMarker(e, currDragElement);
-              currDragElement.style.opacity = "0";
-
-              canvasStore.hoverId = closestTarget;
-              selectToi.treeHoverId = closestTarget;
-            }
-            selectToi.treeHoverSize = 0.5;
+        if (e.altKey) {
+          if (!findOne(selectToi.data, cloneId)) {
+            appendBefore(selectToi.data, currDrag, clonedData);
           }
         }
 
-        requestAnimationFrame(update);
+        if (!closest) {
+          canvasStore.showMarker = false;
+          currDragElement.style.opacity = prevOpacity;
+          selectToi.treeHoverSize = 1;
+
+          rulerSnap.on = true;
+          rulerSnap.setRulerSnap(e, currDrag);
+          if (!rulerSnap.snapLeft) {
+            canvasStore.setLeftPosition(e);
+          }
+          if (!rulerSnap.snapTop) {
+            canvasStore.setTopPosition(e);
+          }
+        } else {
+          closestTarget = useGetClosestDroppableId(e)!;
+
+          if (
+            selectToi.selectedBox === closestTarget ||
+            currDragElement.parentElement === closest
+          ) {
+            selectToi.treeHover = false;
+            currDragElement.style.opacity = prevOpacity;
+          } else {
+            rulerSnap.on = false;
+            canvasStore.setTopPosition(e);
+            canvasStore.setLeftPosition(e);
+            canvasStore.showMarker = true;
+            setDropMarker(e, currDragElement);
+            currDragElement.style.opacity = "0";
+
+            canvasStore.hoverId = closestTarget;
+            selectToi.treeHoverId = closestTarget;
+          }
+          selectToi.treeHoverSize = 0.5;
+        }
       }
       function mouseup() {
         function update() {
@@ -374,267 +304,252 @@ export const useCanvasStore = defineStore({
 
         closest = useGetClosestElement(e);
 
-        function moveElement() {
-          //kalau closest same id chg position
-          if (closest && closest.dataset.id === parentId) {
-            closestTarget = useGetClosestDroppableId(e)!;
-            rulerSnap.show = false;
-            currDragElement.style.opacity = prevOpacity;
-            canvasStore.showMarker = false;
-            selectToi.treeHoverSize = 1;
+        //kalau closest same id chg position
+        if (closest && closest.dataset.id === parentId) {
+          closestTarget = useGetClosestDroppableId(e)!;
+          rulerSnap.show = false;
+          currDragElement.style.opacity = prevOpacity;
+          canvasStore.showMarker = false;
+          selectToi.treeHoverSize = 1;
 
-            let children = [...parentElement!.children] as HTMLElement[];
+          let children = [...parentElement!.children] as HTMLElement[];
 
-            if (children.findIndex((i) => i.dataset.id === currDrag) === -1) {
-              useTransferData().removeChild(selectToi.data, currDrag);
-              useTransferData().appendChild(
-                selectToi.data,
-                selectToi.selectedBoxData,
-                closestTarget
-              );
-
-              selectToi.selectedBoxData.cssRules[0].style.position.value =
-                "static";
-              delete selectToi.selectedBoxData.cssRules[0].style.top;
-              delete selectToi.selectedBoxData.cssRules[0].style.left;
-            }
-
-            if (children.findIndex((i) => i.dataset.id === currDrag) !== -1) {
-              if (
-                selectToi.selectedBoxData.cssRules[0].style.position.value ===
-                "static"
-              ) {
-                currDragElement = document.querySelector(
-                  `[data-id=${currDrag}]`
-                )!;
-                canvasStore.showSolidOutline = true;
-                canvasStore.showGhostOutline = true;
-                canvasStore.ghostOutlineLeft = e.clientX - prevX;
-                canvasStore.ghostOutlineTop = e.clientY - prevY;
-
-                //kalau prev/next sibling 'absolute' cari sampai jumpa static
-                let prevSibling =
-                  currDragElement.previousElementSibling as HTMLElement;
-                let prevSiblingId;
-                let nextSibling =
-                  currDragElement.nextElementSibling as HTMLElement;
-                let nextSiblingId;
-
-                if (prevSibling) {
-                  prevSiblingId = prevSibling.dataset.id;
-                }
-                if (nextSibling) {
-                  nextSiblingId = nextSibling.dataset.id;
-                }
-
-                if (
-                  closest.style?.flexDirection &&
-                  closest.style.flexDirection === "column"
-                ) {
-                  function getPreviousSiblingMiddlePoint() {
-                    let middlePoint =
-                      prevSibling!.getBoundingClientRect().y +
-                      prevSibling!.getBoundingClientRect().height / 2;
-                    return middlePoint;
-                  }
-
-                  function getNextSiblingMiddlePoint() {
-                    let middlePoint =
-                      nextSibling.getBoundingClientRect().y +
-                      nextSibling.getBoundingClientRect().height / 2;
-                    return middlePoint;
-                  }
-
-                  if (
-                    prevSibling &&
-                    e.clientY - prevY < getPreviousSiblingMiddlePoint()
-                  ) {
-                    useTransferData().removeChild(selectToi.data, currDrag);
-                    useTransferData().appendBefore(
-                      selectToi.data,
-                      prevSiblingId,
-                      selectToi.selectedBoxData,
-                      closestTarget
-                    );
-                  }
-
-                  if (
-                    nextSibling &&
-                    e.clientY - prevY + currDragElementRect.height >
-                      getNextSiblingMiddlePoint()
-                  ) {
-                    useTransferData().removeChild(selectToi.data, currDrag);
-                    useTransferData().appendAfter(
-                      selectToi.data,
-                      nextSiblingId,
-                      selectToi.selectedBoxData,
-                      closestTarget
-                    );
-                  }
-                }
-                if (
-                  !closest.style?.flexDirection ||
-                  closest.style.flexDirection === "row"
-                ) {
-                  function getPreviousSiblingMiddlePoint() {
-                    let middlePoint =
-                      prevSibling.getBoundingClientRect().x +
-                      prevSibling.getBoundingClientRect().width / 2;
-                    return middlePoint;
-                  }
-
-                  function getNextSiblingMiddlePoint() {
-                    let middlePoint =
-                      nextSibling.getBoundingClientRect().x +
-                      nextSibling.getBoundingClientRect().width / 2;
-                    return middlePoint;
-                  }
-
-                  if (
-                    prevSibling &&
-                    e.clientX - prevX < getPreviousSiblingMiddlePoint()
-                  ) {
-                    useTransferData().removeChild(selectToi.data, currDrag);
-                    useTransferData().appendBefore(
-                      selectToi.data,
-                      prevSiblingId,
-                      selectToi.selectedBoxData,
-                      closestTarget
-                    );
-                  }
-
-                  if (
-                    nextSibling &&
-                    e.clientX - prevX + currDragElementRect.width >
-                      getNextSiblingMiddlePoint()
-                  ) {
-                    useTransferData().removeChild(selectToi.data, currDrag);
-                    useTransferData().appendAfter(
-                      selectToi.data,
-                      nextSiblingId,
-                      selectToi.selectedBoxData,
-                      closestTarget
-                    );
-                  }
-                }
-              }
-              if (
-                selectToi.selectedBoxData.cssRules[0].style.position.value ===
-                "absolute"
-              ) {
-                canvasStore.setLeftPositionWithParent(e);
-                canvasStore.setTopPositionWithParent(e);
-              }
-            }
-          }
-
-          //kalau keluar and no closest append slice atas currdropzone
-
-          if (!closest) {
-            canvasStore.showSolidOutline = false;
-            canvasStore.showGhostOutline = false;
-            currDragElement.style.opacity = prevOpacity;
-            canvasStore.showMarker = false;
-            selectToi.treeHoverSize = 1;
-
+          if (children.findIndex((i) => i.dataset.id === currDrag) === -1) {
             useTransferData().removeChild(selectToi.data, currDrag);
-            selectToi.selectedBoxData.cssRules[0].style.left = {
-              type: "unit",
-              value: Math.round(
-                (e.clientX - canvasStore.prevX - squareStore.offsetLeft) /
-                  squareStore.scale
-              ),
-              unit: "px",
-            };
-            selectToi.selectedBoxData.cssRules[0].style.top = {
-              type: "unit",
-              value: Math.round(
-                (e.clientY - canvasStore.prevY - squareStore.offsetTop) /
-                  squareStore.scale
-              ),
-              unit: "px",
-            };
-            useTransferData().appendCanvasAbove(
+            useTransferData().appendChild(
               selectToi.data,
-              appendPosition,
-              selectToi.selectedBoxData
-            );
-
-            canvasStore.showSolidOutline = false;
-            canvasStore.showGhostOutline = false;
-
-            selectToi.selectedBoxData.cssRules[0].style.position.value =
-              "absolute";
-            rulerSnap.prevX = prevX;
-            rulerSnap.prevY = prevY;
-            if (Math.abs(e.movementX) <= 5 && Math.abs(e.movementX) <= 5) {
-              rulerSnap.on = true;
-              rulerSnap.setRulerSnap(e, currDrag);
-              if (!rulerSnap.snapLeft) {
-                canvasStore.setLeftPosition(e);
-              }
-              if (!rulerSnap.snapTop) {
-                canvasStore.setTopPosition(e);
-              }
-            } else if (Math.abs(e.movementX) > 5 || Math.abs(e.movementX) > 5) {
-              rulerSnap.on = false;
-              canvasStore.setLeftPosition(e);
-              canvasStore.setTopPosition(e);
-            }
-          }
-
-          //if atas dropzone lain append atas sekali dulu
-
-          if (
-            closest &&
-            closest.dataset.id !== parentId &&
-            closest.dataset.id !== currDrag
-          ) {
-            canvasStore.showSolidOutline = false;
-            canvasStore.showGhostOutline = false;
-            closestTarget = useGetClosestDroppableId(e)!;
-            currDragElement = document.querySelector(`[data-id=${currDrag}]`)!;
-
-            useTransferData().removeChild(selectToi.data, currDrag);
-            selectToi.selectedBoxData.cssRules[0].style.left = {
-              type: "unit",
-              value: Math.round(
-                (e.clientX - canvasStore.prevX - squareStore.offsetLeft) /
-                  squareStore.scale
-              ),
-              unit: "px",
-            };
-            selectToi.selectedBoxData.cssRules[0].style.top = {
-              type: "unit",
-              value: Math.round(
-                (e.clientY - canvasStore.prevY - squareStore.offsetTop) /
-                  squareStore.scale
-              ),
-              unit: "px",
-            };
-            useTransferData().appendToCanvas(
-              selectToi.data,
-              selectToi.selectedBoxData
+              selectToi.selectedBoxData,
+              closestTarget
             );
 
             selectToi.selectedBoxData.cssRules[0].style.position.value =
-              "absolute";
-            canvasStore.setLeftPosition(e);
-            canvasStore.setTopPosition(e);
+              "static";
+            delete selectToi.selectedBoxData.cssRules[0].style.top;
+            delete selectToi.selectedBoxData.cssRules[0].style.left;
+          }
 
-            rulerSnap.on = false;
-            canvasStore.showMarker = true;
-            setDropMarker(e, currDragElement);
-            currDragElement.style.opacity = "0";
+          if (children.findIndex((i) => i.dataset.id === currDrag) !== -1) {
+            if (
+              selectToi.selectedBoxData.cssRules[0].style.position.value ===
+              "static"
+            ) {
+              currDragElement = document.querySelector(
+                `[data-id=${currDrag}]`
+              )!;
+              canvasStore.showSolidOutline = true;
+              canvasStore.showGhostOutline = true;
+              canvasStore.ghostOutlineLeft = e.clientX - prevX;
+              canvasStore.ghostOutlineTop = e.clientY - prevY;
 
-            canvasStore.hoverId = closestTarget;
-            selectToi.treeHoverId = closestTarget;
+              //kalau prev/next sibling 'absolute' cari sampai jumpa static
+              let prevSibling =
+                currDragElement.previousElementSibling as HTMLElement;
+              let prevSiblingId;
+              let nextSibling =
+                currDragElement.nextElementSibling as HTMLElement;
+              let nextSiblingId;
 
-            selectToi.treeHoverSize = 0.5;
+              if (prevSibling) {
+                prevSiblingId = prevSibling.dataset.id;
+              }
+              if (nextSibling) {
+                nextSiblingId = nextSibling.dataset.id;
+              }
+
+              if (
+                closest.style?.flexDirection &&
+                closest.style.flexDirection === "column"
+              ) {
+                function getPreviousSiblingMiddlePoint() {
+                  let middlePoint =
+                    prevSibling!.getBoundingClientRect().y +
+                    prevSibling!.getBoundingClientRect().height / 2;
+                  return middlePoint;
+                }
+
+                function getNextSiblingMiddlePoint() {
+                  let middlePoint =
+                    nextSibling.getBoundingClientRect().y +
+                    nextSibling.getBoundingClientRect().height / 2;
+                  return middlePoint;
+                }
+
+                if (
+                  prevSibling &&
+                  e.clientY - prevY < getPreviousSiblingMiddlePoint()
+                ) {
+                  useTransferData().removeChild(selectToi.data, currDrag);
+                  useTransferData().appendBefore(
+                    selectToi.data,
+                    prevSiblingId,
+                    selectToi.selectedBoxData,
+                    closestTarget
+                  );
+                }
+
+                if (
+                  nextSibling &&
+                  e.clientY - prevY + currDragElementRect.height >
+                    getNextSiblingMiddlePoint()
+                ) {
+                  useTransferData().removeChild(selectToi.data, currDrag);
+                  useTransferData().appendAfter(
+                    selectToi.data,
+                    nextSiblingId,
+                    selectToi.selectedBoxData,
+                    closestTarget
+                  );
+                }
+              }
+              if (
+                !closest.style?.flexDirection ||
+                closest.style.flexDirection === "row"
+              ) {
+                function getPreviousSiblingMiddlePoint() {
+                  let middlePoint =
+                    prevSibling.getBoundingClientRect().x +
+                    prevSibling.getBoundingClientRect().width / 2;
+                  return middlePoint;
+                }
+
+                function getNextSiblingMiddlePoint() {
+                  let middlePoint =
+                    nextSibling.getBoundingClientRect().x +
+                    nextSibling.getBoundingClientRect().width / 2;
+                  return middlePoint;
+                }
+
+                if (
+                  prevSibling &&
+                  e.clientX - prevX < getPreviousSiblingMiddlePoint()
+                ) {
+                  useTransferData().removeChild(selectToi.data, currDrag);
+                  useTransferData().appendBefore(
+                    selectToi.data,
+                    prevSiblingId,
+                    selectToi.selectedBoxData,
+                    closestTarget
+                  );
+                }
+
+                if (
+                  nextSibling &&
+                  e.clientX - prevX + currDragElementRect.width >
+                    getNextSiblingMiddlePoint()
+                ) {
+                  useTransferData().removeChild(selectToi.data, currDrag);
+                  useTransferData().appendAfter(
+                    selectToi.data,
+                    nextSiblingId,
+                    selectToi.selectedBoxData,
+                    closestTarget
+                  );
+                }
+              }
+            }
+            if (
+              selectToi.selectedBoxData.cssRules[0].style.position.value ===
+              "absolute"
+            ) {
+              canvasStore.setLeftPositionWithParent(e);
+              canvasStore.setTopPositionWithParent(e);
+            }
           }
         }
 
-        window.requestAnimationFrame(moveElement);
+        //kalau keluar and no closest append slice atas currdropzone
+        else if (!closest) {
+          canvasStore.showSolidOutline = false;
+          canvasStore.showGhostOutline = false;
+          currDragElement.style.opacity = prevOpacity;
+          canvasStore.showMarker = false;
+          selectToi.treeHoverSize = 1;
+
+          useTransferData().removeChild(selectToi.data, currDrag);
+          selectToi.selectedBoxData.cssRules[0].style.left = {
+            type: "unit",
+            value: Math.round(
+              (e.clientX - canvasStore.prevX - squareStore.offsetLeft) /
+                squareStore.scale
+            ),
+            unit: "px",
+          };
+          selectToi.selectedBoxData.cssRules[0].style.top = {
+            type: "unit",
+            value: Math.round(
+              (e.clientY - canvasStore.prevY - squareStore.offsetTop) /
+                squareStore.scale
+            ),
+            unit: "px",
+          };
+          useTransferData().appendCanvasAbove(
+            selectToi.data,
+            appendPosition,
+            selectToi.selectedBoxData
+          );
+
+          canvasStore.showSolidOutline = false;
+          canvasStore.showGhostOutline = false;
+
+          selectToi.selectedBoxData.cssRules[0].style.position.value =
+            "absolute";
+          rulerSnap.prevX = prevX;
+          rulerSnap.prevY = prevY;
+          rulerSnap.on = true;
+          rulerSnap.setRulerSnap(e, currDrag);
+          if (!rulerSnap.snapLeft) {
+            canvasStore.setLeftPosition(e);
+          }
+          if (!rulerSnap.snapTop) {
+            canvasStore.setTopPosition(e);
+          }
+        }
+
+        //if atas dropzone lain append atas sekali dulu
+        else {
+          canvasStore.showSolidOutline = false;
+          canvasStore.showGhostOutline = false;
+          closestTarget = useGetClosestDroppableId(e)!;
+          currDragElement = document.querySelector(`[data-id=${currDrag}]`)!;
+
+          useTransferData().removeChild(selectToi.data, currDrag);
+          selectToi.selectedBoxData.cssRules[0].style.left = {
+            type: "unit",
+            value: Math.round(
+              (e.clientX - canvasStore.prevX - squareStore.offsetLeft) /
+                squareStore.scale
+            ),
+            unit: "px",
+          };
+          selectToi.selectedBoxData.cssRules[0].style.top = {
+            type: "unit",
+            value: Math.round(
+              (e.clientY - canvasStore.prevY - squareStore.offsetTop) /
+                squareStore.scale
+            ),
+            unit: "px",
+          };
+          useTransferData().appendToCanvas(
+            selectToi.data,
+            selectToi.selectedBoxData
+          );
+
+          selectToi.selectedBoxData.cssRules[0].style.position.value =
+            "absolute";
+
+          rulerSnap.on = false;
+          canvasStore.setLeftPosition(e);
+          canvasStore.setTopPosition(e);
+
+          canvasStore.showMarker = true;
+          setDropMarker(e, currDragElement);
+          currDragElement.style.opacity = "0";
+
+          canvasStore.hoverId = closestTarget;
+          selectToi.treeHoverId = closestTarget;
+
+          selectToi.treeHoverSize = 0.5;
+        }
       }
 
       function mouseup() {
@@ -715,6 +630,63 @@ export const useCanvasStore = defineStore({
           }, 0);
         }
         requestAnimationFrame(update);
+      }
+    },
+    setPositionMultiElement(e: MouseEvent) {
+      const selectToi = useCounterStore();
+      const squareStore = useSquareStore();
+      const canvasStore = useCanvasStore();
+      let prevPositions = [] as Positions[];
+
+      canvasStore.selection.forEach((i) => {
+        let selectedElementRect = useGetElementRect(i.id) as DOMRect;
+
+        let prevX = e.clientX - selectedElementRect.x;
+        let prevY = e.clientY - selectedElementRect.y;
+
+        prevPositions.push({ id: i.id, prevX: prevX, prevY: prevY });
+      });
+
+      window.addEventListener("mousemove", mousemove);
+      window.addEventListener("mouseup", mouseup);
+
+      function mousemove(e: MouseEvent) {
+        e.preventDefault();
+        e.stopPropagation();
+        canvasStore.isDragging = true;
+
+        canvasStore.selection.forEach((i, index) => {
+          let element = useGetElement(i.id) as HTMLElement;
+
+          //change style directly then change json
+          element.style.transform = `translate(${Math.round(
+            (e.clientX - prevPositions[index].prevX - squareStore.offsetLeft) /
+              squareStore.scale
+          )}px, ${Math.round(
+            (e.clientY - prevPositions[index].prevY - squareStore.offsetTop) /
+              squareStore.scale
+          )}px)`;
+
+          i.cssRules[0].style.left!.value = Math.round(
+            (e.clientX - prevPositions[index].prevX - squareStore.offsetLeft) /
+              squareStore.scale
+          );
+
+          i.cssRules[0].style.top!.value = Math.round(
+            (e.clientY - prevPositions[index].prevY - squareStore.offsetTop) /
+              squareStore.scale
+          );
+        });
+      }
+
+      function mouseup(e: MouseEvent) {
+        canvasStore.multiSelectResizerRect.left = "";
+        canvasStore.multiSelectResizerRect.top = "";
+        useSetMultiElementsResizer();
+        canvasStore.isDragging = false;
+
+        window.removeEventListener("mousemove", mousemove);
+        window.removeEventListener("mouseup", mouseup);
       }
     },
   },
