@@ -329,6 +329,8 @@
           : '',
         outline: canvasStore.hoverData ? `2px solid #0191FA` : '',
         outlineOffset: `-2px`,
+        willChange: transform,
+        transformOrigin: '0px 0px',
       }"
     >
       <!--topleft dimensions label-->
