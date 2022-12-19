@@ -28,17 +28,17 @@
         @mouseenter="
           () => {
             mouseenter = true;
-            canvasStore.hoverData = useGetElementData(selectToi.data, frame.id);
+            canvasStore.hoverId = frames.id;
             selectToi.treeHoverId = frame.id;
           }
         "
         @mouseout="
           () => {
-            if(mouseenter){
-            selectToi.treeHover = false;
-            selectToi.treeHoverId = '';
-            canvasStore.hoverData = {} as Node;
-            mouseenter = false
+            if (mouseenter) {
+              selectToi.treeHover = false;
+              selectToi.treeHoverId = '';
+              canvasStore.hoverId = '';
+              mouseenter = false;
             }
           }
         "

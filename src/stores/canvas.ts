@@ -16,7 +16,6 @@ export const useCanvasStore = defineStore({
   id: "canvasStore",
   state: () => ({
     selection: [] as Node[],
-    hoverData: {} as Node,
     isPinchZoom: false,
     isDragging: false,
     isResizingGap: false,
@@ -244,10 +243,7 @@ export const useCanvasStore = defineStore({
               setDropMarker(e, currDragElement);
               currDragElement.style.opacity = "0";
 
-              canvasStore.hoverData = useGetElementData(
-                selectToi.data,
-                closestTarget
-              );
+              canvasStore.hoverId = closestTarget;
               selectToi.treeHoverId = closestTarget;
             }
             selectToi.treeHoverSize = 0.5;
@@ -621,10 +617,7 @@ export const useCanvasStore = defineStore({
             setDropMarker(e, currDragElement);
             currDragElement.style.opacity = "0";
 
-            canvasStore.hoverData = useGetElementData(
-              selectToi.data,
-              closestTarget
-            );
+            canvasStore.hoverId = closestTarget;
             selectToi.treeHoverId = closestTarget;
 
             selectToi.treeHoverSize = 0.5;

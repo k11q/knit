@@ -27,7 +27,7 @@
       @mousedown="dragAndDrop($event, node.id)"
       @mouseover="
         () => {
-          canvasStore.hoverData = useGetElementData(selectToi.data, node.id);
+          canvasStore.hoverId = node.id;
           selectToi.treeHoverId = node.id;
         }
       "

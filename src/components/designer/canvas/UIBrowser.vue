@@ -86,7 +86,6 @@ function mousedown(e: MouseEvent, id: string, type: string) {
       if (canvasStore.selection.length) {
         canvasStore.setPositionMultiElement(e);
       }
-      canvasStore.hoverData = {} as Node;
       canvasStore.hoverId = "";
       selectToi.treeHoverId = "";
     }
@@ -129,7 +128,6 @@ function mouseover(id: string, type: string) {
     calculateDistance(selectToi.selectedBoxData.id, selectToi.treeHoverId);
   }
   if (selectToi.selectedBox === id) {
-    canvasStore.hoverData = {} as Node;
     canvasStore.hoverId = "";
     selectToi.treeHoverId = "";
   }

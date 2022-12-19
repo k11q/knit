@@ -307,28 +307,26 @@
       v-show="
         !canvasStore.isPinchZoom &&
         !canvasStore.isDragging &&
-        canvasStore.hoverData &&
+        canvasStore.hoverId &&
         selectToi.treeHoverId
       "
       class="pointer-events-none"
       :style="{
         position: 'absolute',
         transform: `translate(${
-          canvasStore.hoverData
+          canvasStore.hoverId
             ? useGetElementRect(canvasStore.hoverId)?.left
             : ''
         }px, ${
-          canvasStore.hoverData
-            ? useGetElementRect(canvasStore.hoverId)?.top
-            : ''
+          canvasStore.hoverId ? useGetElementRect(canvasStore.hoverId)?.top : ''
         }px)`,
-        width: canvasStore.hoverData
+        width: canvasStore.hoverId
           ? useGetElementRect(canvasStore.hoverId)?.width + 'px'
           : '',
-        height: canvasStore.hoverData
+        height: canvasStore.hoverId
           ? useGetElementRect(canvasStore.hoverId)?.height + 'px'
           : '',
-        outline: canvasStore.hoverData ? `2px solid #0191FA` : '',
+        outline: canvasStore.hoverId ? `2px solid #0191FA` : '',
         outlineOffset: `-2px`,
         willChange: transform,
         transformOrigin: '0px 0px',

@@ -16,7 +16,6 @@ export function usePinchZoom(event: WheelEvent) {
   if (!canvasStore.isPinchZoom) {
     canvas.style.willChange = "transform";
     canvasStore.isPinchZoom = true;
-    canvasStore.hoverData = {} as Node;
     canvasStore.hoverId = "";
     selectToi.treeHoverId = "";
     measuredLines().value = [];
