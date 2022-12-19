@@ -93,9 +93,8 @@ function mousedown(e: MouseEvent, id: string, type: string) {
 function mouseout(id: string, type: string) {
   selectToi.treeHover = false;
   selectToi.treeHoverId = "";
-  canvasStore.hoverData = {} as Node;
   canvasStore.textHover = false;
-  measuredLines().value = [];
+  canvasStore.hoverId = "";
 
   if (selectToi.selectedBox === id && type !== "text") {
     paddingResize.showPaddingResizer = false;
@@ -104,7 +103,7 @@ function mouseout(id: string, type: string) {
 
 function mouseover(id: string, type: string) {
   if (
-    selectToi.selectedBoxData?.id !== id &&
+    selectToi.selectedBox !== id &&
     type !== "text" &&
     (type !== "box" || (type === "box" && !canvasStore.isDragging)) &&
     canvasStore.selection.findIndex((i) => i.id === id) === -1 &&
@@ -113,7 +112,7 @@ function mouseover(id: string, type: string) {
     !canvasStore.isDragging &&
     !canvasStore.isPinchZoom
   ) {
-    canvasStore.hoverData = useGetElementData(selectToi.data, id);
+    canvasStore.hoverId = id;
   } else if (
     selectToi.selectedBox !== id &&
     type === "text" &&
@@ -125,6 +124,11 @@ function mouseover(id: string, type: string) {
 
   if (event.altKey) {
     calculateDistance(selectToi.selectedBoxData.id, selectToi.treeHoverId);
+  }
+  if (selectToi.selectedBox === id) {
+    canvasStore.hoverData = {} as Node;
+    canvasStore.hoverId = "";
+    selectToi.treeHoverId = "";
   }
 }
 

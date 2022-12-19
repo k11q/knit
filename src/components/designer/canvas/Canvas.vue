@@ -314,18 +314,18 @@
         position: 'absolute',
         transform: `translate(${
           canvasStore.hoverData
-            ? useGetElementRect(canvasStore.hoverData.id)?.left
+            ? useGetElementRect(canvasStore.hoverId)?.left
             : ''
         }px, ${
           canvasStore.hoverData
-            ? useGetElementRect(canvasStore.hoverData.id)?.top
+            ? useGetElementRect(canvasStore.hoverId)?.top
             : ''
         }px)`,
         width: canvasStore.hoverData
-          ? useGetElementRect(canvasStore.hoverData.id)?.width + 'px'
+          ? useGetElementRect(canvasStore.hoverId)?.width + 'px'
           : '',
         height: canvasStore.hoverData
-          ? useGetElementRect(canvasStore.hoverData.id)?.height + 'px'
+          ? useGetElementRect(canvasStore.hoverId)?.height + 'px'
           : '',
         outline: canvasStore.hoverData ? `2px solid #0191FA` : '',
         outlineOffset: `-2px`,
@@ -335,7 +335,7 @@
     >
       <!--topleft dimensions label-->
       <p
-        v-show="useCheckParent(canvasStore.hoverData.id)"
+        v-show="useCheckParent(canvasStore.hoverId)"
         class="absolute left-0 bottom-full flex flex-row justify-start max-w-full"
         :style="{ marginBottom: `4px` }"
       >
@@ -366,7 +366,7 @@
             </svg>
           </i>
           <p class="overflow-hidden overflow-ellipsis">
-            {{ canvasStore.hoverData.name }}
+            {{ hoverName(canvasStore.hoverId) }}
           </p>
         </span>
       </p>
@@ -495,6 +495,12 @@ const resizeStore = useResizeStore();
 const rulerSnap = useRulerSnapStore();
 const canvasStore = useCanvasStore();
 const paddingResize = usePaddingResizeStore();
+
+function hoverName(id: string) {
+  if (id) {
+    return useGetElementData(selectToi.data, id).name;
+  } else return "";
+}
 
 function keydown(e: KeyboardEvent) {
   if (
