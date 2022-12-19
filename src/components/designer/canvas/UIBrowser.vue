@@ -86,6 +86,9 @@ function mousedown(e: MouseEvent, id: string, type: string) {
       if (canvasStore.selection.length) {
         canvasStore.setPositionMultiElement(e);
       }
+      canvasStore.hoverData = {} as Node;
+      canvasStore.hoverId = "";
+      selectToi.treeHoverId = "";
     }
   } else return;
 }

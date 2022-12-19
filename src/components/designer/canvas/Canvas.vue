@@ -306,6 +306,7 @@
     <div
       v-show="
         !canvasStore.isPinchZoom &&
+        !canvasStore.isDragging &&
         canvasStore.hoverData &&
         selectToi.treeHoverId
       "
