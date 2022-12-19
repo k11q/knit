@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute inset-0 overflow-hidden"
+    class="fixed left-[296px] top-14 right-[239px] bottom-0 overflow-clip"
     @wheel.stop.prevent="usePinchZoom($event)"
     @mousedown.stop.prevent="addaSquare.addSquare($event)"
     :class="{
@@ -328,7 +328,7 @@
           : '',
         outline: canvasStore.hoverId ? `2px solid #0191FA` : '',
         outlineOffset: `-2px`,
-        willChange: transform,
+        willChange: 'transform, height, width',
         transformOrigin: '0px 0px',
       }"
     >
