@@ -61,8 +61,10 @@ export const useCanvasStore = defineStore({
       let prevPositions = [] as Positions[];
 
       canvasStore.selection.forEach((i) => {
-        let prevX = e.clientX - useGetElementRect(i.id)!.x;
-        let prevY = e.clientY - useGetElementRect(i.id)!.y;
+        let selectedElementRect = useGetElementRect(i.id) as DOMRect;
+
+        let prevX = e.clientX - selectedElementRect.x;
+        let prevY = e.clientY - selectedElementRect.y;
 
         prevPositions.push({ id: i.id, prevX: prevX, prevY: prevY });
       });
@@ -76,6 +78,17 @@ export const useCanvasStore = defineStore({
         canvasStore.isDragging = true;
 
         canvasStore.selection.forEach((i, index) => {
+          let element = useGetElement(i.id) as HTMLElement;
+
+          //change style directly then change json
+          element.style.transform = `translate(${Math.round(
+            (e.clientX - prevPositions[index].prevX - squareStore.offsetLeft) /
+              squareStore.scale
+          )}px, ${Math.round(
+            (e.clientY - prevPositions[index].prevY - squareStore.offsetTop) /
+              squareStore.scale
+          )}px)`;
+
           i.cssRules[0].style.left!.value = Math.round(
             (e.clientX - prevPositions[index].prevX - squareStore.offsetLeft) /
               squareStore.scale
