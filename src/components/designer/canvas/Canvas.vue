@@ -139,12 +139,14 @@
     --></div>
     <!--Select show-->
     <div
-      v-if="selectStore.showSelect"
+      v-if="isShowSelect().value"
       class="absolute pointer-events-none"
       :style="{
-        transform: `translate(${selectStore.X}px, ${selectStore.Y}px)`,
-        height: selectStore.height + 'px',
-        width: selectStore.width + 'px',
+        transform: `translate(${selectorLeft().value}px, ${
+          selectorTop().value
+        }px)`,
+        height: selectorHeight().value + 'px',
+        width: selectorWidth().value + 'px',
         border: `${selectToi.treeHoverSize}px solid #0191FA`,
         backgroundColor: 'rgba(1, 145, 250, 0.1)',
         willChange: 'transform, height, width',
@@ -478,7 +480,6 @@
 import { useCounterStore } from "@/stores/counter";
 import { useSquareStore } from "~~/src/stores/dataSquare";
 import { useResizeStore } from "~~/src/stores/resizeStore";
-import { useSelectStore } from "~~/src/stores/selectStore";
 import { useRulerSnapStore } from "~~/src/stores/rulerSnap";
 import { useCanvasStore } from "~~/src/stores/canvas";
 import { usePaddingResizeStore } from "~~/src/stores/paddingResizeStore";
@@ -486,7 +487,6 @@ import { usePaddingResizeStore } from "~~/src/stores/paddingResizeStore";
 const selectToi = useCounterStore();
 const addaSquare = useSquareStore();
 const resizeStore = useResizeStore();
-const selectStore = useSelectStore();
 const rulerSnap = useRulerSnapStore();
 const canvasStore = useCanvasStore();
 const paddingResize = usePaddingResizeStore();

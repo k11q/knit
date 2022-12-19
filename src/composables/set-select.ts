@@ -1,10 +1,14 @@
-import { useSelectStore } from "~~/src/stores/selectStore";
 import { useSquareStore } from "~~/src/stores/dataSquare";
 import { useCounterStore } from "~~/src/stores/counter";
 import { useCanvasStore } from "@/stores/canvas";
 
+export const isShowSelect = () => useState("isShowSelect", () => false);
+export const selectorLeft = () => useState("selectorLeft", () => NaN);
+export const selectorTop = () => useState("selectorTop", () => NaN);
+export const selectorWidth = () => useState("selectorWidth", () => NaN);
+export const selectorHeight = () => useState("selectorHeight", () => NaN);
+
 export function useSetSelect(e: MouseEvent) {
-  const selectStore = useSelectStore();
   const squareStore = useSquareStore();
   const selectToi = useCounterStore();
   const canvasStore = useCanvasStore();
@@ -12,14 +16,14 @@ export function useSetSelect(e: MouseEvent) {
   const prevX = e.clientX;
   const prevY = e.clientY;
 
-  selectStore.X = prevX;
-  selectStore.Y = prevY;
+  selectorLeft().value = prevX;
+  selectorTop().value = prevY;
 
   window.addEventListener("mousemove", mousemove);
   window.addEventListener("mouseup", mouseup);
 
   function mousemove(e: MouseEvent) {
-    selectStore.showSelect = true;
+    isShowSelect().value = true;
 
     let positionX = e.clientX;
     let positionY = e.clientY;
@@ -28,41 +32,41 @@ export function useSetSelect(e: MouseEvent) {
     let positiveHeight = positionY - prevY;
 
     if (positiveWidth == 0 && positiveHeight == 0) {
-      selectStore.width = 0;
-      selectStore.height = 0;
-      selectStore.X = prevX;
-      selectStore.Y = prevY;
+      selectorWidth().value = 0;
+      selectorHeight().value = 0;
+      selectorLeft().value = prevX;
+      selectorTop().value = prevY;
     }
 
     if (positiveWidth > 0 && positiveHeight > 0) {
-      selectStore.X = prevX;
-      selectStore.Y = prevY;
+      selectorLeft().value = prevX;
+      selectorTop().value = prevY;
 
-      selectStore.width = positionX - prevX;
-      selectStore.height = positionY - prevY;
+      selectorWidth().value = positionX - prevX;
+      selectorHeight().value = positionY - prevY;
     }
 
     if (positiveWidth < 0 && positiveHeight > 0) {
-      selectStore.Y = prevY;
-      selectStore.height = positionY - prevY;
+      selectorTop().value = prevY;
+      selectorHeight().value = positionY - prevY;
 
-      selectStore.X = positionX;
-      selectStore.width = prevX - positionX;
+      selectorLeft().value = positionX;
+      selectorWidth().value = prevX - positionX;
     }
 
     if (positiveWidth > 0 && positiveHeight < 0) {
-      selectStore.X = prevX;
-      selectStore.width = positionX - prevX;
+      selectorLeft().value = prevX;
+      selectorWidth().value = positionX - prevX;
 
-      selectStore.height = prevY - positionY;
-      selectStore.Y = positionY;
+      selectorHeight().value = prevY - positionY;
+      selectorTop().value = positionY;
     }
 
     if (positiveWidth < 0 && positiveHeight < 0) {
-      selectStore.height = prevY - positionY;
-      selectStore.width = prevX - positionX;
-      selectStore.X = positionX;
-      selectStore.Y = positionY;
+      selectorHeight().value = prevY - positionY;
+      selectorWidth().value = prevX - positionX;
+      selectorLeft().value = positionX;
+      selectorTop().value = positionY;
     }
 
     let surfaceElements = [
@@ -92,29 +96,33 @@ export function useSetSelect(e: MouseEvent) {
 
       if (
         //lineleft
-        (topLeft.x > selectStore.X &&
-          topLeft.x < selectStore.X + selectStore.width &&
-          (topLeft.y > selectStore.Y || bottomLeft.y > selectStore.Y) &&
-          (topLeft.y < selectStore.Y + selectStore.height ||
-            bottomLeft.y < selectStore.Y + selectStore.height)) ||
+        (topLeft.x > selectorLeft().value &&
+          topLeft.x < selectorLeft().value + selectorWidth().value &&
+          (topLeft.y > selectorTop().value ||
+            bottomLeft.y > selectorTop().value) &&
+          (topLeft.y < selectorTop().value + selectorHeight().value ||
+            bottomLeft.y < selectorTop().value + selectorHeight().value)) ||
         //linetop
-        ((topRight.x > selectStore.X || topLeft.x > selectStore.X) &&
-          (topRight.x < selectStore.X + selectStore.width ||
-            topLeft.x < selectStore.X + selectStore.width) &&
-          topRight.y > selectStore.Y &&
-          topRight.y < selectStore.Y + selectStore.height) ||
+        ((topRight.x > selectorLeft().value ||
+          topLeft.x > selectorLeft().value) &&
+          (topRight.x < selectorLeft().value + selectorWidth().value ||
+            topLeft.x < selectorLeft().value + selectorWidth().value) &&
+          topRight.y > selectorTop().value &&
+          topRight.y < selectorTop().value + selectorHeight().value) ||
         //lineright
-        (topRight.x > selectStore.X &&
-          topRight.x < selectStore.X + selectStore.width &&
-          (topRight.y > selectStore.Y || bottomRight.y > selectStore.Y) &&
-          (topRight.y < selectStore.Y + selectStore.height ||
-            bottomRight.y < selectStore.Y + selectStore.height)) ||
+        (topRight.x > selectorLeft().value &&
+          topRight.x < selectorLeft().value + selectorWidth().value &&
+          (topRight.y > selectorTop().value ||
+            bottomRight.y > selectorTop().value) &&
+          (topRight.y < selectorTop().value + selectorHeight().value ||
+            bottomRight.y < selectorTop().value + selectorHeight().value)) ||
         //linebottom
-        ((bottomRight.x > selectStore.X || bottomLeft.x > selectStore.X) &&
-          (bottomRight.x < selectStore.X + selectStore.width ||
-            bottomLeft.x < selectStore.X + selectStore.width) &&
-          bottomRight.y > selectStore.Y &&
-          bottomRight.y < selectStore.Y + selectStore.height)
+        ((bottomRight.x > selectorLeft().value ||
+          bottomLeft.x > selectorLeft().value) &&
+          (bottomRight.x < selectorLeft().value + selectorWidth().value ||
+            bottomLeft.x < selectorLeft().value + selectorWidth().value) &&
+          bottomRight.y > selectorTop().value &&
+          bottomRight.y < selectorTop().value + selectorHeight().value)
       ) {
         let data = useGetElementData(selectToi.data, id);
 
@@ -140,11 +148,11 @@ export function useSetSelect(e: MouseEvent) {
     useSetMultiElementsResizer();
   }
   function mouseup(e: MouseEvent) {
-    selectStore.X = NaN;
-    selectStore.Y = NaN;
-    selectStore.width = 0;
-    selectStore.height = 0;
-    selectStore.showSelect = false;
+    selectorLeft().value = NaN;
+    selectorTop().value = NaN;
+    selectorWidth().value = 0;
+    selectorHeight().value = 0;
+    isShowSelect().value = false;
 
     window.removeEventListener("mousemove", mousemove);
     window.removeEventListener("mouseup", mouseup);
