@@ -9,7 +9,7 @@ export type MeasuredLine = {
 export const measuredLines = () => useState<MeasuredLine[]>("lines", () => []);
 
 export function calculateDistance(originId: string, measuredId: string) {
-  let lines = [] as MeasuredLine[];
+  let lines: MeasuredLine[] = [];
 
   if (originId && measuredId) {
     const originElement = useGetElement(originId) as HTMLElement;
@@ -168,29 +168,29 @@ export function calculateDistance(originId: string, measuredId: string) {
         (originTop <= measuredTop && originBottom >= measuredBottom))
     ) {
       let differenceX = measuredLeft - originRight;
-      let lineX = {
+      let lineX: MeasuredLine = {
         top: originMidY,
         left: originRight,
         width: measuredLeft - originRight,
         type: "solid",
-      } as MeasuredLine;
+      };
 
       if (originMidY > measuredBottom) {
-        let lineY = {
+        let lineY: MeasuredLine = {
           top: measuredBottom,
           left: originRight + differenceX,
           height: originMidY - measuredBottom,
           type: "dashed",
-        } as MeasuredLine;
+        };
 
         measuredLines().value = [lineX, lineY];
       } else if (originMidY < measuredTop) {
-        let lineY = {
+        let lineY: MeasuredLine = {
           top: originMidY,
           left: originRight + differenceX,
           height: measuredTop - originMidY,
           type: "dashed",
-        } as MeasuredLine;
+        };
         measuredLines().value = [lineX, lineY];
       } else {
         measuredLines().value = [lineX];
@@ -204,29 +204,29 @@ export function calculateDistance(originId: string, measuredId: string) {
         (originLeft <= measuredLeft && originRight >= measuredRight))
     ) {
       let differenceY = measuredTop - originBottom;
-      let lineY = {
+      let lineY: MeasuredLine = {
         top: originBottom,
         left: originMidX,
         height: measuredTop - originBottom,
         type: "solid",
-      } as MeasuredLine;
+      };
 
       if (originMidX < measuredLeft) {
-        let lineX = {
+        let lineX: MeasuredLine = {
           top: originBottom + differenceY,
           left: originMidX,
           width: measuredLeft - originMidX,
           type: "dashed",
-        } as MeasuredLine;
+        };
 
         measuredLines().value = [lineX, lineY];
       } else if (originMidX > measuredRight) {
-        let lineX = {
+        let lineX: MeasuredLine = {
           top: originBottom + differenceY,
           left: measuredRight,
           width: originMidX - measuredRight,
           type: "dashed",
-        } as MeasuredLine;
+        };
         measuredLines().value = [lineX, lineY];
       } else {
         measuredLines().value = [lineY];
@@ -239,28 +239,28 @@ export function calculateDistance(originId: string, measuredId: string) {
         (originBottom >= measuredTop && originBottom <= measuredBottom) ||
         (originTop <= measuredTop && originBottom >= measuredBottom))
     ) {
-      let lineX = {
+      let lineX: MeasuredLine = {
         top: originMidY,
         left: measuredRight,
         width: originLeft - measuredRight,
         type: "solid",
-      } as MeasuredLine;
+      };
 
       if (originMidY > measuredBottom) {
-        let lineY = {
+        let lineY: MeasuredLine = {
           top: measuredBottom,
           left: measuredRight,
           height: originMidY - measuredBottom,
           type: "dashed",
-        } as MeasuredLine;
+        };
         measuredLines().value = [lineX, lineY];
       } else if (originMidY < measuredTop) {
-        let lineY = {
+        let lineY: MeasuredLine = {
           top: originMidY,
           left: measuredRight,
           height: measuredTop - originMidY,
           type: "dashed",
-        } as MeasuredLine;
+        };
         measuredLines().value = [lineX, lineY];
       } else {
         measuredLines().value = [lineX];
@@ -273,29 +273,29 @@ export function calculateDistance(originId: string, measuredId: string) {
         (originLeft >= measuredLeft && originLeft <= measuredRight) ||
         (originLeft <= measuredLeft && originRight >= measuredRight))
     ) {
-      let lineY = {
+      let lineY: MeasuredLine = {
         top: measuredBottom,
         left: originMidX,
         height: originTop - measuredBottom,
         type: "solid",
-      } as MeasuredLine;
+      };
 
       if (originMidX < measuredLeft) {
-        let lineX = {
+        let lineX: MeasuredLine = {
           top: measuredBottom,
           left: originMidX,
           width: measuredLeft - originMidX,
           type: "dashed",
-        } as MeasuredLine;
+        };
 
         measuredLines().value = [lineX, lineY];
       } else if (originMidX > measuredRight) {
-        let lineX = {
+        let lineX: MeasuredLine = {
           top: measuredBottom,
           left: measuredRight,
           width: originMidX - measuredRight,
           type: "dashed",
-        } as MeasuredLine;
+        };
 
         measuredLines().value = [lineX, lineY];
       } else {

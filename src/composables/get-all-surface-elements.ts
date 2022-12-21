@@ -14,8 +14,8 @@ export function useGetAllSurfaceElements() {
   let surfaceElements = [
     ...document.querySelector(`[data-id="canvas"]`)!.children,
   ] as HTMLElement[];
-  let allPoints = [] as Point[];
-  let allPointsTransformed = [] as Point[];
+  let allPoints: Point[] = [];
+  let allPointsTransformed: Point[] = [];
 
   surfaceElements.forEach((i) => {
     let id = i.dataset.id as string;

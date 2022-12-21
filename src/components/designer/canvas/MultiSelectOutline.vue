@@ -24,11 +24,11 @@
 
 <script setup lang="ts">
 import { useSquareStore } from "@/stores/dataSquare";
-import { Node as knitNode } from "@/stores/counter";
+import { Node } from "@/stores/counter";
 
 const squareStore = useSquareStore();
 
 const props = defineProps({
-  elements: Array<knitNode>,
+  elements: Array<Node>,
 });
 </script>

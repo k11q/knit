@@ -49,7 +49,7 @@ export function setDropMarker(e: MouseEvent, currDragElement: HTMLElement) {
           },
           {
             offset: Number.NEGATIVE_INFINITY,
-            elementID: "" as string,
+            elementID: "",
             rect: {} as DOMRect,
             index: 0,
           }
@@ -146,7 +146,7 @@ export function setDropMarker(e: MouseEvent, currDragElement: HTMLElement) {
           },
           {
             offset: Number.NEGATIVE_INFINITY,
-            elementID: "" as string,
+            elementID: "",
             rect: {} as DOMRect,
             index: 0,
           }

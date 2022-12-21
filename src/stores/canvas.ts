@@ -630,8 +630,8 @@ export const useCanvasStore = defineStore({
       const selectToi = useCounterStore();
       const squareStore = useSquareStore();
       const canvasStore = useCanvasStore();
-      let prevPositions = [] as Positions[];
-      let clonedSelection = [] as Node[];
+      let prevPositions: Positions[] = [];
+      let clonedSelection: Node[] = [];
 
       canvasStore.selection.forEach((i) => {
         let selectedElementRect = useGetElementRect(i.id) as DOMRect;

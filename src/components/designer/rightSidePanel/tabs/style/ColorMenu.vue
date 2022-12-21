@@ -447,8 +447,8 @@ function pickColor(e: MouseEvent) {
   let target = document.querySelector("#colorHex")!;
   let rect = target.getBoundingClientRect();
 
-  posX.value = (e.clientX - rect.left) as number;
-  posY.value = (e.clientY - rect.top - 5) as number;
+  posX.value = e.clientX - rect.left;
+  posY.value = e.clientY - rect.top - 5;
 
   setColor();
 
@@ -457,10 +457,10 @@ function pickColor(e: MouseEvent) {
 
   function mousemove(e: MouseEvent) {
     if (posX.value <= rect.width && e.clientX - rect.left >= 0) {
-      posX.value = (e.clientX - rect.left) as number;
+      posX.value = e.clientX - rect.left;
     }
     if (posY.value <= rect.height && e.clientY - rect.top - 5 >= 0) {
-      posY.value = (e.clientY - rect.top - 5) as number;
+      posY.value = e.clientY - rect.top - 5;
     }
     if (posX.value > rect.width) {
       posX.value = rect.width;
@@ -489,7 +489,7 @@ function pickHue(e: MouseEvent) {
   let rect = target.getBoundingClientRect();
   let rectWidth = rect.width - 6;
 
-  hexSliderX.value = (e.clientX - rect.left - 6) as number;
+  hexSliderX.value = e.clientX - rect.left - 6;
 
   setHexColor(e);
 
@@ -567,7 +567,7 @@ function pickHue(e: MouseEvent) {
 
   function mousemove(e: MouseEvent) {
     if (hexSliderX.value <= rect.width - 12 && e.clientX - rect.left - 6 >= 0) {
-      hexSliderX.value = (e.clientX - rect.left - 6) as number;
+      hexSliderX.value = e.clientX - rect.left - 6;
     }
     if (hexSliderX.value > rect.width - 12) {
       hexSliderX.value = rect.width - 12;
@@ -604,7 +604,7 @@ function pickOpacity(e: MouseEvent) {
   let target = document.querySelector("#opacitySlider")!;
   let rect = target.getBoundingClientRect();
 
-  opacitySliderX.value = (e.clientX - rect.left - 6) as number;
+  opacitySliderX.value = e.clientX - rect.left - 6;
 
   setOpacity(e);
 
@@ -616,7 +616,7 @@ function pickOpacity(e: MouseEvent) {
       opacitySliderX.value <= rect.width - 12 &&
       e.clientX - rect.left - 6 >= 0
     ) {
-      opacitySliderX.value = (e.clientX - rect.left - 6) as number;
+      opacitySliderX.value = e.clientX - rect.left - 6;
     }
     if (opacitySliderX.value > rect.width - 12) {
       opacitySliderX.value = rect.width - 12;

@@ -155,7 +155,7 @@ export const useRulerSnapStore = defineStore({
     },
     */
     setSiblingsPoints(id: string) {
-      let siblingPointsCopy = [] as Points;
+      let siblingPointsCopy: Points = [];
       const element = document.querySelector(`[data-id=${id}]`)!;
       const elementRect = element.getBoundingClientRect();
 
@@ -367,11 +367,12 @@ export const useRulerSnapStore = defineStore({
 
       const snapLinesCopy = {} as Line;
 
-      const selectedSiblingsCopy = [] as HTMLElement[];
+      const selectedSiblingsCopy: HTMLElement[] = [];
 
       const siblings = [
         ...document.querySelector(`[data-id=${id}]`)!.parentElement!.children,
       ] as HTMLElement[];
+
       this.siblings = siblings.filter((el) => el.dataset.id !== id);
 
       if (this.on) {
@@ -385,8 +386,8 @@ export const useRulerSnapStore = defineStore({
         let closestTopId = "";
         let closestBottomId = "";
 
-        let verticalSameDistLines = [] as MeasuredLine[];
-        let horizontalSameDistLines = [] as MeasuredLine[];
+        let verticalSameDistLines: MeasuredLine[] = [];
+        let horizontalSameDistLines: MeasuredLine[] = [];
 
         this.siblings.forEach((i) => {
           let siblingId = i.dataset.id as string;
@@ -917,12 +918,12 @@ export const useRulerSnapStore = defineStore({
                   let originRect = useGetElementRect(i.originId) as DOMRect;
                   let measuredRect = useGetElementRect(i.measuredId) as DOMRect;
 
-                  let line = {
+                  let line: MeasuredLine = {
                     top: 0,
                     left: originRect.right,
                     width: 0,
                     type: "solid",
-                  } as MeasuredLine;
+                  };
 
                   if (closestLeftId) {
                     line.width =
@@ -968,12 +969,12 @@ export const useRulerSnapStore = defineStore({
                     otherLinesHorizontal.length &&
                     useRulerSnapStore().snapLeft
                   ) {
-                    let lineX = {
+                    let lineX: MeasuredLine = {
                       top: 0,
                       left: 0,
                       width: 0,
                       type: "solid",
-                    } as MeasuredLine;
+                    };
 
                     if (closestLeftId) {
                       lineX.top =
@@ -1168,12 +1169,12 @@ export const useRulerSnapStore = defineStore({
                   let originRect = useGetElementRect(i.originId) as DOMRect;
                   let measuredRect = useGetElementRect(i.measuredId) as DOMRect;
 
-                  let line = {
+                  let line: MeasuredLine = {
                     left: 0,
                     top: originRect.bottom,
                     height: 0,
                     type: "solid",
-                  } as MeasuredLine;
+                  };
 
                   if (closestTopId) {
                     line.height =
@@ -1213,12 +1214,12 @@ export const useRulerSnapStore = defineStore({
 
                 function setLinesAndLabels() {
                   if (otherLines.length && useRulerSnapStore().snapTop) {
-                    let lineX = {
+                    let lineX: MeasuredLine = {
                       top: 0,
                       left: 0,
                       height: 0,
                       type: "solid",
-                    } as MeasuredLine;
+                    };
 
                     if (closestTopId) {
                       lineX.left =
@@ -1450,7 +1451,7 @@ export const useRulerSnapStore = defineStore({
 
       if (!useCheckParent(id)) {
         if (this.on) {
-          let selectedSiblingsCopy = [] as HTMLElement[];
+          let selectedSiblingsCopy: HTMLElement[] = [];
           let siblings = [
             ...document.querySelector(`[data-id=${id}]`)!.parentElement!
               .children,

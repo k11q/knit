@@ -78,8 +78,8 @@ export const usePaddingResizeStore = defineStore({
           gap = getGap() as number;
         } else gap = 0;
 
-        let gapsClone = [] as GapPosition[];
-        this.gap = [] as GapPosition[];
+        let gapsClone: GapPosition[] = [];
+        this.gap = [];
 
         if (staticChildren.length) {
           if (element.style.flexDirection === "column") {
