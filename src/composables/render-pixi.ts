@@ -5,6 +5,10 @@ import * as PIXI from "pixi.js";
 export const pixiScale = () => useState("pixiScale", () => 1);
 export const pixiSelection = () =>
   useState<string[]>("pixiSelection", () => []);
+export const pixiNodesSelection = () =>
+  useState<PIXI.Sprite[]>("pixiNodesSelection", () => []);
+export const pixiContainer = () =>
+  useState<PIXI.Container | null>("pixiContainer", () => null);
 
 export function renderPixi() {
   const squareStore = useSquareStore();
@@ -30,6 +34,7 @@ export function renderPixi() {
   const container = new PIXI.Container();
   container.width = window.innerWidth - 240;
   container.height = 1796;
+  pixiContainer().value = container;
 
   appStage.addChild(container);
 
@@ -148,12 +153,18 @@ export function renderPixi() {
     dragTarget = this;
 
     if (dragTarget) {
-      if (!pixiSelection().value.find((id) => id === dragTarget.name)) {
-        if (pixiSelection().value.length) {
+      if (
+        !pixiSelection().value.find(
+          (id) => id === dragTarget.name && pixiSelection().value.length
+        )
+      ) {
+        if (pixiSelection().value.length || pixiNodesSelection().value.length) {
           pixiSelection().value = [];
+          pixiNodesSelection().value = [];
           removeSelector();
         }
         pixiSelection().value.push(dragTarget.name);
+        pixiNodesSelection().value.push(dragTarget);
         renderSelector(
           dragTarget.x,
           dragTarget.y,
@@ -163,6 +174,7 @@ export function renderPixi() {
         );
       }
       console.log(pixiSelection().value);
+      console.log(pixiNodesSelection().value);
 
       prevX =
         event.clientX / container.scale.x -
@@ -217,6 +229,7 @@ export function renderPixi() {
   function canvasMouseDown(event) {
     if (pixiSelection().value.length) {
       pixiSelection().value = [];
+      pixiNodesSelection().value = [];
       removeSelector();
     }
   }
