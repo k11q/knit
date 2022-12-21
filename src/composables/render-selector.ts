@@ -50,21 +50,37 @@ export function renderSelector(
   selectorTopLeft.tint = PIXI.utils.string2hex("FFFFFF");
   selectorTopLeft.name = "selectorTopLeft";
   selectorTopLeft.filters = [outlineSelector];
+  selectorTopLeft.interactive = true;
+  selectorTopLeft.hitArea = new PIXI.Rectangle(-25, -25, 100, 100);
+  selectorTopLeft.cursor = "crosshair";
+  selectorTopLeft.on("mousedown", resizeTopLeft);
 
   const selectorTopRight = new PIXI.Sprite(PIXI.Texture.WHITE);
   selectorTopRight.tint = PIXI.utils.string2hex("FFFFFF");
   selectorTopRight.name = "selectorTopRight";
   selectorTopRight.filters = [outlineSelector];
+  selectorTopRight.interactive = true;
+  selectorTopRight.hitArea = new PIXI.Rectangle(-25, -25, 100, 100);
+  selectorTopRight.cursor = "crosshair";
+  selectorTopRight.on("mousedown", resizeTopRight);
 
   const selectorBottomLeft = new PIXI.Sprite(PIXI.Texture.WHITE);
   selectorBottomLeft.tint = PIXI.utils.string2hex("FFFFFF");
   selectorBottomLeft.name = "selectorBottomLeft";
   selectorBottomLeft.filters = [outlineSelector];
+  selectorBottomLeft.interactive = true;
+  selectorBottomLeft.hitArea = new PIXI.Rectangle(-25, -25, 100, 100);
+  selectorBottomLeft.cursor = "crosshair";
+  selectorBottomLeft.on("mousedown", resizeBottomLeft);
 
   const selectorBottomRight = new PIXI.Sprite(PIXI.Texture.WHITE);
   selectorBottomRight.tint = PIXI.utils.string2hex("FFFFFF");
   selectorBottomRight.name = "selectorBottomRight";
   selectorBottomRight.filters = [outlineSelector];
+  selectorBottomRight.interactive = true;
+  selectorBottomRight.hitArea = new PIXI.Rectangle(-25, -25, 100, 100);
+  selectorBottomRight.cursor = "crosshair";
+  selectorBottomRight.on("mousedown", resizeBottomRight);
 
   parent.addChild(selectorTop);
   parent.addChild(selectorLeft);
@@ -291,6 +307,150 @@ function resizeLeft(event: MouseEvent) {
       changeLeft(pixiNodesSelection().value[0], left, width);
     }
 
+    function mouseup() {
+      window.removeEventListener("mousemove", mousemove);
+      window.removeEventListener("mouseup", mouseup);
+    }
+  }
+}
+
+function resizeBottomRight(event: MouseEvent) {
+  if (pixiSelection().value.length) {
+    event.stopPropagation();
+
+    const prevLeft = pixiNodesSelection().value[0].x;
+    const prevTop = pixiNodesSelection().value[0].y;
+    const prevHeight = pixiNodesSelection().value[0].height;
+    const prevY = (event.clientY - 56) / pixiScale().value;
+    const prevWidth = pixiNodesSelection().value[0].width;
+    const prevX = (event.clientX - 296) / pixiScale().value;
+
+    window.addEventListener("mousemove", mousemove);
+    window.addEventListener("mouseup", mouseup);
+
+    function mousemove(event) {
+      event.stopPropagation();
+      event.preventDefault();
+
+      const height =
+        (event.clientY - 56) / pixiScale().value - prevY + prevHeight;
+      const width =
+        (event.clientX - 296) / pixiScale().value - prevX + prevWidth;
+
+      updateSelector(prevLeft, prevTop, width, height);
+      pixiNodesSelection().value[0].width = width;
+      pixiNodesSelection().value[0].height = height;
+    }
+    function mouseup() {
+      window.removeEventListener("mousemove", mousemove);
+      window.removeEventListener("mouseup", mouseup);
+    }
+  }
+}
+
+function resizeBottomLeft(event: MouseEvent) {
+  if (pixiSelection().value.length) {
+    event.stopPropagation();
+
+    const prevLeft = pixiNodesSelection().value[0].x;
+    const prevTop = pixiNodesSelection().value[0].y;
+    const prevHeight = pixiNodesSelection().value[0].height;
+    const prevY = (event.clientY - 56) / pixiScale().value;
+    const prevWidth = pixiNodesSelection().value[0].width;
+    const prevX = (event.clientX - 296) / pixiScale().value;
+
+    window.addEventListener("mousemove", mousemove);
+    window.addEventListener("mouseup", mouseup);
+
+    function mousemove(event) {
+      event.stopPropagation();
+      event.preventDefault();
+
+      const left = (event.clientX - 296) / pixiScale().value - prevX + prevLeft;
+      const height =
+        (event.clientY - 56) / pixiScale().value - prevY + prevHeight;
+      const width =
+        prevX - (event.clientX - 296) / pixiScale().value + prevWidth;
+
+      updateSelector(left, prevTop, width, height);
+      pixiNodesSelection().value[0].width = width;
+      pixiNodesSelection().value[0].height = height;
+      pixiNodesSelection().value[0].x = left;
+    }
+    function mouseup() {
+      window.removeEventListener("mousemove", mousemove);
+      window.removeEventListener("mouseup", mouseup);
+    }
+  }
+}
+
+function resizeTopLeft(event: MouseEvent) {
+  if (pixiSelection().value.length) {
+    event.stopPropagation();
+
+    const prevLeft = pixiNodesSelection().value[0].x;
+    const prevTop = pixiNodesSelection().value[0].y;
+    const prevHeight = pixiNodesSelection().value[0].height;
+    const prevY = (event.clientY - 56) / pixiScale().value;
+    const prevWidth = pixiNodesSelection().value[0].width;
+    const prevX = (event.clientX - 296) / pixiScale().value;
+
+    window.addEventListener("mousemove", mousemove);
+    window.addEventListener("mouseup", mouseup);
+
+    function mousemove(event) {
+      event.stopPropagation();
+      event.preventDefault();
+
+      const left = (event.clientX - 296) / pixiScale().value - prevX + prevLeft;
+      const top = (event.clientY - 56) / pixiScale().value - prevY + prevTop;
+      const height =
+        prevY - (event.clientY - 56) / pixiScale().value + prevHeight;
+      const width =
+        prevX - (event.clientX - 296) / pixiScale().value + prevWidth;
+
+      updateSelector(left, top, width, height);
+      pixiNodesSelection().value[0].width = width;
+      pixiNodesSelection().value[0].height = height;
+      pixiNodesSelection().value[0].x = left;
+      pixiNodesSelection().value[0].y = top;
+    }
+    function mouseup() {
+      window.removeEventListener("mousemove", mousemove);
+      window.removeEventListener("mouseup", mouseup);
+    }
+  }
+}
+
+function resizeTopRight(event: MouseEvent) {
+  if (pixiSelection().value.length) {
+    event.stopPropagation();
+
+    const prevLeft = pixiNodesSelection().value[0].x;
+    const prevTop = pixiNodesSelection().value[0].y;
+    const prevHeight = pixiNodesSelection().value[0].height;
+    const prevY = (event.clientY - 56) / pixiScale().value;
+    const prevWidth = pixiNodesSelection().value[0].width;
+    const prevX = (event.clientX - 296) / pixiScale().value;
+
+    window.addEventListener("mousemove", mousemove);
+    window.addEventListener("mouseup", mouseup);
+
+    function mousemove(event) {
+      event.stopPropagation();
+      event.preventDefault();
+
+      const top = (event.clientY - 56) / pixiScale().value - prevY + prevTop;
+      const height =
+        prevY - (event.clientY - 56) / pixiScale().value + prevHeight;
+      const width =
+        (event.clientX - 296) / pixiScale().value - prevX + prevWidth;
+
+      updateSelector(prevLeft, top, width, height);
+      pixiNodesSelection().value[0].width = width;
+      pixiNodesSelection().value[0].height = height;
+      pixiNodesSelection().value[0].y = top;
+    }
     function mouseup() {
       window.removeEventListener("mousemove", mousemove);
       window.removeEventListener("mouseup", mouseup);
