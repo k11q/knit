@@ -87,11 +87,13 @@ export function renderPixi() {
   }
 
   let dragTarget: PIXI.Sprite | null = null;
+  let prevX: number = 0;
+  let prevY: number = 0;
 
   function onDragMove(event: MouseEvent) {
     if (dragTarget) {
-      dragTarget.x = event.clientX - 300 - 20;
-      dragTarget.y = event.clientY - 60 - 50;
+      dragTarget.x = event.clientX - prevX;
+      dragTarget.y = event.clientY - prevY;
     }
   }
 
@@ -100,6 +102,11 @@ export function renderPixi() {
 
     this.alpha = 0.5;
     dragTarget = this;
+
+    if (dragTarget) {
+      prevX = event.clientX - dragTarget.x;
+      prevY = event.clientY - dragTarget.y;
+    }
 
     app.stage.interactive = true;
 
