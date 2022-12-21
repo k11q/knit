@@ -13,8 +13,8 @@ export const useSquareStore = defineStore({
     normalPointer: true,
     dragPointer: false,
     draggingPointer: false,
-    offsetLeft: NaN,
-    offsetTop: NaN,
+    offsetLeft: 0,
+    offsetTop: 0,
     scale: 1,
   }),
   actions: {

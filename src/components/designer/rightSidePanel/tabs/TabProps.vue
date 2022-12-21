@@ -196,7 +196,7 @@
       </div>
     </div>
     <pre>
-            {{ selectToi.selectedBoxData }}
+            {{ selectToi.data }}
           </pre
     >
   </div>

@@ -73,6 +73,7 @@
     </div>
     <div class="flex items-center justify-center">
       <p>{{ route.params.id }}</p>
+      <input type="number" v-model="addaSquare.scale" />
     </div>
     <div class="flex flex-row px-2 gap-3 items-center justify-end w-60">
       <div
