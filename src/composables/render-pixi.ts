@@ -2,40 +2,46 @@ import { Node, useCounterStore } from "@/stores/counter";
 import { useSquareStore } from "@/stores/dataSquare";
 import * as PIXI from "pixi.js";
 
+export const pixiScale = () => useState("pixiScale", () => 1);
+export const pixiSelection = () =>
+  useState<string[]>("pixiSelection", () => []);
+
 export function renderPixi() {
   const squareStore = useSquareStore();
   const selectToi = useCounterStore();
   const nodes = selectToi.data;
+  const canvasWrapper = document.querySelector(
+    "#canvas-wrapper"
+  ) as HTMLElement;
 
-  let app = new PIXI.Application({
+  const app = new PIXI.Application({
     width: window.innerWidth - 240,
     height: 1796,
     backgroundColor: "#1E1E1E",
   });
 
-  const container = app.stage;
-
-  app.stage.hitArea = app.screen;
-  app.stage.interactive = true;
-
-  let canvasWrapper = document.querySelector("#canvas-wrapper") as HTMLElement;
-
+  const appStage = app.stage;
+  appStage.hitArea = app.screen;
+  appStage.interactive = true;
   canvasWrapper.appendChild(app.view);
   canvasWrapper.addEventListener("wheel", pinchZoom);
+  appStage.addEventListener("mousedown", canvasMouseDown);
 
-  app.stage.x = squareStore.offsetLeft;
-  app.stage.y = squareStore.offsetTop;
-  app.stage.scale.x = squareStore.scale;
-  app.stage.scale.y = squareStore.scale;
+  const container = new PIXI.Container();
+  container.width = window.innerWidth - 240;
+  container.height = 1796;
 
-  renderNodes(nodes, app.stage);
+  appStage.addChild(container);
 
-  function renderNodes(nodes: Node[], parent) {
+  renderNodes(nodes, container);
+
+  function renderNodes(nodes: Node[], parent: PIXI.Container) {
     nodes.forEach((i, index) => {
       const node = new PIXI.Sprite(PIXI.Texture.WHITE);
 
       parent.addChild(node);
 
+      node.name = i.id;
       if (
         i.cssRules[0].style.left?.value &&
         typeof i.cssRules[0].style.left?.value === "number"
@@ -53,16 +59,18 @@ export function renderPixi() {
         node.y = 0;
       }
       if (
-        i.cssRules[0].style.width?.value &&
-        typeof i.cssRules[0].style.width?.value === "number"
+        i.cssRules[0].style.width &&
+        i.cssRules[0].style.width.value &&
+        typeof i.cssRules[0].style.width.value === "number"
       ) {
         node.width = i.cssRules[0].style.width?.value;
       } else {
         node.width = 0;
       }
       if (
-        i.cssRules[0].style.height?.value &&
-        typeof i.cssRules[0].style.height?.value === "number"
+        i.cssRules[0].style.height &&
+        i.cssRules[0].style.height.value &&
+        typeof i.cssRules[0].style.height.value === "number"
       ) {
         node.height = i.cssRules[0].style.height?.value;
       } else {
@@ -93,44 +101,97 @@ export function renderPixi() {
   let prevY: number = 0;
 
   function onDragMove(event: MouseEvent) {
+    event.stopImmediatePropagation();
+    event.preventDefault();
+
     if (dragTarget) {
       dragTarget.x = (event.clientX - 296) / container.scale.x - prevX;
       dragTarget.y = (event.clientY - 56) / container.scale.x - prevY;
+
+      const selectorLineHalfThickness = 0.5 / pixiScale().value;
+      const cornerSelectorHalfSize = 3 / pixiScale().value;
+
+      container.getChildByName("selectorTop").x = dragTarget.x;
+      container.getChildByName("selectorTop").y =
+        dragTarget.y - selectorLineHalfThickness;
+      container.getChildByName("selectorLeft").x =
+        dragTarget.x - selectorLineHalfThickness;
+      container.getChildByName("selectorLeft").y = dragTarget.y;
+      container.getChildByName("selectorRight").x =
+        dragTarget.x + dragTarget.width - selectorLineHalfThickness;
+      container.getChildByName("selectorRight").y = dragTarget.y;
+      container.getChildByName("selectorBottom").x = dragTarget.x;
+      container.getChildByName("selectorBottom").y =
+        dragTarget.y + dragTarget.height - selectorLineHalfThickness;
+      container.getChildByName("selectorTopLeft").x =
+        dragTarget.x - cornerSelectorHalfSize;
+      container.getChildByName("selectorTopLeft").y =
+        dragTarget.y - cornerSelectorHalfSize;
+      container.getChildByName("selectorTopRight").x =
+        dragTarget.x + dragTarget.width - cornerSelectorHalfSize;
+      container.getChildByName("selectorTopRight").y =
+        dragTarget.y - cornerSelectorHalfSize;
+      container.getChildByName("selectorBottomLeft").x =
+        dragTarget.x - cornerSelectorHalfSize;
+      container.getChildByName("selectorBottomLeft").y =
+        dragTarget.y + dragTarget.height - cornerSelectorHalfSize;
+      container.getChildByName("selectorBottomRight").x =
+        dragTarget.x + dragTarget.width - cornerSelectorHalfSize;
+      container.getChildByName("selectorBottomRight").y =
+        dragTarget.y + dragTarget.height - cornerSelectorHalfSize;
     }
   }
 
   function onDragStart(event: MouseEvent) {
     event.stopPropagation();
 
-    console.log(this);
     dragTarget = this;
 
     if (dragTarget) {
+      if (!pixiSelection().value.find((id) => id === dragTarget.name)) {
+        if (pixiSelection().value.length) {
+          pixiSelection().value = [];
+          removeSelector();
+        }
+        pixiSelection().value.push(dragTarget.name);
+        renderSelector(
+          dragTarget.x,
+          dragTarget.y,
+          dragTarget.width,
+          dragTarget.height,
+          container
+        );
+      }
+      console.log(pixiSelection().value);
+
       prevX =
         event.clientX / container.scale.x -
         (dragTarget.x + 296 / container.scale.x);
       prevY =
         event.clientY / container.scale.x -
         (dragTarget.y + 56 / container.scale.x);
-    }
 
-    canvasWrapper.addEventListener("mousemove", onDragMove);
-    canvasWrapper.addEventListener("mouseup", onDragEnd);
+      window.addEventListener("mousemove", onDragMove);
+      window.addEventListener("mouseup", onDragEnd);
+    }
   }
 
   function onDragEnd() {
     if (dragTarget) {
-      app.stage.interactive = false;
       dragTarget = null;
 
-      canvasWrapper.removeEventListener("mousemove", onDragMove);
-      canvasWrapper.removeEventListener("mouseup", onDragEnd);
+      window.removeEventListener("mousemove", onDragMove);
+      window.removeEventListener("mouseup", onDragEnd);
     }
   }
 
   function pinchZoom(event) {
+    event.stopPropagation();
+    event.preventDefault();
+
     const mouseX = event.clientX - 296;
     const mouseY = event.clientY - 56;
+
     if (
       event.deltaX === 0 &&
       event.ctrlKey &&
@@ -149,5 +210,34 @@ export function renderPixi() {
       container.x += -event.deltaX * 0.5;
       container.y += -event.deltaY * 0.5;
     }
+
+    pixiScale().value = container.scale.x;
+  }
+
+  function canvasMouseDown(event) {
+    if (pixiSelection().value.length) {
+      pixiSelection().value = [];
+      removeSelector();
+    }
+  }
+
+  function removeSelector() {
+    const selectorTop = container.getChildByName("selectorTop");
+    const selectorLeft = container.getChildByName("selectorLeft");
+    const selectorRight = container.getChildByName("selectorRight");
+    const selectorBottom = container.getChildByName("selectorBottom");
+    const selectorTopLeft = container.getChildByName("selectorTopLeft");
+    const selectorTopRight = container.getChildByName("selectorTopRight");
+    const selectorBottomLeft = container.getChildByName("selectorBottomLeft");
+    const selectorBottomRight = container.getChildByName("selectorBottomRight");
+
+    selectorTop.parent.removeChild(selectorTop);
+    selectorLeft.parent.removeChild(selectorLeft);
+    selectorRight.parent.removeChild(selectorRight);
+    selectorBottom.parent.removeChild(selectorBottom);
+    selectorTopLeft.parent.removeChild(selectorTopLeft);
+    selectorTopRight.parent.removeChild(selectorTopRight);
+    selectorBottomLeft.parent.removeChild(selectorBottomLeft);
+    selectorBottomRight.parent.removeChild(selectorBottomRight);
   }
 }
