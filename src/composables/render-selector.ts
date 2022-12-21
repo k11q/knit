@@ -11,29 +11,40 @@ export function renderSelector(
   height: number,
   parent: PIXI.Container
 ) {
-  const cornerSelectorSize = 6 / pixiScale().value;
   const selectorColor = PIXI.utils.string2hex("0191FA");
   const outlineSelector = new OutlineFilter(1, selectorColor, 1);
 
   const selectorTop = new PIXI.Sprite(PIXI.Texture.WHITE);
   selectorTop.tint = selectorColor;
   selectorTop.name = "selectorTop";
+  selectorTop.interactive = true;
+  selectorTop.hitArea = new PIXI.Rectangle(0, -50, width, 100);
+  selectorTop.cursor = "crosshair";
+  selectorTop.on("mousedown", resizeTop);
 
   const selectorLeft = new PIXI.Sprite(PIXI.Texture.WHITE);
   selectorLeft.tint = selectorColor;
   selectorLeft.name = "selectorLeft";
+  selectorLeft.interactive = true;
+  selectorLeft.hitArea = new PIXI.Rectangle(-50, 0, 100, height);
+  selectorLeft.cursor = "crosshair";
+  selectorLeft.on("mousedown", resizeLeft);
 
   const selectorRight = new PIXI.Sprite(PIXI.Texture.WHITE);
   selectorRight.tint = selectorColor;
   selectorRight.name = "selectorRight";
-
   selectorRight.interactive = true;
+  selectorRight.hitArea = new PIXI.Rectangle(-50, 0, 100, height);
   selectorRight.cursor = "crosshair";
   selectorRight.on("mousedown", resizeRight);
 
   const selectorBottom = new PIXI.Sprite(PIXI.Texture.WHITE);
   selectorBottom.tint = selectorColor;
   selectorBottom.name = "selectorBottom";
+  selectorBottom.interactive = true;
+  selectorBottom.hitArea = new PIXI.Rectangle(0, -50, width, 100);
+  selectorBottom.cursor = "crosshair";
+  selectorBottom.on("mousedown", resizeBottom);
 
   const selectorTopLeft = new PIXI.Sprite(PIXI.Texture.WHITE);
   selectorTopLeft.tint = PIXI.utils.string2hex("FFFFFF");
@@ -145,7 +156,7 @@ export function updateSelector(
   selectorBottomRight.height = cornerSelectorSize;
 }
 
-function changeWidth(node: PIXI.Sprite, value: number) {
+function changeWidthForward(node: PIXI.Sprite, value: number) {
   const prevTop = pixiNodesSelection().value[0].y;
   const prevLeft = pixiNodesSelection().value[0].x;
   const prevHeight = pixiNodesSelection().value[0].height;
@@ -155,20 +166,131 @@ function changeWidth(node: PIXI.Sprite, value: number) {
   node.width = value;
 }
 
+function changeHeightForward(node: PIXI.Sprite, value: number) {
+  const prevTop = pixiNodesSelection().value[0].y;
+  const prevLeft = pixiNodesSelection().value[0].x;
+  const prevWidth = pixiNodesSelection().value[0].width;
+
+  updateSelector(prevLeft, prevTop, prevWidth, value);
+
+  node.height = value;
+}
+
+function changeTop(node: PIXI.Sprite, valueTop: number, valueHeight: number) {
+  const prevLeft = pixiNodesSelection().value[0].x;
+  const prevWidth = pixiNodesSelection().value[0].width;
+
+  updateSelector(prevLeft, valueTop, prevWidth, valueHeight);
+  node.y = valueTop;
+  node.height = valueHeight;
+}
+
+function changeLeft(node: PIXI.Sprite, valueLeft: number, valueWidth: number) {
+  const prevTop = pixiNodesSelection().value[0].y;
+  const prevHeight = pixiNodesSelection().value[0].height;
+
+  updateSelector(valueLeft, prevTop, valueWidth, prevHeight);
+  node.x = valueLeft;
+  node.width = valueWidth;
+}
+
 function resizeRight(event: MouseEvent) {
   if (pixiSelection().value.length) {
-    pixiSelection().value = [];
+    event.stopPropagation();
 
     const prevWidth = pixiNodesSelection().value[0].width;
     const prevX = (event.clientX - 296) / pixiScale().value;
-    const selector = window.addEventListener("mousemove", mousemove);
+    window.addEventListener("mousemove", mousemove);
     window.addEventListener("mouseup", mouseup);
 
     function mousemove(event) {
+      event.stopPropagation();
+      event.preventDefault();
+
       const width =
         (event.clientX - 296) / pixiScale().value - prevX + prevWidth;
-      changeWidth(pixiNodesSelection().value[0], width);
+      changeWidthForward(pixiNodesSelection().value[0], width);
     }
+    function mouseup() {
+      window.removeEventListener("mousemove", mousemove);
+      window.removeEventListener("mouseup", mouseup);
+    }
+  }
+}
+
+function resizeBottom(event: MouseEvent) {
+  if (pixiSelection().value.length) {
+    event.stopPropagation();
+
+    const prevHeight = pixiNodesSelection().value[0].height;
+    const prevY = (event.clientY - 56) / pixiScale().value;
+    window.addEventListener("mousemove", mousemove);
+    window.addEventListener("mouseup", mouseup);
+
+    function mousemove(event) {
+      event.stopPropagation();
+      event.preventDefault();
+
+      const height =
+        (event.clientY - 56) / pixiScale().value - prevY + prevHeight;
+      changeHeightForward(pixiNodesSelection().value[0], height);
+    }
+    function mouseup() {
+      window.removeEventListener("mousemove", mousemove);
+      window.removeEventListener("mouseup", mouseup);
+    }
+  }
+}
+
+function resizeTop(event: MouseEvent) {
+  if (pixiSelection().value.length) {
+    event.stopPropagation();
+
+    const prevTop = pixiNodesSelection().value[0].y;
+    const prevHeight = pixiNodesSelection().value[0].height;
+    const prevY = (event.clientY - 56) / pixiScale().value;
+    window.addEventListener("mousemove", mousemove);
+    window.addEventListener("mouseup", mouseup);
+
+    function mousemove(event) {
+      event.stopPropagation();
+      event.preventDefault();
+
+      const top = (event.clientY - 56) / pixiScale().value - prevY + prevTop;
+      const height =
+        prevY - (event.clientY - 56) / pixiScale().value + prevHeight;
+
+      changeTop(pixiNodesSelection().value[0], top, height);
+    }
+
+    function mouseup() {
+      window.removeEventListener("mousemove", mousemove);
+      window.removeEventListener("mouseup", mouseup);
+    }
+  }
+}
+
+function resizeLeft(event: MouseEvent) {
+  if (pixiSelection().value.length) {
+    event.stopPropagation();
+
+    const prevLeft = pixiNodesSelection().value[0].x;
+    const prevWidth = pixiNodesSelection().value[0].width;
+    const prevX = (event.clientX - 296) / pixiScale().value;
+    window.addEventListener("mousemove", mousemove);
+    window.addEventListener("mouseup", mouseup);
+
+    function mousemove(event) {
+      event.stopPropagation();
+      event.preventDefault();
+
+      const left = (event.clientX - 296) / pixiScale().value - prevX + prevLeft;
+      const width =
+        prevX - (event.clientX - 296) / pixiScale().value + prevWidth;
+
+      changeLeft(pixiNodesSelection().value[0], left, width);
+    }
+
     function mouseup() {
       window.removeEventListener("mousemove", mousemove);
       window.removeEventListener("mouseup", mouseup);
