@@ -39,7 +39,7 @@ type Axis = "horizontal" | "vertical";
 
 const intersectionSensitivity = 5;
 let snapLines: LinePosition = {};
-let renderedLinesId: string[] = [];
+const renderedLinesId: Position[] = [];
 
 export function setDragSnap(
   event: MouseEvent,
@@ -50,6 +50,7 @@ export function setDragSnap(
   const origin = getElementById(id) as PIXI.Sprite;
   const originNode = setOriginPosition(event, origin, prevX, prevY);
   const originSiblings = setOriginSiblings(origin);
+  const container = getElementById("root-container")!;
 
   let snapLinesPlaceholder = {} as LinePosition;
 
@@ -134,37 +135,40 @@ export function setDragSnap(
     });
 
     //check if theres 2 lines on same axis: cancel out farther
-    snapLines = findClosestIntersection(originNode, snapLinesPlaceholder);
+    snapLines = {
+      ...findClosestIntersection(originNode, snapLinesPlaceholder),
+    };
+    console.log(snapLines);
 
+    //render the lines
     if (
-      (snapLines.lineLeft ||
-        snapLines.lineMiddleX ||
-        snapLines.lineRight ||
-        snapLines.lineTop ||
-        snapLines.lineMiddleY ||
-        snapLines.lineBottom) &&
-      renderedLinesId
+      snapLines.lineLeft ||
+      snapLines.lineMiddleX ||
+      snapLines.lineRight ||
+      snapLines.lineTop ||
+      snapLines.lineMiddleY ||
+      snapLines.lineBottom
     ) {
-      if (snapLines.lineLeft) {
-        renderLine("vertical", snapLines.lineLeft);
+      renderAllLines(snapLines);
+    } else if (renderedLinesId.length) {
+      destroyLines();
+    }
+
+    //snap to closest line
+    if (setSnapLeft(id, snapLines) || setSnapTop(id, snapLines)) {
+      if (setSnapLeft(id, snapLines) && !setSnapTop(id, snapLines)) {
+        origin.x = setSnapLeft(id, snapLines)!;
+        origin.y = (event.clientY - 56) / container.scale.x - prevY;
+      } else if (setSnapTop(id, snapLines) && !setSnapLeft(id, snapLines)) {
+        origin.y = setSnapTop(id, snapLines)!;
+        origin.x = (event.clientX - 296) / container.scale.x - prevX;
+      } else {
+        origin.x = setSnapLeft(id, snapLines)!;
+        origin.y = setSnapTop(id, snapLines)!;
       }
-      if (snapLines.lineMiddleX) {
-        renderLine("vertical", snapLines.lineMiddleX);
-      }
-      if (snapLines.lineRight) {
-        renderLine("vertical", snapLines.lineRight);
-      }
-      if (snapLines.lineTop) {
-        renderLine("horizontal", snapLines.lineTop);
-      }
-      if (snapLines.lineMiddleY) {
-        renderLine("horizontal", snapLines.lineMiddleY);
-      }
-      if (snapLines.lineBottom) {
-        renderLine("horizontal", snapLines.lineBottom);
-      }
-    } else if (renderedLinesId) {
-      destroyLines(renderedLinesId);
+    } else {
+      origin.x = (event.clientX - 296) / container.scale.x - prevX;
+      origin.y = (event.clientY - 56) / container.scale.x - prevY;
     }
   }
 }
@@ -232,38 +236,38 @@ function findClosestIntersection(
     snapLinesPlaceholder.lineBottom
   ) {
     if (snapLinesPlaceholder.lineLeft && snapLinesPlaceholder.lineMiddleX) {
-      snapLinesPlaceholder.lineLeft - originNode.lineLeft >
+      snapLinesPlaceholder.lineLeft - originNode.lineLeft <
       snapLinesPlaceholder.lineMiddleX - originNode.lineMiddleX
         ? (snapLinesPlaceholder.lineMiddleX = undefined)
         : (snapLinesPlaceholder.lineLeft = undefined);
     }
     if (snapLinesPlaceholder.lineLeft && snapLinesPlaceholder.lineRight) {
-      snapLinesPlaceholder.lineLeft - originNode.lineLeft >
+      snapLinesPlaceholder.lineLeft - originNode.lineLeft <
       snapLinesPlaceholder.lineRight - originNode.lineRight
         ? (snapLinesPlaceholder.lineRight = undefined)
         : (snapLinesPlaceholder.lineLeft = undefined);
     }
     if (snapLinesPlaceholder.lineMiddleX && snapLinesPlaceholder.lineRight) {
-      snapLinesPlaceholder.lineMiddleX - originNode.lineMiddleX >
+      snapLinesPlaceholder.lineMiddleX - originNode.lineMiddleX <
       snapLinesPlaceholder.lineRight - originNode.lineRight
         ? (snapLinesPlaceholder.lineRight = undefined)
         : (snapLinesPlaceholder.lineMiddleX = undefined);
     }
 
     if (snapLinesPlaceholder.lineTop && snapLinesPlaceholder.lineMiddleY) {
-      snapLinesPlaceholder.lineTop - originNode.lineTop >
+      snapLinesPlaceholder.lineTop - originNode.lineTop <
       snapLinesPlaceholder.lineMiddleY - originNode.lineMiddleY
         ? (snapLinesPlaceholder.lineMiddleY = undefined)
         : (snapLinesPlaceholder.lineTop = undefined);
     }
     if (snapLinesPlaceholder.lineTop && snapLinesPlaceholder.lineBottom) {
-      snapLinesPlaceholder.lineTop - originNode.lineTop >
+      snapLinesPlaceholder.lineTop - originNode.lineTop <
       snapLinesPlaceholder.lineBottom - originNode.lineBottom
         ? (snapLinesPlaceholder.lineBottom = undefined)
         : (snapLinesPlaceholder.lineTop = undefined);
     }
     if (snapLinesPlaceholder.lineMiddleY && snapLinesPlaceholder.lineBottom) {
-      snapLinesPlaceholder.lineMiddleY - originNode.lineMiddleY >
+      snapLinesPlaceholder.lineMiddleY - originNode.lineMiddleY <
       snapLinesPlaceholder.lineBottom - originNode.lineBottom
         ? (snapLinesPlaceholder.lineBottom = undefined)
         : (snapLinesPlaceholder.lineMiddleY = undefined);
@@ -272,39 +276,132 @@ function findClosestIntersection(
   return snapLinesPlaceholder;
 }
 
-function renderLine(axis: Axis, position: number) {
-  const randomId = useCreateId();
-  const line = createElement(Sprite, randomId, PIXI.Texture.WHITE);
+function renderLine(axis: Axis, point: number, position: Position) {
   const container = getElementById("root-container")!;
-  renderedLinesId.push(randomId);
+  const pointXTransformed = point * container.scale.x + container.x;
+  const pointYTransformed = point * container.scale.x + container.y;
+  let line: PIXI.Sprite;
 
-  if (axis === "vertical") {
-    line.x = position * container.scale.x + container.x;
-    line.y = 0;
-    line.width = 1;
-    line.height = window.innerHeight - 56;
-  } else {
-    line.x = 0;
-    line.y = position * container.scale.x + container.y;
-    line.width = window.innerWidth - 240;
-    line.height = 1;
+  if (
+    !getElementById(position) ||
+    (getElementById(position) &&
+      axis === "vertical" &&
+      getElementById(position)!.x !== pointXTransformed) ||
+    (axis === "horizontal" && getElementById(position)!.y !== pointYTransformed)
+  ) {
+    if (!getElementById(position)) {
+      line = createElement(Sprite, position, PIXI.Texture.WHITE);
+      line.name = position;
+      pixiApp().value!.stage.addChild(line);
+      line.tint = 0x2f4fff;
+      renderedLinesId.push(position);
+      console.log("newline");
+    }
+    const element = getElementById(position) as PIXI.Sprite;
+    if (axis === "vertical") {
+      element.x = point * container.scale.x + container.x;
+      element.y = 0;
+      element.width = 1;
+      element.height = window.innerHeight - 56;
+    } else {
+      element.x = 0;
+      element.y = point * container.scale.x + container.y;
+      element.width = window.innerWidth - 240;
+      element.height = 1;
+    }
   }
-  line.tint = 0x2f4fff;
-
-  pixiApp().value.stage.addChild(line);
 }
 
-function destroyLines(ids: string[]) {
+export function destroyLines() {
+  const ids = renderedLinesId;
+  console.log(ids);
   ids.forEach((id) => {
     const element = getElementById(id)!;
-    element.parent.removeChild(element);
-    const index = ids.indexOf(id);
-    if (index > -1) {
-      ids.splice(index, 1);
+    if (element) {
+      element.parent.removeChild(element);
+      element.destroy();
     }
   });
+  ids.splice(0, ids.length);
 }
 
-function setLines(lines: Line[]) {}
+function destroySingle(position: Position) {
+  const ids = renderedLinesId;
+  const index = ids.findIndex((id) => id === position);
+  const element = getElementById(position)!;
+  element.parent.removeChild(element);
+  element.destroy();
+
+  if (index) {
+    ids.splice(index, 1);
+  }
+}
+
+function renderAllLines(lines: LinePosition) {
+  if (lines.lineLeft) {
+    renderLine("vertical", lines.lineLeft, "left");
+  }
+  if (!lines.lineLeft && getElementById("left")) {
+    destroySingle("left");
+  }
+  if (lines.lineMiddleX) {
+    renderLine("vertical", lines.lineMiddleX, "middleX");
+  }
+  if (!lines.lineMiddleX && getElementById("middleX")) {
+    destroySingle("middleX");
+  }
+  if (lines.lineRight) {
+    renderLine("vertical", lines.lineRight, "right");
+  }
+  if (!lines.lineRight && getElementById("right")) {
+    destroySingle("right");
+  }
+  if (lines.lineTop) {
+    renderLine("horizontal", lines.lineTop, "top");
+  }
+  if (!lines.lineTop && getElementById("top")) {
+    destroySingle("top");
+  }
+  if (lines.lineMiddleY) {
+    renderLine("horizontal", lines.lineMiddleY, "middleY");
+  }
+  if (!lines.lineMiddleY && getElementById("middleY")) {
+    destroySingle("middleY");
+  }
+  if (lines.lineBottom) {
+    renderLine("horizontal", lines.lineBottom, "bottom");
+  }
+  if (!lines.lineBottom && getElementById("bottom")) {
+    destroySingle("bottom");
+  }
+}
+
+export function setSnapLeft(id: string, lines: LinePosition) {
+  const origin = getElementById(id) as PIXI.Sprite;
+
+  if (lines.lineLeft || lines.lineMiddleX || lines.lineRight) {
+    if (lines.lineLeft) {
+      return lines.lineLeft;
+    } else if (lines.lineMiddleX) {
+      return lines.lineMiddleX - origin.width / 2;
+    } else {
+      return lines.lineRight! - origin.width;
+    }
+  } else return;
+}
+
+export function setSnapTop(id: string, lines: LinePosition) {
+  const origin = getElementById(id) as PIXI.Sprite;
+
+  if (lines.lineTop || lines.lineMiddleY || lines.lineBottom) {
+    if (lines.lineTop) {
+      return lines.lineTop;
+    } else if (lines.lineMiddleY) {
+      return lines.lineMiddleY - origin.height / 2;
+    } else {
+      return lines.lineBottom! - origin.height;
+    }
+  } else return;
+}
 
 function setPoints(points: Point[]) {}

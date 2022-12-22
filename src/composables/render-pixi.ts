@@ -108,50 +108,12 @@ export function renderPixi() {
   let dragTarget: PIXI.Sprite | null = null;
   let prevX: number = 0;
   let prevY: number = 0;
-  let line = createElement(Sprite, "line", PIXI.Texture.WHITE);
-  line.name = "line";
-  line.width = 1;
-  line.height = 1000;
-  line.y = 0;
-  line.tint = 0x2f4fff;
-  let filteredArray = [];
 
   function onDragMove(event: MouseEvent) {
     event.stopImmediatePropagation();
     event.preventDefault();
 
     if (dragTarget) {
-      const currentDragX = (event.clientX - 296) / container.scale.x - prevX;
-      const currentDragY = (event.clientY - 56) / container.scale.x - prevY;
-      let showLine = false;
-      let x = 0;
-
-      if (filteredArray.length) {
-        filteredArray.forEach((i) => {
-          if (
-            currentDragX < i.x + 5 / container.scale.x &&
-            currentDragX > i.x - 5 / container.scale.x
-          ) {
-            showLine = true;
-            x = i.x * container.scale.x + container.x;
-            dragTarget.x = i.x;
-            return;
-          }
-        });
-
-        if (showLine) {
-          if (!appStage.children.includes(getElementById("line"))) {
-            appStage.addChild(line);
-          }
-          getElementById("line").x = x;
-        } else {
-          appStage.removeChild(getElementById("line"));
-          dragTarget.x = currentDragX;
-        }
-      }
-
-      dragTarget.y = (event.clientY - 56) / container.scale.x - prevY;
-
       setDragSnap(event, dragTarget.name, prevX, prevY);
 
       updateSelector(
@@ -189,29 +151,6 @@ export function renderPixi() {
       );
     }
 
-    filteredArray = [
-      ...dragTarget.parent.children.filter(
-        (i) =>
-          i.name !== dragTarget.name &&
-          i.name !== "selectorLeft" &&
-          i.name !== "selectorTop" &&
-          i.name !== "selectorRight" &&
-          i.name !== "selectorBottom" &&
-          i.name !== "selectorTopLeft" &&
-          i.name !== "selectorLeft" &&
-          i.name !== "selectorTopRight" &&
-          i.name !== "selectorBottomLeft" &&
-          i.name !== "selectorBottomRight"
-      ),
-    ];
-
-    console.log(dragTarget.name);
-    console.log(pixiNodesSelection().value);
-    console.log(dragTarget.x);
-    console.log(dragTarget.y);
-    console.log(dragTarget.width);
-    console.log(dragTarget.height);
-
     prevX =
       event.clientX / container.scale.x -
       (dragTarget.x + 296 / container.scale.x);
@@ -224,9 +163,8 @@ export function renderPixi() {
   }
 
   function onDragEnd() {
-    if (appStage.children.includes(getElementById("line"))) {
-      appStage.removeChild(getElementById("line"));
-    }
+    destroyLines();
+
     dragTarget = null;
 
     window.removeEventListener("mousemove", onDragMove);
