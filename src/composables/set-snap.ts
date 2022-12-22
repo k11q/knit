@@ -215,9 +215,10 @@ function setOriginSiblings(origin: PIXI.Sprite): PIXI.Sprite[] {
 }
 
 function checkIntersection(origin: number, measured: number) {
+  const container = getElementById("root-container")!;
   if (
-    origin < measured + intersectionSensitivity &&
-    origin > measured - intersectionSensitivity
+    origin < measured + intersectionSensitivity / container.scale.x &&
+    origin > measured - intersectionSensitivity / container.scale.x
   ) {
     return true;
   } else return false;
