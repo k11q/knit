@@ -149,7 +149,7 @@ export function setDragSnap(
       snapLines.lineMiddleY ||
       snapLines.lineBottom
     ) {
-      renderAllLines(snapLines);
+      renderAllLines(snapLines, id);
     } else if (renderedLinesId.length) {
       destroyLines();
     }
@@ -337,38 +337,67 @@ function destroySingle(position: Position) {
   }
 }
 
-function renderAllLines(lines: LinePosition) {
-  if (lines.lineLeft) {
+function renderAllLines(lines: LinePosition, id: string) {
+  const origin = getElementById(id) as PIXI.Sprite;
+  if (
+    lines.lineLeft &&
+    (!getElementById("left") ||
+      (getElementById("left") && getElementById("left")!.x === lines.lineLeft))
+  ) {
     renderLine("vertical", lines.lineLeft, "left");
   }
   if (!lines.lineLeft && getElementById("left")) {
     destroySingle("left");
   }
-  if (lines.lineMiddleX) {
+  if (
+    lines.lineMiddleX &&
+    (!getElementById("middleX") ||
+      (getElementById("middleX") &&
+        getElementById("middleX")!.x === lines.lineMiddleX - origin.width / 2))
+  ) {
     renderLine("vertical", lines.lineMiddleX, "middleX");
   }
   if (!lines.lineMiddleX && getElementById("middleX")) {
     destroySingle("middleX");
   }
-  if (lines.lineRight) {
+  if (
+    lines.lineRight &&
+    (!getElementById("right") ||
+      (getElementById("right") &&
+        getElementById("right")!.x === lines.lineRight - origin.width))
+  ) {
     renderLine("vertical", lines.lineRight, "right");
   }
   if (!lines.lineRight && getElementById("right")) {
     destroySingle("right");
   }
-  if (lines.lineTop) {
+  if (
+    lines.lineTop &&
+    (!getElementById("top") ||
+      (getElementById("top") && getElementById("top")!.y === lines.lineTop))
+  ) {
     renderLine("horizontal", lines.lineTop, "top");
   }
   if (!lines.lineTop && getElementById("top")) {
     destroySingle("top");
   }
-  if (lines.lineMiddleY) {
+  if (
+    lines.lineMiddleY &&
+    (!getElementById("middleY") ||
+      (getElementById("middleY") &&
+        getElementById("middleY")!.y === lines.lineMiddleY - origin.height / 2))
+  ) {
     renderLine("horizontal", lines.lineMiddleY, "middleY");
   }
   if (!lines.lineMiddleY && getElementById("middleY")) {
     destroySingle("middleY");
   }
-  if (lines.lineBottom) {
+  if (
+    lines.lineBottom &&
+    (!getElementById("bottom") ||
+      (getElementById("bottom") &&
+        getElementById("bottom")!.y === lines.lineBottom - origin.height))
+  ) {
     renderLine("horizontal", lines.lineBottom, "bottom");
   }
   if (!lines.lineBottom && getElementById("bottom")) {
