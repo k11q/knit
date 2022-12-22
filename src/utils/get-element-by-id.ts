@@ -9,6 +9,8 @@ export function createElement(ClassType, id: string, arg?) {
   return obj;
 }
 
-export function getElementById(id: string) {
+export function getElementById(
+  id: string
+): PIXI.DisplayObject | PIXI.Sprite | null {
   return elementMap.get(id) ?? null;
 }

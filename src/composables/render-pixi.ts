@@ -11,6 +11,8 @@ export const pixiNodesSelection = () =>
   useState<PIXI.Sprite[]>("pixiNodesSelection", () => []);
 export const pixiContainer = () =>
   useState<PIXI.Container | null>("pixiContainer", () => null);
+export const pixiApp = () =>
+  useState<PIXI.Application | null>("pixiApp", () => null);
 
 export function renderPixi() {
   const squareStore = useSquareStore();
@@ -23,10 +25,10 @@ export function renderPixi() {
   const app = new PIXI.Application({
     width: window.innerWidth - 240,
     height: 1796,
-    antialias: true,
     backgroundColor: "#1E1E1E",
   });
 
+  pixiApp().value = app;
   const appStage = app.stage;
   appStage.hitArea = app.screen;
   appStage.interactive = true;
@@ -34,7 +36,7 @@ export function renderPixi() {
   canvasWrapper.addEventListener("wheel", pinchZoom);
   appStage.addEventListener("mousedown", canvasMouseDown);
 
-  const container = new PIXI.Container();
+  const container = createElement(PIXI.Container, "root-container");
   container.width = window.innerWidth - 240;
   container.height = 1796;
   pixiContainer().value = container;
@@ -45,7 +47,7 @@ export function renderPixi() {
 
   function renderNodes(nodes: Node[], parent: PIXI.Container) {
     nodes.forEach((i, index) => {
-      const node = new PIXI.Sprite(PIXI.Texture.WHITE);
+      const node = createElement(Sprite, i.id, PIXI.Texture.WHITE);
 
       parent.addChild(node);
 
@@ -138,7 +140,7 @@ export function renderPixi() {
         });
 
         if (showLine) {
-          if (!appStage.getChildByName("line")) {
+          if (!appStage.children.includes(getElementById("line"))) {
             appStage.addChild(line);
           }
           getElementById("line").x = x;
@@ -149,6 +151,8 @@ export function renderPixi() {
       }
 
       dragTarget.y = (event.clientY - 56) / container.scale.x - prevY;
+
+      setDragSnap(event, dragTarget.name, prevX, prevY);
 
       updateSelector(
         pixiNodesSelection().value[0].x,
@@ -220,7 +224,7 @@ export function renderPixi() {
   }
 
   function onDragEnd() {
-    if (appStage.getChildByName("line")) {
+    if (appStage.children.includes(getElementById("line"))) {
       appStage.removeChild(getElementById("line"));
     }
     dragTarget = null;
