@@ -12,6 +12,7 @@ export function renderSelector(
   parent: PIXI.Container
 ) {
   const selectorColor = PIXI.utils.string2hex("0191FA");
+  const colorWhite = PIXI.utils.string2hex("FFFFFF");
   const outlineSelector = new OutlineFilter(1, selectorColor, 1);
 
   const selectorTop = new PIXI.Sprite(PIXI.Texture.WHITE);
@@ -47,7 +48,7 @@ export function renderSelector(
   selectorBottom.on("mousedown", resizeBottom);
 
   const selectorTopLeft = new PIXI.Sprite(PIXI.Texture.WHITE);
-  selectorTopLeft.tint = PIXI.utils.string2hex("FFFFFF");
+  selectorTopLeft.tint = colorWhite;
   selectorTopLeft.name = "selectorTopLeft";
   selectorTopLeft.filters = [outlineSelector];
   selectorTopLeft.interactive = true;
@@ -56,7 +57,7 @@ export function renderSelector(
   selectorTopLeft.on("mousedown", resizeTopLeft);
 
   const selectorTopRight = new PIXI.Sprite(PIXI.Texture.WHITE);
-  selectorTopRight.tint = PIXI.utils.string2hex("FFFFFF");
+  selectorTopRight.tint = colorWhite;
   selectorTopRight.name = "selectorTopRight";
   selectorTopRight.filters = [outlineSelector];
   selectorTopRight.interactive = true;
@@ -65,7 +66,7 @@ export function renderSelector(
   selectorTopRight.on("mousedown", resizeTopRight);
 
   const selectorBottomLeft = new PIXI.Sprite(PIXI.Texture.WHITE);
-  selectorBottomLeft.tint = PIXI.utils.string2hex("FFFFFF");
+  selectorBottomLeft.tint = colorWhite;
   selectorBottomLeft.name = "selectorBottomLeft";
   selectorBottomLeft.filters = [outlineSelector];
   selectorBottomLeft.interactive = true;
@@ -74,7 +75,7 @@ export function renderSelector(
   selectorBottomLeft.on("mousedown", resizeBottomLeft);
 
   const selectorBottomRight = new PIXI.Sprite(PIXI.Texture.WHITE);
-  selectorBottomRight.tint = PIXI.utils.string2hex("FFFFFF");
+  selectorBottomRight.tint = colorWhite;
   selectorBottomRight.name = "selectorBottomRight";
   selectorBottomRight.filters = [outlineSelector];
   selectorBottomRight.interactive = true;
@@ -117,7 +118,6 @@ export function updateSelector(
   const selectorBottom = container.getChildByName(
     "selectorBottom"
   ) as PIXI.Sprite;
-
   const selectorTopLeft = container.getChildByName(
     "selectorTopLeft"
   ) as PIXI.Sprite;
@@ -219,7 +219,7 @@ function resizeRight(event: MouseEvent) {
     window.addEventListener("mousemove", mousemove);
     window.addEventListener("mouseup", mouseup);
 
-    function mousemove(event) {
+    function mousemove(event: MouseEvent) {
       event.stopPropagation();
       event.preventDefault();
 
@@ -243,7 +243,7 @@ function resizeBottom(event: MouseEvent) {
     window.addEventListener("mousemove", mousemove);
     window.addEventListener("mouseup", mouseup);
 
-    function mousemove(event) {
+    function mousemove(event: MouseEvent) {
       event.stopPropagation();
       event.preventDefault();
 
@@ -268,7 +268,7 @@ function resizeTop(event: MouseEvent) {
     window.addEventListener("mousemove", mousemove);
     window.addEventListener("mouseup", mouseup);
 
-    function mousemove(event) {
+    function mousemove(event: MouseEvent) {
       event.stopPropagation();
       event.preventDefault();
 
@@ -296,7 +296,7 @@ function resizeLeft(event: MouseEvent) {
     window.addEventListener("mousemove", mousemove);
     window.addEventListener("mouseup", mouseup);
 
-    function mousemove(event) {
+    function mousemove(event: MouseEvent) {
       event.stopPropagation();
       event.preventDefault();
 
@@ -328,7 +328,7 @@ function resizeBottomRight(event: MouseEvent) {
     window.addEventListener("mousemove", mousemove);
     window.addEventListener("mouseup", mouseup);
 
-    function mousemove(event) {
+    function mousemove(event: MouseEvent) {
       event.stopPropagation();
       event.preventDefault();
 
@@ -362,7 +362,7 @@ function resizeBottomLeft(event: MouseEvent) {
     window.addEventListener("mousemove", mousemove);
     window.addEventListener("mouseup", mouseup);
 
-    function mousemove(event) {
+    function mousemove(event: MouseEvent) {
       event.stopPropagation();
       event.preventDefault();
 
@@ -398,7 +398,7 @@ function resizeTopLeft(event: MouseEvent) {
     window.addEventListener("mousemove", mousemove);
     window.addEventListener("mouseup", mouseup);
 
-    function mousemove(event) {
+    function mousemove(event: MouseEvent) {
       event.stopPropagation();
       event.preventDefault();
 
@@ -436,7 +436,7 @@ function resizeTopRight(event: MouseEvent) {
     window.addEventListener("mousemove", mousemove);
     window.addEventListener("mouseup", mouseup);
 
-    function mousemove(event) {
+    function mousemove(event: MouseEvent) {
       event.stopPropagation();
       event.preventDefault();
 

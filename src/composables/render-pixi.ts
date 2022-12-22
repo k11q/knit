@@ -104,6 +104,11 @@ export function renderPixi() {
   let dragTarget: PIXI.Sprite | null = null;
   let prevX: number = 0;
   let prevY: number = 0;
+  let line = new PIXI.Graphics();
+  line.name = "line";
+  line.width = 1;
+  line.lineStyle(1, 0x2f4fff);
+  let filteredArray = [];
 
   function onDragMove(event: MouseEvent) {
     event.stopImmediatePropagation();
@@ -113,37 +118,30 @@ export function renderPixi() {
       dragTarget.x = (event.clientX - 296) / container.scale.x - prevX;
       dragTarget.y = (event.clientY - 56) / container.scale.x - prevY;
 
-      const selectorLineHalfThickness = 0.5 / pixiScale().value;
-      const cornerSelectorHalfSize = 3 / pixiScale().value;
+      if (filteredArray.length) {
+        filteredArray.forEach((i) => {
+          if (dragTarget.x < i.x + 5 && dragTarget.x > i.x - 5) {
+            if (!appStage.getChildByName("line")) {
+              appStage.addChild(line);
+            }
+            let x = i.x * container.scale.x + container.x;
+            appStage.getChildByName("line").moveTo(x, 0);
+            appStage.getChildByName("line").lineTo(x, 1000);
+            console.log("left");
+            console.log(i.x);
+            console.log(container.scale.x);
+          } else if (appStage.getChildByName("line")) {
+            appStage.removeChild(appStage.getChildByName("line"));
+          }
+        });
+      }
 
-      container.getChildByName("selectorTop").x = dragTarget.x;
-      container.getChildByName("selectorTop").y =
-        dragTarget.y - selectorLineHalfThickness;
-      container.getChildByName("selectorLeft").x =
-        dragTarget.x - selectorLineHalfThickness;
-      container.getChildByName("selectorLeft").y = dragTarget.y;
-      container.getChildByName("selectorRight").x =
-        dragTarget.x + dragTarget.width - selectorLineHalfThickness;
-      container.getChildByName("selectorRight").y = dragTarget.y;
-      container.getChildByName("selectorBottom").x = dragTarget.x;
-      container.getChildByName("selectorBottom").y =
-        dragTarget.y + dragTarget.height - selectorLineHalfThickness;
-      container.getChildByName("selectorTopLeft").x =
-        dragTarget.x - cornerSelectorHalfSize;
-      container.getChildByName("selectorTopLeft").y =
-        dragTarget.y - cornerSelectorHalfSize;
-      container.getChildByName("selectorTopRight").x =
-        dragTarget.x + dragTarget.width - cornerSelectorHalfSize;
-      container.getChildByName("selectorTopRight").y =
-        dragTarget.y - cornerSelectorHalfSize;
-      container.getChildByName("selectorBottomLeft").x =
-        dragTarget.x - cornerSelectorHalfSize;
-      container.getChildByName("selectorBottomLeft").y =
-        dragTarget.y + dragTarget.height - cornerSelectorHalfSize;
-      container.getChildByName("selectorBottomRight").x =
-        dragTarget.x + dragTarget.width - cornerSelectorHalfSize;
-      container.getChildByName("selectorBottomRight").y =
-        dragTarget.y + dragTarget.height - cornerSelectorHalfSize;
+      updateSelector(
+        pixiNodesSelection().value[0].x,
+        pixiNodesSelection().value[0].y,
+        pixiNodesSelection().value[0].width,
+        pixiNodesSelection().value[0].height
+      );
     }
   }
 
@@ -173,6 +171,21 @@ export function renderPixi() {
           container
         );
       }
+
+      filteredArray = dragTarget.parent.children.filter(
+        (i) =>
+          i.name !== dragTarget.name &&
+          i.name !== "selectorLeft" &&
+          i.name !== "selectorTop" &&
+          i.name !== "selectorRight" &&
+          i.name !== "selectorBottom" &&
+          i.name !== "selectorTopLeft" &&
+          i.name !== "selectorLeft" &&
+          i.name !== "selectorTopRight" &&
+          i.name !== "selectorBottomLeft" &&
+          i.name !== "selectorBottomRight"
+      );
+
       console.log(pixiSelection().value);
       console.log(pixiNodesSelection().value);
 
@@ -189,15 +202,16 @@ export function renderPixi() {
   }
 
   function onDragEnd() {
-    if (dragTarget) {
-      dragTarget = null;
-
-      window.removeEventListener("mousemove", onDragMove);
-      window.removeEventListener("mouseup", onDragEnd);
+    if (appStage.getChildByName("line")) {
+      appStage.removeChild(appStage.getChildByName("line"));
     }
+    dragTarget = null;
+
+    window.removeEventListener("mousemove", onDragMove);
+    window.removeEventListener("mouseup", onDragEnd);
   }
 
-  function pinchZoom(event) {
+  function pinchZoom(event: WheelEvent) {
     event.stopPropagation();
     event.preventDefault();
 
@@ -224,9 +238,17 @@ export function renderPixi() {
     }
 
     pixiScale().value = container.scale.x;
+    if (pixiSelection().value.length || pixiNodesSelection().value.length) {
+      updateSelector(
+        pixiNodesSelection().value[0].x,
+        pixiNodesSelection().value[0].y,
+        pixiNodesSelection().value[0].width,
+        pixiNodesSelection().value[0].height
+      );
+    }
   }
 
-  function canvasMouseDown(event) {
+  function canvasMouseDown(event: MouseEvent) {
     if (pixiSelection().value.length) {
       pixiSelection().value = [];
       pixiNodesSelection().value = [];
