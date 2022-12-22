@@ -4,6 +4,12 @@ import * as PIXI from "pixi.js";
 import { createElement, getElementById } from "../utils/get-element-by-id";
 import { Sprite } from "pixi.js";
 
+class Rectangle extends PIXI.Sprite {
+  setWidth(width: number) {
+    this.x = width;
+  }
+}
+
 export const pixiScale = () => useState("pixiScale", () => 1);
 export const pixiSelection = () =>
   useState<string[]>("pixiSelection", () => []);

@@ -48,40 +48,84 @@ export function renderSelector(
   selectorBottom.on("mousedown", resizeBottom);
 
   const selectorTopLeft = new PIXI.Sprite(PIXI.Texture.WHITE);
-  selectorTopLeft.tint = colorWhite;
+  selectorTopLeft.tint = selectorColor;
   selectorTopLeft.name = "selectorTopLeft";
-  selectorTopLeft.filters = [outlineSelector];
   selectorTopLeft.interactive = true;
   selectorTopLeft.hitArea = new PIXI.Rectangle(-25, -25, 100, 100);
   selectorTopLeft.cursor = "crosshair";
   selectorTopLeft.on("mousedown", resizeTopLeft);
 
+  const selectorTopLeftInner = new PIXI.Sprite(PIXI.Texture.WHITE);
+  selectorTopLeftInner.tint = colorWhite;
+  selectorTopLeftInner.name = "selectorTopLeftInner";
+  selectorTopLeftInner.position.set(
+    (selectorTopLeft.x + selectorTopLeft.width) / 2,
+    (selectorTopLeft.y + selectorTopLeft.height) / 2
+  );
+  selectorTopLeftInner.width = (selectorTopLeft.width * 3) / 4;
+  selectorTopLeftInner.height = (selectorTopLeft.height * 3) / 4;
+  selectorTopLeftInner.anchor.set(0.5, 0.5);
+  selectorTopLeft.addChild(selectorTopLeftInner);
+
   const selectorTopRight = new PIXI.Sprite(PIXI.Texture.WHITE);
-  selectorTopRight.tint = colorWhite;
+  selectorTopRight.tint = selectorColor;
   selectorTopRight.name = "selectorTopRight";
-  selectorTopRight.filters = [outlineSelector];
   selectorTopRight.interactive = true;
   selectorTopRight.hitArea = new PIXI.Rectangle(-25, -25, 100, 100);
   selectorTopRight.cursor = "crosshair";
   selectorTopRight.on("mousedown", resizeTopRight);
 
+  const selectorTopRightInner = new PIXI.Sprite(PIXI.Texture.WHITE);
+  selectorTopRightInner.tint = colorWhite;
+  selectorTopRightInner.name = "selectorTopRightInner";
+  selectorTopRightInner.position.set(
+    (selectorTopRight.x + selectorTopRight.width) / 2,
+    (selectorTopRight.y + selectorTopRight.height) / 2
+  );
+  selectorTopRightInner.width = (selectorTopRight.width * 3) / 4;
+  selectorTopRightInner.height = (selectorTopRight.height * 3) / 4;
+  selectorTopRightInner.anchor.set(0.5, 0.5);
+  selectorTopRight.addChild(selectorTopRightInner);
+
   const selectorBottomLeft = new PIXI.Sprite(PIXI.Texture.WHITE);
-  selectorBottomLeft.tint = colorWhite;
+  selectorBottomLeft.tint = selectorColor;
   selectorBottomLeft.name = "selectorBottomLeft";
-  selectorBottomLeft.filters = [outlineSelector];
   selectorBottomLeft.interactive = true;
   selectorBottomLeft.hitArea = new PIXI.Rectangle(-25, -25, 100, 100);
   selectorBottomLeft.cursor = "crosshair";
   selectorBottomLeft.on("mousedown", resizeBottomLeft);
 
+  const selectorBottomLeftInner = new PIXI.Sprite(PIXI.Texture.WHITE);
+  selectorBottomLeftInner.tint = colorWhite;
+  selectorBottomLeftInner.name = "selectorBottomLeftInner";
+  selectorBottomLeftInner.position.set(
+    (selectorBottomLeft.x + selectorBottomLeft.width) / 2,
+    (selectorBottomLeft.y + selectorBottomLeft.height) / 2
+  );
+  selectorBottomLeftInner.width = (selectorBottomLeft.width * 3) / 4;
+  selectorBottomLeftInner.height = (selectorBottomLeft.height * 3) / 4;
+  selectorBottomLeftInner.anchor.set(0.5, 0.5);
+  selectorBottomLeft.addChild(selectorBottomLeftInner);
+
   const selectorBottomRight = new PIXI.Sprite(PIXI.Texture.WHITE);
-  selectorBottomRight.tint = colorWhite;
+  selectorBottomRight.tint = selectorColor;
   selectorBottomRight.name = "selectorBottomRight";
-  selectorBottomRight.filters = [outlineSelector];
   selectorBottomRight.interactive = true;
   selectorBottomRight.hitArea = new PIXI.Rectangle(-25, -25, 100, 100);
   selectorBottomRight.cursor = "crosshair";
   selectorBottomRight.on("mousedown", resizeBottomRight);
+
+  const selectorBottomRightInner = new PIXI.Sprite(PIXI.Texture.WHITE);
+  selectorBottomRightInner.tint = colorWhite;
+  selectorBottomRightInner.name = "selectorBottomRightInner";
+  selectorBottomRightInner.position.set(
+    (selectorBottomRight.x + selectorBottomRight.width) / 2,
+    (selectorBottomRight.y + selectorBottomRight.height) / 2
+  );
+  selectorBottomRightInner.width = (selectorBottomRight.width * 3) / 4;
+  selectorBottomRightInner.height = (selectorBottomRight.height * 3) / 4;
+  selectorBottomRightInner.anchor.set(0.5, 0.5);
+  selectorBottomRight.addChild(selectorBottomRightInner);
 
   parent.addChild(selectorTop);
   parent.addChild(selectorLeft);
@@ -107,7 +151,7 @@ export function updateSelector(
 
   const selectorLineThickness = 1 / pixiScale().value;
   const selectorLineHalfThickness = 0.5 / pixiScale().value;
-  const cornerSelectorSize = 6 / pixiScale().value;
+  const cornerSelectorSize = 8 / pixiScale().value;
   const cornerSelectorHalfSize = cornerSelectorSize / 2;
 
   const selectorLeft = container.getChildByName("selectorLeft") as PIXI.Sprite;
