@@ -14,7 +14,7 @@
         class="left-0 top-0 bottom-0 right-[240px] w-auto h-auto absolute overflow-hidden"
       >
         <div class="absolute inset-0 left-[296px] top-0 bottom-0">
-          <div id="canvas-wrapper"></div>
+          <div id="canvas-wrapper" v-once></div>
         </div>
       </div>
       <DesignerLeftSidePanel />

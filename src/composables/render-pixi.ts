@@ -23,6 +23,7 @@ export function renderPixi() {
   const app = new PIXI.Application({
     width: window.innerWidth - 240,
     height: 1796,
+    antialias: true,
     backgroundColor: "#1E1E1E",
   });
 
@@ -94,7 +95,6 @@ export function renderPixi() {
       }
 
       node.interactive = true;
-      node.cursor = "pointer";
       node.on("mousedown", onDragStart, node);
 
       if (i.children && i.children.length) {
@@ -126,7 +126,10 @@ export function renderPixi() {
 
       if (filteredArray.length) {
         filteredArray.forEach((i) => {
-          if (currentDragX < i.x + 5 && currentDragX > i.x - 5) {
+          if (
+            currentDragX < i.x + 5 / container.scale.x &&
+            currentDragX > i.x - 5 / container.scale.x
+          ) {
             showLine = true;
             x = i.x * container.scale.x + container.x;
             dragTarget.x = i.x;
