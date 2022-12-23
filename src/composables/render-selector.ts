@@ -20,7 +20,7 @@ export function renderSelector(
   selectorTop.name = "selectorTop";
   selectorTop.interactive = true;
   selectorTop.hitArea = new PIXI.Rectangle(0, -50, width, 100);
-  selectorTop.cursor = "crosshair";
+  selectorTop.cursor = "ns-resize";
   selectorTop.on("mousedown", resizeTop);
 
   const selectorLeft = new PIXI.Sprite(PIXI.Texture.WHITE);
@@ -28,7 +28,7 @@ export function renderSelector(
   selectorLeft.name = "selectorLeft";
   selectorLeft.interactive = true;
   selectorLeft.hitArea = new PIXI.Rectangle(-50, 0, 100, height);
-  selectorLeft.cursor = "crosshair";
+  selectorLeft.cursor = "ew-resize";
   selectorLeft.on("mousedown", resizeLeft);
 
   const selectorRight = new PIXI.Sprite(PIXI.Texture.WHITE);
@@ -36,7 +36,7 @@ export function renderSelector(
   selectorRight.name = "selectorRight";
   selectorRight.interactive = true;
   selectorRight.hitArea = new PIXI.Rectangle(-50, 0, 100, height);
-  selectorRight.cursor = "crosshair";
+  selectorRight.cursor = "ew-resize";
   selectorRight.on("mousedown", resizeRight);
 
   const selectorBottom = new PIXI.Sprite(PIXI.Texture.WHITE);
@@ -44,7 +44,7 @@ export function renderSelector(
   selectorBottom.name = "selectorBottom";
   selectorBottom.interactive = true;
   selectorBottom.hitArea = new PIXI.Rectangle(0, -50, width, 100);
-  selectorBottom.cursor = "crosshair";
+  selectorBottom.cursor = "ns-resize";
   selectorBottom.on("mousedown", resizeBottom);
 
   const selectorTopLeft = new PIXI.Sprite(PIXI.Texture.WHITE);
@@ -52,7 +52,7 @@ export function renderSelector(
   selectorTopLeft.name = "selectorTopLeft";
   selectorTopLeft.interactive = true;
   selectorTopLeft.hitArea = new PIXI.Rectangle(-25, -25, 100, 100);
-  selectorTopLeft.cursor = "crosshair";
+  selectorTopLeft.cursor = "nwse-resize";
   selectorTopLeft.on("mousedown", resizeTopLeft);
 
   const selectorTopLeftInner = new PIXI.Sprite(PIXI.Texture.WHITE);
@@ -72,7 +72,7 @@ export function renderSelector(
   selectorTopRight.name = "selectorTopRight";
   selectorTopRight.interactive = true;
   selectorTopRight.hitArea = new PIXI.Rectangle(-25, -25, 100, 100);
-  selectorTopRight.cursor = "crosshair";
+  selectorTopRight.cursor = "nesw-resize";
   selectorTopRight.on("mousedown", resizeTopRight);
 
   const selectorTopRightInner = new PIXI.Sprite(PIXI.Texture.WHITE);
@@ -92,7 +92,7 @@ export function renderSelector(
   selectorBottomLeft.name = "selectorBottomLeft";
   selectorBottomLeft.interactive = true;
   selectorBottomLeft.hitArea = new PIXI.Rectangle(-25, -25, 100, 100);
-  selectorBottomLeft.cursor = "crosshair";
+  selectorBottomLeft.cursor = "nesw-resize";
   selectorBottomLeft.on("mousedown", resizeBottomLeft);
 
   const selectorBottomLeftInner = new PIXI.Sprite(PIXI.Texture.WHITE);
@@ -112,7 +112,7 @@ export function renderSelector(
   selectorBottomRight.name = "selectorBottomRight";
   selectorBottomRight.interactive = true;
   selectorBottomRight.hitArea = new PIXI.Rectangle(-25, -25, 100, 100);
-  selectorBottomRight.cursor = "crosshair";
+  selectorBottomRight.cursor = "nwse-resize";
   selectorBottomRight.on("mousedown", resizeBottomRight);
 
   const selectorBottomRightInner = new PIXI.Sprite(PIXI.Texture.WHITE);
