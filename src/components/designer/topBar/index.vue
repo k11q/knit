@@ -70,6 +70,28 @@
       >
         <UIIcon name="text" :size="17" />
       </div>
+      <div
+        class="aspect-square flex items-center justify-center text-center cursor-default h-full flex-none rounded hover:opacity-100"
+        :class="{
+          'bg-[#2E2E2E] opacity-100': pixiStore.canvasEvent === 'default',
+          'hover:bg-[#2E2E2E] opacity-60': pixiStore.canvasEvent !== 'default',
+        }"
+        @click="pixiStore.changeCanvasEvent('default')"
+      >
+        <UIIcon name="cursor-default" :size="18" />
+      </div>
+      <div
+        class="aspect-square flex items-center justify-center text-center cursor-default h-full flex-none rounded hover:opacity-100"
+        @click="pixiStore.changeCanvasEvent('createRectangle')"
+        :class="{
+          'bg-[#2E2E2E] opacity-100':
+            pixiStore.canvasEvent === 'createRectangle',
+          'hover:bg-[#2E2E2E] opacity-60':
+            pixiStore.canvasEvent === 'createRectangle',
+        }"
+      >
+        <UIIcon name="square" :size="18" />
+      </div>
     </div>
     <div class="flex items-center justify-center">
       <p>{{ route.params.id }}</p>
@@ -127,9 +149,11 @@
 <script setup lang="ts">
 import { useSquareStore } from "~~/src/stores/dataSquare";
 import { useCounterStore } from "~~/src/stores/counter";
+import { usePixiStore } from "@/stores/pixi";
 
 const addaSquare = useSquareStore();
 const selectToi = useCounterStore();
+const pixiStore = usePixiStore();
 const route = useRoute();
 const user = useSupabaseUser();
 </script>

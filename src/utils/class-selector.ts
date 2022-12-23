@@ -1,6 +1,4 @@
 import * as PIXI from "pixi.js";
-import { OutlineFilter } from "@pixi/filter-outline";
-import { AlphaFilter } from "@pixi/filter-alpha";
 
 export class Selector extends PIXI.Graphics {
   constructor(left: number, top: number) {

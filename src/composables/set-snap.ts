@@ -1,6 +1,7 @@
 import * as PIXI from "pixi.js";
 import { createElement, getElementById } from "../utils/get-element-by-id";
 import { Sprite } from "pixi.js";
+import { RectangleNode } from "../utils/class-rectangle-node";
 
 type Line = {
   x: number;
@@ -43,11 +44,11 @@ const renderedLinesId: Position[] = [];
 
 export function setDragSnap(
   event: MouseEvent,
-  id: string,
+  origin: PIXI.Sprite | RectangleNode,
   prevX: number,
   prevY: number
 ) {
-  const origin = getElementById(id) as PIXI.Sprite;
+  const id = origin.name;
   const originNode = setOriginPosition(event, origin, prevX, prevY);
   const originSiblings = setOriginSiblings(origin);
   const container = getElementById("root-container")!;

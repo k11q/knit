@@ -13,7 +13,13 @@
       <div
         class="left-0 top-0 bottom-0 right-[240px] w-auto h-auto absolute overflow-hidden"
       >
-        <div class="absolute inset-0 left-[296px] top-0 bottom-0">
+        <div
+          class="absolute inset-0 left-[296px] top-0 bottom-0"
+          :class="{
+            'cursor-default': pixiStore.canvasEvent === 'default',
+            'cursor-crosshair': pixiStore.canvasEvent === 'createRectangle',
+          }"
+        >
           <div id="canvas-wrapper" v-once></div>
         </div>
       </div>
@@ -37,9 +43,11 @@
 <script setup lang="ts">
 import { useCanvasStore } from "@/stores/canvas";
 import { useCounterStore } from "@/stores/counter";
+import { usePixiStore } from "../stores/pixi";
 
 const selectToi = useCounterStore();
 const canvasStore = useCanvasStore();
+const pixiStore = usePixiStore();
 const { x, y } = useMouse();
 
 onMounted(() => {

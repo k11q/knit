@@ -4,12 +4,8 @@ import * as PIXI from "pixi.js";
 import { createElement, getElementById } from "../utils/get-element-by-id";
 import { Sprite } from "pixi.js";
 import { Selector } from "../utils/class-selector";
-
-class Rectangle extends PIXI.Sprite {
-  setWidth(width: number) {
-    this.x = width;
-  }
-}
+import { RectangleNode } from "../utils/class-rectangle-node";
+import { usePixiStore } from "../stores/pixi";
 
 export const pixiScale = () => useState("pixiScale", () => 1);
 export const pixiSelection = () =>
@@ -24,6 +20,7 @@ export const pixiApp = () =>
 export function renderPixi() {
   const squareStore = useSquareStore();
   const selectToi = useCounterStore();
+  const pixiStore = usePixiStore();
   const nodes = selectToi.data;
   const canvasWrapper = document.querySelector(
     "#canvas-wrapper"
@@ -40,7 +37,7 @@ export function renderPixi() {
   appStage.hitArea = app.screen;
   appStage.interactive = true;
   canvasWrapper.appendChild(app.view);
-  canvasWrapper.addEventListener("wheel", pinchZoom);
+  canvasWrapper.addEventListener("wheel", pixiPinchZoom);
   appStage.addEventListener("mousedown", canvasMouseDown);
 
   const container = createElement(PIXI.Container, "root-container");
@@ -121,7 +118,7 @@ export function renderPixi() {
     event.preventDefault();
 
     if (dragTarget) {
-      setDragSnap(event, dragTarget.name, prevX, prevY);
+      setDragSnap(event, dragTarget, prevX, prevY);
 
       updateSelector(
         pixiNodesSelection().value[0].x,
@@ -135,7 +132,7 @@ export function renderPixi() {
   function onDragStart(event: MouseEvent) {
     event.stopPropagation();
 
-    dragTarget = this;
+    dragTarget = this as PIXI.Sprite | RectangleNode;
 
     if (
       !pixiSelection().value.find(
@@ -178,44 +175,8 @@ export function renderPixi() {
     window.removeEventListener("mouseup", onDragEnd);
   }
 
-  function pinchZoom(event: WheelEvent) {
-    event.stopPropagation();
-    event.preventDefault();
-
-    const mouseX = event.clientX - 296;
-    const mouseY = event.clientY - 56;
-
-    if (
-      event.deltaX === 0 &&
-      event.ctrlKey &&
-      container.scale.x >= 0.02 &&
-      container.scale.x <= 256
-    ) {
-      const xs = (mouseX - container.x) / container.scale.x;
-      const ys = (mouseY - container.y) / container.scale.x;
-      container.scale.x += event.deltaY * -0.008 * container.scale.x;
-      container.scale.x = Math.max(0.02, Math.min(256, container.scale.x));
-      container.scale.y += event.deltaY * -0.008 * container.scale.x;
-      container.scale.y = Math.max(0.02, Math.min(256, container.scale.x));
-      container.x = mouseX - xs * container.scale.x;
-      container.y = mouseY - ys * container.scale.x;
-    } else {
-      container.x += -event.deltaX * 0.5;
-      container.y += -event.deltaY * 0.5;
-    }
-
-    pixiScale().value = container.scale.x;
-    if (pixiSelection().value.length || pixiNodesSelection().value.length) {
-      updateSelector(
-        pixiNodesSelection().value[0].x,
-        pixiNodesSelection().value[0].y,
-        pixiNodesSelection().value[0].width,
-        pixiNodesSelection().value[0].height
-      );
-    }
-  }
-
-  let selector: Selector;
+  let selector: Selector | null;
+  let newRectangle: RectangleNode | null;
   let selectorPointX: number | null = 0;
   let selectorPointY: number | null = 0;
 
@@ -226,11 +187,36 @@ export function renderPixi() {
       removeSelector();
     }
 
-    selector = new Selector(event.clientX - 296, event.clientY - 56);
-    selectorPointX = Math.round(event.clientX - 296);
-    selectorPointY = Math.round(event.clientY - 56);
+    if (pixiStore.canvasEvent === "default") {
+      selector = new Selector(event.clientX - 296, event.clientY - 56);
 
-    appStage.addChild(selector);
+      selectorPointX = Math.round(event.clientX - 296);
+      selectorPointY = Math.round(event.clientY - 56);
+
+      appStage.addChild(selector);
+    } else if (pixiStore.canvasEvent === "createRectangle") {
+      selectorPointX =
+        Math.round(event.clientX - 296 - container.x) / container.scale.x;
+      selectorPointY =
+        Math.round(event.clientY - 56 - container.y) / container.scale.x;
+
+      const id = useCreateId();
+      newRectangle = createElement(
+        Sprite,
+        id,
+        PIXI.Texture.WHITE
+      ) as RectangleNode;
+      newRectangle.name = id;
+      newRectangle.x = selectorPointX as number;
+      newRectangle.y = selectorPointY as number;
+      newRectangle.width = 0;
+      newRectangle.height = 0;
+      newRectangle.tint = PIXI.utils.string2hex("D9D9D9");
+      newRectangle.interactive = true;
+
+      container.addChild(newRectangle);
+      newRectangle.on("mousedown", onDragStart, newRectangle);
+    }
 
     window.addEventListener("mousemove", selectorDrag);
     window.addEventListener("mouseup", selectorDragEnd);
@@ -239,60 +225,83 @@ export function renderPixi() {
   function selectorDrag(event: MouseEvent) {
     const initialPointX = selectorPointX as number;
     const initialPointY = selectorPointY as number;
-    const currX = Math.round(event.clientX - 296);
-    const currY = Math.round(event.clientY - 56);
 
-    if (currX == initialPointX && !(currY == initialPointY)) {
-      selector.setLeft(initialPointX);
-
-      if (currY > initialPointY) {
-        selector.setTop(initialPointY);
-        selector.setDimensions(0, currY - initialPointY);
-      } else {
-        selector.setTop(currY);
-        selector.setDimensions(0, initialPointY - currY);
-      }
-    }
-    if (!(currX == initialPointX) && currY == initialPointY) {
-      selector.setTop(initialPointY);
-
-      if (currX > initialPointX) {
+    if (pixiStore.canvasEvent === "default" && selector !== null) {
+      const currX = Math.round(event.clientX - 296);
+      const currY = Math.round(event.clientY - 56);
+      if (currX == initialPointX && !(currY == initialPointY)) {
         selector.setLeft(initialPointX);
-        selector.setDimensions(currX - initialPointX, 0);
-      } else {
-        selector.setLeft(currX);
-        selector.setDimensions(initialPointX - currX, 0);
+
+        if (currY > initialPointY) {
+          selector.setTop(initialPointY);
+          selector.setDimensions(0, currY - initialPointY);
+        } else {
+          selector.setTop(currY);
+          selector.setDimensions(0, initialPointY - currY);
+        }
       }
-    }
-    if (currX == initialPointX && currY == initialPointY) {
-      selector.setLeft(initialPointX);
-      selector.setTop(initialPointY);
-      selector.setDimensions(0, 0);
-    }
-    if (currX > initialPointX && currY > initialPointY) {
-      selector.setLeft(initialPointX);
-      selector.setTop(initialPointY);
-      selector.setDimensions(currX - initialPointX, currY - initialPointY);
-    }
-    if (currX < initialPointX && currY > initialPointY) {
-      selector.setLeft(currX);
-      selector.setTop(initialPointY);
-      selector.setDimensions(initialPointX - currX, currY - initialPointY);
-    }
-    if (currX > initialPointX && currY < initialPointY) {
-      selector.setLeft(initialPointX);
-      selector.setTop(currY);
-      selector.setDimensions(currX - initialPointX, initialPointY - currY);
-    }
-    if (currX < initialPointX && currY < initialPointY) {
-      selector.setLeft(currX);
-      selector.setTop(currY);
-      selector.setDimensions(initialPointX - currX, initialPointY - currY);
+      if (!(currX == initialPointX) && currY == initialPointY) {
+        selector.setTop(initialPointY);
+
+        if (currX > initialPointX) {
+          selector.setLeft(initialPointX);
+          selector.setDimensions(currX - initialPointX, 0);
+        } else {
+          selector.setLeft(currX);
+          selector.setDimensions(initialPointX - currX, 0);
+        }
+      }
+      if (currX == initialPointX && currY == initialPointY) {
+        selector.setLeft(initialPointX);
+        selector.setTop(initialPointY);
+        selector.setDimensions(0, 0);
+      }
+      if (currX > initialPointX && currY > initialPointY) {
+        selector.setLeft(initialPointX);
+        selector.setTop(initialPointY);
+        selector.setDimensions(currX - initialPointX, currY - initialPointY);
+      }
+      if (currX < initialPointX && currY > initialPointY) {
+        selector.setLeft(currX);
+        selector.setTop(initialPointY);
+        selector.setDimensions(initialPointX - currX, currY - initialPointY);
+      }
+      if (currX > initialPointX && currY < initialPointY) {
+        selector.setLeft(initialPointX);
+        selector.setTop(currY);
+        selector.setDimensions(currX - initialPointX, initialPointY - currY);
+      }
+      if (currX < initialPointX && currY < initialPointY) {
+        selector.setLeft(currX);
+        selector.setTop(currY);
+        selector.setDimensions(initialPointX - currX, initialPointY - currY);
+      }
+    } else if (
+      pixiStore.canvasEvent === "createRectangle" &&
+      newRectangle !== null
+    ) {
+      const currX =
+        Math.round(event.clientX - 296 - container.x) / container.scale.x;
+      const currY =
+        Math.round(event.clientY - 56 - container.y) / container.scale.x;
+
+      if (currX > initialPointX && currY > initialPointY) {
+        newRectangle.x = initialPointX;
+        newRectangle.y = initialPointY;
+        newRectangle.width = currX - initialPointX;
+        newRectangle.height = currY - initialPointY;
+      }
     }
   }
 
   function selectorDragEnd(event: MouseEvent) {
-    selector.destroy({ texture: true });
+    if (pixiStore.canvasEvent === "default" && selector !== null) {
+      selector.destroy({ texture: true });
+      selector = null;
+    }
+    if (pixiStore.canvasEvent === "createRectangle" && newRectangle !== null) {
+      newRectangle = null;
+    }
     selectorPointX = null;
     selectorPointY = null;
 
