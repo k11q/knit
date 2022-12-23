@@ -3,6 +3,7 @@ import { useSquareStore } from "@/stores/dataSquare";
 import * as PIXI from "pixi.js";
 import { createElement, getElementById } from "../utils/get-element-by-id";
 import { Sprite } from "pixi.js";
+import { Selector } from "../utils/class-selector";
 
 class Rectangle extends PIXI.Sprite {
   setWidth(width: number) {
@@ -214,12 +215,89 @@ export function renderPixi() {
     }
   }
 
+  let selector: Selector;
+  let selectorPointX: number | null = 0;
+  let selectorPointY: number | null = 0;
+
   function canvasMouseDown(event: MouseEvent) {
     if (pixiSelection().value.length) {
       pixiSelection().value = [];
       pixiNodesSelection().value = [];
       removeSelector();
     }
+
+    selector = new Selector(event.clientX - 296, event.clientY - 56);
+    selectorPointX = Math.round(event.clientX - 296);
+    selectorPointY = Math.round(event.clientY - 56);
+
+    appStage.addChild(selector);
+
+    window.addEventListener("mousemove", selectorDrag);
+    window.addEventListener("mouseup", selectorDragEnd);
+  }
+
+  function selectorDrag(event: MouseEvent) {
+    const initialPointX = selectorPointX as number;
+    const initialPointY = selectorPointY as number;
+    const currX = Math.round(event.clientX - 296);
+    const currY = Math.round(event.clientY - 56);
+
+    if (currX == initialPointX && !(currY == initialPointY)) {
+      selector.setLeft(initialPointX);
+
+      if (currY > initialPointY) {
+        selector.setTop(initialPointY);
+        selector.setDimensions(0, currY - initialPointY);
+      } else {
+        selector.setTop(currY);
+        selector.setDimensions(0, initialPointY - currY);
+      }
+    }
+    if (!(currX == initialPointX) && currY == initialPointY) {
+      selector.setTop(initialPointY);
+
+      if (currX > initialPointX) {
+        selector.setLeft(initialPointX);
+        selector.setDimensions(currX - initialPointX, 0);
+      } else {
+        selector.setLeft(currX);
+        selector.setDimensions(initialPointX - currX, 0);
+      }
+    }
+    if (currX == initialPointX && currY == initialPointY) {
+      selector.setLeft(initialPointX);
+      selector.setTop(initialPointY);
+      selector.setDimensions(0, 0);
+    }
+    if (currX > initialPointX && currY > initialPointY) {
+      selector.setLeft(initialPointX);
+      selector.setTop(initialPointY);
+      selector.setDimensions(currX - initialPointX, currY - initialPointY);
+    }
+    if (currX < initialPointX && currY > initialPointY) {
+      selector.setLeft(currX);
+      selector.setTop(initialPointY);
+      selector.setDimensions(initialPointX - currX, currY - initialPointY);
+    }
+    if (currX > initialPointX && currY < initialPointY) {
+      selector.setLeft(initialPointX);
+      selector.setTop(currY);
+      selector.setDimensions(currX - initialPointX, initialPointY - currY);
+    }
+    if (currX < initialPointX && currY < initialPointY) {
+      selector.setLeft(currX);
+      selector.setTop(currY);
+      selector.setDimensions(initialPointX - currX, initialPointY - currY);
+    }
+  }
+
+  function selectorDragEnd(event: MouseEvent) {
+    selector.destroy({ texture: true });
+    selectorPointX = null;
+    selectorPointY = null;
+
+    window.removeEventListener("mousemove", selectorDrag);
+    window.removeEventListener("mouseup", selectorDragEnd);
   }
 
   function removeSelector() {

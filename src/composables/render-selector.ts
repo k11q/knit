@@ -1,7 +1,6 @@
 import { Node, useCounterStore } from "@/stores/counter";
 import { useSquareStore } from "@/stores/dataSquare";
 import * as PIXI from "pixi.js";
-import { OutlineFilter } from "@pixi/filter-outline";
 import { pixiContainer, pixiScale } from "./render-pixi";
 
 export function renderSelector(
@@ -13,7 +12,6 @@ export function renderSelector(
 ) {
   const selectorColor = PIXI.utils.string2hex("0191FA");
   const colorWhite = PIXI.utils.string2hex("FFFFFF");
-  const outlineSelector = new OutlineFilter(1, selectorColor, 1);
 
   const selectorTop = new PIXI.Sprite(PIXI.Texture.WHITE);
   selectorTop.tint = selectorColor;
