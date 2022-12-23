@@ -224,6 +224,8 @@ export function renderPixi() {
 
       container.addChild(newRectangle);
       newRectangle.on("mousedown", onDragStart, newRectangle);
+      newRectangle.on("mouseover", setHoverOutline, newRectangle);
+      newRectangle.on("mouseout", destroyHoverOutline);
     }
 
     window.addEventListener("mousemove", selectorDrag);
