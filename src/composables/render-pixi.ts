@@ -4,6 +4,7 @@ import * as PIXI from "pixi.js";
 import { createElement, getElementById } from "../utils/get-element-by-id";
 import { Sprite } from "pixi.js";
 import { Selector } from "../utils/class-selector";
+import { HoverOutline } from "../utils/render-hover-outline";
 import { RectangleNode } from "../utils/class-rectangle-node";
 import { usePixiStore } from "../stores/pixi";
 
@@ -16,6 +17,8 @@ export const pixiContainer = () =>
   useState<PIXI.Container | null>("pixiContainer", () => null);
 export const pixiApp = () =>
   useState<PIXI.Application | null>("pixiApp", () => null);
+
+let hoverOutline: HoverOutline | null = null;
 
 export function renderPixi() {
   const squareStore = useSquareStore();
@@ -102,6 +105,8 @@ export function renderPixi() {
 
       node.interactive = true;
       node.on("mousedown", onDragStart, node);
+      node.on("mouseover", setHoverOutline, node);
+      node.on("mouseout", destroyHoverOutline);
 
       if (i.children && i.children.length) {
         renderNodes(i.children, node);
@@ -134,6 +139,9 @@ export function renderPixi() {
 
     dragTarget = this as PIXI.Sprite | RectangleNode;
 
+    if (hoverOutline) {
+      destroyHoverOutline();
+    }
     if (
       !pixiSelection().value.find(
         (id) => id === dragTarget.name && pixiSelection().value.length
@@ -327,5 +335,33 @@ export function renderPixi() {
     selectorTopRight.parent.removeChild(selectorTopRight);
     selectorBottomLeft.parent.removeChild(selectorBottomLeft);
     selectorBottomRight.parent.removeChild(selectorBottomRight);
+  }
+
+  function setHoverOutline() {
+    if (!dragTarget || (dragTarget && this !== dragTarget)) {
+      console.log("hover");
+
+      const currX = Math.round(this.x * container.scale.x + container.x);
+      const currY = Math.round(this.y * container.scale.x + container.y);
+      const currWidth = Math.round(this.width * container.scale.x);
+      const currHeight = Math.round(this.height * container.scale.x);
+
+      if (!hoverOutline) {
+        hoverOutline = new HoverOutline(currX, currY, currWidth, currHeight);
+        appStage.addChild(hoverOutline);
+      }
+      hoverOutline.setDimensions(currX, currY, currWidth, currHeight);
+    } else if (hoverOutline) {
+      destroyHoverOutline();
+    }
+  }
+
+  function destroyHoverOutline() {
+    if (hoverOutline !== null) {
+      hoverOutline.clear();
+      hoverOutline.destroy();
+      appStage.removeChild(hoverOutline);
+      hoverOutline = null;
+    }
   }
 }
