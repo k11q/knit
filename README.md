@@ -37,3 +37,7 @@ Locally preview production build:
 ```bash
 pnpm run preview
 ```
+
+## Authors
+
+- Khairul Haaziq ([@khairulhaaziq](https://twitter.com/khairulhaaziqq))
