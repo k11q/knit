@@ -159,17 +159,19 @@ export function setDragSnap(
     if (setSnapLeft(id, snapLines) || setSnapTop(id, snapLines)) {
       if (setSnapLeft(id, snapLines) && !setSnapTop(id, snapLines)) {
         origin.x = setSnapLeft(id, snapLines)!;
-        origin.y = (event.clientY - 56) / container.scale.x - prevY;
+        origin.y = Math.round((event.clientY - 56) / container.scale.x - prevY);
       } else if (setSnapTop(id, snapLines) && !setSnapLeft(id, snapLines)) {
         origin.y = setSnapTop(id, snapLines)!;
-        origin.x = (event.clientX - 296) / container.scale.x - prevX;
+        origin.x = Math.round(
+          (event.clientX - 296) / container.scale.x - prevX
+        );
       } else {
         origin.x = setSnapLeft(id, snapLines)!;
         origin.y = setSnapTop(id, snapLines)!;
       }
     } else {
-      origin.x = (event.clientX - 296) / container.scale.x - prevX;
-      origin.y = (event.clientY - 56) / container.scale.x - prevY;
+      origin.x = Math.round((event.clientX - 296) / container.scale.x - prevX);
+      origin.y = Math.round((event.clientY - 56) / container.scale.x - prevY);
     }
   }
 }

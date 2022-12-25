@@ -7,6 +7,7 @@ import { Selector } from "../utils/class-selector";
 import { HoverOutline } from "../utils/render-hover-outline";
 import { RectangleNode } from "../utils/class-rectangle-node";
 import { usePixiStore } from "../stores/pixi";
+import { resizeBottomRight } from "./render-selector";
 
 export const pixiScale = () => useState("pixiScale", () => 1);
 export const pixiSelection = () =>
@@ -202,6 +203,9 @@ export function renderPixi() {
       selectorPointY = Math.round(event.clientY - 56);
 
       appStage.addChild(selector);
+
+      window.addEventListener("mousemove", selectorDrag);
+      window.addEventListener("mouseup", selectorDragEnd);
     } else if (pixiStore.canvasEvent === "createRectangle") {
       selectorPointX =
         Math.round(event.clientX - 296 - container.x) / container.scale.x;
@@ -226,10 +230,29 @@ export function renderPixi() {
       newRectangle.on("mousedown", onDragStart, newRectangle);
       newRectangle.on("mouseover", setHoverOutline, newRectangle);
       newRectangle.on("mouseout", destroyHoverOutline);
-    }
 
-    window.addEventListener("mousemove", selectorDrag);
-    window.addEventListener("mouseup", selectorDragEnd);
+      if (
+        !pixiSelection().value.find(
+          (id) => id === newRectangle.name && pixiSelection().value.length
+        )
+      ) {
+        if (pixiSelection().value.length || pixiNodesSelection().value.length) {
+          pixiSelection().value = [];
+          pixiNodesSelection().value = [];
+          removeSelector();
+        }
+        pixiSelection().value.push(newRectangle.name);
+        pixiNodesSelection().value.push(newRectangle);
+        renderSelector(
+          newRectangle.x,
+          newRectangle.y,
+          newRectangle.width,
+          newRectangle.height,
+          container
+        );
+      }
+      resizeBottomRight(event);
+    }
   }
 
   function selectorDrag(event: MouseEvent) {
@@ -340,9 +363,11 @@ export function renderPixi() {
   }
 
   function setHoverOutline() {
-    if (!dragTarget || (dragTarget && this !== dragTarget)) {
-      console.log("hover");
-
+    if (
+      !pixiNodesSelection().value.length ||
+      (pixiNodesSelection().value.length &&
+        this.name !== pixiNodesSelection().value[0].name)
+    ) {
       const currX = Math.round(this.x * container.scale.x + container.x);
       const currY = Math.round(this.y * container.scale.x + container.y);
       const currWidth = Math.round(this.width * container.scale.x);

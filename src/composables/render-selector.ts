@@ -265,8 +265,9 @@ function resizeRight(event: MouseEvent) {
       event.stopPropagation();
       event.preventDefault();
 
-      const width =
-        (event.clientX - 296) / pixiScale().value - prevX + prevWidth;
+      const width = Math.round(
+        (event.clientX - 296) / pixiScale().value - prevX + prevWidth
+      );
       changeWidthForward(pixiNodesSelection().value[0], width);
     }
     function mouseup() {
@@ -289,8 +290,9 @@ function resizeBottom(event: MouseEvent) {
       event.stopPropagation();
       event.preventDefault();
 
-      const height =
-        (event.clientY - 56) / pixiScale().value - prevY + prevHeight;
+      const height = Math.round(
+        (event.clientY - 56) / pixiScale().value - prevY + prevHeight
+      );
       changeHeightForward(pixiNodesSelection().value[0], height);
     }
     function mouseup() {
@@ -314,9 +316,12 @@ function resizeTop(event: MouseEvent) {
       event.stopPropagation();
       event.preventDefault();
 
-      const top = (event.clientY - 56) / pixiScale().value - prevY + prevTop;
-      const height =
-        prevY - (event.clientY - 56) / pixiScale().value + prevHeight;
+      const top = Math.round(
+        (event.clientY - 56) / pixiScale().value - prevY + prevTop
+      );
+      const height = Math.round(
+        prevY - (event.clientY - 56) / pixiScale().value + prevHeight
+      );
 
       changeTop(pixiNodesSelection().value[0], top, height);
     }
@@ -342,9 +347,12 @@ function resizeLeft(event: MouseEvent) {
       event.stopPropagation();
       event.preventDefault();
 
-      const left = (event.clientX - 296) / pixiScale().value - prevX + prevLeft;
-      const width =
-        prevX - (event.clientX - 296) / pixiScale().value + prevWidth;
+      const left = Math.round(
+        (event.clientX - 296) / pixiScale().value - prevX + prevLeft
+      );
+      const width = Math.round(
+        prevX - (event.clientX - 296) / pixiScale().value + prevWidth
+      );
 
       changeLeft(pixiNodesSelection().value[0], left, width);
     }
@@ -356,7 +364,7 @@ function resizeLeft(event: MouseEvent) {
   }
 }
 
-function resizeBottomRight(event: MouseEvent) {
+export function resizeBottomRight(event: MouseEvent) {
   if (pixiSelection().value.length) {
     event.stopPropagation();
 
@@ -374,10 +382,12 @@ function resizeBottomRight(event: MouseEvent) {
       event.stopPropagation();
       event.preventDefault();
 
-      const height =
-        (event.clientY - 56) / pixiScale().value - prevY + prevHeight;
-      const width =
-        (event.clientX - 296) / pixiScale().value - prevX + prevWidth;
+      const height = Math.round(
+        (event.clientY - 56) / pixiScale().value - prevY + prevHeight
+      );
+      const width = Math.round(
+        (event.clientX - 296) / pixiScale().value - prevX + prevWidth
+      );
 
       updateSelector(prevLeft, prevTop, width, height);
       pixiNodesSelection().value[0].width = width;
@@ -408,11 +418,15 @@ function resizeBottomLeft(event: MouseEvent) {
       event.stopPropagation();
       event.preventDefault();
 
-      const left = (event.clientX - 296) / pixiScale().value - prevX + prevLeft;
-      const height =
-        (event.clientY - 56) / pixiScale().value - prevY + prevHeight;
-      const width =
-        prevX - (event.clientX - 296) / pixiScale().value + prevWidth;
+      const left = Math.round(
+        (event.clientX - 296) / pixiScale().value - prevX + prevLeft
+      );
+      const height = Math.round(
+        (event.clientY - 56) / pixiScale().value - prevY + prevHeight
+      );
+      const width = Math.round(
+        prevX - (event.clientX - 296) / pixiScale().value + prevWidth
+      );
 
       updateSelector(left, prevTop, width, height);
       pixiNodesSelection().value[0].width = width;
@@ -444,12 +458,18 @@ function resizeTopLeft(event: MouseEvent) {
       event.stopPropagation();
       event.preventDefault();
 
-      const left = (event.clientX - 296) / pixiScale().value - prevX + prevLeft;
-      const top = (event.clientY - 56) / pixiScale().value - prevY + prevTop;
-      const height =
-        prevY - (event.clientY - 56) / pixiScale().value + prevHeight;
-      const width =
-        prevX - (event.clientX - 296) / pixiScale().value + prevWidth;
+      const left = Math.round(
+        (event.clientX - 296) / pixiScale().value - prevX + prevLeft
+      );
+      const top = Math.round(
+        (event.clientY - 56) / pixiScale().value - prevY + prevTop
+      );
+      const height = Math.round(
+        prevY - (event.clientY - 56) / pixiScale().value + prevHeight
+      );
+      const width = Math.round(
+        prevX - (event.clientX - 296) / pixiScale().value + prevWidth
+      );
 
       updateSelector(left, top, width, height);
       pixiNodesSelection().value[0].width = width;
@@ -482,11 +502,15 @@ function resizeTopRight(event: MouseEvent) {
       event.stopPropagation();
       event.preventDefault();
 
-      const top = (event.clientY - 56) / pixiScale().value - prevY + prevTop;
-      const height =
-        prevY - (event.clientY - 56) / pixiScale().value + prevHeight;
-      const width =
-        (event.clientX - 296) / pixiScale().value - prevX + prevWidth;
+      const top = Math.round(
+        (event.clientY - 56) / pixiScale().value - prevY + prevTop
+      );
+      const height = Math.round(
+        prevY - (event.clientY - 56) / pixiScale().value + prevHeight
+      );
+      const width = Math.round(
+        (event.clientX - 296) / pixiScale().value - prevX + prevWidth
+      );
 
       updateSelector(prevLeft, top, width, height);
       pixiNodesSelection().value[0].width = width;
