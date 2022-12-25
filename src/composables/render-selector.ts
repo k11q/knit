@@ -382,7 +382,10 @@ export function resizeBottomRight(event: MouseEvent) {
       event.stopPropagation();
       event.preventDefault();
 
-      if (event.clientY > prevHeight && event.clientX > prevWidth) {
+      if (
+        (event.clientY - 56) / pixiScale().value > prevTop &&
+        (event.clientX - 296) / pixiScale().value > prevLeft
+      ) {
         const height = Math.round(
           (event.clientY - 56) / pixiScale().value - prevY + prevHeight
         );
