@@ -158,18 +158,36 @@ export function setDragSnap(
     //snap to closest line
     if (setSnapLeft(id, snapLines) || setSnapTop(id, snapLines)) {
       if (setSnapLeft(id, snapLines) && !setSnapTop(id, snapLines)) {
+        pixiNodesSelection().value[0].y = Math.round(
+          (event.clientY - 56) / container.scale.x - prevY
+        );
         origin.x = setSnapLeft(id, snapLines)!;
         origin.y = Math.round((event.clientY - 56) / container.scale.x - prevY);
       } else if (setSnapTop(id, snapLines) && !setSnapLeft(id, snapLines)) {
+        pixiNodesSelection().value[0].x = Math.round(
+          (event.clientX - 296) / container.scale.x - prevX
+        );
         origin.y = setSnapTop(id, snapLines)!;
         origin.x = Math.round(
           (event.clientX - 296) / container.scale.x - prevX
         );
       } else {
+        pixiNodesSelection().value[0].x = Math.round(
+          (event.clientX - 296) / container.scale.x - prevX
+        );
+        pixiNodesSelection().value[0].y = Math.round(
+          (event.clientY - 56) / container.scale.x - prevY
+        );
         origin.x = setSnapLeft(id, snapLines)!;
         origin.y = setSnapTop(id, snapLines)!;
       }
     } else {
+      pixiNodesSelection().value[0].x = Math.round(
+        (event.clientX - 296) / container.scale.x - prevX
+      );
+      pixiNodesSelection().value[0].y = Math.round(
+        (event.clientY - 56) / container.scale.x - prevY
+      );
       origin.x = Math.round((event.clientX - 296) / container.scale.x - prevX);
       origin.y = Math.round((event.clientY - 56) / container.scale.x - prevY);
     }

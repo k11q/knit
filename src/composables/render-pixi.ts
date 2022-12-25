@@ -207,10 +207,12 @@ export function renderPixi() {
       window.addEventListener("mousemove", selectorDrag);
       window.addEventListener("mouseup", selectorDragEnd);
     } else if (pixiStore.canvasEvent === "createRectangle") {
-      selectorPointX =
-        Math.round(event.clientX - 296 - container.x) / container.scale.x;
-      selectorPointY =
-        Math.round(event.clientY - 56 - container.y) / container.scale.x;
+      selectorPointX = Math.round(
+        (event.clientX - 296 - container.x) / container.scale.x
+      );
+      selectorPointY = Math.round(
+        (event.clientY - 56 - container.y) / container.scale.x
+      );
 
       const id = useCreateId();
       newRectangle = createElement(
@@ -221,8 +223,8 @@ export function renderPixi() {
       newRectangle.name = id;
       newRectangle.x = selectorPointX as number;
       newRectangle.y = selectorPointY as number;
-      newRectangle.width = 0;
-      newRectangle.height = 0;
+      newRectangle.width = 1;
+      newRectangle.height = 1;
       newRectangle.tint = PIXI.utils.string2hex("D9D9D9");
       newRectangle.interactive = true;
 
