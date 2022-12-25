@@ -36,7 +36,9 @@
         <span>Props</span>
       </div>
     </div>
-    <DesignerRightSidePanelTabsStyle v-if="activeTab === 'style'" />
+
+    <!--<DesignerRightSidePanelTabsStyle v-if="activeTab === 'style'" />-->
+    <DesignerRightSidePanelTabsStyleCopy v-if="activeTab === 'style'" />
     <DesignerRightSidePanelTabsTabProps v-if="activeTab === 'props'" />
     <DesignerRightSidePanelTabsTabAction v-if="activeTab === 'action'" />
   </aside>

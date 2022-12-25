@@ -94,7 +94,7 @@
     </div>
     <!--Dimensions section-->
     <div
-      v-show="selectToi.selectedBox"
+      v-show="pixiNodesSelection().value.length"
       class="flex flex-col py-2 border-[#3A3A3A]"
     >
       <div
@@ -148,11 +148,9 @@
           "
           type="number"
           :placeholder="
-            getLeft()
-              ? getLeft()
-              : Math.round(
-                  useGetElementRect(selectToi.selectedBoxData.id)?.left
-                )
+            pixiNodesSelection().value.length
+              ? pixiNodesSelection().value[0].x
+              : ''
           "
         >
           <p class="text-center w-full">X</p>
@@ -161,9 +159,9 @@
           @slider="useSlider($event, selectToi.selectedBoxData.id).top()"
           type="number"
           :placeholder="
-            getTop()
-              ? getTop()
-              : Math.round(useGetElementRect(selectToi.selectedBoxData.id)?.top)
+            pixiNodesSelection().value.length
+              ? pixiNodesSelection().value[0].y
+              : ''
           "
           @input="
             (event) => {
@@ -268,7 +266,9 @@
           @slider="useSlider($event, selectToi.selectedBoxData.id).width()"
           type="number"
           :placeholder="
-            Math.round(useGetElementRect(selectToi.selectedBoxData.id)?.width)
+            pixiNodesSelection().value.length
+              ? pixiNodesSelection().value[0].width
+              : ''
           "
           :value="getWidth()"
           @input="
@@ -284,7 +284,9 @@
           @slider="useSlider($event, selectToi.selectedBoxData.id).height()"
           type="number"
           :placeholder="
-            Math.round(useGetElementRect(selectToi.selectedBoxData.id)?.height)
+            pixiNodesSelection().value.length
+              ? pixiNodesSelection().value[0].height
+              : ''
           "
           :value="getHeight()"
           @input="
