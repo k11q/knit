@@ -374,6 +374,8 @@ export function resizeBottomRight(event: MouseEvent) {
     const prevY = (event.clientY - 56) / pixiScale().value;
     const prevWidth = pixiNodesSelection().value[0].width;
     const prevX = (event.clientX - 296) / pixiScale().value;
+    const prevClientY = event.clientY;
+    const prevClientX = event.clientX;
 
     window.addEventListener("mousemove", mousemove);
     window.addEventListener("mouseup", mouseup);
@@ -382,16 +384,19 @@ export function resizeBottomRight(event: MouseEvent) {
       event.stopPropagation();
       event.preventDefault();
 
-      const height = Math.round(
-        (event.clientY - 56) / pixiScale().value - prevY + prevHeight
-      );
-      const width = Math.round(
-        (event.clientX - 296) / pixiScale().value - prevX + prevWidth
-      );
+      if (event.clientY > prevClientY && event.clientX > prevClientX) {
+        const height = Math.round(
+          (event.clientY - 56) / pixiScale().value - prevY + prevHeight
+        );
+        const width = Math.round(
+          (event.clientX - 296) / pixiScale().value - prevX + prevWidth
+        );
 
-      updateSelector(prevLeft, prevTop, width, height);
-      pixiNodesSelection().value[0].width = width;
-      pixiNodesSelection().value[0].height = height;
+        pixiNodesSelection().value[0].width = width;
+        pixiNodesSelection().value[0].height = height;
+
+        updateSelector(prevLeft, prevTop, width, height);
+      }
     }
     function mouseup() {
       window.removeEventListener("mousemove", mousemove);
