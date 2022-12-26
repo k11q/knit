@@ -136,9 +136,7 @@ export function setDragSnap(
     });
 
     //check if theres 2 lines on same axis: cancel out farther
-    snapLines = {
-      ...findClosestIntersection(originNode, snapLinesPlaceholder),
-    };
+    snapLines = findClosestIntersection(originNode, snapLinesPlaceholder);
     console.log(snapLines);
 
     //render the lines
@@ -361,54 +359,43 @@ function destroySingle(position: Position) {
 
 function renderAllLines(lines: LinePosition, id: string) {
   const origin = getElementById(id) as PIXI.Sprite;
-  if (
-    lines.lineLeft &&
-    (!getElementById("left") ||
-      (getElementById("left") && getElementById("left")!.x === lines.lineLeft))
-  ) {
-    if (getElementById("left")) {
-      console.log("sameline");
-      destroySingle("left");
-    }
-    renderLine("vertical", lines.lineLeft, "left");
-  }
-  if (!lines.lineLeft && getElementById("left")) {
+  if (pixiApp().value!.stage.getChildByName("left")) {
     destroySingle("left");
   }
-  if (
-    lines.lineMiddleX &&
-    (!getElementById("middleX") ||
-      (getElementById("middleX") &&
-        getElementById("middleX")!.x === lines.lineMiddleX + origin.width / 2))
-  ) {
-    if (getElementById("middleX")) {
-      destroySingle("middleX");
-    }
-    renderLine("vertical", lines.lineMiddleX, "middleX");
+  if (lines.lineLeft) {
+    renderLine("vertical", lines.lineLeft, "left");
   }
-  if (!lines.lineMiddleX && getElementById("middleX")) {
+  if (pixiApp().value!.stage.getChildByName("middleX")) {
     destroySingle("middleX");
   }
-  if (
-    lines.lineRight &&
-    (!getElementById("right") ||
-      (getElementById("right") &&
-        getElementById("right")!.x === lines.lineRight - origin.width))
-  ) {
-    Promise.resolve()
-      .then(() => {
-        if (getElementById("right")) {
-          destroySingle("right");
-          console.log("sameline");
-        }
-      })
-      .then(() => {
-        renderLine("vertical", lines.lineRight, "right");
-      });
+  if (lines.lineMiddleX) {
+    renderLine("vertical", lines.lineMiddleX, "middleX");
   }
-  if (!lines.lineRight && getElementById("right")) {
+  if (pixiApp().value!.stage.getChildByName("right")) {
     destroySingle("right");
   }
+  if (lines.lineRight) {
+    renderLine("vertical", lines.lineRight, "right");
+  }
+  if (pixiApp().value!.stage.getChildByName("top")) {
+    destroySingle("top");
+  }
+  if (lines.lineTop) {
+    renderLine("horizontal", lines.lineTop, "top");
+  }
+  if (pixiApp().value!.stage.getChildByName("middleY")) {
+    destroySingle("middleY");
+  }
+  if (lines.lineMiddleY) {
+    renderLine("horizontal", lines.lineMiddleY, "middleY");
+  }
+  if (pixiApp().value!.stage.getChildByName("bottom")) {
+    destroySingle("bottom");
+  }
+  if (lines.lineBottom) {
+    renderLine("horizontal", lines.lineBottom, "bottom");
+  }
+
   if (
     lines.lineTop &&
     (!getElementById("top") ||
