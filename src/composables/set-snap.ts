@@ -256,41 +256,83 @@ function findClosestIntersection(
     snapLinesPlaceholder.lineBottom
   ) {
     if (snapLinesPlaceholder.lineLeft && snapLinesPlaceholder.lineMiddleX) {
-      snapLinesPlaceholder.lineLeft - originNode.lineLeft <
-      snapLinesPlaceholder.lineMiddleX - originNode.lineMiddleX
-        ? (snapLinesPlaceholder.lineMiddleX = undefined)
-        : (snapLinesPlaceholder.lineLeft = undefined);
+      if (
+        snapLinesPlaceholder.lineLeft - originNode.lineLeft <
+        snapLinesPlaceholder.lineMiddleX - originNode.lineMiddleX
+      ) {
+        snapLinesPlaceholder.lineMiddleX = undefined;
+      } else if (
+        snapLinesPlaceholder.lineLeft - originNode.lineLeft >
+        snapLinesPlaceholder.lineMiddleX - originNode.lineMiddleX
+      ) {
+        snapLinesPlaceholder.lineLeft = undefined;
+      }
     }
     if (snapLinesPlaceholder.lineLeft && snapLinesPlaceholder.lineRight) {
-      snapLinesPlaceholder.lineLeft - originNode.lineLeft <
-      snapLinesPlaceholder.lineRight - originNode.lineRight
-        ? (snapLinesPlaceholder.lineRight = undefined)
-        : (snapLinesPlaceholder.lineLeft = undefined);
+      if (
+        snapLinesPlaceholder.lineLeft - originNode.lineLeft <
+        snapLinesPlaceholder.lineRight - originNode.lineRight
+      ) {
+        snapLinesPlaceholder.lineRight = undefined;
+      } else if (
+        snapLinesPlaceholder.lineLeft - originNode.lineLeft >
+        snapLinesPlaceholder.lineRight - originNode.lineRight
+      ) {
+        snapLinesPlaceholder.lineLeft = undefined;
+      }
     }
     if (snapLinesPlaceholder.lineMiddleX && snapLinesPlaceholder.lineRight) {
-      snapLinesPlaceholder.lineMiddleX - originNode.lineMiddleX <
-      snapLinesPlaceholder.lineRight - originNode.lineRight
-        ? (snapLinesPlaceholder.lineRight = undefined)
-        : (snapLinesPlaceholder.lineMiddleX = undefined);
+      if (
+        snapLinesPlaceholder.lineMiddleX - originNode.lineMiddleX <
+        snapLinesPlaceholder.lineRight - originNode.lineRight
+      ) {
+        snapLinesPlaceholder.lineRight = undefined;
+      } else if (
+        snapLinesPlaceholder.lineMiddleX - originNode.lineMiddleX >
+        snapLinesPlaceholder.lineRight - originNode.lineRight
+      ) {
+        snapLinesPlaceholder.lineMiddleX = undefined;
+      }
     }
 
     if (snapLinesPlaceholder.lineTop && snapLinesPlaceholder.lineMiddleY) {
-      snapLinesPlaceholder.lineTop - originNode.lineTop <
-      snapLinesPlaceholder.lineMiddleY - originNode.lineMiddleY
-        ? (snapLinesPlaceholder.lineMiddleY = undefined)
-        : (snapLinesPlaceholder.lineTop = undefined);
+      if (
+        snapLinesPlaceholder.lineTop - originNode.lineTop <
+        snapLinesPlaceholder.lineMiddleY - originNode.lineMiddleY
+      ) {
+        snapLinesPlaceholder.lineMiddleY = undefined;
+      } else if (
+        snapLinesPlaceholder.lineTop - originNode.lineTop >
+        snapLinesPlaceholder.lineMiddleY - originNode.lineMiddleY
+      ) {
+        snapLinesPlaceholder.lineTop = undefined;
+      }
     }
     if (snapLinesPlaceholder.lineTop && snapLinesPlaceholder.lineBottom) {
-      snapLinesPlaceholder.lineTop - originNode.lineTop <
-      snapLinesPlaceholder.lineBottom - originNode.lineBottom
-        ? (snapLinesPlaceholder.lineBottom = undefined)
-        : (snapLinesPlaceholder.lineTop = undefined);
+      if (
+        snapLinesPlaceholder.lineTop - originNode.lineTop <
+        snapLinesPlaceholder.lineBottom - originNode.lineBottom
+      ) {
+        snapLinesPlaceholder.lineBottom = undefined;
+      } else if (
+        snapLinesPlaceholder.lineTop - originNode.lineTop >
+        snapLinesPlaceholder.lineBottom - originNode.lineBottom
+      ) {
+        snapLinesPlaceholder.lineTop = undefined;
+      }
     }
     if (snapLinesPlaceholder.lineMiddleY && snapLinesPlaceholder.lineBottom) {
-      snapLinesPlaceholder.lineMiddleY - originNode.lineMiddleY <
-      snapLinesPlaceholder.lineBottom - originNode.lineBottom
-        ? (snapLinesPlaceholder.lineBottom = undefined)
-        : (snapLinesPlaceholder.lineMiddleY = undefined);
+      if (
+        snapLinesPlaceholder.lineMiddleY - originNode.lineMiddleY <
+        snapLinesPlaceholder.lineBottom - originNode.lineBottom
+      ) {
+        snapLinesPlaceholder.lineBottom = undefined;
+      } else if (
+        snapLinesPlaceholder.lineMiddleY - originNode.lineMiddleY >
+        snapLinesPlaceholder.lineBottom - originNode.lineBottom
+      ) {
+        snapLinesPlaceholder.lineMiddleY = undefined;
+      }
     }
   }
   return snapLinesPlaceholder;
@@ -358,7 +400,6 @@ function destroySingle(position: Position) {
 }
 
 function renderAllLines(lines: LinePosition, id: string) {
-  const origin = getElementById(id) as PIXI.Sprite;
   if (pixiApp().value!.stage.getChildByName("left")) {
     destroySingle("left");
   }
@@ -394,48 +435,6 @@ function renderAllLines(lines: LinePosition, id: string) {
   }
   if (lines.lineBottom) {
     renderLine("horizontal", lines.lineBottom, "bottom");
-  }
-
-  if (
-    lines.lineTop &&
-    (!getElementById("top") ||
-      (getElementById("top") && getElementById("top")!.y === lines.lineTop))
-  ) {
-    if (getElementById("top")) {
-      destroySingle("top");
-    }
-    renderLine("horizontal", lines.lineTop, "top");
-  }
-  if (!lines.lineTop && getElementById("top")) {
-    destroySingle("top");
-  }
-  if (
-    lines.lineMiddleY &&
-    (!getElementById("middleY") ||
-      (getElementById("middleY") &&
-        getElementById("middleY")!.y === lines.lineMiddleY - origin.height / 2))
-  ) {
-    if (getElementById("middleY")) {
-      destroySingle("middleY");
-    }
-    renderLine("horizontal", lines.lineMiddleY, "middleY");
-  }
-  if (!lines.lineMiddleY && getElementById("middleY")) {
-    destroySingle("middleY");
-  }
-  if (
-    lines.lineBottom &&
-    (!getElementById("bottom") ||
-      (getElementById("bottom") &&
-        getElementById("bottom")!.y === lines.lineBottom - origin.height))
-  ) {
-    if (getElementById("bottom")) {
-      destroySingle("bottom");
-    }
-    renderLine("horizontal", lines.lineBottom, "bottom");
-  }
-  if (!lines.lineBottom && getElementById("bottom")) {
-    destroySingle("bottom");
   }
 }
 
