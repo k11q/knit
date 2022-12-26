@@ -315,7 +315,7 @@ function renderLine(axis: Axis, point: number, position: Position) {
       line = createElement(Sprite, position, PIXI.Texture.WHITE);
       line.name = position;
       pixiApp().value!.stage.addChild(line);
-      line.tint = 0x2f4fff;
+      line.tint = PIXI.utils.string2hex("E93372");
       renderedLinesId.push(position);
       console.log("newline");
     }
@@ -366,6 +366,10 @@ function renderAllLines(lines: LinePosition, id: string) {
     (!getElementById("left") ||
       (getElementById("left") && getElementById("left")!.x === lines.lineLeft))
   ) {
+    if (getElementById("left")) {
+      console.log("sameline");
+      destroySingle("left");
+    }
     renderLine("vertical", lines.lineLeft, "left");
   }
   if (!lines.lineLeft && getElementById("left")) {
@@ -375,8 +379,11 @@ function renderAllLines(lines: LinePosition, id: string) {
     lines.lineMiddleX &&
     (!getElementById("middleX") ||
       (getElementById("middleX") &&
-        getElementById("middleX")!.x === lines.lineMiddleX - origin.width / 2))
+        getElementById("middleX")!.x === lines.lineMiddleX + origin.width / 2))
   ) {
+    if (getElementById("middleX")) {
+      destroySingle("middleX");
+    }
     renderLine("vertical", lines.lineMiddleX, "middleX");
   }
   if (!lines.lineMiddleX && getElementById("middleX")) {
@@ -388,7 +395,16 @@ function renderAllLines(lines: LinePosition, id: string) {
       (getElementById("right") &&
         getElementById("right")!.x === lines.lineRight - origin.width))
   ) {
-    renderLine("vertical", lines.lineRight, "right");
+    Promise.resolve()
+      .then(() => {
+        if (getElementById("right")) {
+          destroySingle("right");
+          console.log("sameline");
+        }
+      })
+      .then(() => {
+        renderLine("vertical", lines.lineRight, "right");
+      });
   }
   if (!lines.lineRight && getElementById("right")) {
     destroySingle("right");
@@ -398,6 +414,9 @@ function renderAllLines(lines: LinePosition, id: string) {
     (!getElementById("top") ||
       (getElementById("top") && getElementById("top")!.y === lines.lineTop))
   ) {
+    if (getElementById("top")) {
+      destroySingle("top");
+    }
     renderLine("horizontal", lines.lineTop, "top");
   }
   if (!lines.lineTop && getElementById("top")) {
@@ -409,6 +428,9 @@ function renderAllLines(lines: LinePosition, id: string) {
       (getElementById("middleY") &&
         getElementById("middleY")!.y === lines.lineMiddleY - origin.height / 2))
   ) {
+    if (getElementById("middleY")) {
+      destroySingle("middleY");
+    }
     renderLine("horizontal", lines.lineMiddleY, "middleY");
   }
   if (!lines.lineMiddleY && getElementById("middleY")) {
@@ -420,6 +442,9 @@ function renderAllLines(lines: LinePosition, id: string) {
       (getElementById("bottom") &&
         getElementById("bottom")!.y === lines.lineBottom - origin.height))
   ) {
+    if (getElementById("bottom")) {
+      destroySingle("bottom");
+    }
     renderLine("horizontal", lines.lineBottom, "bottom");
   }
   if (!lines.lineBottom && getElementById("bottom")) {
